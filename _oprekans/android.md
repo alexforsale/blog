@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Android
-subtitle: Semua oprekan android
+title: android
+subtitle: Oprekan Android
 ---
 
-Semua oprekan yang pernah saya lakukan.
-
+Semua oprekan android yang pernah saya lakukan:
 - [Smartfren Andromax-A](/oprekans/android/A16C3H)
-
