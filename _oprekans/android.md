@@ -2,6 +2,8 @@
 layout: page
 title: android
 subtitle: Oprekan Android
+social-share: true
+comments: true
 ---
 
 Semua oprekan android yang pernah saya lakukan:
