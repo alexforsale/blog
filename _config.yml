@@ -25,9 +25,9 @@ description: Oprekan - oprekan alexforsale
 navbar-links:
   Blog: ""
   Oprekan:
-    - Android: ""
-    - Linux: ""
-    - Lainnya: ""
+    - Android: "oprekans/android"
+    - Linux: "oprekans/linux"
+    - Lainnya: "oprekans/lainnya"
   About: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
