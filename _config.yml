@@ -17,17 +17,17 @@ baseurl: ""
 title: My little website
 
 # Short description of your site
-description: This is what I do when I'm not busy saving my sanity
+description: Oprekan - oprekan alexforsale
 
 # --- Navigation bar options --- #
 
 # List of links in the navigation bar
 navbar-links:
   Blog: ""
-  Projects:
-    - To be added: ""
-    - To be added again: ""
-    - Yet another to be added: ""
+  Oprekan:
+    - Android: ""
+    - Linux: ""
+    - Lainnya: ""
   About: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
