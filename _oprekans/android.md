@@ -12,6 +12,7 @@ Semua oprekan android yang pernah saya lakukan:
 - [Smartfren Andromax-i (HS-EG909)(AD683G)](/oprekans/android/EG909)
 
 Dan Juga beberapa tutorial / artikel yang sebelumnya pernah dipublish dibeberapa blog lain:
+
 - [Ubuntu 16.10 dan Andromax A (A16C3H)](http://mak2006.blogspot.co.id/2017/01/ubuntu-1610-dan-andromax-a16c3h.html)
 - [Andromax-A A16C3H](http://mak2006.blogspot.co.id/2017/01/andromax-a16c3h.html)
 - [Porting CM Recovery](http://mak2006.blogspot.co.id/2017/01/porting-cwm-recovery.html)
