@@ -11,3 +11,5 @@ Tapi belakangan ini, ubuntu di PC saya sangat stabil, tentunya karena saya tidak
 Saya kenal linux semenjak awal 2009an, sudah banyak distro yang saya coba, tidak hanya yang berbasis debian. Dan hasil dari distro-hopping tersebut yang dapat saya lihat, kebanyakan distro - distro tersebut tidak banyak menawarkan sesuatu yang baru. Banyak yang hanya mengambil stabilitas dari repo distro tertentu (biasanya debian), dan membungkusnya dengan tampilan DE (desktop Environment) yang terlihat "baru".
 
 Dan disinilah biasanya saya kembali ke [arch](https://www.archlinux.org/). Jika ingin sesuatu yang baru, lihat arch. Jika ingin pengalaman instalasi yang "edukatif", arch tidak menggunakan installer. Dan sejauh ini yang saya tahu, dokumentasi diweb mereka *sangat* lengkap, tak jarang jika saya searching google untuk masalah tertentu, forum mereka berada di paling atas.
+
+Sekarang saya dalam proses downloading .iso archlinux yang [terbaru](https://www.archlinux.org/download/). Size download-nya tidak sampai 1gb karena tidak ada DE (instalasi DE bisa dilakukan setelah OS terinstall).
