@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Apache dan Jekyll
-tags: [random, blog]
+tags: [random, blog, apache2, jekyll]
 ---
 
 Tutorial ini saya dapatkan dari blog [Christopher Rung](https://christopherrung.com/tutorial/2015/05/07/apache-and-jekyll/), dan sebenarnya semua sudah dikupas tuntas disitu. Saya hanya mencoba menambahkan beberapa hal yang tidak diulas dalam blog itu ketika saya mencoba sendiri melakukan tutorial ini.
