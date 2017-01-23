@@ -90,7 +90,7 @@ Mungkin ini bukan hal aneh, tapi untuk setting jekyll dan apache di arch memilik
 WARNING:  You don't have /home/alexforsale/.gem/ruby/2.4.0/bin in your PATH,
 ```
 
-Tambahkan path tersebut ke ~/.bashrc __UPDATE:__perintah yang lebih disarankan seperti ini:
+Tambahkan path tersebut ke ~/.bashrc *UPDATE:*perintah yang lebih disarankan seperti ini:
 
 ```
 # By default, Bundler installs gems system-wide, which is contrary to the behaviour of gem itself on Arch.
