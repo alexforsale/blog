@@ -79,4 +79,4 @@ Jan 23 20:08:05 archlinux bash[26513]:  Auto-regeneration: enabled for '/data/so
 
 ```
 
-Untuk membuat service ini berjalan setiap reboot, jalankan perintah `systemctl enable build-blog.service`
+Jika melakukan modifikasi pada file `/usr/lib/systemd/system/build-blog.service`, pastikan sebelum start servicenya lakukan reload daemon terlebih dahulu dengan perintah `systemctl daemon-reload`. Untuk membuat service ini berjalan setiap reboot, jalankan perintah `systemctl enable build-blog.service`
