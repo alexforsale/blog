@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Archlinux is live!
-tags: [blog, arch, linux, install]
+title: Modifikasi fstab linux (arch dan ubuntu)
+tags: [blog, arch, ubuntu, linux, fstab]
 ---
 
 Kasusnya seperti ini: saya saat ini memiliki 2 distro gnu/linux yang berbeda, arch dan ubuntu (kemungkinan bertambah melihat partisi `W*nd*ws` yang semakin menyusut dan berteriak "just kill me already!"), dan juga saya memiliki satu partisi khusus /home, saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya selalu sama dimana - mana). Tapi menggunakan username yang sama dengan sharing partisi /home di distro gnu/linux sama saja seperti bom bunuh diri. File konfigurasi user dari banyak software biasanya disimpan di folder ~ (/home/$USER), akan jadi masalah jika satu software digunakan di beberapa distro dan masing - masing berbeda konfigurasi. Masalah berikutnya adalah file media, saya termasuk penikmat musik dan film, walaupun kebanyakan dari file media saya taruh di storage removable (external HDD), tapi nyatanya lebih sering saya akses, dan terlalu banyak klik untuk mencapai file - file tersebut. Masalah terakhir, harddisk pc saya ini cukup kecil, jadi kemungkinan ada file double yang tersimpan di folder ~ sebisa mungkin harus dikurangi, jika file - file tersebut bersifat dokumen, atau tidak berpengaruh terhadap fungsi software atau OS, lebih baik langsung ke storage external.
@@ -35,7 +35,7 @@ Langkah selanjutnya untuk mounting storage external, beberapa distro memiliki pa
 UUID=636683E80CB77EED 				/mnt/TOSHIBA 	ntfs-3g 	exec,permissions,auto 		0 0
 ```
 
-Seperti yang tertulis dicomment, package ntfs-3g dibutuhkan, tidak semua distro otomatis menginstall ini disaat instalasi OS. Selanjutnya di external HDD tersebut saya membuat beberapa folder bernama Documents, Music, Downloads, Pictures, dan Videos. Folder - folder tersebut nantinya juga akan di mount bind seperti ini:
+Seperti yang tertulis dicomment, package `ntfs-3g` dibutuhkan, tidak semua distro otomatis menginstall ini disaat instalasi OS. Selanjutnya di external HDD tersebut saya membuat beberapa folder bernama Documents, Music, Downloads, Pictures, dan Videos. Folder - folder tersebut nantinya juga akan di mount bind seperti ini:
 
 ```
 # mount bind Documents
@@ -54,6 +54,8 @@ Seperti yang tertulis dicomment, package ntfs-3g dibutuhkan, tidak semua distro 
 /mnt/TOSHIBA/Videos 				/home/alexforsale/Videos 	ntfs-3g 			bind 	0 0
 ```
 
+Semua mounting diatas seperti sudah cukup jelas, folder - folder seperti Music, Videos, dan Pictures di mount agar aplikasi - aplikasi default dari OS-nya (seperti music player, video player, image viewer dan sebagainya) dapat mencari file media yang sesuai didalam folder /home, dan untuk mempermudah proses penyimpanan file media tersebut (seperti misalnya screenshot dan lainnya).
+
 Save file `/etc/fstab` tersebut dan reboot OS-nya untuk menjalankan file tersebut, atau bisa saja langsung di test dengan perintah `mount -a` tetapi pastikan terlebih dahulu semua mount point yang dicantumkan difile tersebut ada. Dan *pastikan* user id dan gid di kedua OS tersebut sama, untuk username saya seperti ini:
 
 ```
@@ -64,4 +66,5 @@ wheel alexforsale
 [alexforsale@archlinux ~]$ 
 ```
 
-Karena jika berbeda nantinya akan ada masalah permission untuk mengakses file yang dishare di fstab.
+Karena jika berbeda nantinya akan ada masalah permission untuk mengakses file yang dishare di fstab. Biasanya untuk uid dan guid selalu 1000:1000 jika untuk user pertama yang dibuat, lebih detail mengenai users dan groups bisa dibaca di [wiki archlinux](https://wiki.archlinux.org/index.php/Users_and_groups) yang sudah sangat lengkap.
+
