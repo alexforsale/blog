@@ -6,12 +6,12 @@ tags: [random, blog, apache2, jekyll, systemd]
 
 File unit systemd, yang mirip seperti file `.desktop` (yang juga sebenarnya terinspirasi dari file `.ini`-nya `W*nd*ws`) adalah file yang digunakan oleh systemd dan biasanya berupa service (`.service`), mount point (`.mount`), devices (`.device`) ataupun socket (`.socket`).
 
-Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll yang berada di `~/bin/build-blog.sh`. Berdasarkan dokumentasi [systemd](https://wiki.archlinux.org/index.php/Systemd) yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):
+Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang akan generate blog saya ke `/srv/http`, untuk lebih lengkapnya baca post saya sebelumnya [disini](https://alexforsale.github.io/2017-01-21-jekyll-dan-apache/)), script tersebut saya simpand di `~/bin/build-blog.sh`. Berdasarkan dokumentasi [systemd](https://wiki.archlinux.org/index.php/Systemd) yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):
 
 - `/usr/lib/systemd/system/`
 - `/etc/systemd/system/`
 
-File unitnya saya buat di `/usr/lib/systemd/system/` dengan nama `build-blog.service` menggunakan nano
+File unitnya saya buat di `/usr/lib/systemd/system/` dengan nama `build-blog.service` menggunakan nano.
 
 ```
 sudo nano /usr/lib/systemd/system/build-blog.service
@@ -36,7 +36,7 @@ WantedBy=multi-user.target
 ```
 
 - Description di bagian `[Unit]` sepertinya sudah cukup jelas. 
-- Environment ini untuk menentukan path ke executables yang digunakan (bundle dan jekyll), check melalui perintah `which bundle` dan `which jekyll`.
+- `Environment` ini untuk menentukan path ke executables yang digunakan (dalam hal ini, `bundle` dan `jekyll`), check melalui perintah `which bundle` dan `which jekyll`.
 - Untuk `type=oneshot` berarti unit ini hanya akan melakukan satu 'job' lalu exit.
 - `ExecStart` adalah file yang akan dieksekusi.
 - `RemainAfterExit` di set `yes` berarti systemd akan tetap menganggap service ini aktif setelah prosesnya selesai
