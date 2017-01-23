@@ -81,3 +81,30 @@ sudo jekyll build -d /var/www/
 Dan akhirnya blog saya sudah terinstall di `/var/www/alexforsale`. Edit file `/etc/apache2/sites-enabled/000-default.conf` dan sesuaikan `DocumentRoot` dengan path yang dibuild oleh `jekyll`. Restart service apachenya dengan perintah `sudo service apache2 restart`. Dan blog saya sudah live, di `localhost` dalam kasus saya.
 
 Lanjut lagi baca blog referensi [diatas](https://christopherrung.com/tutorial/2015/05/07/apache-and-jekyll/) jika ingin memodifikasi lebih lanjut, misalnya untuk autogeneration melalui `/etc/rc.local` atau menggunakan service Dropbox.
+
+### arch linux
+
+Mungkin ini bukan hal aneh, tapi untuk setting jekyll dan apache di arch memiliki banyak perbedaan dibandingkan di ubuntu, yang pertama, perhatikan warning di setiap instalasi diatas. Jika seperti ini:
+
+```
+WARNING:  You don't have /home/alexforsale/.gem/ruby/2.4.0/bin in your PATH,
+```
+
+Tambahkan path tersebut ke ~/.bashrc
+
+```
+export PATH=/home/alexforsale/.gem/ruby/2.4.0/bin:$PATH
+```
+
+Dan jika ada error sewaktu menjalankan `jekyll build` seperti ini:
+
+```
+Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
+```
+
+Lakukan saja apa yang diminta, perintahnya menjadi `bundle exec jekyll build -d /srv/http`. Package apache di arch secara default directory-nya di `/srv/http`, jika ingin dirubah bisa dimodifikasi file `/etc/httpd/conf/httpd.conf`-nya, lengkapnya bisa baca di [wiki](https://wiki.archlinux.org/index.php/Apache_HTTP_Server)-nya.
+
+#### Automatic Regeneration
+
+Khusus untuk di arch, saya melakukan proses yang berbeda untuk regenerate blog saya, dan saya tulis di post [terpisah](https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/).
+
