@@ -58,12 +58,24 @@ Semua mounting diatas seperti sudah cukup jelas, folder - folder seperti Music, 
 
 Save file `/etc/fstab` tersebut dan reboot OS-nya untuk menjalankan file tersebut, atau bisa saja langsung di test dengan perintah `mount -a` tetapi pastikan terlebih dahulu semua mount point yang dicantumkan difile tersebut ada. Dan *pastikan* user id dan gid di kedua OS tersebut sama, untuk username saya seperti ini:
 
+Di arch:
+
 ```
 [alexforsale@archlinux ~]$ id $USER
 uid=1000(alexforsale) gid=1000(alexforsale) groups=1000(alexforsale),10(wheel)
 [alexforsale@archlinux ~]$ groups $USER
 wheel alexforsale
 [alexforsale@archlinux ~]$ 
+```
+
+Di ubuntu:
+
+```
+alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ id $USER
+uid=1000(alexforsale) gid=1000(alexforsale) groups=1000(alexforsale),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),121(lpadmin),132(sambashare),136(autopilot),137(debian-transmission),999(docker)
+alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ groups $USER
+alexforsale : alexforsale adm cdrom sudo dip plugdev lpadmin sambashare autopilot debian-transmission docker
+alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ 
 ```
 
 Karena jika berbeda nantinya akan ada masalah permission untuk mengakses file yang dishare di fstab. Biasanya untuk uid dan guid selalu 1000:1000 jika untuk user pertama yang dibuat, lebih detail mengenai users dan groups bisa dibaca di [wiki archlinux](https://wiki.archlinux.org/index.php/Users_and_groups) yang sudah sangat lengkap.
