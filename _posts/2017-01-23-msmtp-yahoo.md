@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Command line email dengan msmtp dan yahoo mail
-tags: [blog, arch, linux, mail, yahoo, gmail, smtp, msmtp]
+tags: [blog, linux, mail, yahoo, gmail, smtp, msmtp]
 ---
 
 Package yang perlu diinstall: [msmtp](https://www.archlinux.org/packages/?name=msmtp) dan opsional, [msmtp-mta](https://www.archlinux.org/packages/?name=msmtp-mta) yang akan membuat alias `sendmail` ke msmtp. Dan [s-nail](https://www.archlinux.org/packages/?name=s-nail) agar kita bisa mengirim email dengan perintah `mail` (di arch saya package s-nail sudah terinstall). Semua package tersebut diinstall menggunakan *pacman*.
@@ -93,3 +93,4 @@ Karena saya menggunakan 2 account, saya mencoba mengirim email dari masing - mas
 
 <img src="https://github.com/alexforsale/alexforsale.github.io/blob/99ce21451fe4e7a11f8114f4fb66ac3add9a8b01/img/post/msmtp-yahoo.png?raw=true" alt="Drawing" style="width: 100px;"/>
 
+Jika package [msmtp-mta](https://www.archlinux.org/packages/?name=msmtp-mta) juga terinstall, perintah *msmtp* bisa diganti dengan *sendmail*.
