@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Bash prompt untuk git
-tags: [blog, arch, linux, bash, git, bash-prompt]
+tags: [blog, linux, bash, git, bash-prompt]
 ---
 
 Ada banyak cara mengkonfigurasi bash agar bisa lebih informatif ketika didalam folder git, tapi satu yang lebih sering saya pakai adalah bash-git-prompt dari [magicmonty](https://github.com/magicmonty/bash-git-prompt), saya temukan dari google beberapa bulan yang lalu, coba pakai diubuntu, dan akan saya pakai di arch juga.
