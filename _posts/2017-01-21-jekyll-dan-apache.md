@@ -89,28 +89,29 @@ Rubah isi defaultnya menjadi seperti ini:
 <IfModule mod_userdir.c>
         UserDir public_html
         UserDir disabled root
- 
+
         <Directory /home/*/public_html>
-		AllowOverride All
-		Options MultiViews Indexes SymLinksIfOwnerMatch
-		<Limit GET POST OPTIONS>
-			# Apache <= 2.2:
-		        Order allow,deny
-		        Allow from all
+                AllowOverride All
+                Options MultiViews Indexes SymLinksIfOwnerMatch
+                <Limit GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        #Order allow,deny
+                        #Allow from all
  
-		        # Apache >= 2.4:
-		        #Require all granted
-		</Limit>
-		<LimitExcept GET POST OPTIONS>
-			# Apache <= 2.2:
-		        Order deny,allow
-		        Deny from all
+                        # Apache >= 2.4:
+                        Require all granted
+                </Limit>
+                <LimitExcept GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        #Order deny,allow
+                        #Deny from all
  
-			# Apache >= 2.4:
-			#Require all denied
-		</LimitExcept>
+                        # Apache >= 2.4:
+                        Require all denied
+                </LimitExcept>
         </Directory>
 </IfModule>
+
 ```
 
 Directory *public_html* secara default di disabled untuk alasan keamanan, jadi untuk membuatnya menjadi *enable* ada konfigurasi *apache* yang perlu dirubah:
@@ -173,9 +174,28 @@ cd /path/to/jekyll/blog/
 sudo jekyll build -d /var/www/
 ```
 
-Dan akhirnya blog saya sudah terinstall di `/var/www/alexforsale`. Edit file `/etc/apache2/sites-enabled/000-default.conf` dan sesuaikan `DocumentRoot` dengan path yang dibuild oleh `jekyll`. Restart service apachenya dengan perintah `sudo service apache2 restart`. Dan blog saya sudah live, di `localhost` dalam kasus saya.
+Dan akhirnya blog saya sudah terinstall di `/var/www/alexforsale`. Edit file `/etc/apache2/sites-enabled/000-default.conf` dan sesuaikan `DocumentRoot` dengan path yang dibuild oleh `jekyll`. Restart service apachenya dengan perintah `sudo service apache2 restart`. Dan blog saya sudah live, di `localhost/~alexforsale` dalam kasus saya.
 
-Lanjut lagi baca blog referensi [diatas](https://christopherrung.com/tutorial/2015/05/07/apache-and-jekyll/) jika ingin memodifikasi lebih lanjut, misalnya untuk autogeneration melalui `/etc/rc.local` atau menggunakan service Dropbox.
+#### Buat file virtual host
+
+Salin konfigurasi virtual host *Apache* menjadi file yang akan kita gunakan
+```
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/alexforsale.github.io.conf
+```
+
+Dan
+
+```
+sudo nano /etc/apache2/sites-available/alexforsale.github.io.conf
+```
+
+Hapus tanda `#` didepan *ServerName*, ganti *www.example.com* dengan `localhost`, edit *DocumentRoot*-nya menjadi `/home/username/public_html`, sesuaikan *username*-nya. Lalu gunakan perintah `a2ensite` untuk enable file konfigurasi tersebut:
+
+```
+sudo a2ensite alexforsale.github.io.conf
+```
+
+Dan blog tersebut sudah dapat diakses melalui `http://localhost`. Lanjut lagi baca blog referensi [diatas](https://christopherrung.com/tutorial/2015/05/07/apache-and-jekyll/) jika ingin memodifikasi lebih lanjut, misalnya untuk autogeneration melalui `/etc/rc.local` atau menggunakan service Dropbox.
 
 ### arch linux
 

@@ -6,6 +6,8 @@ tags: [random, blog, apache2, jekyll, systemd]
 
 File unit systemd, yang mirip seperti file `.desktop` (yang juga sebenarnya terinspirasi dari file `.ini`-nya `W*nd*ws`) adalah file yang digunakan oleh systemd dan biasanya berupa service (`.service`), mount point (`.mount`), devices (`.device`) ataupun socket (`.socket`).
 
+### arch
+
 Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang akan generate blog saya ke `/srv/http`, untuk lebih lengkapnya baca post saya sebelumnya [disini](https://alexforsale.github.io/2017-01-21-jekyll-dan-apache/)), script tersebut saya simpand di `~/bin/build-blog.sh`. Berdasarkan dokumentasi [systemd](https://wiki.archlinux.org/index.php/Systemd) yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):
 
 - `/usr/lib/systemd/system/`
@@ -61,6 +63,9 @@ $GEM_HOME/bin/bundle exec $GEM_HOME/bin/jekyll build --watch -s $blogpath -d /ho
 
 ```
 
+```
+chmod a+x ~/bin/build-blog.sh
+```
 Save file tersebut, dan tes dengan jalankan perintah `systemctl start build-blog.service`, jika semuanya berjalan lancar tidak akan ada message apapun, ketik *CTRL-C* untuk kembali ke prompt. Cek status dari service tersebut dengan ketik `systemctl status build-blog.service`, semestinya hasilnya seperti ini:
 
 ```
@@ -85,3 +90,25 @@ Jan 26 13:21:24 archlinux build-blog.sh[6938]:  Auto-regeneration: enabled for '
 ```
 
 Jika melakukan modifikasi pada file `/usr/lib/systemd/system/build-blog.service`, pastikan sebelum start servicenya lakukan reload daemon terlebih dahulu dengan perintah `systemctl daemon-reload`. Untuk membuat service ini berjalan setiap reboot, jalankan perintah `systemctl enable build-blog.service`
+
+### ubuntu
+
+Beberapa perbedaan untuk ubuntu, simpan file `/usr/lib/systemd/system/build-blog.service` di `/etc/systemd/system/build-blog.service` karena ada perbedaan lokasi, sedangkan untuk isi dari `~/bin/build-blog.sh`pun harus disesuaikan, edit menjadi seperti ini:
+
+```
+#!/bin/bash
+# 
+# Christian Alexander <alexforsale@yahoo.com>
+# executable script untuk service systemd
+# https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/
+# 
+
+blogpath=/data/source/alexforsale.github.io
+#GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
+
+cd $blogpath
+
+bundle exec jekyll build --watch -s $blogpath -d /home/alexforsale/public_html
+
+```
+
