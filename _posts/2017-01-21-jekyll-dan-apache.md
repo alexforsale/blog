@@ -73,6 +73,101 @@ Setting up ruby-dev:amd64 (1:2.3.0+4) ...
 
 Baru setelahnya instalasi `jekyll` berhasil. Dan sebelum jalankan `jekyll build` pastikan juga semua gem sudah terinstall. Semua yang dibutuhkan ada didalam file `Gemfile.lock` yang berada didalam folder blog. Kita bisa install semua langsung dengan perintah `bundle install`. Proses ini akan menginformasikan jika memang dibutuhkan akses root, jadi tidak perlu menggunakan `sudo`.
 
+Jika ada error `zlib is missing; necessary for building libxml2` ketika installing *gem* *nokogiri* (`bundle install`), install package `zlib1g-dev`.
+
+#### Jalankan PHP dari user directory
+
+Butuh package `php`, `php7.0-cli` dan `apache2` tentunya. Aktifkan module userdir dengan perintah `sudo a2enmod userdir`, dan lakukan konfigurasi pada module *userdir*-nya difile *userdir.conf*.
+
+```
+sudo nano /etc/apache2/mods-enabled/userdir.conf
+```
+
+Rubah isi defaultnya menjadi seperti ini:
+
+```
+<IfModule mod_userdir.c>
+        UserDir public_html
+        UserDir disabled root
+ 
+        <Directory /home/*/public_html>
+		AllowOverride All
+		Options MultiViews Indexes SymLinksIfOwnerMatch
+		<Limit GET POST OPTIONS>
+			# Apache <= 2.2:
+		        Order allow,deny
+		        Allow from all
+ 
+		        # Apache >= 2.4:
+		        #Require all granted
+		</Limit>
+		<LimitExcept GET POST OPTIONS>
+			# Apache <= 2.2:
+		        Order deny,allow
+		        Deny from all
+ 
+			# Apache >= 2.4:
+			#Require all denied
+		</LimitExcept>
+        </Directory>
+</IfModule>
+```
+
+Directory *public_html* secara default di disabled untuk alasan keamanan, jadi untuk membuatnya menjadi *enable* ada konfigurasi *apache* yang perlu dirubah:
+
+```
+sudo nano /etc/apache2/mods-available/php7.0.conf
+```
+
+Sesuai keterangan dari comment-nya, beri tanda comment `#` mulai dari `<IfModule ...>` sampai ke `</IfModule>`
+
+```
+<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+<FilesMatch ".+\.phps$">
+    SetHandler application/x-httpd-php-source
+    # Deny access to raw php sources by default
+    # To re-enable it's recommended to enable access to the files
+    # only in specific virtual host or directory
+    Require all denied
+</FilesMatch>
+# Deny access to files without filename (e.g. '.php')
+<FilesMatch "^\.ph(p[3457]?|t|tml|ps)$">
+    Require all denied
+</FilesMatch>
+
+# Running PHP scripts in user directories is disabled by default
+#
+# To re-enable PHP in user directories comment the following lines
+# (from <IfModule ...> to </IfModule>.) Do NOT set it to On as it
+# prevents .htaccess files from disabling it.
+#<IfModule mod_userdir.c>
+#    <Directory /home/*/public_html>
+#        php_admin_flag engine Off
+#    </Directory>
+#</IfModule>
+
+```
+
+Jika kosong berarti file tersebut tidak ada, cek folder `/etc/apache2/mods-available`, jika folder tersebut pun tidak ada, kemungkinan perlu install `libapache2-mod-php`.
+
+##### Dari https://wiki.ubuntu.com/UserDirectoryPHP
+
+Menjalankan script *PHP* di directory home user sebenarnya sangat berbahaya -- *PHP* adalah bahasa programming full, dan karenanya, dapat digunakan sebagai tools untuk hacking dengan berbagai cara. Idealnya, *PHP* engine ini hanya diberikan untuk user yang dipercaya saja, jika ingin seperti ini, jangan lakukan step yang diatas. Sebaliknya, buat file baru (sebagai root) dengan nama`/etc/apache2/conf.d/php-in-homedirs.conf` dan isi seperti ini:
+
+```
+    <IfModule mod_userdir.c>
+        <Directory /home/$USERNAME/public_html>
+            php_admin_value engine On
+        </Directory>
+    </IfModule>
+```
+
+Ganti `$USERNAME` dengan nama user yang ingin diberikan permission untuk *php*, dan bagian `<Directory>` ini bisa dibuat berulang kali (misal untuk folder / user berbeda).
+
+Restart *Apache* web servernya dengan perintah `sudo service apache2 restart`, dan buat folder `~/public_html`-nya (mkdir `~/public_html`)
+
 ```
 cd /path/to/jekyll/blog/
 sudo jekyll build -d /var/www/
@@ -84,26 +179,98 @@ Lanjut lagi baca blog referensi [diatas](https://christopherrung.com/tutorial/20
 
 ### arch linux
 
-Mungkin ini bukan hal aneh, tapi untuk setting jekyll dan apache di arch memiliki banyak perbedaan dibandingkan di ubuntu, yang pertama, perhatikan warning di setiap instalasi diatas. Jika seperti ini:
+Beberapa perbedaan antara *arch* dengan *ubuntu*:
+
+#### ruby
+
+Sebelum menggunakan rubygem tambahkan line ini ke `$PATH` (gunakan `~/.bashrc`)
 
 ```
-WARNING:  You don't have /home/alexforsale/.gem/ruby/2.4.0/bin in your PATH,
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 ```
 
-Tambahkan path tersebut ke ~/.bashrc *UPDATE:*perintah yang lebih disarankan seperti ini:
+Atau jika ingin lebih detail lagi:
 
 ```
-# By default, Bundler installs gems system-wide, which is contrary to the behaviour of gem itself on Arch.
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+#Setting the GEM_PATH and GEM_HOME variables may not be necessary, check 'gem env' output to verify whether both variables already exist 
+GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
+GEM_PATH=$GEM_HOME
+export PATH=$PATH:$GEM_HOME/bin
 ```
 
-Dan jika ada error sewaktu menjalankan `jekyll build` seperti ini:
+#### User directory apache
+
+Di apache user directory defaultnya ada di `http://localhost/~yourusername/` dan mengacu ke `~/public_html` (bisa diganti di `/etc/httpd/conf/extra/httpd-userdir.conf`), setelah membuat folder `~/public_html` set permissionnya, serta permission folder `home`:
 
 ```
-Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
+$ chmod o+x ~
+$ chmod o+x ~/public_html
+$ chmod -R o+r ~/public_html```
 ```
 
-Lakukan saja apa yang diminta, perintahnya menjadi `bundle exec jekyll build -d /srv/http`. Package apache di arch secara default directory-nya di `/srv/http`, jika ingin dirubah bisa dimodifikasi file `/etc/httpd/conf/httpd.conf`-nya, lengkapnya bisa baca di [wiki](https://wiki.archlinux.org/index.php/Apache_HTTP_Server)-nya.
+Ubah isi file `/etc/httpd/conf/extra/httpd-userdir.conf`
+
+```
+# Settings for user home directories
+#
+# Required module: mod_authz_core, mod_authz_host, mod_userdir
+
+#
+# UserDir: The name of the directory that is appended onto a user's home
+# directory if a ~user request is received.  Note that you must also set
+# the default access control for these directories, as in the example below.
+#
+UserDir public_html
+
+#
+# Control access to UserDir directories.  The following is an example
+# for a site where these directories are restricted to read-only.
+#
+        <Directory /home/*/public_html>
+		AllowOverride All
+		Options MultiViews Indexes SymLinksIfOwnerMatch
+		<Limit GET POST OPTIONS>
+			# Apache <= 2.2:
+		        Order allow,deny
+		        Allow from all
+ 
+		        # Apache >= 2.4:
+		        #Require all granted
+		</Limit>
+		<LimitExcept GET POST OPTIONS>
+			# Apache <= 2.2:
+		        Order deny,allow
+		        Deny from all
+ 
+			# Apache >= 2.4:
+			#Require all denied
+		</LimitExcept>
+        </Directory>
+```
+
+Dan juga untuk `/etc/httpd/conf/extra/httpd-vhosts.conf` tambahkan dipaling bawah:
+
+```
+<VirtualHost *:80>
+  ServerName localhost
+  DocumentRoot /home/username/public_html
+</VirtualHost>
+
+```
+
+ganti *username* tentunya, dan terakhir, file `/etc/httpd/conf/httpd.conf`, hapus tanda `#` didepan baris:
+
+```
+Include conf/extra/httpd-vhosts.conf
+```
+
+Dan untuk perintah build-nya:
+
+```
+bundle exec jekyll build -d ~/public_html
+```
+
+Sekarang blog sudah dapat dilihat di `http://localhost`.
 
 #### Automatic Regeneration
 
