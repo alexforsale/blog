@@ -68,13 +68,13 @@ Jika sebelumnya gpg belum pernah digunakan, kita harus generate key terlebih dah
 Dan untuk memasukkan passwordnya kedalam file `~/.msmtp-gmail.gpg` kita gunakan perintah ini:
 
 ```
-echo -e "password\n" | gpg --encrypt -o .msmtp-gmail.gpg
+echo -e "password\n" | gpg --encrypt -o ~/.msmtp-gmail.gpg
 ```
 
 Untuk password yahoo:
 
 ```
-echo -e "password\n" | gpg --encrypt -o .msmtp-yahoo.gpg
+echo -e "password\n" | gpg --encrypt -o ~/.msmtp-yahoo.gpg
 ```
 
 ganti kata "password" dengan password-nya, tapi jangan hapus "\n"-nya.
