@@ -24,7 +24,6 @@ Dan isinya:
 Description= build blog
 
 [Service]
-Environment="PATH=/home/alexforsale/.gem/ruby/2.4.0/bin/bundle"
 Type=oneshot
 ExecStart=/home/alexforsale/bin/build-blog.sh
 RemainAfterExit=yes
@@ -46,37 +45,43 @@ WantedBy=multi-user.target
 File unit sudah dibuat, tinggal membuat script untuk generate blog jekyll ini di `~/bin/build-blog.sh`.
 
 ```
-#!/bin/bash
+#!/bin/bash 
+# 
+# Christian Alexander <alexforsale@yahoo.com>
+# executable script untuk service systemd 
+# https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/
+# 
 
 blogpath=/data/source/alexforsale.github.io
+GEM_HOME=$(/usr/bin/ls -t -U | /usr/bin/ruby -e 'puts Gem.user_dir')
 
 cd $blogpath
 
-/home/alexforsale/.gem/ruby/2.4.0/bin/bundle exec /home/alexforsale/.gem/ruby/2.4.0/bin/jekyll build --watch -s /data/source/alexforsale.github.io/ -d /srv/http
+$GEM_HOME/bin/bundle exec $GEM_HOME/bin/jekyll build --watch -s $blogpath -d /home/alexforsale/public_html
 
 ```
 
-Save file tersebut, dan tes dengan jalankan perintah `systemctl start build-blog.service`, jika semuanya berjalan lancar hasilnya seperti ini:
+Save file tersebut, dan tes dengan jalankan perintah `systemctl start build-blog.service`, jika semuanya berjalan lancar tidak akan ada message apapun, ketik *CTRL-C* untuk kembali ke prompt. Cek status dari service tersebut dengan ketik `systemctl status build-blog.service`, semestinya hasilnya seperti ini:
 
 ```
+13:21 $ systemctl status build-blog.service 
 ● build-blog.service - build blog
    Loaded: loaded (/usr/lib/systemd/system/build-blog.service; disabled; vendor preset: disabled)
-   Active: activating (start) since Mon 2017-01-23 20:08:03 WIB; 21s ago
- Main PID: 26513 (bash)
+   Active: activating (start) since Thu 2017-01-26 13:21:21 WIB; 26s ago
+ Main PID: 6938 (build-blog.sh)
     Tasks: 5 (limit: 4915)
    CGroup: /system.slice/build-blog.service
-           ├─26513 /bin/bash /home/alexforsale/bin/build-blog.sh
-           └─26514 /home/alexforsale/.gem/ruby/2.4.0/bin/jekyll build --watch -s /data/source/alexforsale.github.io/ -d /srv/http
+           ├─6938 /bin/bash /home/alexforsale/bin/build-blog.sh
+           └─6943 /home/alexforsale/.gem/ruby/2.4.0/bin/jekyll build --watch -s /data/source/alexforsale.github.io -d /home/alexforsae/public_html
 
-Jan 23 20:08:03 archlinux systemd[1]: Starting build blog...
-Jan 23 20:08:04 archlinux bash[26513]: Configuration file: /data/source/alexforsale.github.io/_config.yml
-Jan 23 20:08:04 archlinux bash[26513]:             Source: /data/source/alexforsale.github.io/
-Jan 23 20:08:04 archlinux bash[26513]:        Destination: /srv/http
-Jan 23 20:08:04 archlinux bash[26513]:  Incremental build: disabled. Enable with --incremental
-Jan 23 20:08:04 archlinux bash[26513]:       Generating...
-Jan 23 20:08:05 archlinux bash[26513]:                     done in 1.369 seconds.
-Jan 23 20:08:05 archlinux bash[26513]:  Auto-regeneration: enabled for '/data/source/alexforsale.github.io/'
-
+Jan 26 13:21:21 archlinux systemd[1]: Starting build blog...
+Jan 26 13:21:22 archlinux build-blog.sh[6938]: Configuration file: /data/source/alexforsale.github.io/_config.yml
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:             Source: /data/source/alexforsale.github.io
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:        Destination: /home/alexforsale/public_html
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:  Incremental build: disabled. Enable with --incremental
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:       Generating...
+Jan 26 13:21:23 archlinux build-blog.sh[6938]:                     done in 1.732 seconds.
+Jan 26 13:21:24 archlinux build-blog.sh[6938]:  Auto-regeneration: enabled for '/data/source/alexforsale.github.io'
 ```
 
 Jika melakukan modifikasi pada file `/usr/lib/systemd/system/build-blog.service`, pastikan sebelum start servicenya lakukan reload daemon terlebih dahulu dengan perintah `systemctl daemon-reload`. Untuk membuat service ini berjalan setiap reboot, jalankan perintah `systemctl enable build-blog.service`
