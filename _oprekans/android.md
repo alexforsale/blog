@@ -2,6 +2,7 @@
 layout: page
 title: android
 subtitle: Oprekan Android
+image: /oprekans/android/img/Android_800_thumb800.jpg
 social-share: true
 comments: true
 ---
