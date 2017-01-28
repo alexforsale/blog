@@ -8,8 +8,8 @@ comments: true
 
 Semua oprekan android yang pernah saya lakukan:
 
-- [Smartfren Andromax-A](/oprekans/android/A16C3H)
-- [Smartfren Andromax-i (HS-EG909)(AD683G)](/oprekans/android/EG909)
+- [Smartfren Andromax-A](/oprekans/A16C3H)
+- [Smartfren Andromax-i (HS-EG909)(AD683G)](/oprekans/EG909)
 
 Dan Juga beberapa tutorial / artikel yang sebelumnya pernah dipublish dibeberapa blog lain:
 
