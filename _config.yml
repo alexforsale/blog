@@ -14,7 +14,7 @@ baseurl: "/blog"
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: My little website
+title: My little blog
 
 # Short description of your site
 description: Oprekan - oprekan alexforsale
@@ -27,7 +27,7 @@ navbar-links:
   Oprekan:
     - Android: "oprekans/android"
     - Linux: "oprekans/linux"
-    - Lainnya: "oprekans/lainnya"
+  Front-Page: "https://alexforsale.github.io"
   About: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
