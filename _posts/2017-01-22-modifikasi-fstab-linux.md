@@ -4,7 +4,7 @@ title: Modifikasi fstab linux (arch dan ubuntu)
 tags: [blog, arch, ubuntu, linux, fstab]
 ---
 
-Kasusnya seperti ini: saya saat ini memiliki 2 distro *gnu/linux* yang berbeda, *arch* dan *ubuntu* (kemungkinan bertambah melihat partisi `W*nd*ws` yang semakin menyusut dan berteriak "just kill me already!"), dan juga saya memiliki satu partisi khusus `/home`, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya selalu sama dimana - mana). 
+Kasusnya seperti ini: saya saat ini memiliki 2 distro *gnu/linux* yang berbeda, *arch* dan *ubuntu* (kemungkinan bertambah melihat partisi *windows* yang semakin menyusut dan berteriak "just kill me already!"), dan juga saya memiliki satu partisi khusus `/home`, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya selalu sama dimana - mana). 
 
 Tapi menggunakan username yang sama dengan sharing partisi `/home` di distro *gnu/linux* sama saja seperti bom bunuh diri. File konfigurasi user dari banyak software biasanya disimpan di folder `~` (`/home/$USER`), akan jadi masalah jika satu software digunakan di beberapa distro dan masing - masing berbeda konfigurasi. 
 
