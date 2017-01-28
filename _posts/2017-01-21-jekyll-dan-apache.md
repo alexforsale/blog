@@ -296,9 +296,21 @@ Dan untuk perintah build-nya:
 bundle exec jekyll build -d ~/public_html
 ```
 
+jalankan service `httpd`
+
+```
+systemctl start httpd.service
+```
+
+Untuk *enable* sehingga service tersebut di-start otomatis
+
+```
+systemctl enable httpd.service
+```
+
 Sekarang blog sudah dapat dilihat di `http://localhost`.
 
 #### Automatic Regeneration
 
-Khusus untuk di arch, saya melakukan proses yang berbeda untuk regenerate blog saya, dan saya tulis di post [terpisah](https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/).
+Khusus untuk di automatic regeneration blog (jadi setiap perubahan akan langsung terlihat), saya melakukan proses yang berbeda untuk regenerate blog saya, dan saya tulis di post [terpisah](https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/).
 
