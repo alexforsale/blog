@@ -8,7 +8,7 @@ comments: true
 ---
 
 
-Semua oprekan gnu/linux yang pernah saya lakukan:
+Semua OS yang terpasang diharddisk saya saat ini:
 
 - Ubuntu
 - Arch
@@ -31,3 +31,8 @@ Sebuah distro dengan semangat "do it yourself", [dokumentasi mereka yang sangat 
 <img src="https://github.com/alexforsale/blog/blob/gh-pages/_oprekans/linux/img/debian/Screenshot-debian.png?raw=true" alt="debian" />
 
 Distro yang saya pilih untuk melakukan hobi saya yang lain: compiling android dari source ([AOSP](https://source.android.com/source/initializing.html)). Sengaja pilih debian karena menggunakan 2 partisi yang berbeda untuk distro yang sama terasa sangat *redundant*.
+
+<img src="https://github.com/alexforsale/blog/blob/master/_oprekans/linux/img/partisi.png?raw=true" alt="partisi" />
+
+
+
