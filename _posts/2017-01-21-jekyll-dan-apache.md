@@ -284,6 +284,12 @@ ganti *username* tentunya, dan terakhir, file `/etc/httpd/conf/httpd.conf`, hapu
 Include conf/extra/httpd-vhosts.conf
 ```
 
+Serta dibaris:
+
+```
+Include conf/extra/httpd-userdir.conf
+```
+
 Dan untuk perintah build-nya:
 
 ```
