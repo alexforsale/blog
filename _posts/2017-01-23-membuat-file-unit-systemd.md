@@ -4,7 +4,7 @@ title: Membuat file unit systemd
 tags: [random, blog, apache2, jekyll, systemd]
 ---
 
-File unit systemd, yang mirip seperti file `.desktop` (yang juga sebenarnya terinspirasi dari file `.ini`-nya `W*nd*ws`) adalah file yang digunakan oleh systemd dan biasanya berupa service (`.service`), mount point (`.mount`), devices (`.device`) ataupun socket (`.socket`).
+File unit systemd, yang mirip seperti file `.desktop` (yang juga sebenarnya terinspirasi dari file `.ini`-nya *windows*) adalah file yang digunakan oleh systemd dan biasanya berupa service (`.service`), mount point (`.mount`), devices (`.device`) ataupun socket (`.socket`).
 
 ### arch
 
