@@ -129,7 +129,7 @@ bin/pip install -e .
 Perhatikan ada `.` diperintah tersebut. Setelah perintah diatas selesai, *flexget* berada difolder `bin/flexget` dan dapat dijalankan dengan perintah
 
 ```
-~/flexget-dev/bin/flexget
+~/flexget/bin/flexget
 ```
 
 Untuk mudahnya dapat dibuat *symlink* dari *flexget* ke path yang termasuk dalam environment `$PATH`
