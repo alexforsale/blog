@@ -9,7 +9,7 @@ comments: true
 
 Akhir - akhir ini saya menemukan satu titik dimana kemalasan untuk menulis kembali datang, bukan berarti ini adalah hal yang baru, hanya saja rasa malas ini memandulkan banyak ide - ide bagus yang sebenarnya bisa dijadikan bahan tulisan. Dan _the so-called-virus_ bernama kemalasan ini menyebar dengan skala yang menakutkan. Jadi untuk mengatasi-nya saya menggunakan cara old-school yang cukup efisien:'_keep writing_'.
 
-_So what have I been up to?_ jawabannya: "_alot_", sebagai permulaan, ada satu hal yang sedang menarik minat saya dalam skala yang luar biasa: *(Emacs)[https://www.gnu.org/software/emacs/]*, tadinya saya hanya mencari editor alternatif dengan pilihan akhir antara _emacs_ atau _vim_. Kenapa hanya dua itu pilihannya?
+_So what have I been up to?_ jawabannya: "_alot_", sebagai permulaan, ada satu hal yang sedang menarik minat saya dalam skala yang luar biasa: [Emacs](https://www.gnu.org/software/emacs/), tadinya saya hanya mencari editor alternatif dengan pilihan akhir antara _emacs_ atau _vim_. Kenapa hanya dua itu pilihannya?
 
 Tentu saja pilihan text editor tidak hanya _emacs_ atau _vim_ saja, tetapi akhirnya saya memilih _emacs_ dengan beberapa alasan:
 
