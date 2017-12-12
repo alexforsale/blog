@@ -9,7 +9,7 @@ description:
 # I'm Back
 Saya kembali, ke Bekasi. _the home is where the heart is_ katanya... konon. Mengadu nasib sepertinya susah untuk _orang yang tidak memiliki nasib_. _But anyway,_ ini topik post yang dimaksud untuk hari ini: **Instalasi archlinux disebuah Ancient PC**
 
-## Kenapa harus arch?
+## <a name="atas"></a>Kenapa harus arch?
 Ini sebuah pertanyaan klasik yang sering ditanyakan, dan parahnya lagi, sering dijawab oleh semua orang. Bertanya "mengapa distro ini lebih baik dari itu?" sebenarnya sama saja seperti menanyakan "Kenapa lebih suka makanan ini daripada makanan itu?" Tentunya setiap jenis makanan memiliki kualitas yang berbeda dibandingkan makanan lain, sama halnya seperti distro linux, jika bertanya kepada orang Padang "kenapa sih suka makan rendang?", sama saja seperti bertanya kepada penggemar archlinux "kenapa sih selalu archlinux?"
 
 Berbeda halnya jika pertanyaan yang diajukan adalah "Mengapa archlinux di PC tersebut?" [Ini jawabannya](https://pastebin.com/P1nv1BYz). Archlinux menjadi pilihan ideal karena:
@@ -26,3 +26,8 @@ Setelah mencari semua bagian - bagian dari si PC ini di seantero rumah, dan perc
 Dugaan pertama ada di power supply, hanya saja karena tidak tersedia kotak P3K dirumah, saya copot power supply dan bawa ke rumah sakit terdekat(yang menerima pasien power supply tentunyaa). Dugaan yang tepat karena kata si dokter(yang juga hanya bisa mendiagnosa power supply) power supply yang saya bawa sudah tidak bisa tertolong lagi, bahkan menurut si dokter power supply tersebut sudah mati lama.
 
 Akhirnya saya beli power supply second karena buat apa beli barang baru buat ditaruh dirumah lama? Sepanjang perjalanan pulang saya memikirkan filosofi ini terus...
+
+## Tanda kehidupan
+PC sialan ini akhirnya menyala setelah dipasang power supply yang baru(tapi lama) ini. Tapi masalah baru muncul: monitor masih kelam... Saya copot vga card dan coba bersihkan seikhlas mungkin, lalu pasang kembali, tetap tidak menyala. Kali ini saya coba copot kembali vga card-nya, lalu pasang kabel monitor ke input vga onboard, dan layar menyambut dengan log BIOS, dan berhenti disitu... masalah baru menghadang, tetapi saya masih belum bisa menerima keadaan dan tetap memaksa untuk menarik sang VGA dari alam lain.
+
+Setelah akhirnya saya menyerah dan ikhlas merelakan kepergian si vga card, lanjut ke masalah berikutnya. Ternyata dari 3 hard drive yang ada dirumah ini, hanya satu yang masih layak digunakan(note: kata layak disini masih sangat diragukan juga). Sialnya lagi hard drive yang survive justru bukan yang memiliki OS didalamnya. Ini juga jawaban dari pertanyaan di[atas](#atas)
