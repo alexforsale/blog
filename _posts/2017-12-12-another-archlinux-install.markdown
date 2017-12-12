@@ -30,4 +30,7 @@ Akhirnya saya beli power supply second karena buat apa beli barang baru buat dit
 ## Tanda kehidupan
 PC sialan ini akhirnya menyala setelah dipasang power supply yang baru(tapi lama) ini. Tapi masalah baru muncul: monitor masih kelam... Saya copot vga card dan coba bersihkan seikhlas mungkin, lalu pasang kembali, tetap tidak menyala. Kali ini saya coba copot kembali vga card-nya, lalu pasang kabel monitor ke input vga onboard, dan layar menyambut dengan log BIOS, dan berhenti disitu... masalah baru menghadang, tetapi saya masih belum bisa menerima keadaan dan tetap memaksa untuk menarik sang VGA dari alam lain.
 
-Setelah akhirnya saya menyerah dan ikhlas merelakan kepergian si vga card, lanjut ke masalah berikutnya. Ternyata dari 3 hard drive yang ada dirumah ini, hanya satu yang masih layak digunakan(note: kata layak disini masih sangat diragukan juga). Sialnya lagi hard drive yang survive justru bukan yang memiliki OS didalamnya. Ini juga jawaban dari pertanyaan di[atas](#atas)
+Setelah akhirnya saya menyerah dan ikhlas merelakan kepergian si vga card, lanjut ke masalah berikutnya. Ternyata dari 3 hard drive yang ada dirumah ini, hanya satu yang masih layak digunakan(note: kata layak disini masih sangat diragukan juga). Sialnya lagi hard drive yang survive justru bukan yang memiliki OS didalamnya. Ini juga jawaban dari pertanyaan di [atas](#atas).
+
+# Ending itu sebenarnya adalah awal dari sebuah ending baru
+Post ini judulnya **Another Archlinux Install** tapi sama sekali tidak ada kaitannya dengan instalasi ya? Anggap saja post ini sebuah prelude, seperi trilogi Star Wars yang diikuti dengan prequel, dilanjut dengan sequel yang konon akan diikuti oleh prequel lagi...
