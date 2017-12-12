@@ -18,4 +18,11 @@ Berbeda halnya jika pertanyaan yang diajukan adalah "Mengapa archlinux di PC ter
   Release awal bulan Desember ini size installer-nya hanya sekitar 500mb. Tentunya butuh download tambahan ketika proses instalasi dimulai, tetapi distro lain yang installer-nya dilengkapi dengan _packaging_ yang lengkap pun setelah instalasi tetap harus di update juga. Tambah lagi, _package - package_ yang disediakan oleh distro lain tersebut belum tentu ideal untuk PC ini. Seperti hanya sambal, beda mulut tentu beda rasa.
 * Freedom for the people!
 
-  Minimnya packaging yang diberikan oleh archlinux biasanya yang menyebabkan orang malas. Tetapi disisi lain, buat saya ini seperti sebuah kertas kosong yang belum ada coretan (banyak). Saya cukup install apa yang saya perlu di PC ini.
+  Minimnya packaging yang diberikan oleh archlinux biasanya yang menyebabkan orang malas. Tetapi disisi lain, buat saya ini seperti sebuah kertas kosong yang belum ada coretan (banyak). Saya cukup install apa yang saya perlu di PC ini. Seandainya lupa, **Intel(R) Pentium(R) Dual  CPU  E2160  @ 1.80GHz**.
+  
+## Kondisi sang pasien
+Setelah mencari semua bagian - bagian dari si PC ini di seantero rumah, dan percobaan pertama ketika dinyalakan tidak ada power. Tombol power yang semestinya menyala biru berpendaran merah selayaknya anak indigo sama sekali tidak ada nyawa. Layar monitor tetap hitam seperti masa depan negeri ini.
+
+Dugaan pertama ada di power supply, hanya saja karena tidak tersedia kotak P3K dirumah, saya copot power supply dan bawa ke rumah sakit terdekat(yang menerima pasien power supply tentunyaa). Dugaan yang tepat karena kata si dokter(yang juga hanya bisa mendiagnosa power supply) power supply yang saya bawa sudah tidak bisa tertolong lagi, bahkan menurut si dokter power supply tersebut sudah mati lama.
+
+Akhirnya saya beli power supply second karena buat apa beli barang baru buat ditaruh dirumah lama? Sepanjang perjalanan pulang saya memikirkan filosofi ini terus...
