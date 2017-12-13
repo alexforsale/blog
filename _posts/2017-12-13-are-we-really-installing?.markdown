@@ -92,4 +92,7 @@ make
 sudo make install
 ```
 
-![archlinux-pekayon](/img/post/Screenshot-2017-12-13T20:28:54.png)
+{% include image.html
+            img="img/post/Screenshot-2017-12-13T20:28:54.png"
+            title="Arch"
+            caption="neofetch" %}
