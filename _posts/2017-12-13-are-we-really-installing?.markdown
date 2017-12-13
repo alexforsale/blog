@@ -92,10 +92,7 @@ make
 sudo make install
 ```
 
-#### Are we still doing this? ####
-Jujur saja tadinya saya rencananya ingin membuat beberapa post yang mengupas proses instalasi ini sampai selesai, hanya saja karena proses instalasinya sudah hampir sebulan yang lalu, tambah lagi walaupun saya sudah catat di file khusus semua proses - proses yang saya jalani, jika harus dibabar satu - persatu sepertinya akan sangat membosankan...
-
-{% include image-left.html
+{% include image.html
             img="img/post/Screenshot-2017-12-13T20:28:54.png"
             title="Arch"
             caption="neofetch" %}
