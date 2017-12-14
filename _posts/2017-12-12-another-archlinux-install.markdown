@@ -2,7 +2,7 @@
 layout: post
 title: Another Archlinux Install
 subtitle: sebuah proyek necromancery, part I?
-tags: arch,linux,installation
+tags: [arch, linux, installation]
 bigimg: /img/post/IMG_20171212_223908.jpg
 description: 
 ---

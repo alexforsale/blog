@@ -2,7 +2,7 @@
 layout: post
 title: Are We Really Installing?
 subtitle: Proyek necromancery, part II
-tags: archlinux, PC
+tags: [archlinux, PC]
 bigimg: /img/post/IMG_20171212_223908.jpg
 description: 
 ---
