@@ -65,6 +65,7 @@ author:
   youtube: user/alexforsale   # eg. user/daattali or channel/daattali
   spotify: alexforsale   # eg. daattali
   stackoverflow: 9088776/alexforsale  # eg. "3943160/daattali"
+  steam: alexforsale     # eg. daattali
   telephone: +6281265107156   # eg. +14159998888
   telephone: +628887706594   # eg. +14159998888
 
@@ -76,16 +77,16 @@ footer-links-active:
   twitter: true
   google-plus: true
   github: true
-  reddit: false
+  reddit: true
   linkedin: false
   xing: false
-  stackoverflow: false
+  stackoverflow: true
   snapchat: false
   instagram: false
   youtube: false
   spotify: false
   telephone: false
-  steam: false
+  steam: true
   twitch: false
   yelp: false
 
