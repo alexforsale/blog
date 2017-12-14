@@ -1,5 +1,5 @@
 ---
-layout: oprekans
+layout: post
 title: The Never Ending Saga
 subtitle: What Dies Should Stay Dead
 tags: [random, blog]

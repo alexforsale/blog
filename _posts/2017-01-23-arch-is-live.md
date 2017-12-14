@@ -16,7 +16,7 @@ Rebuild kembali initramfs dengan `mkinitcpio -p linux` dan fixed untuk kendala b
 
 Informasi instalasi sebenarnya sudah ada di file install.txt yang berada di folder root, lumayan membantu untuk step - step install-nya.
 
-Modifikasi awal yang saya lakukan adalah [memodifikasi file `/etc/fstab`](/post/2017-01-22-modifikasi-fstab-linux), [setup lagi jekyll dan apache](2017-01-21-jekyll-dan-apache) untuk keperluan blog ini (bisa dibilang tampilan di *localhost* sebagai soft publish untuk mengecek hasil akhir).
+Modifikasi awal yang saya lakukan adalah [memodifikasi file `/etc/fstab`](/post/2017-01-22-modifikasi-fstab-linux), [setup lagi jekyll dan apache](/post/2017-01-21-jekyll-dan-apache) untuk keperluan blog ini (bisa dibilang tampilan di *localhost* sebagai soft publish untuk mengecek hasil akhir).
 
 Sampai ke penulisan post ini, baru package *nvidia*, *gnome*, dan beberapa package networking yang terpasang. Rencananya post ini akan menjadi dokumentasi saya dalam *setting up archlinux*
 

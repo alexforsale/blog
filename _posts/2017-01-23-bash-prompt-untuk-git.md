@@ -48,6 +48,6 @@ Semua yang diawali tanda `#` adalah comment dan tidak dibaca oleh script, semua 
 
 ### Hasilnya
 
-<img src="https://github.com/alexforsale/alexforsale.github.io/blob/93c78938040472c8cef3608c596dab0f305ac56b/img/post/2017-01-23-bash-prompt-untuk-git-01.png?raw=true" />
+![screenshot]({{ "/img/post/2017-01-23-bash-prompt-untuk-git-01.png" | absolute_url }})
 
 Untuk detail list dari prompt-nya bisa lihat ke file readme yang berada didalam repository git-nya.

@@ -91,6 +91,6 @@ Tentunya ganti terlebih darhulu username@domain.com dengan alamat email yang ing
 
 Karena saya menggunakan 2 account, saya mencoba mengirim email dari masing - masing account ke account lainnya.
 
-<img src="https://github.com/alexforsale/alexforsale.github.io/blob/99ce21451fe4e7a11f8114f4fb66ac3add9a8b01/img/post/msmtp-yahoo.png?raw=true" alt="Drawing" style="width: 100px;"/>
+![screenshot]({{ "/img/post/msmtp-yahoo.png" | absolute_url }})
 
 Jika package [msmtp-mta](https://www.archlinux.org/packages/?name=msmtp-mta) juga terinstall, perintah *msmtp* bisa diganti dengan *sendmail*.

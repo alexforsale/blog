@@ -8,7 +8,7 @@ File unit systemd, yang mirip seperti file `.desktop` (yang juga sebenarnya teri
 
 ### arch
 
-Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang akan generate blog saya ke `/srv/http`, untuk lebih lengkapnya baca post saya sebelumnya [disini](https://alexforsale.github.io/2017-01-21-jekyll-dan-apache/)), script tersebut saya simpand di `~/bin/build-blog.sh`. Berdasarkan dokumentasi [systemd](https://wiki.archlinux.org/index.php/Systemd) yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):
+Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang akan generate blog saya ke `/srv/http`, untuk lebih lengkapnya baca post saya sebelumnya [disini](https://alexforsale.github.io/blog/2017-01-21-jekyll-dan-apache/)), script tersebut saya simpand di `~/bin/build-blog.sh`. Berdasarkan dokumentasi [systemd](https://wiki.archlinux.org/index.php/Systemd) yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):
 
 - `/usr/lib/systemd/system/`
 - `/etc/systemd/system/`
@@ -51,7 +51,7 @@ File unit sudah dibuat, tinggal membuat script untuk generate blog jekyll ini di
 # 
 # Christian Alexander <alexforsale@yahoo.com>
 # executable script untuk service systemd 
-# https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/
+# https://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/
 # 
 
 blogpath=/data/source/alexforsale.github.io
@@ -100,7 +100,7 @@ Beberapa perbedaan untuk ubuntu, simpan file `/usr/lib/systemd/system/build-blog
 # 
 # Christian Alexander <alexforsale@yahoo.com>
 # executable script untuk service systemd
-# https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/
+# https://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/
 # 
 
 blogpath=/data/source/alexforsale.github.io
