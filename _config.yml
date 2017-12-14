@@ -216,6 +216,14 @@ prose:
 
 plugins:
   - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+  - jemoji
+  - jekyll-mentions
+
+jekyll-mentions:
+  base_url: https://twitter.com
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189

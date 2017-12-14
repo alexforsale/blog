@@ -219,7 +219,12 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages (= 163)
+  jekyll-feed
+  jekyll-mentions
   jekyll-paginate
+  jekyll-seo-tag
+  jekyll-sitemap
+  jemoji
 
 BUNDLED WITH
    1.16.0
