@@ -91,5 +91,7 @@ cd emacs
 make
 sudo make install
 ```
+{% include image.html
+    img="/img/post/Screenshot-2017-12-13T20:28:54.png"
+    title="screenshot" %}
 
-![screenshot]({{ "/img/post/Screenshot-2017-12-13T20:28:54.png" | absolute_url }})

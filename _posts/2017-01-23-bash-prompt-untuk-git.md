@@ -48,6 +48,8 @@ Semua yang diawali tanda `#` adalah comment dan tidak dibaca oleh script, semua 
 
 ### Hasilnya
 
-![screenshot]({{ "/img/post/2017-01-23-bash-prompt-untuk-git-01.png" | absolute_url }})
+{% include image.html
+    img="/img/post/2017-01-23-bash-prompt-untuk-git-01.png"
+    title="screenshot" %}
 
 Untuk detail list dari prompt-nya bisa lihat ke file readme yang berada didalam repository git-nya.
