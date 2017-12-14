@@ -107,10 +107,10 @@ disqus: "alexforsale"
 google_analytics: "UA-90730319-1"
 
 # Google Tag Manager ID
-#gtm: ""
+gtm: "GTM-MZL2TQ8"
 
 # Facebook App ID
-# fb_app_id: ""
+# fb_app_id: "175444193059305"
 
 # Excerpt Word Length
 # Truncates the excerpt to the specified number of words on the index page
