@@ -180,7 +180,7 @@ video/*                  ; /usr/bin/vlc %s                                 ; cop
 
 Sesuaikan dengan aplikasi yang digunakan, w3m bisa diganti dengan elinks, sebagai terminal web browser.
 
-`set sendmail="/usr/bin/msmtp"` mengacu kepada [post saya sebelumnya]({{ baseurl }} {% post_url 2017-01-23-msmtp-yahoo %}). Jika tidak diset, akun default yang akan digunakan.
+`set sendmail="/usr/bin/msmtp"` mengacu kepada [post saya sebelumnya]({{ site.baseurl }} {% post_url 2017-01-23-msmtp-yahoo %}). Jika tidak diset, akun default yang akan digunakan.
 
 ![](../img/post/Screenshot-2017-12-15T17:20:16.png "screenshot")
 
