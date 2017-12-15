@@ -11,7 +11,7 @@ Saya memiliki banyak account email, tetapi untungnya semua email itu bisa di for
 
 Client yang akan kita gunakan adalah NeoMutt, bisa juga Mutt, yang sudah ada lebih dulu. Namun keunggulan dari NeoMutt ini karena developernya mengambil setiap patch - patch Mutt yang kebanyakan sudah diabaikan. Bagi yang tertarik untuk melihat source codenya bisa langsung lihat di repository [github mereka](https://github.com/neomutt/neomutt).
 
-Walaupun sebenarnya Mutt(dan NeoMutt) sudah memiliki fitur imap dan smtp native namun untuk support imap masih belum tersedia fitur offline, dan untuk smtp saya sebelumnya sudah menggunakan [msmtp]({{ baseurl }} {% post_url 2017-01-23-msmtp-yahoo %}), jadi tidak perlu mengisi credential yang sama berulang.
+Walaupun sebenarnya Mutt(dan NeoMutt) sudah memiliki fitur imap dan smtp native namun untuk support imap masih belum tersedia fitur offline, dan untuk smtp saya sebelumnya sudah menggunakan [msmtp]({{ site.baseurl }}{% post_url 2017-01-23-msmtp-yahoo %}), jadi tidak perlu mengisi credential yang sama berulang.
 
 ## Installing
 
@@ -23,7 +23,7 @@ yaourt -S --noconfirm urlview
 mkdir -p ~/.getmail
 chmod 700 ~/.getmail
 touch ~/.getmail/getmailrc
-mkdir -p ~/.mail/{cur,new,tmp,spam,inbox}
+mkdir -p ~/.mail/{cur,new,tmp,spam,mbox,draft}
 ```
 
 ## getmail
@@ -130,7 +130,7 @@ set send_charset="utf-8"
 
 set spoolfile=+/
 set record=+sent
-set postponed=+drafts
+set postponed=+draft
 set mbox_type=Maildir
 
 # format yang digunakan ketika forward

@@ -312,5 +312,5 @@ Sekarang blog sudah dapat dilihat di `http://localhost`.
 
 #### Automatic Regeneration
 
-Khusus untuk di automatic regeneration blog (jadi setiap perubahan akan langsung terlihat), saya melakukan proses yang berbeda untuk regenerate blog saya, dan saya tulis di post [terpisah](https://alexforsale.github.io/2017-01-23-membuat-file-unit-systemd/).
+Khusus untuk di automatic regeneration blog (jadi setiap perubahan akan langsung terlihat), saya melakukan proses yang berbeda untuk regenerate blog saya, dan saya tulis di post [terpisah]({{ site.baseurl }}{% post_url 2017-01-23-membuat-file-unit-systemd %}).
 
