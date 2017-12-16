@@ -185,3 +185,19 @@ Sesuaikan dengan aplikasi yang digunakan, w3m bisa diganti dengan elinks, sebaga
 ![](../img/post/Screenshot-2017-12-15T17:20:16.png "screenshot")
 
 Ini adalah konfigurasi minimal untuk NeoMutt.
+
+# Penggunaan
+
+Sepertinya yang perlu diingat hanya ini untuk navigasi:
+
+| Key           | Function           | Description                               |
+|:--------------|:-------------------|:------------------------------------------|
+| j or <Down>   | `<next-entry>`     | move to the next entry                    |
+| k or <Up>     | `<previous-entry>` | move to the previous entry                |
+| z or <PageDn> | `<page-down>`      | go to the next page                       |
+| Z or <PageUp> | `<page-up>`        | go to the previous page                   |
+| = or <Home>   | `<first-entry>`    | jump to the first entry                   |
+| * or <End>    | `<last-entry>`     | jump to the last entry                    |
+| q             | `<quit>`           | exit the current menu                     |
+| ?             | `<help>`           | list all keybindings for the current menu |
+
