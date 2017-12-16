@@ -57,6 +57,25 @@ set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
 ```
 
+### keybinding untuk sidebar
+Tambahkan ini dibaris terakhir dari `~/.mutt/muttrc`:
+
+```
+# bindings
+source ~/.mutt/bindings
+```
+
+Lalu edit file bindings tersebut:
+
+```
+# sidebar
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Cl sidebar-open
+```
+
+Di sesi Mutt/NeoMutt berikutnya, akan muncul sidebar disebelah kiri, dan kita bisa menggunakan bindings yang baru saja kita buat untuk navigasi. Tentunya bindings tersebut bisa kita sesuaikan dengan keinginan.
+
 # Multiple account
 
 Salah satu fitur dari msmtp adalah kemampuannya untuk menggunakan lebih dari satu account dalam satu file Konfigurasi(`'~/.msmtprc`). Kita pun bisa memanfaatkan fitur ini didalam neomutt/mutt.
