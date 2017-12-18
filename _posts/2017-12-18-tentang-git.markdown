@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tentang Git
-subtitle: Pengenalan Awal Git
+subtitle: Pengenalan Awal Git - Seri pengenalan git dari https://git-scm.com/
 tags: [git]
 description: 
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Setup Git
-subtitle: Konfigurasi untuk Git
+subtitle: Konfigurasi untuk Git - Seri pengenalan git dari https://git-scm.com/
 tags: [git]
 description: 
 ---
@@ -73,3 +73,4 @@ Setting diatas adalah untuk GPG, lebih jelasnya mengenai gpg bisa lihat di [post
 - `user.signingkey`: key yang akan kita pakai untuk sign setiap commit-nya.
 - `commit.gpgsign`: memastikan setiap commit yang kita lakukan selalu disign.
 - `gpg.program`: Nama file program gpg yang kita gunakan, umumnya selalu gpg2.
+
