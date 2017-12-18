@@ -312,7 +312,7 @@ git add .
 git commit -m 'tambah file PROJECTS.md'
 ```
 
-`git add .` berarti menambahkan semua didalam folder tersebut. Hati - hati dengan perintah ini. Oke, file `PROJECTS.md` ternyata merupakan kesalahan, kita ingin menghapusnya. Kita hapus dengan `rm` hasilnya seperti ini:
+`git add .` berarti menambahkan semua didalam folder tersebut, terkecuali semua file yang tercantum didalam `.gitignore`. Hati - hati dengan perintah ini. Oke, file `PROJECTS.md` ternyata merupakan kesalahan, kita ingin menghapusnya. Kita hapus dengan `rm` hasilnya seperti ini:
 
 ```shell
 rm PROJECTS.md

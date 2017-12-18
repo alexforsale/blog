@@ -1,0 +1,75 @@
+---
+layout: post
+title: Setup Git
+subtitle: Konfigurasi untuk Git
+tags: [git]
+description: 
+---
+
+Setelah sebelumnya kita membahas mengenai Git secara umum, sekarang saatnya mengetahui konfigurasi dari git. Konfigurasi ini akan tetap sama untuk setiap versi git, tidak akan berubah di setiap upgrade.
+
+# Git Config
+
+Git memiliki tool sendiri untuk memanage konfigurasi nya melalui `git config` yang memungkinan kita untuk mengatur variable yang mengontrol setiap aspek mengenai git, caranya beroperasi, serta tampilan. Variable ini disimpan dibeberapa tempat:
+
+1. `/ect/gitconfig`: Menyimpan konfigurasi yang diaplikasikan untuk semua user dan repository mereka. Jika kita menggunakan `--system` ketika melakukan perintah `git config` maka file ini yang akan dilakukan proses baca/tulis. Karenanya butuh superuser privilege untuk melakukannya.
+
+2. `~/.gitconfig` atau `~/.config/git/config`: Konfigurasi yang berlaku untuk semua repository user yang bersangkutan. Kita bisa mengaksesnya dengan menggunakan `--global` ketika melakukan perintah `git config`.
+
+3. `config`: Yang berada didalam folder repository(`.git/config`). Perubahan disini spesifik untuk repository yang bersangkutan saja.
+
+Setiap level override level yang sebelumnya, jadi file `.git/config` didalam repository akan override konfigurasi yang sama yang berada di file `/etc/gitconfig`.
+
+# Identitas
+
+Yang pertama kali perlu dilakukan adalah setup identitas kita, username dan email. Ini penting karena setiap commit yang kita lakukan menggunakan informasi ini.
+
+{% highlight shell %}
+git config --global user.name "alexforsale"
+git config --global user.email "alexforsale@yahoo.com"
+{% endhighlight %}
+
+Kita hanya perlu melakukannya sekali jika menggunakan `--global`, karena git akan menggunakan ini selama kita berada disystem yang sama. Jika kita ingin mengubahnya hanya didalam repository tertentu saja, lakukan tanpa opsi `--global`.
+
+# Editor
+
+Ini untuk set default editor yang kita gunakan, jika tidak kita set maka git akan menggunakan editor yang diset oleh system, cek output dari `echo $EDITOR` untuk mengetahuinya.
+
+```shell
+git config --global core.editor nano
+```
+
+{: .box-note}
+Sebaiknya untuk penggunaan git melalui terminal gunakan editor terminal-based. Jika menggunakan editor GUI, terlebih yang memakan resource banyak akan menghabiskan banyak waktu hanya untuk starting aplikasinya, sedangkan penggunaannya sebenarnya tidak terlalu banyak.
+
+
+# Check Setting Yang Ada
+
+Gunakan perintah `git config --list` maka akan terlihat semua setup yang digunakan.
+
+```shell
+$ git config --list
+user.name=alexforsale
+user.email=alexforsale@yahoo.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...
+```
+
+Akan muncul beberapa setting yang sama karena git membaca beberapa file sekaligus (`/etc/gitconfig` dan `~/.gitconfig` misalnya). Bila seperti itu maka yang diambil oleh git adalah setting dibaris terbawah.
+
+# Beberapa Setting tambahan
+
+```shell
+git config --global user.signingkey 972B3C2D613E4AE9
+git config --global commit.gpgsign true
+git config --global gpg.program gpg2
+```
+
+Setting diatas adalah untuk GPG, lebih jelasnya mengenai gpg bisa lihat di [post saya sebelumnya]({{ site.baseurl }}{% post_url 2017-12-17-tentang-gpg %}).
+
+- `user.signingkey`: key yang akan kita pakai untuk sign setiap commit-nya.
+- `commit.gpgsign`: memastikan setiap commit yang kita lakukan selalu disign.
+- `gpg.program`: Nama file program gpg yang kita gunakan, umumnya selalu gpg2.
