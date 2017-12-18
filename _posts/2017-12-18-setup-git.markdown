@@ -31,6 +31,9 @@ git config --global user.email "alexforsale@yahoo.com"
 
 Kita hanya perlu melakukannya sekali jika menggunakan `--global`, karena git akan menggunakan ini selama kita berada disystem yang sama. Jika kita ingin mengubahnya hanya didalam repository tertentu saja, lakukan tanpa opsi `--global`.
 
+{: .box-note}
+**Note:** Sesuaikan user.name dan user.email dengan yang diregistrasikan di web.
+
 # Editor
 
 Ini untuk set default editor yang kita gunakan, jika tidak kita set maka git akan menggunakan editor yang diset oleh system, cek output dari `echo $EDITOR` untuk mengetahuinya.
@@ -73,4 +76,3 @@ Setting diatas adalah untuk GPG, lebih jelasnya mengenai gpg bisa lihat di [post
 - `user.signingkey`: key yang akan kita pakai untuk sign setiap commit-nya.
 - `commit.gpgsign`: memastikan setiap commit yang kita lakukan selalu disign.
 - `gpg.program`: Nama file program gpg yang kita gunakan, umumnya selalu gpg2.
-
