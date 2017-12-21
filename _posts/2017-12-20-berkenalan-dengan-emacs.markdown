@@ -199,7 +199,7 @@ Kita bisa menentukan *mark* secara eksplisit, tapi command - command tertentu ot
 
 ### Region
 
-*Mark juga memiliki fungsi lain: *mark* dan point menentukan *region*. Banyak perintah yang hanya beroperasi ke text yang berada didalam region(diantara *mark* dan point). Kita set region dengan menentukan *mark* lalu memindahkan point ketempat lain, atau dengan klik lalu drag menggunakan mouse. *Emacs* menyediakan beberapa perintah yang akan menentukan region dengan menggerakan *mark* dan point:
+*Mark* juga memiliki fungsi lain: *mark* dan point menentukan *region*. Banyak perintah yang hanya beroperasi ke text yang berada didalam region(diantara *mark* dan point). Kita set region dengan menentukan *mark* lalu memindahkan point ketempat lain, atau dengan klik lalu drag menggunakan mouse. *Emacs* menyediakan beberapa perintah yang akan menentukan region dengan menggerakan *mark* dan point:
 
 | `C-x h` | membuat region berisi seluruh buffer |
 | `M-h`   | membuat region dari paragraph        |
