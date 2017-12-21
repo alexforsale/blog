@@ -157,7 +157,7 @@ Beberapa dari key diatas untuk navigasi berdasarkan dari posisi kita dibuffer, j
     
 Lompat langsung ke satu baris tertentu:
 
-| M-g g | lompat ke baris |
+| `M-g g` | lompat ke baris |
 
 Perintah *search* juga bisa dianggap sebagai bentuk dari navigasi buffer, *incremental search* mempermudah pencarian text berdasarkan *keyword*.
 
