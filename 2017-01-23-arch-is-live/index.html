@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Dokumentasi modifikasi Arch</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Dokumentasi modifikasi Arch">
+  
+
+   
+  <meta property="og:description" content="Akhirnya arch sudah terpasang di-PC saya! Setelah sebelumnya sekali percobaan install gagal karena terus terang saja, yang bisa melakukan install archlinux manual tanpa kesalahan dalam sekali coba sangat hebat sekali. Inipun saya juga sudah membuat partisinya sebelum memulai, karena menggunakan parted atau fdisk untuk memodifikasi partisi masih sangat menakutkan bagi...">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-01-23-arch-is-live/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-01-23-arch-is-live/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Dokumentasi modifikasi Arch">
+  
+
+  
+  <meta name="twitter:description" content="Akhirnya arch sudah terpasang di-PC saya! Setelah sebelumnya sekali percobaan install gagal karena terus terang saja, yang bisa melakukan install archlinux manual tanpa kesalahan dalam sekali coba sangat hebat sekali. Inipun saya juga sudah membuat partisinya sebelum memulai, karena menggunakan parted atau fdisk untuk memodifikasi partisi masih sangat menakutkan bagi...">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Dokumentasi modifikasi Arch</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on January 23, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <p>Akhirnya <a href="https://www.archlinux.org/">arch</a> sudah terpasang di-PC saya! Setelah sebelumnya sekali percobaan install gagal karena terus terang saja, yang bisa melakukan install <em>archlinux</em> manual tanpa kesalahan dalam sekali coba sangat hebat sekali. Inipun saya juga sudah membuat partisinya sebelum memulai, karena menggunakan parted atau fdisk untuk memodifikasi partisi masih sangat menakutkan bagi saya.</p>
+
+<p>Kesulitan pertama adalah untuk menyambung ke internet menggunakan wifi. Terakhir kali saya harus melakukan koneksi via terminal juga waktu instalasi arch pertama kalinya (lebih dari setahun yang lalu kira - kira). Dan diperparah dengan nama interface yang panjang (<code class="highlighter-rouge">wlp0s26u1u1</code>) yang membuat saya tambah malas lagi.</p>
+
+<p>Cara simpel untuk mendapatkan internet jika memiliki device <code class="highlighter-rouge">android</code>: konek ke pc dengan usb, aktifkan <code class="highlighter-rouge">usb-tethering</code>, cek interface-nya dengan perintah <code class="highlighter-rouge">ip link</code>, aktifkan <code class="highlighter-rouge">dhcpcd</code> di interface tersebut. Jika ada akses wifi, aktifkan wifi di device <code class="highlighter-rouge">android</code>-nya, matikan koneksi data (jika paket data di device limited), dikasus saya, akses wifi dari <code class="highlighter-rouge">android</code> yang di <em>tether</em> ke pc malah lebih cepat dibandingkan paket data mobile-nya.</p>
+
+<p>Kesulitan kedua didalam instalasi <em>arch</em> yang saya temui adalah setelah selesai proses instalasinya, ketika booting OS pertama kalinya, booting fail dengan error <em>“Cannot load crc32 driver”</em>, padahal package <code class="highlighter-rouge">intel-ucode</code> sudah terpasang berbarengan dengan package <code class="highlighter-rouge">grub</code> dan <code class="highlighter-rouge">os-prober</code>. Jadi terpaksa kembali boot dengan liveusb <em>arch</em>, edit manual <code class="highlighter-rouge">/etc/mkinicpio.conf</code> dan tambahkan <code class="highlighter-rouge">"crc32_generic crc32c-intel"</code> didalam baris <code class="highlighter-rouge">MODULES=</code>.</p>
+
+<p>Rebuild kembali initramfs dengan <code class="highlighter-rouge">mkinitcpio -p linux</code> dan fixed untuk kendala booting-nya.</p>
+
+<p>Informasi instalasi sebenarnya sudah ada di file install.txt yang berada di folder root, lumayan membantu untuk step - step install-nya.</p>
+
+<p>Modifikasi awal yang saya lakukan adalah <a href="/blog/2017-01-22-modifikasi-fstab-linux/">memodifikasi file <code class="highlighter-rouge">/etc/fstab</code></a>, <a href="/post/2017-01-21-jekyll-dan-apache">setup lagi jekyll dan apache</a> untuk keperluan blog ini (bisa dibilang tampilan di <em>localhost</em> sebagai soft publish untuk mengecek hasil akhir).</p>
+
+<p>Sampai ke penulisan post ini, baru package <em>nvidia</em>, <em>gnome</em>, dan beberapa package networking yang terpasang. Rencananya post ini akan menjadi dokumentasi saya dalam <em>setting up archlinux</em></p>
+
+<h3 id="bashrc">~/.bashrc</h3>
+
+<p>Sepertinya yang perlu saya lakukan pertama kali adalah memodifikasi <code class="highlighter-rouge">~/.bashrc</code> di <em>arch</em>, yang sangat minimalistik:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] &amp;&amp; return
+
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '
+</code></pre></div></div>
+
+<p>Install package <code class="highlighter-rouge">bash_completion</code> dan tambahkan baris ini ke <code class="highlighter-rouge">~/.bashrc</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+</code></pre></div></div>
+
+<p>Ini saya ambil dari <code class="highlighter-rouge">.bashrc</code> <em>ubuntu</em>, sangat berguna untuk TAB-completion sehingga meminimalisir pengetikan, masih ada beberapa lagi yang bisa diimpor dari <code class="highlighter-rouge">.bashrc</code> <em>ubuntu</em>, seperti:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+</code></pre></div></div>
+
+<p>Keterangan fungsi - fungsi-nya sudah jelas di comment, tambahan yang saya dapat dari <a href="https://wiki.archlinux.org/index.php/Bash">wiki arch tentang bash</a>:</p>
+
+<ul>
+  <li>Tambah fitur untuk command not found (butuh package <code class="highlighter-rouge">pkgfile</code>) tambahkan:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /usr/share/doc/pkgfile/command-not-found.bash
+</code></pre></div></div>
+
+<ul>
+  <li>Auto cd ke directory (jadi tinggal ketik langsung path-nya) tambahkan:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shopt -s autocd
+</code></pre></div></div>
+
+<p>Akan tiba harinya dimana saya belajar <em>vi</em>, tapi bukan hari ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export EDITOR=nano
+</code></pre></div></div>
+
+<h3 id="gnome-terminal">Gnome Terminal</h3>
+
+<p>Kebiasaan lama menekan kombinasi <em>CTRL-ALT-T</em> sepertinya masih dibutuhkan, jadi itu hal pertama yang perlu dilakukan untuk <em>gnome-terminal</em>. Setting-nya ada di <em>All-settings</em> - <em>keyboard</em>, lalu dipaling bawah ada tanda <code class="highlighter-rouge">+</code> besar, tinggal tambahkan <em>gnome-terminal</em> di command dan edit shortcut-nya. Untuk setting transparency sepertinya harus menggunakan <em>AUR</em>, dan karena tidak terlalu penting bisa ditunda sampai ada kebutuhan lain yang lebih mendesak dan harus menggunakan <em>AUR</em> (dan juga saya kurang tertarik memodifikasi <em>tampilan</em>).</p>
+
+<h3 id="aur">AUR</h3>
+
+<p>Penjelasan lebih detail mengenai <a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">AUR bisa dilihat diwiki langsung</a>. Jadi untuk mencari package yang tidak dimaintain oleh repo arch resmi, kemungkinan besar ada di repo <a href="https://aur.archlinux.org/">AUR</a>, kita tinggal mencarinya saja. Kebanyakan tutorial menyarankan kita untuk menggunakan salah satu dari sekian banyak <em>AUR helper</em> yang tersedia, ada banyak pilihan untuk ini, saya memilih <code class="highlighter-rouge">yaourt</code> karena sebelumnya ini yang saya gunakan dulu.</p>
+
+<p>Step opsional sebelumnya adalah menyiapkan folder khusus untuk menyimpan repository git <em>AUR</em>, saya memiliki folder <code class="highlighter-rouge">/data/source/AUR</code> yang sengaja dibuat untuk tempat cloning repository git dari <em>AUR</em>. Package <code class="highlighter-rouge">yaourt</code> membutuhkan package <a href="https://aur.archlinux.org/packages/package-query/">package-query</a> yang tidak tersedia direpository official (bisa dicek diweb-nya), jadi clone package tersebut terlebih dahulu.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /data/source/AUR
+git clone https://aur.archlinux.org/package-query.git
+Cloning into 'package-query'...
+remote: Counting objects: 33, done.
+remote: Compressing objects: 100% (32/32), done.
+remote: Total 33 (delta 1), reused 32 (delta 1)
+Unpacking objects: 100% (33/33), done.
+</code></pre></div></div>
+
+<p>Masuk ke folder package-query dan jalankan perintah <code class="highlighter-rouge">makepkg</code> tanpa elevasi root (jika memang membutuhkan root akan diminta).</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd package-query
+makepkg -si
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">-s</code>/<code class="highlighter-rouge">--syncdeps</code> secara otomatis meresolve dan install dependencies yang dibutuhkan menggunakan <code class="highlighter-rouge">pacman</code> disini password root akan diminta jika diperlukan.</li>
+  <li>
+<code class="highlighter-rouge">-i</code>/<code class="highlighter-rouge">--install</code> otomatis install package-nya jika build berjalan sukses.</li>
+</ul>
+
+<p>Beberapa flag lain yang mungkin berguna:</p>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">r</code>/<code class="highlighter-rouge">rmdeps</code> akan menghapus dependencies yang dibutuhkan hanya ketika proses build dijalankan, biasanya tidak diperlukan lagi jika build sukses, tapi mungkin diperlukan jika package tersebut diupdate nantinya.</li>
+  <li>
+<code class="highlighter-rouge">-c</code>/<code class="highlighter-rouge">--clean</code> hapus file - file compiling setelah selesai build, karena memang tidak lagi dibutuhkan.</li>
+</ul>
+
+<p>Jika proses build-nya selesai tanpa error, cd kembali ke <em>AUR</em> dan clone repository <code class="highlighter-rouge">yaourt</code>-nya</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+[alexforsale@archlinux AUR]$ git clone https://aur.archlinux.org/yaourt.git
+Cloning into 'yaourt'...
+remote: Counting objects: 22, done.
+remote: Compressing objects: 100% (19/19), done.
+remote: Total 22 (delta 3), reused 22 (delta 3)
+Unpacking objects: 100% (22/22), done.
+
+</code></pre></div></div>
+
+<p>Masuk kedalam folder <em>yaourt</em>, dan kembali jalankan perintah <code class="highlighter-rouge">makepkg</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ../yaourt
+makepkg -si
+</code></pre></div></div>
+
+<p>Cek packagenya dengan perintah <code class="highlighter-rouge">yaourt -V</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✘-1 /data/source/AUR/yaourt [master|…106] 
+18:33 $ yaourt -V
+yaourt 1.8.1
+homepage: http://archlinux.fr/yaourt-en
+
+</code></pre></div></div>
+
+<p>Dan <em>yaourt</em> sudah terinstall.</p>
+
+<h3 id="pkgfile">PKGFILE</h3>
+
+<p>Tool yang berguna untuk mencari file didalam package didalam repository official, install dengan <code class="highlighter-rouge">pacman</code>. Jalankan perintah <code class="highlighter-rouge">sudo pkgfile --update</code> untuk mengisi database-nya pertama kali.</p>
+
+<h4 id="penggunaan">Penggunaan</h4>
+
+<p>Misal ingin mencari package yang memiliki file <code class="highlighter-rouge">makepkg</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[alexforsale@archlinux ~]$ pkgfile makepkg
+core/pacman
+</code></pre></div></div>
+
+<p>Untuk melihat list semua file yang disediakan oleh package <code class="highlighter-rouge">archlinux-keyring</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[alexforsale@archlinux ~]$ pkgfile -l archlinux-keyring
+core/archlinux-keyring	/usr/
+core/archlinux-keyring	/usr/share/
+core/archlinux-keyring	/usr/share/pacman/
+core/archlinux-keyring	/usr/share/pacman/keyrings/
+core/archlinux-keyring	/usr/share/pacman/keyrings/archlinux-revoked
+core/archlinux-keyring	/usr/share/pacman/keyrings/archlinux-trusted
+core/archlinux-keyring	/usr/share/pacman/keyrings/archlinux.gpg
+</code></pre></div></div>
+<p>Package <em>pkgfile</em> sudah termasuk service <em>systemd</em> yang secara otomatis sync database-nya, untuk mengaktifkannya menggunakan <code class="highlighter-rouge">systemctl</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[alexforsale@archlinux ~]$ systemctl enable pkgfile-update.timer
+Created symlink /etc/systemd/system/multi-user.target.wants/pkgfile-update.timer → /usr/lib/systemd/system/pkgfile-update.timer.
+[alexforsale@archlinux ~]$ 
+</code></pre></div></div>
+<p>Alternatif lain jika ingin cek dependency dari sebuah package menggunakan pacman:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pacman -Qi &lt;namapackage&gt;
+</code></pre></div></div>
+
+<h3 id="github-ssh-key">Github SSH Key</h3>
+
+<p>Key ini dibutuhkan untuk koneksi dan authenticate pc ke remote server dan service github. Login ke web github dan masuk kedalam setting <a href="https://github.com/settings/keys">keys</a>-nya. Petunjuk untuk cara-nya bisa dilihat juga <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">disitu</a>.</p>
+
+<h4 id="cek-existing-keys">Cek existing keys</h4>
+
+<p>Saya skip step ini karena berada di instalasi OS baru yang masih fresh, namun ada baiknya tetap cek dengan perintah <code class="highlighter-rouge">ls -al ~/.ssh</code> seandainya ada SSH key, cek seandainya ada file bernama:</p>
+
+<ul>
+  <li>
+<em>id_dsa.pub</em>, atau</li>
+  <li>
+<em>id_rsa.pub</em> atau file lainnya dengan ekstensi <em>.pub</em>
+</li>
+</ul>
+
+<p>Seandainya tidak ada, lanjut ke generate SSH key baru, namun bila ada file <em>id_rsa.pub</em> (public) dan <em>id_rsa</em> (private), bila ingin digunakan bisa lanjut langsung ke step memasukkan SSH key kedalam ssh_agent.</p>
+
+<h4 id="generate-ssh-key-baru-dan-memassukan-ssh-key-tersebut-kedalam-ssh_agent">Generate SSH key baru dan memassukan SSH key tersebut kedalam ssh_agent</h4>
+
+<p>Kita harus generate SSH key baru jika belum ada, dan jika tidak ingin selalu memasukkan passphrase setiap kali menggunakan SSH key tersebut kita dapat memasukkan SSH key tersebut kedalam ssh_agent.</p>
+
+<h5 id="generate-ssh-key-baru">Generate SSH key baru</h5>
+
+<p>Step ini menggunakan perintah ssh-keygen, yang ada didalam package <code class="highlighter-rouge">openssh</code> (cek dengan perintah <code class="highlighter-rouge">pkgfile ssh-keygen</code>), jika package <em>openssh</em> belum ada, install terlebih dahulu dengan pacman. Buka terminal dan masukkan:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+</code></pre></div></div>
+
+<p>Perintah ini akan membuat SSH key baru menggunakan email yang diberikan sebagai label-nya. Ketik <em>ENTER</em> untuk menaruh file tersebut kedalam lokasi default-nya (~/.ssh/id_rsa), masukkan passphrase-nya dua kali (langsung ketik <em>ENTER</em> jika tidak ingin menggunakan passphrase)</p>
+
+<p>Jika ingin mengganti passphrase dari key yang sudah ada, gunakan <code class="highlighter-rouge">ssh-keygen -p</code>.</p>
+
+<h5 id="memasukkan-ssh-key-kedalam-ssh-agent">Memasukkan SSH key kedalam ssh-agent</h5>
+
+<p>Jalankan ssh-agent dengan perintah <code class="highlighter-rouge">eval "$(ssh-agent -s)"</code> lalu tambahkan SSH key tadi (<code class="highlighter-rouge">~/.ssh/id_rsa</code>) atau jika sudah ada SSH key lain ganti <em>id_rsa</em> dengan nama file tersebut.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-add ~/.ssh/id_rsa
+</code></pre></div></div>
+
+<h4 id="menambahkan-ssh-key-baru-kedalam-akun-github">Menambahkan SSH key baru kedalam akun github</h4>
+
+<ul>
+  <li>copy SSH key ke clipboard
+Bisa dengan cara manual, <code class="highlighter-rouge">cat ~/.ssh/id_rsa</code> (atau file SSH lain yang sudah ada) copy isinya. Atau bisa menggunakan package <code class="highlighter-rouge">xclip</code>, dengan perintah <code class="highlighter-rouge">xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code>. Masuk ke setting keys di<a href="https://github.com/settings/keys">github</a>, dan masukkan key tersebut.</li>
+</ul>
+
+<h3 id="konfigurasi-global-git">Konfigurasi global git</h3>
+
+<p>Untuk set konfigurasi global git, perintahnya <code class="highlighter-rouge">git config --global</code> diikuti dengan konfigurasinya.</p>
+
+<ul>
+  <li>username
+<code class="highlighter-rouge">git config --global user.name "John Doe"</code>
+</li>
+  <li>email
+<code class="highlighter-rouge">git config --global user.email johndoe@example.com</code>
+</li>
+  <li>editor
+untuk mengganti editor yang secara defaultnya mengikuti editor yang diset default juga oleh OS.
+<code class="highlighter-rouge">git config --global core.editor nano</code>
+</li>
+</ul>
+
+<p>Cek semua konfigurasi dengan perintah <code class="highlighter-rouge">git config --list</code>, terkadang ada value yang double (karena git mengambil konfigurasi dari beberapa file, seperti <em>/etc/gitconfig</em> dan <em>~/.gitconfig</em>), jika ini terjadi, git hanya akan mengambil value paling akhir.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/blog">blog</a>
+          
+            <a href="/tag/arch">arch</a>
+          
+            <a href="/tag/linux">linux</a>
+          
+            <a href="/tag/install">install</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Dokumentasi+modifikasi+Arch+http://alexforsale.github.io/blog/2017-01-23-arch-is-live/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-01-23-arch-is-live/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-01-23-arch-is-live/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-01-23-arch-is-live/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-01-22-modifikasi-fstab-linux/" data-toggle="tooltip" data-placement="top" title="Modifikasi fstab linux (arch dan ubuntu)">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-01-23-bash-prompt-untuk-git/" data-toggle="tooltip" data-placement="top" title="Bash prompt untuk git">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

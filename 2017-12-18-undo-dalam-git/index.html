@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Undo dalam git</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+  <meta name="description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Undo dalam git">
+  
+
+   
+  <meta property="og:description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Undo dalam git">
+  
+
+  
+  <meta name="twitter:description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Undo dalam git</h1>
+		  
+		    
+			<h2 class="post-subheading">Git Basic - Seri Pengenalan git dari https://git-scm.com/</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 18, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <p>Seandainya ada tombol undo di kehidupan nyata…</p>
+
+<h1 id="proses-undo-dalam-git">Proses Undo dalam git</h1>
+
+<p>Suatu saat pasti kita membutuhkan untuk kembali kedalam keadaan repository sebelumnya dan merubah kesalahan yang terjadi dalam waktu itu. Kita akan coba mereview beberapa tool basic yang biasa digunakan. Ini adalah beberapa area dalam git dimana kita dapat kehilangan data jika kita melakukan kesalahan.</p>
+
+<h2 id="amend">Amend</h2>
+<p>Salah satu kasus undo yang umum terjadi jika kita commit terlalu dini dan melupakan satu atau lebih file, atau kita salah dalam menulis isi commit message. Jika kita ingin mengulang kembali commit tersebut, lakukan perubahan tambahan yang tadi kita lupa, dan commit kembali dengan tambahan <code class="highlighter-rouge">--amend</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--amend</span>
+</code></pre></div></div>
+
+<p>Perintah ini akan membawa semua file di staging dan menggunakannya untuk commit, jika kita tidak membuat perubahan lain sejak commit terakhir yang salah itu, maka snapshotnya akan terlihat sama dan yang berubah hanyalah commit message saja(itupun jika diubah).</p>
+
+<p>Editor yang muncul akan menampilkan commit message yang sebelumnya dan bisa kita edit.</p>
+
+<h2 id="melepas-file-dari-staging">Melepas file dari staging</h2>
+
+<p>Anggaplah kita sudah membuat perubahan di dua file project kita, me-rename <code class="highlighter-rouge">README.md</code> menjadi <code class="highlighter-rouge">README</code> dan membuat perubahan isi file <code class="highlighter-rouge">CONTRIBUTING.md</code>. Kita ingin membuat dua commit terpisah untuk kedua file tersebut namun secara tidak sengaja mengetik perintah <code class="highlighter-rouge">git add .</code>. Bagaimana cara melepas salah satu dari file tersebut? Jika seperti ini kita masih bisa melihat output dari <code class="highlighter-rouge">git status</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+On branch master
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">"git reset HEAD &lt;file&gt;..."</span> to unstage<span class="o">)</span>
+
+    renamed:    README.md -&gt; README
+    modified:   CONTRIBUTING.md
+</code></pre></div></div>
+
+<p>Kita ikuti saran dia dan ketik perintah:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset HEAD CONTRIBUTING.md
+Unstaged changes after reset:
+M	CONTRIBUTING.md
+git status
+On branch master
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">"git reset HEAD &lt;file&gt;..."</span> to unstage<span class="o">)</span>
+
+    renamed:    README.md -&gt; README
+
+Changes not staged <span class="k">for </span>commit:
+  <span class="o">(</span>use <span class="s2">"git add &lt;file&gt;..."</span> to update what will be committed<span class="o">)</span>
+  <span class="o">(</span>use <span class="s2">"git checkout -- &lt;file&gt;..."</span> to discard changes <span class="k">in </span>working directory<span class="o">)</span>
+
+    modified:   CONTRIBUTING.md
+</code></pre></div></div>
+
+<p>Kita akan kembali kepada <code class="highlighter-rouge">git reset</code> mungkin dalam post yang berbeda(<strong>mungkin</strong>).</p>
+
+<h2 id="mengembalikan-file-yang-dimodifikasi">Mengembalikan file yang dimodifikasi</h2>
+
+<p>Bagaimana jika ternyata kita tidak ingin menyimpan perubahan di file <code class="highlighter-rouge">CONTRIBUTING.md</code>? Untungnya git status masih memberikan solusi untuk ini juga. Cukup jalankan perintah:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">--</span> CONTRIBUTING.md
+git status
+On branch master
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">"git reset HEAD &lt;file&gt;..."</span> to unstage<span class="o">)</span>
+
+    renamed:    README.md -&gt; README
+</code></pre></div></div>
+
+<h2 id="kembali-ke-beberapa-commit-yang-lalu">Kembali ke beberapa commit yang lalu</h2>
+
+<p>Seandainya mesin waktu ada didalam kehidupan nyata… Tapi didalam git hal tersebut mungkin terjadi, ambil contoh seperti ini dalam repository project kita: Kita sedang break sejenak dari aktifitas, dan mencoba mereview semua commit yang kita buat sejak pagi tadi, kita bisa melihat hasil dari <code class="highlighter-rouge">git log --oneline</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d38c5de <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> fix paragraph sebelumnya, dan tambah Our standard
+1f91e9d Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+55c17f6 tambah getting started, code of conduct dan our pledge
+af5b331 fix paragraph
+45e9dea ubah README menjadi README.md
+f31d0f2 hapus file PROJECTS.md
+e9ed298 tambah file PROJECTS.md
+2b1ec45 tambah file CONTRIBUTING.md
+8b96753 tambah Project Title
+2ab97fb tambah file .gitignore
+e75f756 my first commit!
+</code></pre></div></div>
+
+<p>Semua terlihat baik - baik saja, tapi karena kita sedang benar - benar senggang, kita coba lihat output yang lebih lengkap, <code class="highlighter-rouge">git log --patch</code>. Perintah ini membuat output dari <code class="highlighter-rouge">git log</code> menjadi patch(lebih mengenai ini (<strong>mungkin</strong>) dipost lain. Hasilnya seperti ini:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commit d38c5de8f4d2b5253b44303ff12520dc6e58771a <span class="o">(</span>HEAD -&gt; master<span class="o">)</span>
+Author: alexforsale &lt;alexforsale@yahoo.com&gt;
+Date:   Tue Dec 19 00:03:01 2017 +0700
+
+    fix paragraph sebelumnya, dan tambah Our standard
+
+diff <span class="nt">--git</span> a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 895a129..4d8c0cb 100644
+<span class="nt">---</span> a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ <span class="nt">-19</span>,6 +19,26 @@ These instructions will get you a copy of the project up and running on your loc
+ 
+ <span class="c">### Our Pledge</span>
+ 
+<span class="nt">-In</span> the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation <span class="k">in </span>our project and our community a harassment-free experience <span class="k">for </span>everyone, regardless of age
+, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and
+<span class="nt">-orientation</span><span class="nb">.</span>
++In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation <span class="k">in </span>our project and our community a harassment-free experience <span class="k">for </span>everyone, regardless of age
+, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+ 
++## Our Standards
++
++Examples of behavior that contributes to creating a positive environment
++include:
++
++<span class="k">*</span> Using welcoming and inclusive language
++<span class="k">*</span> Being respectful of differing viewpoints and experiences
++<span class="k">*</span> Gracefully accepting constructive criticism
++<span class="k">*</span> Focusing on what is best <span class="k">for </span>the community
++<span class="k">*</span> Showing empathy towards other community members
++
++Examples of unacceptable behavior by participants include:
++
++<span class="k">*</span> The use of sexualized language or imagery and unwelcome sexual attention or
++advances
++<span class="k">*</span> Trolling, insulting/derogatory comments, and personal or political attacks
++<span class="k">*</span> Public or private harassment
++<span class="k">*</span> Publishing others<span class="s1">' private information, such as a physical or electronic
++  address, without explicit permission
++* Other conduct which could reasonably be considered inappropriate in a
++  professional setting
+</span></code></pre></div></div>
+
+<p>Output yang sadis ya? Intinya kita iseng - iseng melihat semua diff yang dihasilkan dari log tersebut, dan melihat ada satu kesalahan fatal:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commit 55c17f65269deecf27907ff34acc8f1cf37652f8
+Author: alexforsale &lt;alexforsale@yahoo.com&gt;
+Date:   Mon Dec 18 23:59:00 2017 +0700
+
+    tambah getting started, code of conduct dan our pledge
+
+diff <span class="nt">--git</span> a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 6d9868b..895a129 100644
+<span class="nt">---</span> a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ <span class="nt">-4</span>,6 +4,10 @@ When contributing to this repository, please first discuss the change you wish t
+ 
+ Please note we have a code of conduct, please follow it <span class="k">in </span>all your interactions with the project.
+ 
++## Getting Started
++
++These instructions will get you a copy of the project up and running on your <span class="nb">local </span>machine <span class="k">for </span>development and testing purposes. See deployment <span class="k">for </span>notes on how to deploy the project on a live system.
++
+ <span class="c">## Pull Request Process</span>
+ 
+ 1. Ensure any install or build dependencies are removed before the end of the layer when doing a build.
+@@ <span class="nt">-11</span>,3 +15,10 @@ Please note we have a code of conduct, please follow it <span class="k">in </span>all your interactions
+ 3. Increase the version numbers <span class="k">in </span>any examples files and the README.md to the new version that this Pull Request would represent. 
+ 4. You may merge the Pull Request <span class="k">in </span>once you have the sign-off of two other developers, or <span class="k">if </span>you <span class="k">do </span>not have permission to <span class="k">do </span>that, you may request the second reviewer to merge it <span class="k">for </span>you.
+</code></pre></div></div>
+
+<p>Jadi di commit ini kita membuat kesalahan menempatkan konten, semestinya <code class="highlighter-rouge">Getting started</code> berada di file <code class="highlighter-rouge">README.md</code>. Kita harus membetulkannya di commit tersebut(tidak masuk akal karena contoh ini hanya dokumen text ya? Tapi anggap aja isi file tersebut sebuah kode programming dan sampai saat ini masih luput dari build error tapi kita tahu itu adalah sebuah kesalahan yang fatal). Rumitnya lagi, kesalahan tersebut berhubungan dengan kedua file dalam project ini.</p>
+
+<p>Bagaimana solusinya? kita bisa menggunakan <code class="highlighter-rouge">git rebase</code>. Ini adalah sebuah tool yang <strong>berbahaya</strong>, karena bisa mengacak - acak history dari sebuah repository. Namun untuk mengetahui kalau api itu panas kita harus membakar tangan kita terlebih dahulu kan? Jadi mari kita coba:</p>
+
+<h3 id="git-rebase">Git rebase</h3>
+
+<p>Kita tidak akan membahas terlalu dalam mengenai <code class="highlighter-rouge">git rebase</code> ini(pertama karena saya juga masih belum paham benar). Kita melakukan ini karena memang sangat dibutuhkan dan kebetulan kita belum push perubahan direpository lokal kita ke repository remote(lebih mengenai ini nanti).</p>
+
+<p>Pertama kita tahu commit yang bermasalah di <code class="highlighter-rouge">55c17f6</code> atau lengkapnya <code class="highlighter-rouge">55c17f65269deecf27907ff34acc8f1cf37652f8</code>, <strong>kita akan melakukan rebase ke commit sebelum commit yang akan kita edit</strong>, kita cek lagi melalui perintah <code class="highlighter-rouge">git log --oneline</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log <span class="nt">--oneline</span>
+d38c5de <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> fix paragraph sebelumnya, dan tambah Our standard
+1f91e9d Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+55c17f6 tambah getting started, code of conduct dan our pledge
+af5b331 fix paragraph
+45e9dea ubah README menjadi README.md
+f31d0f2 hapus file PROJECTS.md
+e9ed298 tambah file PROJECTS.md
+2b1ec45 tambah file CONTRIBUTING.md
+8b96753 tambah Project Title
+2ab97fb tambah file .gitignore
+e75f756 my first commit!
+<span class="o">(</span>END<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Jadi kita tahu kita harus rebase ke commit <code class="highlighter-rouge">af5b331</code>, kita lakukan rebase dengan opsi <code class="highlighter-rouge">--interactive</code> karena disitu kita bisa memilih secara interactive commit apa saja yang perlu diedit.</p>
+
+<p class="box-note"><strong>Note:</strong> Pastikan repository dalam keadaan “bersih” sebelum melakukan rebase.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase <span class="nt">--interactive</span> af5b331
+</code></pre></div></div>
+
+<p>hasilnya kita akan masuk ke editor seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pick 55c17f6 tambah getting started, code of conduct dan our pledge
+pick 1f91e9d Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+pick d38c5de fix paragraph sebelumnya, dan tambah Our standard
+
+# Rebase af5b331..d38c5de onto af5b331 (3 commands)
+#
+# Commands:
+# C-c C-c  tell Git to make it happen
+# C-c C-k  tell Git that you changed your mind, i.e. abort
+# p        move point to previous line
+# n        move point to next line
+# M-p      move the commit at point up
+# M-n      move the commit at point down
+# SPC      show the commit at point in another buffer
+# RET      show the commit at point in another buffer and select its window
+# C-_      undo last change
+# k        drop the commit at point
+# y        insert a line for an arbitrary commit
+# z        add noop action at point
+# c        pick = use commit
+# r, w     reword = use commit, but edit the commit message
+# e, m     edit = use commit, but stop for amending
+# s        squash = use commit, but meld into previous commit
+# f        fixup = like "squash", but discard this commit's log message
+# x        exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+</code></pre></div></div>
+
+<p>Tambahan informasi(semua yang berawal dengan tanda <code class="highlighter-rouge">#</code>) berarti perintah ini memang benar - benar berbahaya ditangan mereka yang lemah. Oke, ada tiga commit yang akan diproses dalam rebase ini, kita hanya perlu merubah commit bermasalah dari keadaan <code class="highlighter-rouge">pick</code> menjadi <code class="highlighter-rouge">edit</code> (dieditor saya dengan <code class="highlighter-rouge">e</code> atau <code class="highlighter-rouge">m</code> karena saya menggunakan <code class="highlighter-rouge">emacsclient</code>, editor lain mungkin berbeda). Oke, sepertinya sudah benar, taruh kursor didepan baris commit yang akan kita ubah, ketik <code class="highlighter-rouge">e</code> atau <code class="highlighter-rouge">m</code>, save buffer(nama lain dari file yang sedang dibuka di <code class="highlighter-rouge">emacs</code>) lalu exit dan berdoa semoga semua tatasurya berada dalam posisi yang benar. Dan output-nya seperti ini:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase <span class="nt">--interactive</span> af5b331
+Stopped at 55c17f6...  tambah getting started, code of conduct dan our pledge
+You can amend the commit now, with
+
+  git commit <span class="nt">--amend</span> <span class="s1">'-S'</span>
+
+Once you are satisfied with your changes, run
+
+  git rebase <span class="nt">--continue</span>
+</code></pre></div></div>
+
+<p>Oke kita sudah kembali kemasa lampau, disini semua orang masih berkomunikasi dengan mulut, dan masih membaca berita dari koran, buku dan majalah. Kita melihat ada figur masyarakat penting yang dimasa depan akan mengalami kejadian fatal, kita bisa memberikan peringatan, tetapi bukan itu tujuan kita ke masa lalu. Kita disini untuk membetulkan satu commit!</p>
+
+<p>Oke kedua file tersebut sudah kita edit, bagian <code class="highlighter-rouge">Getting Started</code> yang tadinya ada didalam file <code class="highlighter-rouge">CONTRIBUTING.md</code> kita pindahkan ke file <code class="highlighter-rouge">README.md</code>, lengkapnya seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 895a129..5b6a2d3 100644
+</span><span class="gd">--- a/CONTRIBUTING.md
+</span><span class="gi">+++ b/CONTRIBUTING.md
+</span><span class="gu">@@ -4,10 +4,6 @@ When contributing to this repository, please first discuss the change you wish t
+</span> 
+ Please note we have a code of conduct, please follow it in all your interactions with the project.
+ 
+<span class="gd">-## Getting Started
+-
+-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+-
+</span> ## Pull Request Process
+ 
+ 1. Ensure any install or build dependencies are removed before the end of the layer when doing a build.
+<span class="gh">diff --git a/README.md b/README.md
+index a910def..3c271ec 100644
+</span><span class="gd">--- a/README.md
+</span><span class="gi">+++ b/README.md
+</span><span class="gu">@@ -1,3 +1,7 @@
+</span> # Project Title
+ 
+ One Paragraph of project description goes here
+<span class="gi">+
++## Getting Started
++
++These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+</span>(END)
+</code></pre></div></div>
+
+<p>Kita lakukan <code class="highlighter-rouge">git commit --amend</code> dengan tambahan <code class="highlighter-rouge">-S</code> yang diinstruksikan, karena commit tersebut di <code class="highlighter-rouge">sign</code>, jika tidak diinstruksikan tidak perlu ditambahkan!</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+git commit <span class="nt">--amend</span> <span class="nt">-S</span>
+</code></pre></div></div>
+
+<p>kita add kedua file karena memang keduanya harus dilakukan perubahan, setelah kita lakukan <code class="highlighter-rouge">git commit --amend -S</code> kita lakukan instruksi yang diberikan begitu kita sampai dimasa lalu, kita lakukan <code class="highlighter-rouge">git rebase --continue</code> dan berharap dimasa depan tidak ada perubahan yang tidak diinginkan.</p>
+
+<p>Masalah pertama menghadang:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase --continue
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+error: could not apply 1f91e9d... Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm &lt;conflicted_files&gt;", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+
+Could not apply 1f91e9d... Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+</code></pre></div></div>
+
+<p>Jadi ada conflict di commit setelahnya. Kita cek melalui <code class="highlighter-rouge">git status</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+interactive rebase in progress; onto af5b331
+Last commands done (2 commands done):
+   edit 55c17f6 tambah getting started, code of conduct dan our pledge
+   pick 1f91e9d Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+Next command to do (1 remaining command):
+   pick d38c5de fix paragraph sebelumnya, dan tambah Our standard
+  (use "git rebase --edit-todo" to view and edit)
+You are currently rebasing branch 'master' on 'af5b331'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git reset HEAD &lt;file&gt;..." to unstage)
+  (use "git add &lt;file&gt;..." to mark resolution)
+
+	both modified:   README.md
+</code></pre></div></div>
+
+<p>Disitu tertera <code class="highlighter-rouge">both modified</code> untuk file <code class="highlighter-rouge">README.md</code>, kita coba cek melalui <code class="highlighter-rouge">git diff</code> hasilnya seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+diff --cc README.md
+index 3c271ec,1902e56..0000000
+--- a/README.md
++++ b/README.md
+@@@ -2,6 -2,41 +2,47 @@@
+  
+  One Paragraph of project description goes here
+  
+++&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ +## Getting Started
+ +
+ +These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+++=======
++ ### Prerequisites
++ 
++ What things you need to install the software and how to install them
++ 
++ ```
++ Give examples
++ ```
++ 
++ ### Installing
++ 
++ A step by step series of examples that tell you have to get a development env running
++ 
++ Say what the step will be
++ 
++ ```
++ Give the example
++ ```
++ 
++ And repeat
++ 
++ ```
++ until finished
++ ```
++ 
++ End with an example of getting some data out of the system or using it for a little demo
++ 
++ ## Running the tests
++ 
++ Explain how to run the automated tests for this system
++ 
++ ### Break down into end to end tests
++ 
++ Explain what these tests test and why
++ 
++ ```
++ Give an example
++ ```
++ 
+++&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1f91e9d... Tambah Prerequisites, instruksi installing, Running tests dan breakdown into end to end tests.
+</code></pre></div></div>
+
+<p>Terlihat conflictnya yang membuat git tidak dapat melanjutkan ke commit berikutnya, kedua conflict tersebut dipisahkan dengan tanda <code class="highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> dan diakhiri dengan <code class="highlighter-rouge">=======</code> di setiap conflict-nya, git tidak mau melanjutkan karena posisi yang semestinya sesuai dengan history awal sebelum kita kemasa lalu(di commit <code class="highlighter-rouge">1f91e9d</code>) sudah kita isi dengan commit kita(ditandai dengan <code class="highlighter-rouge">HEAD</code>). Dari sini saja sudah terlihat betapa berbahaya nya <code class="highlighter-rouge">git rebase</code> kan? Disini kita cukup hapus kedua tanda indikator tersebut dan gabungkan menjadi satu dokumen, setelahnya kita bisa kembali melanjutkan perjalanan kemasa depan. Tapi bayangkan jika yang direbase adalah project source code!</p>
+
+<p>Selesai wejangan orang tua-nya, kita edit file <code class="highlighter-rouge">README.md</code> save lalu masukkan ke staging,</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add README.md
+</code></pre></div></div>
+
+<p>Namun kita tidak melakukan <code class="highlighter-rouge">git commit --amend</code> disini! Kita sudah cukup mengacak - acak history, yang kita lakukan disini adalah “menyesuaikan” isi commit <code class="highlighter-rouge">1f91e9d</code> agar sesuai dengan perubahan yang kita buat dimasa lalu(coba pikirkan seandainya commit <code class="highlighter-rouge">1f91e9d</code> ternyata milik orang lain yang berkolaborasi dengan kita menggunakan repository yang sama… Dan ini kita bahkan belum berbicara mengenai <code class="highlighter-rouge">branch</code>).</p>
+
+<p>Kita lakukan kembali <code class="highlighter-rouge">git rebase --continue</code>, sebelum lanjut ke commit berikutnya kita masuk ke editor lagi untuk commit message di commit ini(<code class="highlighter-rouge">1f91e9d</code>), cukup save lalu exit hingga commit terkini(dengan catatan tidak ada conflict lagi).</p>
+
+<p>Sepertinya semua terlihat baik - baik saja dari konten kedua file tersebut ya? Untuk memastikan kita coba bandingkan hasil dari <code class="highlighter-rouge">git log --oneline</code> sebelum rebase dengan setelahnya:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Sebelum Rebase</td>
+      <td>Setelah Rebase</td>
+    </tr>
+    <tr>
+      <td>d38c5de (HEAD -&gt; master) fix paragraph sebelumnya, dan tambah Our standard</td>
+      <td><strong>a2ec0dc (HEAD -&gt; master) fix paragraph sebelumnya, dan tambah Our standard</strong></td>
+    </tr>
+    <tr>
+      <td>1f91e9d Tambah Prerequisites, instruksi installing…</td>
+      <td><strong>07d17c0 Tambah Prerequisites, instruksi installing…</strong></td>
+    </tr>
+    <tr>
+      <td>55c17f6 tambah getting started, code of conduct dan our pledge</td>
+      <td><strong>4fd5ac5 tambah getting started, code of conduct dan our pledge</strong></td>
+    </tr>
+    <tr>
+      <td>af5b331 fix paragraph</td>
+      <td>af5b331 fix paragraph</td>
+    </tr>
+    <tr>
+      <td>45e9dea ubah README menjadi README.md</td>
+      <td>45e9dea ubah README menjadi README.md</td>
+    </tr>
+    <tr>
+      <td>f31d0f2 hapus file PROJECTS.md</td>
+      <td>f31d0f2 hapus file PROJECTS.md</td>
+    </tr>
+    <tr>
+      <td>e9ed298 tambah file PROJECTS.md</td>
+      <td>e9ed298 tambah file PROJECTS.md</td>
+    </tr>
+    <tr>
+      <td>2b1ec45 tambah file CONTRIBUTING.md</td>
+      <td>2b1ec45 tambah file CONTRIBUTING.md</td>
+    </tr>
+    <tr>
+      <td>8b96753 tambah Project Title</td>
+      <td>8b96753 tambah Project Title</td>
+    </tr>
+    <tr>
+      <td>2ab97fb tambah file .gitignore</td>
+      <td>2ab97fb tambah file .gitignore</td>
+    </tr>
+    <tr>
+      <td>e75f756 my first commit!</td>
+      <td>e75f756 my first commit!</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Commit yang kita ubah menggunakan rebase (mulai dari <code class="highlighter-rouge">55c17f6</code> sampai ke <code class="highlighter-rouge">HEAD</code>) checksum SHA-1 nya semua berubah! Jika ini adalah sebuah repository lokal yang tidak dipush ke repository remote dan merupakan project pribadi tidak menjadi masalah, tapi coba bayangkan seandainya ini adalah sebuah repositry publik, dan commit yang kita rebase melewati banyak commit yang bisa jadi di-commit oleh orang lain. Jika seperti itu kasusnya <code class="highlighter-rouge">git rebase</code> sangat tidak disarankan, lebih baik buat commit baru dengan penjelasan yang mendetail mengenai commit tersebut.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/git">git</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Undo+dalam+git+http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-12-18-tentang-git/" data-toggle="tooltip" data-placement="top" title="Tentang Git">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-12-20-berkenalan-dengan-emacs/" data-toggle="tooltip" data-placement="top" title="Berkenalan dengan emacs">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

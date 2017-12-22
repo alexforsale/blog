@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Berkenalan dengan emacs</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+  <meta name="description" content="editor realtime yang mudah dikustomisasi, terdokumentasi dengan sendirinya, dan dapat dikembangkan lebih jauh lagi">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Berkenalan dengan emacs">
+  
+
+   
+  <meta property="og:description" content="editor realtime yang mudah dikustomisasi, terdokumentasi dengan sendirinya, dan dapat dikembangkan lebih jauh lagi">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Berkenalan dengan emacs">
+  
+
+  
+  <meta name="twitter:description" content="editor realtime yang mudah dikustomisasi, terdokumentasi dengan sendirinya, dan dapat dikembangkan lebih jauh lagi">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Berkenalan dengan emacs</h1>
+		  
+		    
+			<h2 class="post-subheading">editor realtime yang mudah dikustomisasi, terdokumentasi dengan sendirinya, dan dapat dikembangkan lebih jauh lagi</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 20, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <p>Saya berkenalan dengan <em>emacs</em> sebenarnya sudah cukup lama, begitu mulai tertarik dengan <em>linux</em> kurang lebihnya. Awal berkenalan dengan <em>linux</em>, ada tiga editor yang menarik minat saya: <em>nano</em>, <em>vi/vim</em>, dan <em>emacs</em> tentunya. <em>Nano</em> dan <em>vi</em> karena umumnya semua distro - distro <em>linux</em> yang pernah saya coba menyediakan salah satu(terkadang keduanya) dari editor itu. Ketertarikan saya awalnya karena satu pertanyaan saja: “bagaimana cara keluar dari editor ini?”</p>
+
+<p>Ketertarikan saya berkurang kepada <em>nano</em> karena (kala itu) saya tidak menemukan dokumentasi yang cukup mendalam mengenai editor ini, walaupun ternyata sebenarnya <a href="https://duckduckgo.com/?q=linux+nano&amp;t=qupzilla&amp;ia=web">ada</a>. Namun karena penggunaannya yang (menurut saya) terlalu <em>straight-forward</em>(alias begitu - begitu saja), saya mulai mencoba menggunakan <em>vi</em>(atau tepatnya <em>vim</em> kala itu). Saya lebih tertarik untuk penggunaan didalam terminal, untuk <em>visudo</em>, <em>crontab -e</em> dan sebagainya.</p>
+
+<p>Saya tertarik dengan <em>vim</em> melihat keunikannya dibandingkan editor - editor lainnya, <em>vi</em> sebenarnya adalah <em>modal editor</em>. <em>Modal editor</em> adalah editor yang berbasis mode - mode, sesuatu yang jarang sekarang ini. <em>vim</em> memiliki banyak mode:</p>
+
+<ul>
+  <li>Insert mode: Ini merupakan mode yang digunakan untuk memasukkan text.</li>
+  <li>Visual mode: Mode ini digunakan untuk modifikasi text, yang katanya memiliki banyak sub-mode lagi didalamnya, tapi saya belum pernah belajar sampai situ.</li>
+  <li>Normal mode: Mode ini yang biasanya membuat orang bertanya “kenapa linux saya hang?”</li>
+  <li>Command mode: Mode ini kebanyakan untuk memasukkan perintah, seperti membuka dan menutup file, dan menulis file ke disk.</li>
+  <li>Search mode: seperti namanya, untuk melakukan pencarian.</li>
+</ul>
+
+<p>Namun setelah beberapa waktu mulai mempelajari <em>vim</em>, setiap kali saya melakukan pencarian di web(baik untuk cara instalasi plugins dan lainnya), saya seringkali menemukan juga cara yang sama namun untuk <em>emacs</em>, akhirnya saya coba install juga. Dan bukan sebagai perbandingan antara <em>vim</em> vs <em>emacs</em>, saya akhirnya lebih memilih <em>emacs</em> sebagai editor utama yang saya gunakan. Banyak faktor penentunya, saya kurang nyaman berpindah - pindah mode di <em>vim</em>(walaupun sebenarnya jika dibiasakan tentunya bisa). <em>Emacs</em> usianya sudah <strong>SANGAT</strong> lama, sama seperti <em>vi</em> sekitar pertengahan 1970-an, jadi bisa dipastikan <em>kedewasaan-nya</em>, pertama karena jaman itu mouse belum tenar, segala sesuatunya dilakukan melalui keyboard, keyboard dengan tanda panah baru mulai populer di tahun 1980-an. Dengan fokus dikeyboard saja kita sudah mempercepat kinerja beberapa kali lipat.</p>
+
+<p><img src="../img/post/emacs-1.png" alt="emacs"></p>
+
+<h1 id="fitur-emacs">Fitur Emacs</h1>
+
+<p>Diluar dari fitur standarnya yang sebagai editor file text, <em>emacs</em> memiliki fitur - fitur spesial lainnya yang dapat membantu kita menulis dalam banyak bahasa manusia maupun bahasa programming atau bahasa markup(markup languages). Dan juga dapat digunakan sebagai alat untuk melakukan <em>compiling</em>, <em>running</em> ataupun <em>testing</em> program, dapat juga dipakai sebagai alat untuk membandingkan dua file dan menyorot perbedaannya. Emacs bahkan dapat digunakan sebagai alat yang sudah diluar fungsi dari editor text, seperti sebagai <em>file manager</em>, sebagai <em>email client</em> untuk membaca mail dan RSS Feed, bahkan bisa digunakan untuk bermain tetris!</p>
+
+<p><img src="../img/post/tampilan-stock-emacs.png" alt="stock emacs" title="tampilan standar emacs"></p>
+
+<p>Dan semua fitur diatas tadi sudah ada didalam <em>emacs</em> yang belum dikustomisasi! Kita masih belum membicarakan mengenai package - package yang yang bisa kita ambil dari repository utama <em>emacs</em>, dan repository lain.</p>
+
+<h2 id="kemampuan-integrasi-dengan-tools-lain">Kemampuan integrasi dengan tools lain</h2>
+
+<p>Ada beberapa tools yang bisa dipanggil dari dalam <em>emacs</em> langsung,</p>
+
+<ul>
+  <li>Shell: Terminal emulator didalam <em>emacs</em>.</li>
+  <li>Compile: Dengan <code class="highlighter-rouge">make</code> output dari kompilasi akan ditampilkan langsung, baris error dari output yang berisi nama file dan barisnya bisa kita klik langsung untuk masuk ke file yang bersangkutan.</li>
+  <li>grep: Seperti compile, jika kita klik nama file yang cocok akan dibawa ke baris tersebut.</li>
+  <li>man: menampilkan man page.</li>
+  <li>calculator dan</li>
+  <li>calendar</li>
+</ul>
+
+<h2 id="version-control">Version Control</h2>
+
+<p><em>Emacs</em> dapat membantu kita dalam memanipulasi dan meng-edit file - file yang disimpan dalam <em>version control</em>. <em>Emacs</em> mendukung CVS, Subversion, bzr, git, hg dan lainnya. <em>Tampilan</em> yang didapat menggunakan <em>interface</em> yang sama, <em>VC</em>, terlepas dari <em>version control</em> yang digunakan.</p>
+
+<h2 id="edit-file-jarak-jauh">Edit file jarak jauh</h2>
+
+<p><em>Emacs</em> melakukan editing file <em>remote</em> secara transparan(seakan - akan file lokal) menggunakan fitur dengan nama <em>Tramp</em>. <em>Emacs</em> dapat meng-edit file melalui SSH, FTP ataupun metode lainnya. Dengan <em>emacs</em> kita dapat edit file dari komputer yang berbeda menggunakan satu sesi <em>emacs</em> walaupun <em>emacs</em> tidak terpasang di <em>remote</em>.</p>
+
+<p>Kita juga bisa edit file lokal menggunakan <em>permission</em> user lain. Misalnya seperti edit file dengan <em>privelege</em> sudo.</p>
+
+<h2 id="emacs-server">Emacs Server</h2>
+
+<p>Orang terbiasa hanya menggunakan satu sesi <em>emacs</em> dan edit semua file disitu. Melakukan ini memiliki beberapa kelebihan:</p>
+
+<ul>
+  <li>Copy/paste yang sama untuk semua file.</li>
+  <li>
+<em>Emacs</em> menyimpan semua <em>Argument history</em>, seperti perintah - perintah apa saja yang digunakan, file - file apa saja yang dibuka, apa saja yang di <em>search</em>.</li>
+  <li>Jika kita menggunakan banyak kustomisasi, biasanya memulai <em>instance</em> baru memakan waktu.</li>
+</ul>
+
+<p>Kita bisa menggunakan <em>emacsclient</em>, yang membuka <em>frame</em> baru yang tersambung ke <em>instance</em> yang sudah ada. Berguna untuk dipakai sebagai editor untuk git, editing terminal seperti <em>visudo</em> dan <em>crontab</em> misalnya.</p>
+
+<h2 id="mode-untuk-pengguna-vivim">Mode untuk pengguna vi/vim</h2>
+
+<p><em>Emacs</em> menyediakan <em>viper-mode</em> agar perilaku <em>emacs</em> menyerupai <em>vi/vim</em>, tergantung seberapa mirip <em>vi/vim</em> yang kita inginkan.</p>
+
+<h1 id="perlukah-kita-belajar-emacs">Perlukah kita belajar emacs?</h1>
+
+<p>Ini merupakan pertanyaan pentingnya, sepadankah hasilnya jika kita memulai belajar editor baru dari awal? <em>Emacs</em> bisa saja digunakan seperti layaknya editor biasa, namun fitur “ganas”nya bukan hanya itu saja, jika kita hanya menggunakan editor untuk sekedar edit file, lalu geser mouse ke pojok kiri atas untuk klik “file” -&gt; “save” saja sebaiknya tetap gunakan editor yang sekarang dipakai.</p>
+
+<p>Tetapi jika kita mau meluangkan waktu sekitas sejam sehari, untuk mempelajari editor baru tersebut, dan mengetahui benar manfaat apa yang bisa didapat dari mempelajari editor tersebut, coba jalankan tutorial yang ada didalam <em>emacs</em> (ketik CTRL-c lalu t).</p>
+
+<h2 id="jargon-emacs">Jargon Emacs</h2>
+
+<p>Perlu diingat bahwa <em>emacs</em> sudah ada sebelum era komputer yang mulai global, jadi banyak dari istilah - istilah dalam <em>emacs</em> tidak mengikuti istilah umum.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Istilah umum</th>
+      <th>Istilah Emacs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">selection</td>
+      <td>region</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">cut</td>
+      <td>kill</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">paste</td>
+      <td>yank</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">window</td>
+      <td>frame</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pane</td>
+      <td>window</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">workspace or document</td>
+      <td>buffer</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">shortcut</td>
+      <td>key sequence</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">wrap</td>
+      <td>fill</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">syntax highlighting</td>
+      <td>font-lock</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Dalam istilah <em>emacs</em>:</p>
+<ul>
+  <li>Frame adalah window.</li>
+  <li>Window adalah sub-frame.</li>
+  <li>Mode line adalah text di border bawah dari window.</li>
+  <li>Buffer berisi object <em>emacs</em> seperti text. Sebuah buffer bisa saja tidak terlihat dibeberapa window.</li>
+  <li>minibuffer adalah buffer khusus untuk menjalankan perintah; terlihat sebagai frame terpisah atau berada dipaling bawah setiap frame.</li>
+  <li>Cursor memperlihatkan dimana kita memasukkan text.</li>
+  <li>Pointer yang memperlihatkan posisi mouse.</li>
+  <li>Posisi dari kursor disebut point.</li>
+  <li>Tombol pada mouse biasa disebut <code class="highlighter-rouge">mouse-1</code>, <code class="highlighter-rouge">mouse-2</code>, dan <code class="highlighter-rouge">mouse-3</code>.</li>
+  <li>Key binding adalah mapping antara perintah <em>emacs</em> dengan key-sequence.</li>
+  <li>Keymap adalah sekumpulan key binding.</li>
+</ul>
+
+<h2 id="keybinding-yang-sering-digunakan">Keybinding yang sering digunakan</h2>
+
+<p>Dalam istilah <em>emacs</em>, CTRL-c ditulis <code class="highlighter-rouge">C-c</code>, ALT-c <code class="highlighter-rouge">M-c</code> dan WIN-c <code class="highlighter-rouge">s-c</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Keybinding</th>
+      <th>fungsi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-c C-h</code></td>
+      <td>help</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-g</code></td>
+      <td>quit(seperti ESC)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x b</code></td>
+      <td>pindah buffer</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x right</code></td>
+      <td>pindah ke buffer kanan</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x left</code></td>
+      <td>pindah ke buffer kiri</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x k</code></td>
+      <td>hapus buffer</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x 0</code></td>
+      <td>tutup window aktif</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x 1</code></td>
+      <td>tutup semua window kecuali yang aktif</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x 2</code></td>
+      <td>bagi window aktif menjadi 2 window horizontal</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x 3</code></td>
+      <td>bagi window aktif menjadi 2 window vertikal</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x o</code></td>
+      <td>pindah window aktif ke window berikutnya</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x C-f</code></td>
+      <td>buka file baru</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x C-s</code></td>
+      <td>save file</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-x C-w</code></td>
+      <td>save file dengan nama baru</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-space</code></td>
+      <td>aktifkan mark region</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-w</code></td>
+      <td>kill region</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-k</code></td>
+      <td>kill region antara point sampai ke akhir baris</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-w</code></td>
+      <td>kill region tanpa hapus</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-y</code></td>
+      <td>yank region dari kill ring</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-y</code></td>
+      <td>pindah ke item sebelumnya di kill ring</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-Y</code></td>
+      <td>pindah ke item berikutnya di kill ring</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center">
+<code class="highlighter-rouge">C-_</code> atau <code class="highlighter-rouge">C-/</code>
+</td>
+      <td>undo</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-f</code></td>
+      <td>maju satu karakter</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-b</code></td>
+      <td>mundur satu karakter</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-n</code></td>
+      <td>baris berikutnya</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-p</code></td>
+      <td>baris sebelumnya</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-a</code></td>
+      <td>awal baris</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-e</code></td>
+      <td>akhir baris</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-a</code></td>
+      <td>kalimat sebelum</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-e</code></td>
+      <td>kalimat sesudah</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-v</code></td>
+      <td>screen sebelum (page up)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">C-v</code></td>
+      <td>baris berikut (page down)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-&lt;</code></td>
+      <td>awal buffer</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">M-&gt;</code></td>
+      <td>akhir buffer</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Beberapa dari key diatas untuk navigasi berdasarkan dari posisi kita dibuffer, jadi bisa digunakan berulang (<code class="highlighter-rouge">C-p</code> <code class="highlighter-rouge">C-p</code> <code class="highlighter-rouge">C-p</code> berarti 3 baris sebelum). Dan bisa juga menggunakan tambahan <em>prefix</em> seperti <code class="highlighter-rouge">C-u</code> diikuti angka dan perintah navigasi akan mengulang perintah navigasi tersebut sebanyak angka yang dimasukkan. Jika kita menggunakan <code class="highlighter-rouge">C-u</code> tanpa menambahkan angka, defaultnya adalah 4.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-u 3 C-p</code></td>
+      <td>mundur 3 baris</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-u 10 C-f</code></td>
+      <td>maju 10 karakter</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">M-1 M-0 C-f</code></td>
+      <td>maju 10 karakter</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-u C-n</code></td>
+      <td>Maju 4 baris</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-u C-u C-n</code></td>
+      <td>maju 16 baris</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-u C-u C-u C-n</code></td>
+      <td>maju 64 barisnya</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lompat langsung ke satu baris tertentu:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">M-g g</code></td>
+      <td>lompat ke baris</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Perintah <em>search</em> juga bisa dianggap sebagai bentuk dari navigasi buffer, <em>incremental search</em> mempermudah pencarian text berdasarkan <em>keyword</em>.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-s</code></td>
+      <td>
+<em>incremental search</em> kedepan</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-r</code></td>
+      <td>
+<em>incremental search</em> kebelakang</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Mengetik <code class="highlighter-rouge">C-s</code> diikuti dengan text akan memulai <em>incremental search</em>. <em>Emacs</em> akan lompat menuju ke text yang ditulis tersebut, selagi kita mengetikkannya. Semua text yang sama akan di<em>highlight</em>. Didalam <em>incremental search</em> mengetik <code class="highlighter-rouge">C-s</code> akan lanjut lompat ke text sama berikutnya.</p>
+
+<p>Jika kita menemukan lokasi text yang diinginkan, ketik <code class="highlighter-rouge">RET</code> (ENTER) akan mengakhiri pencarian di tempat tersebut, atau ketik <code class="highlighter-rouge">C-g</code> (cancel) untuk kembali ke awal dimana pencarian dimulai. Jika kita mengakhirinya dilokasi salah satu <em>search</em>, kita dapat kembali ke lokasi awal dengan ketik <code class="highlighter-rouge">C-x C-x</code> karena <em>incremental search</em> otomatis menyimpan lokasi awal sebagai <em>mark</em>.</p>
+
+<p>Perintah berikut mengatur cara - cara pencarian:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-s C-s</code></td>
+      <td>
+<em>search</em> item yang paling terakhir dicari</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-s M-p</code></td>
+      <td>item sebelumnya di <em>search history</em>
+</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-s M-n</code></td>
+      <td>item berikutnya di <em>search history</em>
+</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-h k C-s</code></td>
+      <td>guide untuk command - command lain di <em>incremental search</em>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Untuk <em>incremental search</em> kebelakang sama seperti diatas juga.</p>
+
+<h3 id="mark">Mark</h3>
+
+<p><em>Emacs</em> mengingat sesuatu yang dinamakan <em>mark</em>, yakni lokasi kursor sebelumnya. Kita dapat menandai <em>mark</em> ke lokasi tertentu didalam buffer agar kita dapat mudah kembali kesitu. <code class="highlighter-rouge">C-x C-x</code> akan mengembalikan kita ke posisi tersebut. Sebenarnya, perintah itu juga memindahkan <em>mark</em> ke point sebelumnya; jadi, <code class="highlighter-rouge">C-x C-x</code> berikutnya akan mengembalikan point ke lokasi aslinya.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-space</code></td>
+      <td>set <em>mark</em> di lokasi saat ini</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-x C-x</code></td>
+      <td>berpindah antara <em>mark</em> dan point</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Kita bisa menentukan <em>mark</em> secara eksplisit, tapi command - command tertentu otomatis menentukan lokasi <em>mark</em>:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Ketika kita…</strong></td>
+      <td><strong>mark diset ke</strong></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-space</code></td>
+      <td>lokasi saat ini</td>
+    </tr>
+    <tr>
+      <td>lompat ke salah satu ujung dari buffer (<code class="highlighter-rouge">M-&lt;</code> atau <code class="highlighter-rouge">M-&gt;</code>)</td>
+      <td>lokasi sebelumnya</td>
+    </tr>
+    <tr>
+      <td>mengakhiri <em>incremental search</em>
+</td>
+      <td>lokasi dimulainya <em>search</em>
+</td>
+    </tr>
+    <tr>
+      <td>
+<em>yank</em> text</td>
+      <td>awal <em>region</em> yang di <em>yank</em>
+</td>
+    </tr>
+    <tr>
+      <td>memasukkan buffer atau file</td>
+      <td>awal dari text yang dimasukkan</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Emacs</em> juga menyimpan lokasi - lokasi <em>mark</em> sebelumnya. Kita dapat melihat semuanya melalui <em>mark ring</em>, yang menyimpan 16 <em>mark</em> terakhir yang kita set di buffer saat ini.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-u C-space</code></td>
+      <td>rotasi <em>mark ring</em>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="region">Region</h3>
+
+<p><em>Mark</em> juga memiliki fungsi lain: <em>mark</em> dan point menentukan <em>region</em>. Banyak perintah yang hanya beroperasi ke text yang berada didalam region(diantara <em>mark</em> dan point). Kita set region dengan menentukan <em>mark</em> lalu memindahkan point ketempat lain, atau dengan klik lalu drag menggunakan mouse. <em>Emacs</em> menyediakan beberapa perintah yang akan menentukan region dengan menggerakan <em>mark</em> dan point:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-x h</code></td>
+      <td>membuat region berisi seluruh buffer</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">M-h</code></td>
+      <td>membuat region dari paragraph</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Narrowing</em> membatasi view (dan editing) dari buffer ke region tertentu. Cukup berguna jika kita hanya sedang beroperasi di bagian tertentu saja dari buffer yang besar(seperti hanya di salah satu chapter dari buku). Maka perintah seperti <em>incremental search</em>, <code class="highlighter-rouge">beginning-of-buffer</code> atau <code class="highlighter-rouge">end-of-buffer</code> tidak akan membawa kita keluar dari region yang ditentukan, dan perintah seperti search atau replace tidak mempengaruhi seluruh isi file.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-x n n</code></td>
+      <td>
+<em>narrow</em> buffer ke region saat ini</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-x n w</code></td>
+      <td>mengembalikan buffer</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="killing-cutting-text">Killing (“cutting”) text</h3>
+
+<p>Sama seperti pergerakan text, <em>emacs</em> juga menyediakan command untuk menghapus text.</p>
+
+<p><code class="highlighter-rouge">C-k</code> akan menghapus sisa baris setelah point(atau menghapus baris baru setelah point jika point berada diujung baris). Argumen prefix untuk <code class="highlighter-rouge">C-k</code> dapat dipakai untuk menghapus beberapa baris:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-k</code></td>
+      <td>kill baris</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-u C-k</code></td>
+      <td>kill 10 baris</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Perintah berikut beroperasi pada region, dan yang paling mendekati definisi “cut” dan “copy” didalam <em>emacs</em>:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-w</code></td>
+      <td>Kill region (“cut”)</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">M-w</code></td>
+      <td>save region ke kill ring tanpa menghapus (“copy”)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Perintah dibawah ini cukup berguna:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">M-d</code></td>
+      <td>kill kata berikut</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">M-k</code></td>
+      <td>kill sampai ke akhir kalimat</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Semua perintah diatas membuat text di “kill”, yang berarti <em>emacs</em> mengambil text tersebut dan menyimpannya untuk dikembalikan (“yanking”). Kebanyakan perintah yang menghapus text dalam jumlah besar melakukan kill dibandingkan benar - benar menghapus, jadi kita dapat menggunakan perintah - perintah ini untuk menghapus text atau cut.</p>
+
+<h3 id="yanking-pasting-text">Yanking (“pasting”) text</h3>
+
+<p>Setelah text di kill, text tersebut akan disimpan dilokasi yang dinamakan “kill ring” yang kurang lebih sama dengan istilah “clipboard”: kita bisa yank sebuah item dari kill ring dengan <code class="highlighter-rouge">C-y</code>. Namun tidak seperti clipboard, kill ring mampu menyimpan banyak item yang berbeda. Jika item yang kita yank bukan yang kita inginkan ketika mengetik <code class="highlighter-rouge">C-y</code> ketik <code class="highlighter-rouge">M-y</code>(berulang, jika perlu) untuk berpindah ke item - item sebelumnya.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-y</code></td>
+      <td>yank item terakhir di kill</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">M-y</code></td>
+      <td>mengganti text yank dengan item kill sebelumnya</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="undo">Undo</h3>
+
+<p>Undo dalam <em>emacs</em> beroperasi dengan cara yang berbeda dibandingkan dengan editor lain. Setelah sequence undo berturut - turut, <em>emacs</em> membuat semua tindakan sebelumnya dapat di undo, termasuk undo itu sendiri.</p>
+
+<p>Undo dapat dipanggil dengan tiga key yang berbeda:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-/</code></td>
+      <td>Undo</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-_</code></td>
+      <td>Undo</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">C-x u</code></td>
+      <td>Undo</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="search-dan-replace">Search dan replace</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">M-%</code></td>
+      <td><em>query replace</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Perintah <em>query replace</em> akan meminta kita untuk memasukkan <em>string</em> untuk search dan untuk replace. Lalu, setiap kecocokan dibuffer, kita dapat memilih apakah ingin replace atau tidak. Ini beberapa opsi yang bisa kita pilih:</p>
+
+<ul>
+  <li>ketik <code class="highlighter-rouge">y</code> untuk replace text yang cocok.</li>
+  <li>ketik <code class="highlighter-rouge">n</code> untuk melewati text dan mencari kecocokan berikutnya.</li>
+  <li>ketik <code class="highlighter-rouge">q</code> untuk keluar dan tidak lagi melakukan replace.</li>
+  <li>ketik <code class="highlighter-rouge">.</code> untuk replace text yang cocok saat ini lalu keluar.</li>
+  <li>ketik <code class="highlighter-rouge">!</code> untuk replace semua kecocokan berikutnya tanpa perlu bertanya lagi.</li>
+</ul>
+
+<h3 id="regular-expression-search">Regular expression search</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">C-M-s</code></td>
+      <td><em>regular expression incremental search</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Regular expression adalah cara pencarian beberapa string dalam waktu bersamaan dengan menggunakan bahasa khusus untuk mendeskripsikan bentuk dari apa yang kita cari. Mengenai regular expression(atau regex) bukan merupakan spesifik milik <em>emacs</em>, untuk syntax - syntax-nya mungkin perlu satu post khusus. Namun jika kita belum paham mengenai regular expression, atau kita ingin bantuan dalam pembuatan regex yang cukup rumit, kita bisa pakai perintah regexp builder(M-x re-builder). Perintah ini akan menampilkan pop-up window terpisah dimana kita bisa mencoba regexp yang ingin kita test, dan setiap kecocokan yang muncul dari regexp tersebut akan dihighlight.</p>
+
+<p>Tanpa harus melompati tiap kecocokan satu - persatu, kita juga dapat memilih untuk menampilkan semua kecocokan sekaligus. <code class="highlighter-rouge">M-x occur</code> akan meminta regex dari kita, lalu menampikan semua kecocokan dalam buffer terpisah dalam bentuk list dari semua baris di buffer tersebut yang cocok dengan regex(juga dengan nomor barisnya). Klik salah satu dari baris tersebut akan membawa point ke baris didalam buffer.</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/emacs">emacs</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Berkenalan+dengan+emacs+http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-12-18-undo-dalam-git/" data-toggle="tooltip" data-placement="top" title="Undo dalam git">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-12-20-branching-dalam-git/" data-toggle="tooltip" data-placement="top" title="Branching dalam git">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

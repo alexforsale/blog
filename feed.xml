@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My little blog</title>
+    <description>a World of alexforsale</description>
+    <link>http://alexforsale.github.io/blog</link>
+    <atom:link href="http://alexforsale.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Branching dan Merging</title>
+        <description>
+          Git Basic - Seri Pengenalan git dari https://git-scm.com/ - 
+          Branching dan Merging Sederhana Mari kita lihat contoh sederhana dari branching dan merging dengan alur kerja yang kemungkinan besar kita alami di dunia nyata. Kita biasanya menggunakan langkah - langkah seperti ini: Mengerjakan sesuatu pada sebuah website. Membuat sebuah branch khusus untuk satu cerita yang sedang kita kerjakan. Mengerjakan sesuatu...
+        </description>
+        <pubDate>Fri, 22 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/</guid>
+      </item>
+    
+      <item>
+        <title>Branching dalam git</title>
+        <description>
+          Git Basic - Seri Pengenalan git dari https://git-scm.com/ - 
+          Branching merupakan hal umum dalam VCS, yang bertujuan untuk memisahkan dari jalur development utama dan melanjukan development tanpa harus mengganggu jalur development utama tadi. Banyak orang yang menganggap branching dalam git merupakan fitur yang paling diandalkan dan memisahkan git dari VCS lainnya. Branching dalam git sangat spesial karena lebih “lightweight”...
+        </description>
+        <pubDate>Wed, 20 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-20-branching-dalam-git/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-20-branching-dalam-git/</guid>
+      </item>
+    
+      <item>
+        <title>Berkenalan dengan emacs</title>
+        <description>
+          editor realtime yang mudah dikustomisasi, terdokumentasi dengan sendirinya, dan dapat dikembangkan lebih jauh lagi - 
+          Saya berkenalan dengan emacs sebenarnya sudah cukup lama, begitu mulai tertarik dengan linux kurang lebihnya. Awal berkenalan dengan linux, ada tiga editor yang menarik minat saya: nano, vi/vim, dan emacs tentunya. Nano dan vi karena umumnya semua distro - distro linux yang pernah saya coba menyediakan salah satu(terkadang keduanya) dari...
+        </description>
+        <pubDate>Wed, 20 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-20-berkenalan-dengan-emacs/</guid>
+      </item>
+    
+      <item>
+        <title>Undo dalam git</title>
+        <description>
+          Git Basic - Seri Pengenalan git dari https://git-scm.com/ - 
+          Seandainya ada tombol undo di kehidupan nyata… Proses Undo dalam git Suatu saat pasti kita membutuhkan untuk kembali kedalam keadaan repository sebelumnya dan merubah kesalahan yang terjadi dalam waktu itu. Kita akan coba mereview beberapa tool basic yang biasa digunakan. Ini adalah beberapa area dalam git dimana kita dapat kehilangan...
+        </description>
+        <pubDate>Mon, 18 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-18-undo-dalam-git/</guid>
+      </item>
+    
+      <item>
+        <title>Tentang Git</title>
+        <description>
+          Pengenalan Awal Git - Seri pengenalan git dari https://git-scm.com/ - 
+          Git adalah free software yang didistribusikan menggunakan Gnu General Public License version 2, awalnya dibuat oleh Linus Torvald ditahun 2005 untuk memanage perkembangan dari kernel linux, seiring dengan semakin banyaknya jumlah developer yang ikut bergabung dalam proyek tersebut. Git Git merupakan version control system(VCS), yang berfungsi untuk tracking perubahan pada...
+        </description>
+        <pubDate>Mon, 18 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-18-tentang-git/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-18-tentang-git/</guid>
+      </item>
+    
+      <item>
+        <title>Setup Git</title>
+        <description>
+          Konfigurasi untuk Git - Seri pengenalan git dari https://git-scm.com/ - 
+          Setelah sebelumnya kita membahas mengenai Git secara umum, sekarang saatnya mengetahui konfigurasi dari git. Konfigurasi ini akan tetap sama untuk setiap versi git, tidak akan berubah di setiap upgrade. Git Config Git memiliki tool sendiri untuk memanage konfigurasi nya melalui git config yang memungkinan kita untuk mengatur variable yang mengontrol...
+        </description>
+        <pubDate>Mon, 18 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-18-setup-git/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-18-setup-git/</guid>
+      </item>
+    
+      <item>
+        <title>Tentang GPG</title>
+        <description>
+          Sebuah pengenalan - 
+          Arguing that you don’t care about the right to privacy because you have nothing to hide is no different from saying you don’t care about free speech because you have nothing to say. – Edward Snowden Sebagian besar dari artikel ini dari Archlinux Wiki dan GPG Tutorial dari alieasen. Gnu...
+        </description>
+        <pubDate>Sun, 17 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-17-tentang-gpg/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-17-tentang-gpg/</guid>
+      </item>
+    
+      <item>
+        <title>offlineimap</title>
+        <description>
+          sync imaps server - 
+          Di post kemarin, saya mencoba untuk menggunakan getmail sebagai mail retriever, walaupun getmail berfungsi sebagai mana mestinya, tapi kurangnya fitur sync 2 arah membuat saya terus mencari alternatif lain. Dan saya menemukan offlineimap, sesuai namanya software ini memungkinkan kita untuk membaca mail secara offline dan mampu sync 2 arah melalui...
+        </description>
+        <pubDate>Sun, 17 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-17-offlineimap/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-17-offlineimap/</guid>
+      </item>
+    
+      <item>
+        <title>Konfigurasi NeoMutt</title>
+        <description>
+          kata siapa command-line email client sudah obsolete? - 
+          Background mengikuti theme terminal Edit file ~/.mutt/muttrc, tambahkan baris ini dipaling bawah: source ~/.mutt/colors Isi file tersebut (~/.mutt/colors) dengan ini: color normal white default color attachment brightyellow default color hdrdefault cyan default color indicator black cyan color markers brightred default color quoted green default color signature cyan default color status...
+        </description>
+        <pubDate>Fri, 15 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/</guid>
+      </item>
+    
+      <item>
+        <title>NeoMutt, procmail, msmtp dan Getmail</title>
+        <description>
+          unifikasi email - email dengan neomutt - 
+          Apa yang ingin kita raih? Saya memiliki banyak account email, tetapi untungnya semua email itu bisa di forward ke email utama saya, Gmail. Walau ada beberapa email yang tidak memiliki fitur forwarding tersebut namun setidaknya mereka menyediakan fitur imap/pop3, yang bisa disetup dari dalam Gmail. Client yang akan kita gunakan...
+        </description>
+        <pubDate>Thu, 14 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-14-mutt-dan-getmail/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-14-mutt-dan-getmail/</guid>
+      </item>
+    
+      <item>
+        <title>Are We Really Installing?</title>
+        <description>
+          Proyek necromancery, part II - 
+          By failing to prepare, you are preparing to fail Quote tenar dari Benjamin Franklin. Simpelnya, untuk instalasi ini, yang diperlukan hanyalah: Media instalasi, USB Stick ukuran 2 GB sudah lebih dari cukup. Media untuk koneksi internet. Saya menggunakan modem portable Smartfren M2Y. http://wiki.archlinux.org, alternatif lain ada file text berisi instruksi...
+        </description>
+        <pubDate>Wed, 13 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-13-are-we-really-installing/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-13-are-we-really-installing/</guid>
+      </item>
+    
+      <item>
+        <title>Another Archlinux Install</title>
+        <description>
+          sebuah proyek necromancery, part I? - 
+          I’m Back Saya kembali, ke Bekasi. the home is where the heart is katanya… konon. Mengadu nasib sepertinya susah untuk orang yang tidak memiliki nasib. But anyway, ini topik post yang dimaksud untuk hari ini: Instalasi archlinux disebuah Ancient PC Kenapa harus arch? Ini sebuah pertanyaan klasik yang sering ditanyakan,...
+        </description>
+        <pubDate>Tue, 12 Dec 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/</guid>
+      </item>
+    
+      <item>
+        <title>The Never Ending Saga</title>
+        <description>
+          What Dies Should Stay Dead - 
+          Akhir - akhir ini saya menemukan satu titik dimana kemalasan untuk menulis kembali datang, bukan berarti ini adalah hal yang baru, hanya saja rasa malas ini memandulkan banyak ide - ide bagus yang sebenarnya bisa dijadikan bahan tulisan. Dan the so-called-virus bernama kemalasan ini menyebar dengan skala yang menakutkan. Jadi...
+        </description>
+        <pubDate>Sat, 18 Mar 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-03-18-the-never-ending-saga/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-03-18-the-never-ending-saga/</guid>
+      </item>
+    
+      <item>
+        <title>Command line email dengan msmtp dan yahoo mail</title>
+        <description>
+          
+          Package yang perlu diinstall: msmtp dan opsional, msmtp-mta yang akan membuat alias sendmail ke msmtp. Dan s-nail agar kita bisa mengirim email dengan perintah mail (di arch saya package s-nail sudah terinstall). Semua package tersebut diinstall menggunakan pacman. File konfigurasi untuk msmtp bisa disimpan di ~/.msmtprc (untuk konfigurasi per-user), atau...
+        </description>
+        <pubDate>Mon, 23 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-23-msmtp-yahoo/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-23-msmtp-yahoo/</guid>
+      </item>
+    
+      <item>
+        <title>Membuat file unit systemd</title>
+        <description>
+          
+          File unit systemd, yang mirip seperti file .desktop (yang juga sebenarnya terinspirasi dari file .ini-nya windows) adalah file yang digunakan oleh systemd dan biasanya berupa service (.service), mount point (.mount), devices (.device) ataupun socket (.socket). arch Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang...
+        </description>
+        <pubDate>Mon, 23 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/</guid>
+      </item>
+    
+      <item>
+        <title>Bash prompt untuk git</title>
+        <description>
+          
+          Ada banyak cara mengkonfigurasi bash agar bisa lebih informatif ketika didalam folder git, tapi satu yang lebih sering saya pakai adalah bash-git-prompt dari magicmonty, saya temukan dari google beberapa bulan yang lalu, coba pakai diubuntu, dan akan saya pakai di arch juga. Fungsi dari bash prompt ini adalah untuk menampilkan...
+        </description>
+        <pubDate>Mon, 23 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-23-bash-prompt-untuk-git/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-23-bash-prompt-untuk-git/</guid>
+      </item>
+    
+      <item>
+        <title>Dokumentasi modifikasi Arch</title>
+        <description>
+          
+          Akhirnya arch sudah terpasang di-PC saya! Setelah sebelumnya sekali percobaan install gagal karena terus terang saja, yang bisa melakukan install archlinux manual tanpa kesalahan dalam sekali coba sangat hebat sekali. Inipun saya juga sudah membuat partisinya sebelum memulai, karena menggunakan parted atau fdisk untuk memodifikasi partisi masih sangat menakutkan bagi...
+        </description>
+        <pubDate>Mon, 23 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-23-arch-is-live/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-23-arch-is-live/</guid>
+      </item>
+    
+      <item>
+        <title>Modifikasi fstab linux (arch dan ubuntu)</title>
+        <description>
+          
+          Kasusnya seperti ini: saya saat ini memiliki 2 distro gnu/linux yang berbeda, arch dan ubuntu (kemungkinan bertambah melihat partisi windows yang semakin menyusut dan berteriak “just kill me already!”), dan juga saya memiliki satu partisi khusus /home, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya...
+        </description>
+        <pubDate>Sun, 22 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/</guid>
+      </item>
+    
+      <item>
+        <title>Archlinux!</title>
+        <description>
+          
+          Perlu diketahui, saya adalah pengguna ubuntu yang setia, yang jadi pertanyaan ketika ingin dual booting adalah bukan “OS apa yang ingin saya dual boot bersama W*nd*ws?&quot; tapi lebih ke “OS apa yang akan saya dual boot bersamaan dengan ubuntu?”. Dan seringkali jawabannya adalah W*nd*ws tentunya, karena alasan praktis. Saya tentunya...
+        </description>
+        <pubDate>Sun, 22 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-22-archlinux/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-22-archlinux/</guid>
+      </item>
+    
+      <item>
+        <title>Apache dan Jekyll</title>
+        <description>
+          
+          Tutorial ini saya dapatkan dari blog Christopher Rung, dan sebenarnya semua sudah dikupas tuntas disitu. Saya hanya mencoba menambahkan beberapa hal yang tidak diulas dalam blog itu ketika saya mencoba sendiri melakukan tutorial ini. Yang pertama, ketika proses instalasi yang diberikan diblog tersebut semuanya sudah saya lakukan, masih ada error...
+        </description>
+        <pubDate>Sat, 21 Jan 2017 00:00:00 +0700</pubDate>
+        <link>http://alexforsale.github.io/blog/2017-01-21-jekyll-dan-apache/</link>
+        <guid isPermaLink="true">http://alexforsale.github.io/blog/2017-01-21-jekyll-dan-apache/</guid>
+      </item>
+    
+  </channel>
+</rss>

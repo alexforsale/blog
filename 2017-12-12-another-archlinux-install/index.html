@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Another Archlinux Install</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+  <meta name="description" content="sebuah proyek necromancery, part I?">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Another Archlinux Install">
+  
+
+   
+  <meta property="og:description" content="sebuah proyek necromancery, part I?">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Another Archlinux Install">
+  
+
+  
+  <meta name="twitter:description" content="sebuah proyek necromancery, part I?">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img="1" data-img-src-1="/blog/img/post/IMG_20171212_223908.jpg"></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Another Archlinux Install</h1>
+		  
+		    
+			<h2 class="post-subheading">sebuah proyek necromancery, part I?</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 12, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="img-desc"></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Another Archlinux Install</h1>
+		  
+		    
+			<h2 class="post-subheading">sebuah proyek necromancery, part I?</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 12, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <h1 id="im-back">I’m Back</h1>
+<p>Saya kembali, ke Bekasi. <em>the home is where the heart is</em> katanya… konon. Mengadu nasib sepertinya susah untuk <em>orang yang tidak memiliki nasib</em>. <em>But anyway,</em> ini topik post yang dimaksud untuk hari ini: <strong>Instalasi archlinux disebuah Ancient PC</strong></p>
+
+<h2 id="kenapa-harus-arch">
+<a name="atas"></a>Kenapa harus arch?</h2>
+<p>Ini sebuah pertanyaan klasik yang sering ditanyakan, dan parahnya lagi, sering dijawab oleh semua orang. Bertanya “mengapa distro ini lebih baik dari itu?” sebenarnya sama saja seperti menanyakan “Kenapa lebih suka makanan ini daripada makanan itu?” Tentunya setiap jenis makanan memiliki kualitas yang berbeda dibandingkan makanan lain, sama halnya seperti distro linux, jika bertanya kepada orang Padang “kenapa sih suka makan rendang?”, sama saja seperti bertanya kepada penggemar archlinux “kenapa sih selalu archlinux?”</p>
+
+<p>Berbeda halnya jika pertanyaan yang diajukan adalah “Mengapa archlinux di PC tersebut?” <a href="https://pastebin.com/P1nv1BYz">Ini jawabannya</a>. Archlinux menjadi pilihan ideal karena:</p>
+<ul>
+  <li>
+    <p>Installer yang benar2 ramping</p>
+
+    <p>Release awal bulan Desember ini size installer-nya hanya sekitar 500mb. Tentunya butuh download tambahan ketika proses instalasi dimulai, tetapi distro lain yang installer-nya dilengkapi dengan <em>packaging</em> yang lengkap pun setelah instalasi tetap harus di update juga. Tambah lagi, <em>package - package</em> yang disediakan oleh distro lain tersebut belum tentu ideal untuk PC ini. Seperti hanya sambal, beda mulut tentu beda rasa.</p>
+  </li>
+  <li>
+    <p>Freedom for the people!</p>
+
+    <p>Minimnya packaging yang diberikan oleh archlinux biasanya yang menyebabkan orang malas. Tetapi disisi lain, buat saya ini seperti sebuah kertas kosong yang belum ada coretan (banyak). Saya cukup install apa yang saya perlu di PC ini. Seandainya lupa, <strong>Intel(R) Pentium(R) Dual  CPU  E2160  @ 1.80GHz</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="kondisi-sang-pasien">Kondisi sang pasien</h2>
+<p>Setelah mencari semua bagian - bagian dari si PC ini di seantero rumah, dan percobaan pertama ketika dinyalakan tidak ada power. Tombol power yang semestinya menyala biru berpendaran merah selayaknya anak indigo sama sekali tidak ada nyawa. Layar monitor tetap hitam seperti masa depan negeri ini.</p>
+
+<p>Dugaan pertama ada di power supply, hanya saja karena tidak tersedia kotak P3K dirumah, saya copot power supply dan bawa ke rumah sakit terdekat(yang menerima pasien power supply tentunyaa). Dugaan yang tepat karena kata si dokter(yang juga hanya bisa mendiagnosa power supply) power supply yang saya bawa sudah tidak bisa tertolong lagi, bahkan menurut si dokter power supply tersebut sudah mati lama.</p>
+
+<p>Akhirnya saya beli power supply second karena buat apa beli barang baru buat ditaruh dirumah lama? Sepanjang perjalanan pulang saya memikirkan filosofi ini terus…</p>
+
+<h2 id="tanda-kehidupan">Tanda kehidupan</h2>
+<p>PC sialan ini akhirnya menyala setelah dipasang power supply yang baru(tapi lama) ini. Tapi masalah baru muncul: monitor masih kelam… Saya copot vga card dan coba bersihkan seikhlas mungkin, lalu pasang kembali, tetap tidak menyala. Kali ini saya coba copot kembali vga card-nya, lalu pasang kabel monitor ke input vga onboard, dan layar menyambut dengan log BIOS, dan berhenti disitu… masalah baru menghadang, tetapi saya masih belum bisa menerima keadaan dan tetap memaksa untuk menarik sang VGA dari alam lain.</p>
+
+<p>Setelah akhirnya saya menyerah dan ikhlas merelakan kepergian si vga card, lanjut ke masalah berikutnya. Ternyata dari 3 hard drive yang ada dirumah ini, hanya satu yang masih layak digunakan(note: kata layak disini masih sangat diragukan juga). Sialnya lagi hard drive yang survive justru bukan yang memiliki OS didalamnya. Ini juga jawaban dari pertanyaan di <a href="#atas">atas</a>.</p>
+
+<h1 id="ending-itu-sebenarnya-adalah-awal-dari-sebuah-ending-baru">Ending itu sebenarnya adalah awal dari sebuah ending baru</h1>
+<p>Post ini judulnya <strong>Another Archlinux Install</strong> tapi sama sekali tidak ada kaitannya dengan instalasi ya? Anggap saja post ini sebuah prelude, seperi trilogi Star Wars yang diikuti dengan prequel, dilanjut dengan sequel yang konon akan diikuti oleh prequel lagi…</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/arch">arch</a>
+          
+            <a href="/tag/linux">linux</a>
+          
+            <a href="/tag/installation">installation</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Another+Archlinux+Install+http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-12-12-another-archlinux-install/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-03-18-the-never-ending-saga/" data-toggle="tooltip" data-placement="top" title="The Never Ending Saga">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-12-13-are-we-really-installing/" data-toggle="tooltip" data-placement="top" title="Are We Really Installing?">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

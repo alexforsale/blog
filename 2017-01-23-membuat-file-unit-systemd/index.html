@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Membuat file unit systemd</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Membuat file unit systemd">
+  
+
+   
+  <meta property="og:description" content="File unit systemd, yang mirip seperti file .desktop (yang juga sebenarnya terinspirasi dari file .ini-nya windows) adalah file yang digunakan oleh systemd dan biasanya berupa service (.service), mount point (.mount), devices (.device) ataupun socket (.socket). arch Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang...">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Membuat file unit systemd">
+  
+
+  
+  <meta name="twitter:description" content="File unit systemd, yang mirip seperti file .desktop (yang juga sebenarnya terinspirasi dari file .ini-nya windows) adalah file yang digunakan oleh systemd dan biasanya berupa service (.service), mount point (.mount), devices (.device) ataupun socket (.socket). arch Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang...">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Membuat file unit systemd</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on January 23, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <p>File unit systemd, yang mirip seperti file <code class="highlighter-rouge">.desktop</code> (yang juga sebenarnya terinspirasi dari file <code class="highlighter-rouge">.ini</code>-nya <em>windows</em>) adalah file yang digunakan oleh systemd dan biasanya berupa service (<code class="highlighter-rouge">.service</code>), mount point (<code class="highlighter-rouge">.mount</code>), devices (<code class="highlighter-rouge">.device</code>) ataupun socket (<code class="highlighter-rouge">.socket</code>).</p>
+
+<h3 id="arch">arch</h3>
+
+<p>Saya akan membuat satu file unit yang berfungsi untuk menjalankan script build jekyll (yang akan generate blog saya ke <code class="highlighter-rouge">/srv/http</code>, untuk lebih lengkapnya baca post saya sebelumnya <a href="https://alexforsale.github.io/blog/2017-01-21-jekyll-dan-apache/">disini</a>), script tersebut saya simpand di <code class="highlighter-rouge">~/bin/build-blog.sh</code>. Berdasarkan dokumentasi <a href="https://wiki.archlinux.org/index.php/Systemd">systemd</a> yang saya baca, file unit akan dicari di salah satu dari dua directory ini (berdasarkan prioritas dari terendah sampai tertinggi):</p>
+
+<ul>
+  <li><code class="highlighter-rouge">/usr/lib/systemd/system/</code></li>
+  <li><code class="highlighter-rouge">/etc/systemd/system/</code></li>
+</ul>
+
+<p>File unitnya saya buat di <code class="highlighter-rouge">/usr/lib/systemd/system/</code> dengan nama <code class="highlighter-rouge">build-blog.service</code> menggunakan nano.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nano /usr/lib/systemd/system/build-blog.service
+</code></pre></div></div>
+
+<p>Dan isinya:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description= build blog
+
+[Service]
+Type=oneshot
+ExecStart=/home/alexforsale/bin/build-blog.sh
+RemainAfterExit=yes
+User=alexforsale
+Group=alexforsale
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<ul>
+  <li>Description di bagian <code class="highlighter-rouge">[Unit]</code> sepertinya sudah cukup jelas.</li>
+  <li>
+<code class="highlighter-rouge">Environment</code> ini untuk menentukan path ke executables yang digunakan (dalam hal ini, <code class="highlighter-rouge">bundle</code> dan <code class="highlighter-rouge">jekyll</code>), check melalui perintah <code class="highlighter-rouge">which bundle</code> dan <code class="highlighter-rouge">which jekyll</code>.</li>
+  <li>Untuk <code class="highlighter-rouge">type=oneshot</code> berarti unit ini hanya akan melakukan satu ‘job’ lalu exit.</li>
+  <li>
+<code class="highlighter-rouge">ExecStart</code> adalah file yang akan dieksekusi.</li>
+  <li>
+<code class="highlighter-rouge">RemainAfterExit</code> di set <code class="highlighter-rouge">yes</code> berarti systemd akan tetap menganggap service ini aktif setelah prosesnya selesai</li>
+  <li>
+<code class="highlighter-rouge">User</code> dan <code class="highlighter-rouge">Group</code> disini untuk memastikan unit ini berjalan tidak sebagai root, tapi sebagai user.</li>
+  <li>
+<code class="highlighter-rouge">WantedBy</code> untuk menentukan <em>targets</em> dari systemd, yang mirip seperti runlevel, jalankan perintah <code class="highlighter-rouge">systemctl list-units --type=target</code> untuk melihat list target yang ada.</li>
+</ul>
+
+<p>File unit sudah dibuat, tinggal membuat script untuk generate blog jekyll ini di <code class="highlighter-rouge">~/bin/build-blog.sh</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash </span>
+<span class="c"># </span>
+<span class="c"># Christian Alexander &lt;alexforsale@yahoo.com&gt;</span>
+<span class="c"># executable script untuk service systemd </span>
+<span class="c"># https://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/</span>
+<span class="c"># </span>
+
+<span class="nv">blogpath</span><span class="o">=</span>/data/source/alexforsale.github.io
+<span class="nv">GEM_HOME</span><span class="o">=</span><span class="k">$(</span>/usr/bin/ls <span class="nt">-t</span> <span class="nt">-U</span> | /usr/bin/ruby <span class="nt">-e</span> <span class="s1">'puts Gem.user_dir'</span><span class="k">)</span>
+
+<span class="nb">cd</span> <span class="nv">$blogpath</span>
+
+<span class="nv">$GEM_HOME</span>/bin/bundle <span class="nb">exec</span> <span class="nv">$GEM_HOME</span>/bin/jekyll build <span class="nt">--watch</span> <span class="nt">-s</span> <span class="nv">$blogpath</span> <span class="nt">-d</span> /home/alexforsale/public_html
+
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod a+x ~/bin/build-blog.sh
+</code></pre></div></div>
+<p>Save file tersebut, dan tes dengan jalankan perintah <code class="highlighter-rouge">systemctl start build-blog.service</code>, jika semuanya berjalan lancar tidak akan ada message apapun, ketik <em>CTRL-C</em> untuk kembali ke prompt. Cek status dari service tersebut dengan ketik <code class="highlighter-rouge">systemctl status build-blog.service</code>, semestinya hasilnya seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>13:21 $ systemctl status build-blog.service 
+● build-blog.service - build blog
+   Loaded: loaded (/usr/lib/systemd/system/build-blog.service; disabled; vendor preset: disabled)
+   Active: activating (start) since Thu 2017-01-26 13:21:21 WIB; 26s ago
+ Main PID: 6938 (build-blog.sh)
+    Tasks: 5 (limit: 4915)
+   CGroup: /system.slice/build-blog.service
+           ├─6938 /bin/bash /home/alexforsale/bin/build-blog.sh
+           └─6943 /home/alexforsale/.gem/ruby/2.4.0/bin/jekyll build --watch -s /data/source/alexforsale.github.io -d /home/alexforsae/public_html
+
+Jan 26 13:21:21 archlinux systemd[1]: Starting build blog...
+Jan 26 13:21:22 archlinux build-blog.sh[6938]: Configuration file: /data/source/alexforsale.github.io/_config.yml
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:             Source: /data/source/alexforsale.github.io
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:        Destination: /home/alexforsale/public_html
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:  Incremental build: disabled. Enable with --incremental
+Jan 26 13:21:22 archlinux build-blog.sh[6938]:       Generating...
+Jan 26 13:21:23 archlinux build-blog.sh[6938]:                     done in 1.732 seconds.
+Jan 26 13:21:24 archlinux build-blog.sh[6938]:  Auto-regeneration: enabled for '/data/source/alexforsale.github.io'
+</code></pre></div></div>
+
+<p>Jika melakukan modifikasi pada file <code class="highlighter-rouge">/usr/lib/systemd/system/build-blog.service</code>, pastikan sebelum start servicenya lakukan reload daemon terlebih dahulu dengan perintah <code class="highlighter-rouge">systemctl daemon-reload</code>. Untuk membuat service ini berjalan setiap reboot, jalankan perintah <code class="highlighter-rouge">systemctl enable build-blog.service</code></p>
+
+<h3 id="ubuntu">ubuntu</h3>
+
+<p>Beberapa perbedaan untuk ubuntu, simpan file <code class="highlighter-rouge">/usr/lib/systemd/system/build-blog.service</code> di <code class="highlighter-rouge">/etc/systemd/system/build-blog.service</code> karena ada perbedaan lokasi, sedangkan untuk isi dari <code class="highlighter-rouge">~/bin/build-blog.sh</code>pun harus disesuaikan, edit menjadi seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># </span>
+<span class="c"># Christian Alexander &lt;alexforsale@yahoo.com&gt;</span>
+<span class="c"># executable script untuk service systemd</span>
+<span class="c"># https://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/</span>
+<span class="c"># </span>
+
+<span class="nv">blogpath</span><span class="o">=</span>/data/source/alexforsale.github.io
+<span class="c">#GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')</span>
+
+<span class="nb">cd</span> <span class="nv">$blogpath</span>
+
+bundle <span class="nb">exec </span>jekyll build <span class="nt">--watch</span> <span class="nt">-s</span> <span class="nv">$blogpath</span> <span class="nt">-d</span> /home/alexforsale/public_html
+
+</code></pre></div></div>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/random">random</a>
+          
+            <a href="/tag/blog">blog</a>
+          
+            <a href="/tag/apache2">apache2</a>
+          
+            <a href="/tag/jekyll">jekyll</a>
+          
+            <a href="/tag/systemd">systemd</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Membuat+file+unit+systemd+http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-01-23-membuat-file-unit-systemd/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-01-23-bash-prompt-untuk-git/" data-toggle="tooltip" data-placement="top" title="Bash prompt untuk git">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-01-23-msmtp-yahoo/" data-toggle="tooltip" data-placement="top" title="Command line email dengan msmtp dan yahoo mail">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

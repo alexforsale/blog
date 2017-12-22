@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Modifikasi fstab linux (arch dan ubuntu)</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Modifikasi fstab linux (arch dan ubuntu)">
+  
+
+   
+  <meta property="og:description" content="Kasusnya seperti ini: saya saat ini memiliki 2 distro gnu/linux yang berbeda, arch dan ubuntu (kemungkinan bertambah melihat partisi windows yang semakin menyusut dan berteriak “just kill me already!”), dan juga saya memiliki satu partisi khusus /home, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya...">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Modifikasi fstab linux (arch dan ubuntu)">
+  
+
+  
+  <meta name="twitter:description" content="Kasusnya seperti ini: saya saat ini memiliki 2 distro gnu/linux yang berbeda, arch dan ubuntu (kemungkinan bertambah melihat partisi windows yang semakin menyusut dan berteriak “just kill me already!”), dan juga saya memiliki satu partisi khusus /home, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya...">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Modifikasi fstab linux (arch dan ubuntu)</h1>
+		  
+		  
+		  
+		  <span class="post-meta">Posted on January 22, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <p>Kasusnya seperti ini: saya saat ini memiliki 2 distro <em>gnu/linux</em> yang berbeda, <em>arch</em> dan <em>ubuntu</em> (kemungkinan bertambah melihat partisi <em>windows</em> yang semakin menyusut dan berteriak “just kill me already!”), dan juga saya memiliki satu partisi khusus <code class="highlighter-rouge">/home</code>, akan tetapi saya tidak ingin menggunakan username yang berbeda ditiap distro (username saya selalu sama dimana - mana).</p>
+
+<p>Tapi menggunakan username yang sama dengan sharing partisi <code class="highlighter-rouge">/home</code> di distro <em>gnu/linux</em> sama saja seperti bom bunuh diri. File konfigurasi user dari banyak software biasanya disimpan di folder <code class="highlighter-rouge">~</code> (<code class="highlighter-rouge">/home/$USER</code>), akan jadi masalah jika satu software digunakan di beberapa distro dan masing - masing berbeda konfigurasi.</p>
+
+<p>Masalah berikutnya adalah file media, saya termasuk penikmat musik dan film, walaupun kebanyakan dari file media saya taruh di storage removable (external HDD), tapi nyatanya lebih sering saya akses, dan terlalu banyak klik untuk mencapai file - file tersebut. Masalah terakhir, harddisk pc saya ini cukup kecil, jadi kemungkinan ada file double yang tersimpan di folder <code class="highlighter-rouge">~</code> sebisa mungkin harus dikurangi, jika file - file tersebut bersifat dokumen, atau tidak berpengaruh terhadap fungsi software atau OS, lebih baik langsung ke storage external.</p>
+
+<p>Jadi bagaimana solusinya? Untuk masalah yang pertama, supaya dapat tetap menggunakan username yang sama tanpa folder home yang sama, saya harus edit file <code class="highlighter-rouge">/etc/fstab</code>. Secara default-nya saat kita install distro baru, jika menggunakan partisi yang berbeda untuk /home, partisi tersebut otomatis akan dimount di <code class="highlighter-rouge">/home</code>. Yang saya lakukan adalah, memindahkan mounting tersebut ke tempat lain (saya pilih <code class="highlighter-rouge">/data</code>), baru dari situ saya mount bind <code class="highlighter-rouge">/home</code> ke <code class="highlighter-rouge">/data/(nama distro)</code>.</p>
+
+<p>Distro pertama yang saya install (<em>ubuntu</em>) sudah terlanjur mount <code class="highlighter-rouge">/home</code> dipartisi tersebut, sehingga saya perlu menyalin secara manual terlebih dahulu isi <code class="highlighter-rouge">/home/$USER</code> di ubuntu ke <code class="highlighter-rouge">/home/ubuntu/$USER</code> (tidak langsung pindahkan untuk jaga - jaga seandainya ada masalah nantinya, dan tentunya file <code class="highlighter-rouge">/etc/fstab</code> yang asli pun perlu disalin sebelum dimodifikasi).</p>
+
+<p>Tadinya baris <code class="highlighter-rouge">/etc/fstab</code> untuk mounting /home seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /home was on /dev/sda6 during installation
+UUID=06c1b622-6537-4998-a392-28df2dd79519 /home           ext4    defaults        0       2
+</code></pre></div></div>
+
+<p>Saya ubah menjadi:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /home was on /dev/sda6 during installation
+UUID=06c1b622-6537-4998-a392-28df2dd79519 /data           ext4    defaults        0       2
+
+# the /home now bind to /data/ubuntu
+/data/ubuntu /home none bind 0 0
+
+</code></pre></div></div>
+<p>Untuk mengidentifikasi partisi sebaiknya menggunakan UUID, karena lebih permanen dibandingkan ‘dev/sda’ atau dengan label partisi. Sekarang ubuntu akan menaruh /home/$USER di /data/ubuntu/$USER, <a href="http://serverfault.com/questions/613179/how-do-i-do-mount-bind-in-etc-fstab">fungsinya sama seperti perintah <code class="highlighter-rouge">mount --bind</code> di terminal</a>. Hal yang sama saya lakukan juga untuk file <code class="highlighter-rouge">/etc/fstab</code> di arch. Cek dan croscek UUID dikedua distro menggunakan perintah <code class="highlighter-rouge">blkid</code> (membutuhkan elevasi root).</p>
+
+<p>Langkah selanjutnya untuk mounting storage external, beberapa distro memiliki path yang berbeda untuk automount removable storage, di <em>ubuntu</em> berada di <code class="highlighter-rouge">/media/$USER/(nama-storage)</code> dan di <em>arch</em> berada di <code class="highlighter-rouge">/run/media/$USER/(nama-storage)</code>. Hanya bertambah penulisan 4 karakter tapi untuk jangka panjangnya berpengaruh sekali. Jadi saya memutuskan untuk mount external HDD saya di <code class="highlighter-rouge">/mnt</code> untuk kedua distro ini.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Toshiba external hdd
+# make sure ntfs-3g package is installed
+UUID=636683E80CB77EED 				/mnt/TOSHIBA 	ntfs-3g 	exec,permissions,auto 		0 0
+</code></pre></div></div>
+
+<p>Seperti yang tertulis dicomment, package <code class="highlighter-rouge">ntfs-3g</code> dibutuhkan, tidak semua distro otomatis menginstall ini disaat instalasi OS. Selanjutnya di external HDD tersebut saya membuat beberapa folder bernama Documents, Music, Downloads, Pictures, dan Videos. Folder - folder tersebut nantinya juga akan di mount bind seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mount bind Documents
+/mnt/TOSHIBA/Documents 				/home/alexforsale/Documents 	ntfs-3g 			bind 	0 0
+
+# mount bind Downloads
+/mnt/TOSHIBA/Downloads 				/home/alexforsale/Downloads 	ntfs-3g 			bind	0 0
+
+# mount bind Music
+/mnt/TOSHIBA/Music 				/home/alexforsale/Music 	ntfs-3g 			bind 	0 0
+
+# mount bind Pictures
+/mnt/TOSHIBA/Pictures 				/home/alexforsale/Pictures 	ntfs-3g 			bind 	0 0
+
+# mount bind Videos
+/mnt/TOSHIBA/Videos 				/home/alexforsale/Videos 	ntfs-3g 			bind 	0 0
+</code></pre></div></div>
+
+<p>Semua mounting diatas seperti sudah cukup jelas, folder - folder seperti <em>Music</em>, <em>Videos</em>, dan <em>Pictures</em> di mount agar aplikasi - aplikasi default dari OS-nya (seperti music player, video player, image viewer dan sebagainya) dapat mencari file media yang sesuai didalam folder <code class="highlighter-rouge">/home</code>, dan untuk mempermudah proses penyimpanan file media tersebut (seperti misalnya screenshot dan lainnya).</p>
+
+<p>Save file <code class="highlighter-rouge">/etc/fstab</code> tersebut dan reboot OS-nya untuk menjalankan file tersebut, atau bisa saja langsung di test dengan perintah <code class="highlighter-rouge">mount -a</code> tetapi pastikan terlebih dahulu semua mount point yang dicantumkan di-file tersebut ada. Dan <em>pastikan</em> user id (<code class="highlighter-rouge">uid</code>) dan <code class="highlighter-rouge">gid</code> di kedua OS tersebut sama, untuk username saya seperti ini:</p>
+
+<p>Di <em>arch</em>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[alexforsale@archlinux ~]$ id $USER
+uid=1000(alexforsale) gid=1000(alexforsale) groups=1000(alexforsale),10(wheel)
+[alexforsale@archlinux ~]$ groups $USER
+wheel alexforsale
+[alexforsale@archlinux ~]$ 
+</code></pre></div></div>
+
+<p>Di <em>ubuntu</em>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ id $USER
+uid=1000(alexforsale) gid=1000(alexforsale) groups=1000(alexforsale),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),121(lpadmin),132(sambashare),136(autopilot),137(debian-transmission),999(docker)
+alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ groups $USER
+alexforsale : alexforsale adm cdrom sudo dip plugdev lpadmin sambashare autopilot debian-transmission docker
+alexforsale@ubuntu-home:/data/source/alexforsale.github.io$ 
+</code></pre></div></div>
+
+<p>Karena jika berbeda nantinya akan ada masalah permission untuk mengakses file yang dishare di fstab. Biasanya untuk <code class="highlighter-rouge">uid</code> dan <code class="highlighter-rouge">guid</code> selalu <em>1000:1000</em> jika untuk user pertama yang dibuat, lebih detail mengenai users dan groups bisa dibaca di <a href="https://wiki.archlinux.org/index.php/Users_and_groups">wiki archlinux</a> yang sudah sangat lengkap.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/blog">blog</a>
+          
+            <a href="/tag/arch">arch</a>
+          
+            <a href="/tag/ubuntu">ubuntu</a>
+          
+            <a href="/tag/linux">linux</a>
+          
+            <a href="/tag/fstab">fstab</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Modifikasi+fstab+linux+%28arch+dan+ubuntu%29+http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-01-22-modifikasi-fstab-linux/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-01-22-archlinux/" data-toggle="tooltip" data-placement="top" title="Archlinux!">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-01-23-arch-is-live/" data-toggle="tooltip" data-placement="top" title="Dokumentasi modifikasi Arch">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

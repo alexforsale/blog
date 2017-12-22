@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Konfigurasi NeoMutt</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+  <meta name="description" content="kata siapa command-line email client sudah obsolete?">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Konfigurasi NeoMutt">
+  
+
+   
+  <meta property="og:description" content="kata siapa command-line email client sudah obsolete?">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Konfigurasi NeoMutt">
+  
+
+  
+  <meta name="twitter:description" content="kata siapa command-line email client sudah obsolete?">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Konfigurasi NeoMutt</h1>
+		  
+		    
+			<h2 class="post-subheading">kata siapa command-line email client sudah obsolete?</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 15, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <h1 id="background-mengikuti-theme-terminal">Background mengikuti theme terminal</h1>
+
+<p>Edit file <code class="highlighter-rouge">~/.mutt/muttrc</code>, tambahkan baris ini dipaling bawah:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.mutt/colors
+</code></pre></div></div>
+
+<p>Isi file tersebut (<code class="highlighter-rouge">~/.mutt/colors</code>) dengan ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>color normal  white default
+color attachment brightyellow default
+color hdrdefault cyan default
+color indicator black cyan
+color markers brightred default
+color quoted  green default
+color signature cyan default
+color status  brightgreen blue
+color tilde blue default
+color tree  red default
+
+color index red default ~P
+color index red default ~D
+color index magenta default ~T
+
+color header brightgreen default ^From:
+color header brightcyan default ^To:
+color header brightcyan default ^Reply-To:
+color header brightcyan default ^Cc:
+color header brightblue default ^Subject:
+
+color body  brightred default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+# identifies email addresses
+
+color body  brightblue default (https?|ftp)://[\-\.,/%~_:?&amp;=\#a-zA-Z0-9]+
+# identifies URLs
+</code></pre></div></div>
+
+<p><img src="../img/post/Screenshot-2017-12-15T19:29:13.png" alt="" title="screenshot"></p>
+
+<h1 id="sidebar">sidebar</h1>
+
+<p>Tambahkan baris ini kedalam <code class="highlighter-rouge">~/.mutt/muttrc</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set sidebar_visible
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+</code></pre></div></div>
+
+<h3 id="keybinding-untuk-sidebar">keybinding untuk sidebar</h3>
+<p>Tambahkan ini dibaris terakhir dari <code class="highlighter-rouge">~/.mutt/muttrc</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># bindings
+source ~/.mutt/bindings
+</code></pre></div></div>
+
+<p>Lalu edit file bindings tersebut:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sidebar
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Cl sidebar-open
+</code></pre></div></div>
+
+<p>Di sesi Mutt/NeoMutt berikutnya, akan muncul sidebar disebelah kiri, dan kita bisa menggunakan bindings yang baru saja kita buat untuk navigasi. Tentunya bindings tersebut bisa kita sesuaikan dengan keinginan.</p>
+
+<h1 id="multiple-account">Multiple account</h1>
+
+<p>Salah satu fitur dari msmtp adalah kemampuannya untuk menggunakan lebih dari satu account dalam satu file Konfigurasi(<code class="highlighter-rouge">'~/.msmtprc</code>). Kita pun bisa memanfaatkan fitur ini didalam neomutt/mutt.</p>
+
+<p>Di <a href="/blog/2017-01-23-msmtp-yahoo/">post</a> saya sebelumnya sudah dibahas mengenai konfigurasi dari <em>msmtp</em>, dan untuk menyegarkan ingatan, ini adalah konfigurasi penuh saya:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Set default values for all following accounts.
+defaults
+
+logfile        ~/.msmtp.log
+#aliases        /etc/aliases
+
+# Gmail
+account        gmail
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+host           smtp.gmail.com
+port           587
+from           alexarians@gmail.com
+user           alexarians@gmail.com
+passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.msmtp-gmail.gpg"
+
+# Yahoo service
+account        yahoo
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+host           smtp.mail.yahoo.com
+port           587
+from           alexforsale@yahoo.com
+user           alexforsale
+passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.msmtp-yahoo.gpg"
+
+# Hotmail
+account        hotmail
+tls            on
+tls_certcheck  off
+host           smtp.live.com
+from           christian.alexander@windowslive.com
+auth           on
+user           christian.alexander@windowslive.com
+passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.msmtp-hotmail.gpg"
+
+# Set a default account
+account default : gmail
+</code></pre></div></div>
+
+<p>Terlihat lebih aman karena semua password di encrypt menggunakan <a href="https://gnupg.org/">GnuPG</a>. Jadi saya memiliki tiga akun smtp yang bisa saya pilih. Dan untuk menggunakannya didalam Mutt/NeoMutt tambahkan baris ini di <code class="highlighter-rouge">~/.mutt/muttrc</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>send2-hook '~f alexarians@gmail.com' 'set sendmail="/usr/bin/msmtp"'
+send2-hook '~f alexforsale@yahoo.com' 'set sendmail="/usr/bin/msmtp -a yahoo"'
+send2-hook '~f alexforsale@hotmail.com' 'set sendmail="/usr/bin/msmtp -a hotmail"'
+</code></pre></div></div>
+
+<p>Tentunya sesuaikan terlebih dahulu email yang digunakan, lokasi dari binary <em>msmtp</em>-nya. Untuk penjelasan dari argumen diatas:</p>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">send2-hook</code>: Ketika ada pattern berubah (baik melalu edit atau menu compose), perintah dieksekusi. Sedangkan untuk</li>
+  <li>
+<code class="highlighter-rouge">'-f expression'</code>: Artinya message yang berasal dari expression tersebut.</li>
+  <li>
+<code class="highlighter-rouge">set sendmail</code>: Adalah perintah yang harus dieksekusi berdasarkan expression, note untuk alexarians@gmail.com perintah msmtp tidak menggunakan parameter tambahan karena merupakan default di msmtprc.</li>
+</ul>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/neomutt">neomutt</a>
+          
+            <a href="/tag/muttrc">muttrc</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Konfigurasi+NeoMutt+http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-12-15-konfigurasi-neomutt/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-12-14-mutt-dan-getmail/" data-toggle="tooltip" data-placement="top" title="NeoMutt, procmail, msmtp dan Getmail">← Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/blog/2017-12-17-offlineimap/" data-toggle="tooltip" data-placement="top" title="offlineimap">Next Post →</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>

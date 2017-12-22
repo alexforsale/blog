@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Branching dan Merging</title>
+
+  <meta name="author" content="Christian Alexander">
+
+  
+  <meta name="description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="My little blog - a World of alexforsale" href="/blog/feed.xml">
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZL2TQ8');</script>
+    <!-- End Google Tag Manager -->
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" href="/blog/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/blog/css/main.css">
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Branching dan Merging">
+  
+
+   
+  <meta property="og:description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/">
+  <link rel="canonical" href="http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/">
+  
+
+  
+  <meta property="og:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+  
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@alexforsale">
+  <meta name="twitter:creator" content="@alexforsale">
+
+  
+  <meta name="twitter:title" content="Branching dan Merging">
+  
+
+  
+  <meta name="twitter:description" content="Git Basic - Seri Pengenalan git dari https://git-scm.com/">
+  
+
+  
+  <meta name="twitter:image" content="http://alexforsale.github.io/blog/img/alexforsale_small.jpg">
+  
+
+  
+  <link rel="icon" type="image/png" href="/img/alexforsale_small.jpg">
+  
+
+</head>
+
+
+  <body>
+
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZL2TQ8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="http://alexforsale.github.io/blog">My little blog</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/./..">Front-Page</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/blog/aboutme">About</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="http://alexforsale.github.io/blog%20">
+	      <img class="avatar-img" src="/blog/img/alexforsale_small.jpg">
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Branching dan Merging</h1>
+		  
+		    
+			<h2 class="post-subheading">Git Basic - Seri Pengenalan git dari https://git-scm.com/</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 22, 2017</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+      
+      <article role="main" class="blog-post">
+        <h1 id="branching-dan-merging-sederhana">Branching dan Merging Sederhana</h1>
+
+<p>Mari kita lihat contoh sederhana dari branching dan merging dengan alur kerja yang kemungkinan besar kita alami di dunia nyata. Kita biasanya menggunakan langkah - langkah seperti ini:</p>
+
+<ul>
+  <li>Mengerjakan sesuatu pada sebuah <em>website</em>.</li>
+  <li>Membuat sebuah branch khusus untuk satu cerita yang sedang kita kerjakan.</li>
+  <li>Mengerjakan sesuatu dalam branch baru tersebut.</li>
+</ul>
+
+<p>Ditahap ini, ternyata kita menerima telepon bahwa ada satu permasalahan(issue) yang butuh hotfix cepat. Kita lakukan seperti ini:</p>
+
+<ul>
+  <li>Pindah kembali ke branch production.</li>
+  <li>Buat branch baru untuk membuat hotfix-nya.</li>
+  <li>Setelah lolos test, merge branch hotfix tersebut dan push ke production.</li>
+  <li>Pindah kembali ke cerita awal yang kita sedang kerjakan sebelumnya.</li>
+</ul>
+
+<h2 id="branching-dasar">Branching dasar</h2>
+
+<p>Pertama, anggaplah kita sedang mengerjakan sebuah project dan sudah memiliki beberapa commit di branch <code class="highlighter-rouge">master</code>.</p>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-1.png" alt="history commit sederhana"></p>
+
+<p>Kita memutuskan untuk mengerjakan issue #53 dalam system tracking issue yang digunakan oleh perusahaan. Untuk membuat branch baru dan langsung berpindah ke branch tersebut kita menggunakan perintah</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout <span class="nt">-b</span> iss53
+Switched to a new branch <span class="s2">"iss53"</span>
+</code></pre></div></div>
+
+<p>Ini merupakan perintah gabungan dari:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git branch iss53
+<span class="nv">$ </span>git checkout iss53
+</code></pre></div></div>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-2.png" alt="membuat satu pointer branch baru"></p>
+
+<p>Kita melanjutkan pekerjaan dan membuat commit baru. Yang membuat branch <code class="highlighter-rouge">iss53</code> bergerak maju, karena kita checkout ke situ(disitu tempat yang dirujuk <code class="highlighter-rouge">HEAD</code>):</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>vim index.html
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s1">'added a new footer [issue 53]'</span>
+</code></pre></div></div>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-3.png" alt="branch `iss53` maju seiring commit"></p>
+
+<p>Sekarang kita mendapatkan telepon bahwa ada issue baru dengan website, yang harus dikerjakan secepatnya. Dengan git, kita tidak perlu merilis fix tersebut bersamaan dengan perubahan untuk <code class="highlighter-rouge">iss53</code> yang baru kita buat, dan kita tidak perlu membalikkan perubahan - perubahan tersebut sebelum kita bisa mengerjakan fix di production. Yang perlu kita lakukan hanyalah pindah kembali ke branch <code class="highlighter-rouge">master</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+Switched to branch <span class="s1">'master'</span>
+</code></pre></div></div>
+
+<p>Disini, working directory dari project kita sama seperti keadaan sebelum kita memulai issue #53, dan kita bisa fokus mengerjakan fix ini. Ini poin yang perlu diingat: ketika kita berpindah branch, git mereset working directory agar terlihat seperti saat commit terakhir di branch tersebut. Git akan menambah, mengurangi dan merubah file secara otomatis agar terlihat seperti itu.</p>
+
+<p>Selanjutnya, kita mempunyai satu hotfix yang harus dikerjakan:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout <span class="nt">-b</span> hotfix
+Switched to a new branch <span class="s1">'hotfix'</span>
+<span class="nv">$ </span>vim index.html
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s1">'fixed the broken email address'</span>
+<span class="o">[</span>hotfix 1fb7853] fixed the broken email address
+ 1 file changed, 2 insertions<span class="o">(</span>+<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-4.png" alt="hotfix branch berdasarkan branch `master`"></p>
+
+<p>Kita lakukan beberapa kali test, untuk memastikan hotfix tersebut, dan akhirnya merge branch <code class="highlighter-rouge">hotfix</code> kembali kedalam branch <code class="highlighter-rouge">master</code> untuk dilepas ke production. Kita lakukan menggunakan perintah <code class="highlighter-rouge">git merge</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge hotfix
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
+ 1 file changed, 2 insertions<span class="o">(</span>+<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Perhatikan ada istilah “fast-forward” dalam merge tersebut. Karena commit <code class="highlighter-rouge">C4</code> yang dipoint oleh branch <code class="highlighter-rouge">hotfix</code> yang kita merge berada persis didepan dari commit <code class="highlighter-rouge">C2</code> lokasi kita sekarang, git hanya perlu menggerakan maju pointernya saja. Dengan kata lain, ketika kita mencoba merge satu commit dengan commit yang bisa dijangkau dengan mengikuti history commit pertama, git mempermudah dengan menggerakan maju pointernya karena tidak ada cabang yang perlu dimerge bersamaan - ini yang dinamakan “fast-forward”.</p>
+
+<p>Perubahan kita sekarang berada didalam snapshot dari commit yang dipoint oleh branch <code class="highlighter-rouge">master</code> dan kita bisa merilis fix tersebut.</p>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-5.png" alt="branch `master` fast-forward ke `hotfix`"></p>
+
+<p>Setelah fix tersebut dirilis, kita siap untuk kembali mengerjakan issue yang tadi kita kerjakan sebelum terpotong oleh fix ini. Namun, sebelumnya kita perlu menghapus branch <code class="highlighter-rouge">hotfix</code> ini karena kita tidak lagi membutuhkannya - branch <code class="highlighter-rouge">master</code> sama - sama merujuk ke lokasi yang sama. Kita bisa menghapusnya dengan aman menggunakan tambahan <code class="highlighter-rouge">-d</code> dalam <code class="highlighter-rouge">git branch</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git branch <span class="nt">-d</span> hotfix
+Deleted branch hotfix <span class="o">(</span>3a0874c<span class="o">)</span><span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Sekarang kita bisa pindah kembali ke branch issue #53 dan melanjutkan pekerjaan.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout iss53
+Switched to branch <span class="s2">"iss53"</span>
+<span class="nv">$ </span>vim index.html
+<span class="nv">$git</span> commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s1">'finished the new footer [issue 53]'</span>
+<span class="o">[</span>iss53 ad82d7a] finished the new footer <span class="o">[</span>issue 53]
+1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-branching-6.png" alt="pengerjaan berlanjut di `iss53`"></p>
+
+<p>Perlu diingat bahwa semua yang baru kita kerjakan di branch <code class="highlighter-rouge">hotfix</code> tidak ada didalam branch <code class="highlighter-rouge">iss53</code> ini. Jika kita perlu menariknya, kita bisa merge branch <code class="highlighter-rouge">master</code> kedalam <code class="highlighter-rouge">iss53</code> dengan perintah <code class="highlighter-rouge">git merge master</code>, atau kita bisa menundanya dan merge branch <code class="highlighter-rouge">iss53</code> ini ke branch <code class="highlighter-rouge">master</code> setelahnya.</p>
+
+<h2 id="merging-dasar">Merging dasar</h2>
+
+<p>Anggaplah kita sudah memutuskan bahwa fix untuk issue #53 sudah selesai dan siap untuk di merge ke branch <code class="highlighter-rouge">master</code>. Untuk melakukan itu kita merge branch <code class="highlighter-rouge">iss53</code> kedalam branch <code class="highlighter-rouge">master</code> sama seperti proses merging branch <code class="highlighter-rouge">hotfix</code> sebelumnya. Yang perlu kita lakukan adalah pindah ke branch yang akan menerima merge tersebut dan jalankan perintah <code class="highlighter-rouge">git merge</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+Switched to branch <span class="s1">'master'</span>
+<span class="nv">$ </span>git merge iss53
+Merge made by the <span class="s1">'recursive'</span> strategy.
+index.html |    1 +
+1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Terlihat berbeda dengan output dari merge branch <code class="highlighter-rouge">hotfix</code> sebelumnya. Ini karena, history bercabang di point awal. Commit di branch kita sekarang bukanlah <em>ancestor</em> langsung dari branch yang hendak kita merge, git perlu melakukan sesuatu terlebih dahulu sebelumnya. Yang dilakukan oleh git adalah merging tiga arah sederhana, menggunakan dua snapshot yang merujuk ke ujung branch dan <em>ancestor</em> serupa dari keduanya.</p>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-merging-1.png" alt="tiga snapshot digunakan untuk merge"></p>
+
+<p>Daripada sekedar memajukan pointer branch kedepan, git membuat snapshot baru yang merupakan hasil dari merge tiga arah tadi dan otomatis membuat commit yang merujuk ke snapshot tersebut. Ini disebut <em>merge commit</em>, dan unik karena memiliki lebih dari satu parent.</p>
+
+<p><img src="https://git-scm.com/book/en/v2/images/basic-merging-2.png" alt="merge commit"></p>
+
+<p>Perlu diketahui pula bahwa git yang menentukan ancestor serupa yang akan dijadikan basis untuk merge-nya; ini merupakan satu perbedaan dibandingkan VCS lain seperti CVS atau Subversion(sebelum versi 1.5), dimana sang developer yang melakukan merging harus menentukan sendiri basis merge terbaik.</p>
+
+<p>Sekarang setelah pekerjaan kita selesai dimerge, kita tidak lagi membutuhkan branch <code class="highlighter-rouge">iss53</code> tadi, kita bisa close ticket dalam ticket-tracking system dan hapus branch-nya:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git branch <span class="nt">-d</span> iss53
+</code></pre></div></div>
+
+<h2 id="contoh-merge-conflict">Contoh Merge conflict</h2>
+
+<p>Terkadang, proses merging ini tidak berjalan mulus. Jika kita merubah satu bagian file yang sama dalam dua branch yang berbeda, git tidak akan mampu untuk melakukan merge secara bersih. Jika fix untuk issue #53 ternyata memodifikasi bagian dari file yang sama dengan branch <code class="highlighter-rouge">hotfix</code>, kita akan mendapatkan merge conflict seperti ini:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git merge iss53
+Auto-merging index.html
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict <span class="k">in </span>index.html
+Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then </span>commit the result.
+</code></pre></div></div>
+
+<p>Disini git belum membuat merge commit secara otomatis. Prosesnya dihentikan untuk sementara memberikan kita kesempatan untuk me-resolve conflict tersebut. Jika kita ingin melihat file mana yang tidak di merge setelah merge conflict kita bisa lihat melalui <code class="highlighter-rouge">git status</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git status
+On branch master
+You have unmerged paths.
+  <span class="o">(</span>fix conflicts and run <span class="s2">"git commit"</span><span class="o">)</span>
+
+Unmerged paths:
+  <span class="o">(</span>use <span class="s2">"git add &lt;file&gt;..."</span> to mark resolution<span class="o">)</span>
+
+    both modified:      index.html
+
+no changes added to commit <span class="o">(</span>use <span class="s2">"git add"</span> and/or <span class="s2">"git commit -a"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>Semua yang memiliki merge conflict dan belum di resolve di-list sebagai unmerged. Git menambahkan penanda khusus didalam file - file tersebut, jadi bisa kita buka secara manual untuk me-resolve nya. File kita mungkin memiliki bagian seperti ini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html
+&lt;div id="footer"&gt;contact : email.support@github.com&lt;/div&gt;
+=======
+&lt;div id="footer"&gt;
+ please contact us at support@github.com
+&lt;/div&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; iss53:index.html
+</code></pre></div></div>
+
+<p>Ini berarti versi yang di <code class="highlighter-rouge">HEAD</code>(branch <code class="highlighter-rouge">master</code>, karena disitulah kita checkout untuk melakukan merge) adalah bagian teratas dari block(semua yang diatas <code class="highlighter-rouge">======</code>), sementara versi yang didalam branch <code class="highlighter-rouge">iss53</code> adalah semua yang berada dibawahnya. Untuk resolve conflict ini kita harus memilih salah satu dari dua versi tersebut, atau membuat versi baru. Misalnya, kita bisa mengganti seluruh block tersebut dengan:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+please contact us at email.support@github.com
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>Resolusi ini memiliki sedikit bagian dari masing - masing block tadi, dan tanda <code class="highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code class="highlighter-rouge">=======</code>, dan <code class="highlighter-rouge">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> semuanya telah terhapus. Kita lakukan <code class="highlighter-rouge">git add</code> di setiap file yang unmerged untuk menandainya sebagai resolved. Staging file - file tersebut dalam kondisi ini berarti menandainya sebagai resolved dalam git.</p>
+
+<p>Jika kita ingin menggunakan tool graphic untuk membantu resolve conflict seperti ini, kita bisa gunakan perintah <code class="highlighter-rouge">git mergetool</code>, yang nantinya akan membuka tool merge visual yang digunakan.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git mergetool
+
+This message is displayed because <span class="s1">'merge.tool'</span> is not configured.
+See <span class="s1">'git mergetool --tool-help'</span> or <span class="s1">'git help config'</span> <span class="k">for </span>more details.
+<span class="s1">'git mergetool'</span> will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p4merge araxis bc3 codecompare vimdiff emerge
+Merging:
+index.html
+
+Normal merge conflict <span class="k">for</span> <span class="s1">'index.html'</span>:
+  <span class="o">{</span><span class="nb">local</span><span class="o">}</span>: modified file
+  <span class="o">{</span>remote<span class="o">}</span>: modified file
+Hit <span class="k">return </span>to start merge resolution tool <span class="o">(</span>opendiff<span class="o">)</span>:
+</code></pre></div></div>
+
+<p>Jika kita ingin menggunakan mergetool lain selain tool default(git menggunakan opendiff dalam contoh ini karena perintah tersebut dijalankan didalam Mac), kita dapat melihat tool - tool lain yang didukung, cukup ketik nama tool tersebut.</p>
+
+<p>Setelah kita keluar dari mergetool tadi, git akan bertanya apakah proses merge nya sukses. Jika kita menulis demikian maka file - file tersebut akan ditandai sebagai resolved. Kita bisa menjalankan kembali <code class="highlighter-rouge">git status</code> untuk memastikan benar sudah diresolved.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git status
+On branch master
+All conflicts fixed but you are still merging.
+  <span class="o">(</span>use <span class="s2">"git commit"</span> to conclude merge<span class="o">)</span>
+
+Changes to be committed:
+
+    modified:   index.html
+</code></pre></div></div>
+
+<p>Jika kita puas dengan hasil tersebut dan memastikan semua conflict sudah di staged, kita jalankan <code class="highlighter-rouge">git commit</code> untuk menyudahi proses merge-nya. Secara default commit message-nya seperti ini:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Merge branch <span class="s1">'iss53'</span>
+
+Conflicts:
+    index.html
+<span class="c">#</span>
+<span class="c"># It looks like you may be committing a merge.</span>
+<span class="c"># If this is not correct, please remove the file</span>
+<span class="c">#	.git/MERGE_HEAD</span>
+<span class="c"># and try again.</span>
+
+
+<span class="c"># Please enter the commit message for your changes. Lines starting</span>
+<span class="c"># with '#' will be ignored, and an empty message aborts the commit.</span>
+<span class="c"># On branch master</span>
+<span class="c"># All conflicts fixed but you are still merging.</span>
+<span class="c">#</span>
+<span class="c"># Changes to be committed:</span>
+<span class="c">#	modified:   index.html</span>
+<span class="c">#</span>
+</code></pre></div></div>
+
+<p>Sebaiknya kita tambahkan detail lebih mendalam lagi mengenai proses merging-nya dalam commit message.</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tag/git">git</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Branching+dan+Merging+http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/" class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/" class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on Google Plus -->
+    <a href="https://plus.google.com/share?url=http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/" class="btn btn-social-icon btn-google" title="Share on Google+">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+      <span class="sr-only">Google+</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://alexforsale.github.io/blog/2017-12-22-branching-dan-merging/" class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/blog/2017-12-20-branching-dalam-git/" data-toggle="tooltip" data-placement="top" title="Branching dalam git">← Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          <div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'alexforsale';
+        /* ensure that pages with query string get the same discussion */
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+</div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/alexforsale" title="Facebook">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/alexforsale" title="GitHub">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">GitHub</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="https://twitter.com/alexforsale" title="Twitter">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Twitter</span>
+            </a>
+          </li>
+          
+	  
+          <li>
+            <a href="https://reddit.com/u/elasrofxela" title="Reddit">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Reddit</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://plus.google.com/+ChristianAlexander" title="Google+">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Google+</span>
+            </a>
+          </li>
+          
+		  
+          <li>
+            <a href="mailto:alexforsale@yahoo.com" title="Email me">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Email me</span>
+            </a>
+          </li>
+          
+		  
+		  
+		  
+          <li>
+            <a href="https://stackoverflow.com/users/9088776/alexforsale" title="StackOverflow">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">StackOverflow</span>
+            </a>
+          </li>
+          
+      
+      
+      
+      
+      
+		  
+          <li>
+            <a href="/blog/feed.xml" title="RSS">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">RSS</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://steamcommunity.com/id/alexforsale" title="Steam">
+              <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-steam fa-stack-1x fa-inverse"></i>
+              </span>
+              <span class="sr-only">Steam</span>
+            </a>
+          </li>
+          
+      
+      
+        </ul>
+        <p class="copyright text-muted">
+		  Christian Alexander
+		   • 
+		  2017
+
+		  
+		   • 
+		  <a href="http://alexforsale.github.io/blog">alexforsale.github.io</a>
+		  
+	    </p>
+	        <!-- Please don't remove this, keep my open source work credited :) -->
+		<p class="theme-by text-muted">
+		  Theme by
+		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/blog/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+	<script src="/blog/js/main.js"></script>
+    
+  
+
+
+
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-90730319-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+  
+  </body>
+</html>
