@@ -3,7 +3,7 @@
 # url is the full website URL
 # baseurl is the website's URL without the hostname
 
-# If you are building a simple GitHub user page (http://username.github.io) then use these settings:
+# If you are building a simple GitHub user page (https://username.github.io) then use these settings:
 #url: "http://alexforsale.github.io"
 #baseurl: ""
 
@@ -36,14 +36,23 @@ avatar: "/img/alexforsale_small.jpg"
 
 # --- Background colour/image options --- #
 
-# By default, the navigation bar and footer have a light gray background, and the main page
-# has a white background. You can specify a different background colour or a background image
-# for the navigation bar, the main page, and the footer.
-# navbar-col: "orange"
+# Personalize the colors in your website. Colour values can be any valid CSS colour
+
+navbar-col: "#F5F5F5"
+navbar-text-col: "#404040"
+navbar-children-col: "#F5F5F5"
+page-col: "#FFFFFF"
+link-col: "#008AFF"
+hover-col: "#0085A1"
+footer-col: "#F5F5F5"
+footer-text-col: "#777777"
+footer-link-col: "#404040"
+
+# Alternatively, the navbar, footer, and page background can be set to use background images
+# instead of colour
+
 # navbar-img: "/img/bgimage.png"
-# footer-col: "blue"
 # footer-img: "/img/bgimage.png"
-# page-col: "#FF0000"
 # page-img: "/img/bgimage.png"
 
 # --- Footer options --- #
@@ -98,15 +107,48 @@ share-links-active:
 # Remove this if you don't want a link in the footer
 url-pretty: "alexforsale.github.io"  # eg. "deanattali.com/beautiful-jekyll"
 
-# --- Misc --- #
-# Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
-disqus: "alexforsale"
+# --- Web Statistics Section --- #
+
+# Fill in your Google Analytics gtag.js ID to track your website using gtag
+#gtag: ""
 
 # Fill in your Google Analytics ID to track your website using GA
 google_analytics: "UA-90730319-1"
 
 # Google Tag Manager ID
 gtm: "GTM-MZL2TQ8"
+
+# Matomo (aka Piwik) Web statistics
+# Uncomment the following section to enable Matomo. The opt-out parameter controls
+# whether or not you want to allow users to opt out of tracking.
+
+#matomo:
+#  site_id: "9"
+#  uri: "demo.wiki.pro"
+#  opt-out: true
+
+# --- Comments --- #
+
+# Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
+# disqus: ""
+# If you want to use just-comments fill with the API Key
+#just-comments: "ABCD-EFGH-IJKL"
+
+# To use Facebook Comments, fill in a Facebook App ID
+# fb_comment_id: ""
+
+# Staticman support
+staticman:
+  repository : # GitHub username/repository eg. "daattali/beautiful-jekyll"
+  branch     : # eg. "master" If you're not using `master` branch, then you also need to update the `branch` parameter in `staticman.yml`
+  endpoint   : # URL of your own deployment (with trailing slash) (will fallback to a public GitLab instance)
+  reCaptcha:
+    # reCaptcha for Staticman (OPTIONAL)
+    # If you use reCaptcha, you must also set these parameters in staticman.yml
+    siteKey  : # Use your own site key, you need to apply for one on Google
+    secret   : # ENCRYPT your password by going to https://staticman3.herokuapp.com/v3/encrypt/<your-site-secret>
+
+# --- Misc --- #
 
 # Facebook App ID
 # fb_app_id: "175444193059305"
@@ -148,8 +190,8 @@ defaults:
       layout: "page"
       show-avatar: true
 
-# Use tags pages (not recommended if you are deploying via GitHub pages, only set to true if deploying locally with ruby)
-link-tags: false
+# Use tags index page and make tags on each post clickable
+link-tags: true
 
 # Exclude these files from production site
 exclude:
@@ -216,14 +258,7 @@ prose:
 
 plugins:
   - jekyll-paginate
-  - jekyll-seo-tag
-  - jekyll-feed
   - jekyll-sitemap
-  - jemoji
-  - jekyll-mentions
-
-jekyll-mentions:
-  base_url: https://twitter.com
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
