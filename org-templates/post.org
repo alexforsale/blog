@@ -1,0 +1,4 @@
+#+AUTHOR: Kristian Alexander P
+#+KEYWORDS: post
+#+OPTIONS: toc:nil
+#+HTML_DOCTYPE: xhtml-strict

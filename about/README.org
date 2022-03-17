@@ -1,0 +1,5 @@
+#+title: My Blog
+#+author: alexforsale
+#+email: alexforsale@yahoo.com
+
+This is based from [[https://gitlab.com/psachin/psachin.gitlab.io][psachin's templates]], so if you're currently trying to create your own website using this template, I suggest you use his template instead.
