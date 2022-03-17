@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/alexforsale
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://alexforsale.github.io
+  * I am alexforsale (https://keybase.io/alexforsale) on keybase.
+  * I have a public key with fingerprint 2751 7709 E592 F14C 5A51  D90B 972B 3C2D 613E 4AE9
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207460caa4e8ce5099479ba83373593545c7d39058f8eb837695dfdb384e4d06620a",
+      "fingerprint": "27517709e592f14c5a51d90b972b3c2d613e4ae9",
+      "host": "keybase.io",
+      "key_id": "972b3c2d613e4ae9",
+      "kid": "010186929fa0065f4b5b43cb3066d30c9a8cc0c4f9c11a55c12174282684b76fa6d50a",
+      "uid": "76bdde86b51b3e9bf32a81dd542cb619",
+      "username": "alexforsale"
+    },
+    "service": {
+      "hostname": "alexforsale.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1513536064,
+  "expire_in": 157680000,
+  "prev": "1fd7ef262fb329ce46b8bccda602f3750d6f51704ddb1b10b3fef11810c903a5",
+  "seqno": 14,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owJ4nG1SXWxURRTexaWGJZiWNrzYBnp9gNJ2M3Pn787SoMaaENDEiiSkJm7m7+5e
+KHuXvXfbAhoehGL9QVJD1AdeDMSoxZBqYiEp4cW06otEq8EgBEglGBpAJcGK1rnV
+Pum8nMyZ7/vOd86cIyseSGXTb7d3dYqNm2+kv7ohU730TGmfI0O9x8nvc3aahWD6
+tIniws5AO3kHQBcwTIESAhtPGQI4x4xL4SHEEOGIYKKYRhwQz/eM9BCjnGhfS+Rh
+gzWg1AXC6XD8oFw01Uo1KMdW1mUEMga4Idz1IVZEEKg5kJy5EilXU4gMFoZbYimM
+EoY1J0VkckFoc/ZSWLD3P/hF3wB6lLvcFwBQ4mNJJEZKImtII6C48JQCCvtcQSgI
+UdCFDLueSz0sGfUF1WTBd21BjlGptfGoJFAiw6WPXOFBrQl2laQwqVuLTLUsdhmL
+Fn1m0A+rkY3OSx2OfegPlElmmzTzX1CuGMSlmvynt0o1jEMV9llIKY4rUT6RiPdU
+Es6AkYV/1QoyKGs7U8voN9UoCMtOHlqkioNEHhKICKKA4g7HDFaCqikECYIw6gF7
+kjrG9FtN6GtmfJe6vkQuVwZT6UmltKDA9REjQFPffhbAWksoIZDINz6EHrRDBEgQ
+J2lwdzm04rZWLIpWMwqKZRHXqrb97HAaZVLpbKplVWtmbc/AspmRO0/19lxYvriI
+S5ckW5jKLqtfzBxiD85vOdjctjwmh37a0lNa+vlY0/r2zA+5rtzEpmfrX2g6/Pz2
+vSfXHzjx2PF14z8P0S/u/nmxdUnTN5emG7pn6ez+ua5PWy59cP3wj7/uzTQcGNmx
+YezW7TMfprfLo7uvdF6p23bi6nuNR6cq8fDEhecy8FTru733rg3ixx+pb9w0d/rR
+m6vHvptpa7k5P53/cvWL+Ps/zNrR+ytuvTk0T0tbv35r/MiI95DInj342sr+sdOT
+deO/z5797eHmu92vnxpc2Xl8NGo89+SrxY9z77Chts1r7ky0dLfXPnli5tjUxo++
+rTu3raHr2PjLl18ZmFwzXLz2/twvzv17V2+jN55pPj+3f2p69Onz6/76jA5tmPwb
+yKVMQQ==
+=n5Ks
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/alexforsale
+
+==================================================================
