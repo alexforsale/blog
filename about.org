@@ -5,4 +5,4 @@
 
 I actually hate making blogs, I love tinkering, but I'm a failure at documenting every discoveries I've found so far. When I heard about [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] and how it's basically built-in inside /Emacs/ with [[https://orgmode.org/][org-mode]], maybe it's the time to really start using it.
 
-The blog itself is completely build from /org-mode/, managed with several /Emacs-lisp/ functions, scripted using /GNU [[file:Makefile][Makefiles]]/. The /Emacs lisp/ build file [[file:publish.el][publish.el]] is independent and can be run using vanilla /Emacs/ with no configuration.
+The blog itself is completely build from /org-mode/, managed with several /Emacs-lisp/ functions, scripted using /GNU [[https://github.com/alexforsale/alexforsale.github.io/blob/main/Makefile][Makefiles]]/. The /Emacs lisp/ build file [[https://github.com/alexforsale/alexforsale.github.io/blob/main/publish.el][publish.el]] is independent and can be run using vanilla /Emacs/ with no configuration.
