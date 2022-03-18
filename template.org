@@ -8,4 +8,4 @@
 
 CONTENT
 
-#+INCLUDE: "../disquss.inc"
+#+INCLUDE: "../utterances.inc"
