@@ -3,3 +3,16 @@
 #+email: alexforsale@yahoo.com
 
 This is based from [[https://gitlab.com/psachin/psachin.gitlab.io][psachin's templates]], so if you're currently trying to create your own website using this template, I suggest you use his template instead.
+* How it works
+  :PROPERTIES:
+  :header-args: :tangle no
+  :END:
+  The [[file:Makefile][Makefile]] is run by the ~make~ executable, the file itself is a standard textfile contains the commands needed to create the /html/ files. Since this is basically an /org-mode/ exported files, the core functions is in the [[file:publish.el][publish.el]] file, mostly still the same as the original [[https://gitlab.com/psachin/psachin.gitlab.io][Makefile from psachin's repo]], with some modifications:
+  - added user credentials
+    #+begin_src emacs-lisp
+      (setq user-full-name "Kristian Alexander P"
+            user-mail-address "alexforsale@yahoo.com")
+    #+end_src
+    This is needed for the generated /xml/ from =ox-rss= package.
+
+  The Makefile itself is modified in order to add another function for publishing to local directory. Other than that it still using the original. I might tinker with the /css/ when I have the time(and the knowledge for that).
