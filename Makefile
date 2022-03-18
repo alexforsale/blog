@@ -28,7 +28,7 @@ endif
 all: publish
 
 publish: publish.el
-	@echo "Publishing... with current Emacs configurations."
+	@echo "Publishing..."
 	${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
 
 publish_local: publish.el
