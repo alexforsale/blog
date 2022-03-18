@@ -1,0 +1,6 @@
+#+title: About
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+filetags: about
+
+I actually hate making blogs, I love tinkering, but I'm a failure at documenting every discoveries I've found so far.
