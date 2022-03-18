@@ -8,9 +8,9 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v1
       - name: Install Emacs
         run: sudo apt install emacs-nox --yes
 
@@ -18,8 +18,8 @@ jobs:
         run: make
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          branch: gh-pages
+          folder: public
