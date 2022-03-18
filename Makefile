@@ -34,8 +34,8 @@ publish: publish.el
 publish_local: publish.el
 	@echo "Publishing to server"
 	${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
-	rm -rf ${SERVER_PATH}/*
-	mv ./public/* ${SERVER_PATH}
+	sudo rm -rf ${SERVER_PATH}/*
+	sudo mv ./public/* ${SERVER_PATH}
 	sudo chown -R ${SERVER_USER} ${SERVER_PATH}
 clean:
 	@echo "Cleaning up.."
