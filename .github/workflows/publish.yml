@@ -1,16 +1,15 @@
-name: Publish to GitHub Pages
-
+name: Build and Deploy
 on:
   push:
     branches:
       - main
-
 jobs:
-  publish:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install Emacs
         run: sudo apt install emacs-nox --yes
@@ -19,7 +18,7 @@ jobs:
         run: make
 
       - name: Publish generated content to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@4.2.5
         with:
           branch: gh-pages
-          folder: public
+          folder: ./public
