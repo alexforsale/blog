@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@main
+
       - name: Install Emacs
         run: sudo apt install emacs-nox --yes
 
@@ -20,6 +21,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: public
