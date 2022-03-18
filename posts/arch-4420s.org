@@ -1,0 +1,801 @@
+#+startup: hideblocks overview
+#+title: Archlinux on HP Probook 4420s
+#+date: <2022-03-13 Sun>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+
+This is how I setup my /archlinux/ on [[https://support.hp.com/id-en/document/c02052909][HP Probook 4420s]]:
+#+ATTR_HTML: :class center no-border
+[[file:~/Documents/google-drive/org/blog/images/posts/probook-4420s.jpg][file:../images/posts/probook-4420s.jpg]]
+
+* Partitions
+  :PROPERTIES:
+  :header-args: :exports both
+  :END:
+  #+begin_src sh :results verbatim
+    lsblk /dev/sda
+  #+end_src
+
+  #+RESULTS:
+  : NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+  : sda      8:0    0 232.9G  0 disk
+  : |-sda1   8:1    0     1M  0 part
+  : |-sda2   8:2    0   500M  0 part /boot
+  : |                                /efi
+  : |-sda3   8:3    0     4G  0 part [SWAP]
+  : `-sda4   8:4    0 228.4G  0 part /home
+  :                                  /
+
+  #+begin_src sh :dir /sudo:: :results verbatim
+    blkid /dev/sda*
+  #+end_src
+
+  #+RESULTS:
+  : /dev/sda: PTUUID="8cb2d283-12d9-1b4a-a243-b67401089ded" PTTYPE="gpt"
+  : /dev/sda1: PARTUUID="55e8ee87-ca6e-6845-a950-6b0fe7c9b83f"
+  : /dev/sda2: LABEL_FATBOOT="EFI" LABEL="EFI" UUID="B62E-3C95" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="6dd9fef5-d5f3-7748-8ccc-38f188314920"
+  : /dev/sda3: LABEL="swap" UUID="beec6b47-9a1c-41d9-aee7-babfbe0be198" TYPE="swap" PARTUUID="d67a8634-fc47-0a44-810e-41efaac903eb"
+  : /dev/sda4: LABEL="root" UUID="654e6dbd-97f7-4aa6-8243-3afa51153038" UUID_SUB="a80dcbd5-16e0-46fe-a165-aeffb916c54a" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="4cdbfe1d-aefb-3a49-a0bd-a6eea749d2f1"
+
+** btrfs subvolumes
+   #+begin_src sh :results verbatim
+     sudo btrfs subvolume list /
+   #+end_src
+
+   #+RESULTS:
+   : ID 256 gen 89902 top level 5 path @
+   : ID 259 gen 80884 top level 256 path @/home
+   : ID 260 gen 96591 top level 259 path @/home/arch
+   : ID 263 gen 89901 top level 256 path @/snapshots
+   : ID 267 gen 88978 top level 256 path @/guix
+   : ID 268 gen 89901 top level 256 path @/data
+   : ID 269 gen 85827 top level 268 path @/data/music
+   : ID 270 gen 89903 top level 256 path @/arch
+   : ID 271 gen 96591 top level 270 path @/arch/root
+   : ID 272 gen 89918 top level 271 path var/lib/portables
+   : ID 273 gen 89919 top level 271 path var/lib/machines
+** Bootloader
+   I'm using [[https://wiki.archlinux.org/title/REFInd][refind]], with no modification on the main configuration(=refind.conf=), but since I'm mounting the /EFI/ partition on =/efi= and the =/boot= partition is actualy a /bind mount/ to =/efi/EFI/arch/=, the only modification needed is in the =refind_linux.conf=, which basically points to where my /root/ partition is.
+   #+begin_src sh :results verbatim
+     cat /boot/refind_linux.conf
+   #+end_src
+
+   #+RESULTS:
+   : "Normal Boot" "root=PARTUUID=4cdbfe1d-aefb-3a49-a0bd-a6eea749d2f1 rw rootflags=subvol=@/arch/root initrd=EFI\arch\intel-ucode.img initrd=EFI\arch\initramfs-%v.img"
+
+   The main reason why I choose /refind/ is convenience, I often install other linux distro on this laptop, usually for testing. And with /refind/ I don't need to setup bootloader for other distro, I just need to setup the boot partition under the =/efi/EFI=, configure the =refind_linux= file(this is because /refind/ needs to knows where the /initrd/ files and the root partition for the specific kernel), and /refind/ will automatically adds it to the boot menu. The same reason why I chose the /btrfs/ filesystem.
+* Archlinux packages
+  :PROPERTIES:
+  :header-args: :tangle no :exports both
+  :END:
+  These are the packages I've installed apart from the obvious(such as filesystem packages, networking packages etc) of course.
+** essential packages
+   #+begin_src sh :results no
+     sudo pacman -S --noconfirm --needed wget screen emacs git htop bash-completion
+   #+end_src
+   - wget ::
+     Network utilities for retrieving files from the web.
+   - screen ::
+     Terminal multiplexer, nothing special, I'm just never used /tmux/, plus /screen/ is usually available on many linux installer by default.
+   - emacs ::
+     For writing this of course.
+   - htop ::
+     Monitoring stuffs.
+   - bash-completion ::
+     ~TAB~-ing is like a bad habit for me.
+*** emacs packages
+    /Emacs/ packages usually handled by it's own package manager, but some of the packages also needed other functionalities provided by the OS:
+    #+begin_src sh
+      sudo pacman -S --noconfirm --needed w3m fd libvterm
+    #+end_src
+    - w3m ::
+      I personally like it more than the defaultl /eww/ (emacs web wowser).
+    - fd ::
+      It's an alternative to the /GNU Findutils/.
+** xorg
+   #+begin_src sh
+     sudo pacman -S --noconfirm --needed xorg
+   #+end_src
+   In /arch/, =xorg= is a package group, although I can choose to install individual packages manually, eventually I'll installed them all.
+*** video driver
+    #+begin_src sh
+      sudo pacman -S --noconfirm --needed xf86-video-intel
+    #+end_src
+    Usually using /kernel modesettings/ method is better. But using this package I don't have to setup additional backlight configuration(apart from the =xorg.conf=).
+*** input driver
+    #+begin_src sh
+      cat /etc/X11/xorg.conf.d/30-touchpad.conf
+    #+end_src
+    The driver itself already installed(~xf86-input-libinput~) by default.
+*** xinit
+    #+begin_src sh
+      sudo pacman -S --noconfirm --needed xorg-xinit
+    #+end_src
+    It's not needed when using /display manager/ (lightdm etc).
+*** additional packages
+    #+begin_src sh
+      sudo pacman -S --noconfirm --needed bash-completion  pass pass-otp sbcl
+    #+end_src
+**** Networking
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed blueman network-manager-applet
+     #+end_src
+     - blueman ::
+       for bluetooth
+     - network-manager-applet ::
+       obviously because I'm using /Network Manager/.
+**** mail packages
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed notmuch isync goimapnotify msmtp msmtp-mta
+     #+end_src
+**** multimedia
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed beets mpv pulseaudio pulseaudio-{alsa,bluetooth,equalizer}
+     #+end_src
+**** fonts
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed ttf-fantasque-sans-mono gnu-free-fonts bdf-unifont ttf-fontawesome noto-fonts-emoji ttf-bitstream-vera adobe-source-{code-pro,sans,serif}-fonts
+     #+end_src
+**** desktop packages
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed xterm python-pywal feh picom dunst xsettingsd udiskie unclutter xclip capitaine-cursors papirus-icon-theme arc-gtk-theme firefox
+     #+end_src
+     - xterm ::
+       Terminal emulator inside /xorg/.
+     - feh ::
+       Minimal image viewer that can also acts as wallpaper setter.
+     - python-pywal ::
+       /xorg/ colorscheme setter on the fly.
+     - picom ::
+       /X/ compositor.
+     - dunst ::
+       Lightweight notification daemon
+     - xsettingsd ::
+       Provides settings for /X11/ applications.
+     - udiskie ::
+       Removable disk automounter using /udisks/.
+     - unclutter ::
+       For auto hide the mouse cursor.
+     - xclip ::
+       CLI interface for /X11/ clipboard.
+**** setup [[*makepkg.conf][makepkg]].
+**** aur helper
+    #+begin_src sh
+      pushd /tmp
+      git clone https://aur.archlinux.org/yay
+      cd yay
+      makepkg -si
+      popd
+    #+end_src
+**** additional packages for /polybar/.
+     Install these first since it's not explicitly required in /polybar/ /PKGBUILD/.
+     /i3-gaps/ installed to avoid installing the standard /i3-wm/.
+     #+begin_src sh
+       sudo pacman -S i3-gaps libmpdclient
+     #+end_src
+**** additional aur packages
+    #+begin_src sh
+      yay -S --noconfirm --needed polybar
+      yay -S --noconfirm --needed tgs2png # for emacs-telega
+      yay -S --noconfirm --needed grive # google-drive sync
+    #+end_src
+**** additional packages for grive
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed inotify-tools cppunit
+     #+end_src
+**** beets optional dependencies
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed chromaprint ffmpeg gst-plugins-{bad,ugly,good} gst-{libav,python} imagemagick python-{beautifulsoup4,flask,mpd2,pyacoustid,pylast,xdg,pymad}
+     #+end_src
+**** emacs desktop-environment packages
+     #+begin_src sh
+       sudo pacman -S --noconfirm alsa-utils pamixer brightnessctl scrot slock upower tlp playerctl
+     #+end_src
+**** emacs projectile packages
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed ripgrep
+     #+end_src
+     /Ripgrep/ is a /GNU Grep/ alternatives.
+**** Window-manager
+     /exwm/ and /stumpwm/ can be started as user using /xinit/ and /sbcl/ respectively, other /window manager/ that interest me:
+     #+begin_src sh
+       sudo pacman -S --needed --noconfirm qtile # python
+     #+end_src
+***** qtile deps
+      #+begin_src sh
+        sudo pacman -S --needed --noconfirm canto-daemon cmus jupyter_console khal moc python-{dbus-next,iwlib,keyring,mpd2,psutil,setproctitle}
+      #+end_src
+***** python-pip
+      Needed to install user python packages
+      #+begin_src sh
+        sudo pacman -S --noconfirm --needed python-pip
+      #+end_src
+* Archlinux configuration files
+  :PROPERTIES:
+  :header-args: :exports both :results verbatim
+  :END:
+** System-wide configuration
+*** fstab
+    To automatically mount nfs shares, first install nfs-utils
+    #+begin_src sh
+      sudo pacman -S --noconfirm --needed nfs-utils
+    #+end_src
+**** TODO /etc/fstab
+     :LOGBOOK:
+     - State "TODO"       from              [2022-03-13 Sun 15:20]
+     :END:
+     #+begin_src sh :results output
+       cat /etc/fstab
+     #+end_src
+
+     #+RESULTS:
+     #+begin_example
+     # Static information about the filesystems.
+     # See fstab(5) for details.
+
+     # <file system> <dir> <type> <options> <dump> <pass>
+     # /dev/sda4 LABEL=root
+     UUID=654e6dbd-97f7-4aa6-8243-3afa51153038	/         	btrfs     	rw,relatime,space_cache=v2,subvolid=271,subvol=/@/arch/root	0 0
+
+     # /dev/sda2 LABEL=EFI
+     UUID=B62E-3C95      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+     # /dev/sda4 LABEL=root
+     UUID=654e6dbd-97f7-4aa6-8243-3afa51153038	/home     	btrfs     	rw,relatime,space_cache=v2,subvolid=260,subvol=/@/home/arch	0 0
+
+     # /mnt/boot/EFI/arch
+     /efi/EFI/arch  	/boot     	none      	rw,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro,bind	0 0
+
+     # /dev/sda3 LABEL=swap
+     UUID=beec6b47-9a1c-41d9-aee7-babfbe0be198	none      	swap      	defaults  	0 0
+
+     #+end_example
+
+*** =acpi_backlight=
+    #+begin_src conf :mkdirp t :tangle /sudo::/etc/udev/rules.d/99-backlight.rules
+      RUN+="/bin/chgrp video /sys/class/backlight/acpi_video0/brightness"
+      RUN+="/bin/chmod g+w /sys/class/backlight/acpi_video0/brightness"
+    #+end_src
+    skip this if using /intel/ driver (xf86-video-intel).
+*** =intel_backlight=
+    #+begin_src conf :tangle /sudo::/etc/udev/rules.d/99-intel-backlight.rules
+      RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+      RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+    #+end_src
+*** =libinput=
+    I've switched to using /libinput/ since the /synaptic/ driver often acting weird.
+    #+begin_src conf :tangle /sudo::/etc/X11/xorg.conf.d/30-touchpad.conf
+      Section "InputClass"
+              Identifier "touchpad"
+              Driver "libinput"
+              MatchIsTouchpad "on"
+              Option "Tapping" "on"
+              Option "NaturalScrolling" "true"
+      EndSection
+    #+end_src
+*** lis3lv02d
+    ST LIS3LV02Dx three-axis digital accelerometer driver, to autoload this using /systemd/:
+    #+begin_src conf :tangle /sudo::/etc/modules-load.d/lis3lv02d.conf
+      lis3lv02d
+    #+end_src
+    Details for this module [[https://www.kernel.org/doc/html/latest/misc-devices/lis3lv02d.html][here]].
+**** TODO packages
+     :LOGBOOK:
+     - State "TODO"       from              [2022-03-18 Fri 16:22]
+     :END:
+     perhaps handled by /evdev/?
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed xf86-input-evdev
+     #+end_src
+*** battery
+**** packages
+     #+begin_src sh
+       sudo pacman -S --needed --noconfirm acpi acpid
+     #+end_src
+***** enable acpid
+      #+begin_src sh
+        sudo systemctl enable --now acpid
+      #+end_src
+*** pacman
+    Enable /multilib/ repository at =/etc/pacman.conf=. While we're at it, also enable other functionalities as well:
+    1. =UseSyslog= ::
+       Enable logging to systemd-journald.
+    2. =Color= ::
+       Use colored output.
+    3. =CheckSpace= ::
+       Enable space checking before running /pacman/.
+    4. =VerbosePkgLists= ::
+       Detailed package information
+    5. =ParallelDownloads= ::
+       Enable parallel downloads, useful since it's /arch/ afterall, expect kernel updates faster than other distro.
+    #+begin_src conf :tangle /sudo::/etc/pacman.conf
+      #
+      # /etc/pacman.conf
+      #
+      # See the pacman.conf(5) manpage for option and repository directives
+
+      #
+      # GENERAL OPTIONS
+      #
+      [options]
+      # The following paths are commented out with their default values listed.
+      # If you wish to use different paths, uncomment and update the paths.
+      #RootDir     = /
+      #DBPath      = /var/lib/pacman/
+      #CacheDir    = /var/cache/pacman/pkg/
+      #LogFile     = /var/log/pacman.log
+      #GPGDir      = /etc/pacman.d/gnupg/
+      #HookDir     = /etc/pacman.d/hooks/
+      HoldPkg     = pacman glibc
+      #XferCommand = /usr/bin/curl -L -C - -f -o %o %u
+      #XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
+      #CleanMethod = KeepInstalled
+      Architecture = auto
+
+      # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+      #IgnorePkg   =
+      #IgnoreGroup =
+
+      #NoUpgrade   =
+      #NoExtract   =
+
+      # Misc options
+      UseSyslog
+      Color
+      #NoProgressBar
+      CheckSpace
+      VerbosePkgLists
+      ParallelDownloads = 5
+
+      # By default, pacman accepts packages signed by keys that its local keyring
+      # trusts (see pacman-key and its man page), as well as unsigned packages.
+      SigLevel    = Required DatabaseOptional
+      LocalFileSigLevel = Optional
+      #RemoteFileSigLevel = Required
+
+      # NOTE: You must run `pacman-key --init` before first using pacman; the local
+      # keyring can then be populated with the keys of all official Arch Linux
+      # packagers with `pacman-key --populate archlinux`.
+
+      #
+      # REPOSITORIES
+      #   - can be defined here or included from another file
+      #   - pacman will search repositories in the order defined here
+      #   - local/custom mirrors can be added here or in separate files
+      #   - repositories listed first will take precedence when packages
+      #     have identical names, regardless of version number
+      #   - URLs will have $repo replaced by the name of the current repo
+      #   - URLs will have $arch replaced by the name of the architecture
+      #
+      # Repository entries are of the format:
+      #       [repo-name]
+      #       Server = ServerName
+      #       Include = IncludePath
+      #
+      # The header [repo-name] is crucial - it must be present and
+      # uncommented to enable the repo.
+      #
+
+      # The testing repositories are disabled by default. To enable, uncomment the
+      # repo name header and Include lines. You can add preferred servers immediately
+      # after the header, and they will be used before the default mirrors.
+
+      #[testing]
+      #Include = /etc/pacman.d/mirrorlist
+
+      [core]
+      Include = /etc/pacman.d/mirrorlist
+
+      [extra]
+      Include = /etc/pacman.d/mirrorlist
+
+      #[community-testing]
+      #Include = /etc/pacman.d/mirrorlist
+
+      [community]
+      Include = /etc/pacman.d/mirrorlist
+
+      # If you want to run 32 bit applications on your x86_64 system,
+      # enable the multilib repositories as required here.
+
+      #[multilib-testing]
+      #Include = /etc/pacman.d/mirrorlist
+
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+
+      # An example of a custom package repository.  See the pacman manpage for
+      # tips on creating your own repositories.
+      #[custom]
+      #SigLevel = Optional TrustAll
+      #Server = file:///home/custompkgs
+    #+end_src
+    After the first sync (=pacman -Syu=), also install =multilib-devel= if you're planning to install lib32 aur packages.
+*** other packages
+**** fwupd
+     #+begin_src sh
+       sudo pacman -S --noconfirm --needed fwupd
+     #+end_src
+***** fwupd get-devices
+      #+begin_src sh :results verbatim
+        sudo fwupdmgr get-devices
+      #+end_src
+
+      #+RESULTS:
+      #+begin_example
+
+      ?
+      ??HP Integrated Module:
+      ?     Device ID:          c0170efdf195b8590000fa21474253c0d97e7335
+      ?     Current version:    3.6
+      ?     Vendor:             Broadcom Corp (USB:0x03F0)
+      ?     GUIDs:              08412d80-639e-522b-abd2-7d46b9445334 ? USB\VID_03F0&PID_231D&REV_0306
+      ?                         79814083-7581-5801-b6f3-8792cc340f0c ? USB\VID_03F0&PID_231D
+      ?     Device Flags:       ? Updatable
+      ?
+      ??WDC WD2500BEVT-22ZCT0:
+            Device ID:          602b0a6cc821d155208724f0e22f8d111542b74c
+            Summary:            ATA drive
+            Current version:    11.01A11
+            Vendor:             Western Digital (ATA:0x101C, OUI:0014ee)
+            Serial Number:      WD-WXE1E10S5682
+            GUIDs:              b03be26b-ec23-5084-b50a-3a381315f822 ? IDE\WDC_WD2500BEVT-22ZCT0___________________11.01A11
+                                b958b198-9fdf-5b92-b0fc-8f6e116d9693 ? IDE\0WDC_WD2500BEVT-22ZCT0___________________
+                                68dbccef-a445-5349-b9c1-3d748058bd36 ? WDC WD2500BEVT-22ZCT0
+            Device Flags:       ? Internal device
+                                ? Updatable
+                                ? System requires external power source
+                                ? Needs a reboot after installation
+                                ? Device is usable for the duration of the update
+
+      #+end_example
+** User configuration
+*** makepkg.conf
+    The system-wide configuration is =/etc/makepkg.conf=, but it's better to create user configuration at =~/.config/pacman/makepkg.conf=.
+    #+begin_src conf :tangle ~/.config/pacman/makepkg.conf :mkdirp t
+      MAKEFLAGS="-j2"
+      BUILDENV=(!distcc color !ccache !check sign)
+      PKGDEST=/data/pacman/packages
+      SRCDEST=/data/pacman/sources
+      SRCPKGDEST=/data/pacman/srcpackages
+      LOGDEST=/data/pacman/makepkglogs
+
+      PACKAGER="$(git config --global user.name) <$(git config --global user.email)>"
+      GPG_KEY="$(git config --global user.signingkey)"
+    #+end_src
+    - if using own gpg-key, first add it to pacman-key:
+      #+begin_src sh
+        sudo pacman-key --recv-keys "<your_key_here>"
+        sudo pacman-key --lsign-keys "<your_key_here>"
+      #+end_src
+    - create the necessary directories
+      #+begin_src sh
+        sudo mkdir -pv /data/pacman/{packages,sources,srcpackages,makepkglogs}
+        sudo chown -v :admin /data/pacman/{packages,sources,srcpackages,makepkglogs}
+        sudo chmod -v 1775 /data/pacman/{packages,sources,srcpackages,makepkglogs}
+      #+end_src
+      =admin= is a user-defined group, if no other user is using /makepkg/, it's safe to use your own user group and set the directories inside your user "${HOME}".
+*** [[https://github.com/vitalif/grive2][grive]]
+    A fork from the original /grive/, with the support for the new Drive REST API and partial sync. Create a directory for syncing (in my case it's =~/Documents/google-drive=). Run ~grive -a~ inside the directory for initializing the connection. Once it's established, we can continue with the systemd user unit (=grive-changes@$(systemd-escape Documents/google-drive).service=).
+    #+begin_src sh
+      systemctl --user enable --now grive-changes@$(systemd-escape Documents/google-drive).service
+    #+end_src
+    To verify:
+    #+begin_src sh :results verbatim
+      systemctl --user status grive-changes@$(systemd-escape Documents/google-drive).service
+    #+end_src
+
+    #+RESULTS:
+    #+begin_example
+    ,* grive-changes@Documents-google\x2ddrive.service - Google drive sync (changed files)
+         Loaded: loaded (/usr/lib/systemd/user/grive-changes@.service; enabled; vendor preset: enabled)
+         Active: active (running) since Sun 2022-03-13 17:23:22 WIB; 41s ago
+       Main PID: 61459 (grive-sync.sh)
+          Tasks: 2 (limit: 4423)
+         Memory: 1004.0K
+            CPU: 40ms
+         CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/app-grive\x2dchanges.slice/grive-changes@Documents-google\x2ddrive.service
+                 |-61459 /bin/bash /usr/lib/grive/grive-sync.sh listen "Documents-google\\x2ddrive"
+                 `-61463 inotifywait -q -r -e modify,attrib,close_write,move,create,delete --exclude ".grive_state|.grive" Documents/google-drive
+
+    Mar 13 17:23:22 arch-4420s systemd[382]: Started Google drive sync (changed files).
+    Mar 13 17:23:22 arch-4420s grive-sync.sh[61459]: Listening for changes in ~/Documents/google-drive
+    #+end_example
+    It depends on /inotify-tools/ so make sure it's [[*additional packages for grive][installed]].
+*** TODO mail
+    :LOGBOOK:
+    - State "TODO"       from              [2022-03-13 Sun 17:26]
+    :END:
+    I have four accounts configured in this setup:
+    1. Gmail
+       My primary account.
+    2. Yahoo
+       My "bulk" mail, usually for subscribing to news, mailing lists and such.
+    3. Hotmail
+       A.K.A /windowslive/. Not used often but still needed for connecting to /ms/ stuffs.
+    4. ymail
+       Few mailing lists and stuffs.
+**** msmtp
+     Configuration can be stored in =~/.msmtprc= or =~/.config/msmtp/config=.
+     #+begin_src conf :tangle ~/.config/msmtp/config :mkdirp t
+       # Set default values for all following accounts.
+       defaults
+       auth           on
+       tls            on
+       tls_trust_file /etc/ssl/certs/ca-certificates.crt
+       logfile        ~/.local/share/mail/msmtp.log
+
+       # Gmail
+       account        gmail
+       host           smtp.gmail.com
+       port           587
+       from           alexarians@gmail.com
+       user           alexarians
+       passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-gmail.gpg"
+
+       # Yahoo service
+       account        yahoo
+       auth           on
+       tls            on
+       tls_trust_file /etc/ssl/certs/ca-certificates.crt
+       host           smtp.mail.yahoo.com
+       port           587
+       from           alexforsale@yahoo.com
+       user           alexforsale
+       passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-yahoo.gpg"
+
+       # Hotmail
+       account        hotmail
+       auth           on
+       tls            on
+       tls_trust_file /etc/ssl/certs/ca-certificates.crt
+       #tls_certcheck  off
+       host           smtp-mail.outlook.com
+       port           587
+       from           christian.alexander@windowslive.com
+       user           christian.alexander@windowslive.com
+       passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-hotmail.gpg"
+
+       # Ymail service
+       account        ymail
+       auth           on
+       tls            on
+       tls_trust_file /etc/ssl/certs/ca-certificates.crt
+       host           smtp.mail.yahoo.com
+       port           587
+       from           christian.alexander@ymail.com
+       user           christian.alexander@ymail.com
+       passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-ymail.gpg"
+
+       # Set a default account
+       account default : yahoo
+
+     #+end_src
+     To easily encript the files in =~/.local/etc/mail/=, open the file in /Emacs/ and save it with =.gpg= extension, if you've setup gpg(see arch wiki for [[https://wiki.archlinux.org/title/GnuPG][that]]) it'll prompt you for the key to encrypt. Another option is to use /password-store/ to store the password, details also in [[https://wiki.archlinux.org/title/Msmtp][arch wiki]].
+**** isync
+     This is what I configured in =~/.mbsyncrc=:
+     #+begin_src conf :tangle ~/.mbsyncrc
+       IMAPAccount gmail
+       # Address to connect to
+       Host imap.gmail.com
+       User alexarians@gmail.com
+       # Pass ***************
+       # To store the password in an encrypted file use PassCmd instead of Pass
+       PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-gmail.gpg"
+       #
+       # Use SSL
+       SSLType IMAPS
+       # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+       CertificateFile /etc/ssl/certs/ca-certificates.crt
+       #CertificateFile ~/.cert/imap.gmail.com.pem
+       #CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+       IMAPAccount yahoo
+       Host imap.mail.yahoo.com
+       User alexforsale@yahoo.com
+       PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-yahoo.gpg"
+       SSLType IMAPS
+       CertificateFile /etc/ssl/certs/ca-certificates.crt
+       PipelineDepth 10
+
+       IMAPAccount ymail
+       Host imap.mail.yahoo.com
+       User christian.alexander@ymail.com
+       PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-ymail.gpg"
+       SSLType IMAPS
+       CertificateFile /etc/ssl/certs/ca-certificates.crt
+       PipelineDepth 10
+
+       IMAPAccount hotmail
+       Host imap-mail.outlook.com
+       User christian.alexander@windowslive.com
+       PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-hotmail.gpg"
+       SSLType IMAPS
+       CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+       IMAPStore gmail-remote
+       Account gmail
+
+       MaildirStore gmail-local
+       SubFolders Verbatim
+       # The trailing "/" is important
+       Path /home/alexforsale/.mail/gmail/
+       Inbox /home/alexforsale/.mail/gmail/Inbox
+
+       Channel gmail-trash
+       Far :gmail-remote:"[Gmail]/Trash"
+       Near :gmail-local:trash
+       Create Near
+
+
+       Channel gmail-sent
+       Far :gmail-remote:"[Gmail]/Sent Mail"
+       Near :gmail-local:sent
+       Create Near
+
+       Channel gmail-drafts
+       Far :gmail-remote:"[Gmail]/Drafts"
+       Near :gmail-local:drafts
+       Create Near
+
+       Channel gmail-allmail
+       Far :gmail-remote:"[Gmail]/All Mail"
+       Near :gmail-local:archived
+       Create Near
+
+       Channel gmail-default
+       Far :gmail-remote:
+       Near :gmail-local:
+       # Exclude everything under the internal [Gmail] folder, except the interesting folders
+       #Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+       #Patterns "INBOX" ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/All Mail" "[Gmail]/Trash"
+       Patterns "INBOX" ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+       # Or include everything
+       #Patterns *
+       # Automatically create missing mailboxes, both locally and on the server
+       Create Both
+       # Sync the movement of messages between folders and deletions, add after making sure the sync works
+       # Expunge Both
+       # Save the synchronization state files in the relevant directory
+       SyncState *
+
+       Group gmail
+       Channel gmail-default
+       Channel gmail-sent
+       Channel gmail-drafts
+       Channel gmail-trash
+       Channel gmail-allmail
+
+       IMAPStore yahoo-remote
+       Account yahoo
+
+       MaildirStore yahoo-local
+       SubFolders Verbatim
+       Path /home/alexforsale/.mail/yahoo/
+       Inbox /home/alexforsale/.mail/yahoo/Inbox
+
+       Channel yahoo
+       Far :yahoo-remote:
+       Near :yahoo-local:
+       Patterns "INBOX" Draft Sent Archive Spam
+       Create Both
+       SyncState *
+       CopyArrivalDate yes
+
+       IMAPStore hotmail-remote
+       Account hotmail
+
+       MaildirStore hotmail-local
+       SubFolders Verbatim
+       Path /home/alexforsale/.mail/hotmail/
+       Inbox /home/alexforsale/.mail/hotmail/Inbox
+
+       Channel hotmail
+       Far :hotmail-remote:
+       Near :hotmail-local:
+       Patterns *
+       Create Both
+
+       IMAPStore ymail-remote
+       Account ymail
+
+       MaildirStore ymail-local
+       SubFolders Verbatim
+       Path /home/alexforsale/.mail/ymail/
+       Inbox /home/alexforsale/.mail/ymail/Inbox
+
+       Channel ymail
+       Far :ymail-remote:
+       Near :ymail-local:
+       Patterns *
+       Create Both
+     #+end_src
+     Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
+**** notmuch
+     run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
+**** goimapnotify
+     Needs separate configuration file for each accounts, here I'm using /password-store/.
+     - gmail
+       #+begin_src conf :tangle ~/.config/imapnotify/gmail.conf :mkdirp t
+         {
+         "host": "imap.gmail.com",
+         "port": 993,
+         "tls": true,
+         "tlsOptions": {
+         "rejectUnauthorized": false
+         },
+         "username": "alexarians@gmail.com",
+         "password": "",
+         "passwordCmd": "pass show google.com/app_pass/alexarians@gmail.com | head -n1",
+         "onNewMail": "mbsync gmail",
+         "onNewMailPost": "notmuch new",
+         "wait": 20,
+         "boxes": [ "Inbox" ]
+         }
+       #+end_src
+     - yahoo
+       #+begin_src conf :tangle ~/.config/imapnotify/yahoo.conf
+         {
+         "host": "imap.mail.yahoo.com",
+         "port": 993,
+         "tls": true,
+         "tlsOptions": {
+         "rejectUnauthorized": false
+         },
+         "username": "alexforsale@yahoo.com",
+         "password": "",
+         "passwordCmd": "pass show login.yahoo.com/app_pass/alexforsale@yahoo.com | head -n1",
+         "onNewMail": "mbsync yahoo",
+         "onNewMailPost": "notmuch new",
+         "wait": 20,
+         "boxes": [ "Inbox" ]
+         }
+       #+end_src
+     - hotmail
+       #+begin_src conf :tangle ~/.config/imapnotify/hotmail.conf
+         {
+         "host": "imap-mail.outlook.com",
+         "port": 993,
+         "tls": true,
+         "tlsOptions": {
+         "rejectUnauthorized": false
+         },
+         "username": "christian.alexander@windowslive.com",
+         "password": "",
+         "passwordCmd": "pass show outlook.live.com/christian.alexander@windowslive.com | head -n1",
+         "onNewMail": "mbsync hotmail",
+         "onNewMailPost": "notmuch new",
+         "wait": 20,
+         "boxes": [ "Inbox" ]
+         }
+       #+end_src
+     - ymail
+       #+begin_src conf :tangle ~/.config/imapnotify/ymail.conf
+         {
+         "host": "imap.mail.yahoo.com",
+         "port": 993,
+         "tls": true,
+         "tlsOptions": {
+         "rejectUnauthorized": false
+         },
+         "username": "christian.alexander@ymail.com",
+         "password": "",
+         "passwordCmd": "pass show login.yahoo.com/app_pass/christian.alexander@ymail.com | head -n1",
+         "onNewMail": "mbsync ymail",
+         "onNewMailPost": "notmuch new",
+         "wait": 20,
+         "boxes": [ "Inbox" ]
+         }
+       #+end_src
+       Notice how each account calls /mbsync/ separately. Enable the systemd user units
+       #+begin_src sh
+         systemctl --user enable --now goimapnotify@{gmail,yahoo,hotmail,ymail}
+       #+end_src
+*** Emacs
+**** lsp
+     - python
+       install /pylint/ via pip
+       #+begin_src sh
+         pip install pylint
+       #+end_src
