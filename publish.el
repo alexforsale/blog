@@ -56,7 +56,7 @@
 <link rel='stylesheet' href='/css/custom.css' type='text/css'/>
 <link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
 
-(defun me/website-html-preamble (plist)
+(defun posts/website-html-preamble (plist)
   "PLIST: An entry."
   (if (org-export-get-date plist this-date-format)
         (plist-put plist
@@ -67,13 +67,30 @@
   (with-temp-buffer
     (insert-file-contents "../html-templates/preamble.html") (buffer-string)))
 
-(defun me/website-html-postamble (plist)
+(defun posts/website-html-postamble (plist)
   "PLIST."
   (concat (format
            (with-temp-buffer
              (insert-file-contents "../html-templates/postamble.html") (buffer-string))
            (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
+(defun pages/website-html-preamble (plist)
+  "PLIST: An entry."
+  (if (org-export-get-date plist this-date-format)
+        (plist-put plist
+             :subtitle (format "Published on %s by %s."
+                               (org-export-get-date plist this-date-format)
+                               (car (plist-get plist :author)))))
+  ;; Preamble
+  (with-temp-buffer
+    (insert-file-contents "html-templates/preamble.html") (buffer-string)))
+
+(defun pages/website-html-postamble (plist)
+  "PLIST."
+  (concat (format
+           (with-temp-buffer
+             (insert-file-contents "html-templates/postamble.html") (buffer-string))
+           (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
@@ -109,11 +126,11 @@ publishing directory. Returns output file name."
 
 (setq org-publish-project-alist
       `(("posts"
-         :base-directory "posts"
+         :base-directory "posts/"
          :base-extension "org"
          :recursive t
          :publishing-function org-html-publish-to-html
-         :publishing-directory "./public"
+         :publishing-directory "./public/posts/"
          :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
          :auto-sitemap t
          :sitemap-filename "index.org"
@@ -126,23 +143,23 @@ publishing directory. Returns output file name."
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble me/website-html-preamble
-         :html-postamble me/website-html-postamble)
-        ("about"
-         :base-directory "about"
+         :html-preamble posts/website-html-preamble
+         :html-postamble posts/website-html-postamble)
+        ("pages"
+         :base-directory ,(expand-file-name (getenv "PWD"))
          :base-extension "org"
-         :exclude ,(regexp-opt '("README.org" "draft"))
-         :index-filename "index.org"
+         :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
          :recursive nil
          :publishing-function org-html-publish-to-html
-         :publishing-directory "./public/about"
+         :publishing-directory "public/"
          :html-link-home "/"
          :html-link-up "/"
+         :auto-sitemap nil
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble me/website-html-preamble
-         :html-postamble me/website-html-postamble)
+         :html-preamble pages/website-html-preamble
+         :html-postamble pages/website-html-postamble)
         ("css"
          :base-directory "./css"
          :base-extension "css"
@@ -174,7 +191,7 @@ publishing directory. Returns output file name."
          :exclude ".*"
          :include ("index.org")
          :table-of-contents nil)
-        ("all" :components ("posts" "about" "css" "images" "assets" "rss"))))
+        ("all" :components ("posts" "pages" "css" "images" "assets" "rss"))))
 
 (provide ':publish)
 ;;; publish.el ends here

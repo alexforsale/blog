@@ -2,10 +2,10 @@
 #+date: <YYYY-MM-DD>
 #+filetags: separated by SPACE
 #+draft: t
-#+setupfile: ../org-templates/post.org
-#+setupfile: ../org-templates/latex-pdf.org
+#+setupfile: org-templates/post.org
+#+setupfile: org-templates/latex-pdf.org
 #+LaTeX_HEADER: \lhead{TITLE}
 
 CONTENT
 
-#+INCLUDE: "../utterances.inc"
+#+INCLUDE: "utterances.inc"
