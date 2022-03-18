@@ -21,6 +21,10 @@ ifndef SERVER_PATH
 SERVER_PATH = "/srv/http"
 endif
 
+ifndef SERVER_USER
+SERVER_USER = "http"
+endif
+
 all: publish
 
 publish: publish.el
@@ -30,8 +34,9 @@ publish: publish.el
 publish_local: publish.el
 	@echo "Publishing to server"
 	${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
-	rm -rf /srv/http/*
-	mv ./public/* /srv/http
+	rm -rf ${SERVER_PATH}/*
+	mv ./public/* ${SERVER_PATH}
+	sudo chown -R ${SERVER_USER} ${SERVER_PATH}
 clean:
 	@echo "Cleaning up.."
 	@rm -rvf *.elc
