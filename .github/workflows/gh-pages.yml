@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v1
 
       - name: Install Emacs
         run: sudo apt install emacs-nox --yes
