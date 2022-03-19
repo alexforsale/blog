@@ -1,0 +1,588 @@
+#+title: Qtile Configuration
+#+subtitle: A lightweight approach
+#+date: <2022-03-14 Mon>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+startup: inlineimages
+* About
+  #+caption: the mandatory screenshot
+  #+attr_org: :width 300
+  #+ATTR_HTML: :class center no-border :width 75% :height 75%
+  [[../images/posts/screenshot_2022_03_19-00_38-38.png]]
+
+  This file will be the base of my configuration. With =org-mode= I can /tangle/ every source code snippet in this file and put them in one or more files.
+** These are the keybindings:
+   - Navigation
+     | Modifier Key     | Key | Function               |
+     |------------------+-----+------------------------|
+     | *Mod4* (Super Key) | h   | Switch to left window  |
+     | *Mod4* (Super Key) | j   | Switch to lower window |
+     | *Mod4* (Super Key) | k   | Switch to upper window |
+     | *Mod4* (Super Key) | l   | Switch to right window |
+   - Window Movement
+     | Modifier Key             | Key | Function                 |
+     |--------------------------+-----+--------------------------|
+     | *Mod4* (Super Key) + *Shift* | h   | Move window to the left  |
+     | *Mod4* (Super Key) + *Shift* | j   | Move window to bottom    |
+     | *Mod4* (Super Key) + *Shift* | k   | Move window to top       |
+     | *Mod4* (Super Key) + *Shift* | l   | Move window to the right |
+   - Resizing
+     Only works in /floating mode./
+     | Modifier Key               | Key | Function                 |
+     |----------------------------+-----+--------------------------|
+     | *Mod4* (Super Key) + *Control* | h   | grow window to the left  |
+     | *Mod4* (Super Key) + *Control* | j   | grow window to bottom    |
+     | *Mod4* (Super Key) + *Control* | k   | grow window to top       |
+     | *Mod4* (Super Key) + *Control* | l   | grow window to the right |
+   - Basic Commands
+     | Modifier Key                  | Key   | Function                           |
+     | *Mod4* (Super Key)              | TAB   | Toggle between previous group      |
+     | *Mod4* (Super Key) + Mod1 (ALT) | TAB   | Toggle between layouts             |
+     | *Mod4* (Super Key)              | F4    | Kill focused window                |
+     | *Mod4* (Super Key) + *Control*    | r     | Reload Qtile configuration file(s) |
+     | *Mod4* (Super Key) + *Control*    | q     | Logout                             |
+     | *Mod4* (Super Key)              | d     | Spawn Command                      |
+     | *Mod4* (Super Key)              | Space | Switch to next window              |
+   - Other Commands
+     - picom
+       These commands need /picom/ available and running.
+       | Modifier Key     | Key | Function                                       | External Command |
+       | *Mod4* (Super Key) | F2  | Decrease transparency value for current window | picom            |
+       | *Mod4* (Super Key) | F3  | Increase transparency value for current window | picom            |
+     - Hardware keys
+       | Modifier Key     | Key                   | Function                   | External Command |
+       | -                | XF86MonBrightnessUp   | Increase brightness        | brightnessctl    |
+       | -                | XF86MonBrightnessDown | Decrease brightness        | brightnessctl    |
+       | -                | XF86AudioLowerVolume  | Decrease volume            | pactl            |
+       | -                | XF86AudioRaiseVolume  | Increase volume            | pactl            |
+       | -                | XF86AudioMute         | Toggle volume muting       | pactl            |
+       | -                | XF86AudioPlay         | Toggle media play/pause    | playerctl        |
+       | -                | XF86AudioNext         | Toggle media play next     | playerctl        |
+       | -                | XF86AudioPrev         | Toggle media play previous | playerctl        |
+       | -                | XF86Mail              | Opens Notmuch in Emacs     | emacs            |
+       | -                | XF86MyComupter        | Open Thunar                | thunar           |
+       | -                | Print                 | Fullscreen screenshot      | maim             |
+       | *Mod4* (Super Key) | Print                 | Selection screenshot       | maim             |
+     - Various other apps
+       | Modifier Key             | Key                | Function                 | External Command          |
+       | *Mod4* (Super Key)         | Return (Enter Key) | Opens Terminal           | Configurable via Variable |
+       | *Mod4* (Super Key) + *Shift* | Return (Enter Key) | Open Emacs vterm         | Emacs                     |
+       | *Mod4* (Super Key)         | b                  | Opens Firefox            | firefox                   |
+       | *Mod4* (Super Key)         | m                  | Opens Notmuch in Emacs   | emacs                     |
+       | *Mod4* (Super Key)         | n                  | Opens emacsclient window | emacs                     |
+       | *Mod4* (Super Key) + *Shift* | m                  | Opens Emms in Emacs      | emacs                     |
+       | *Mod4* (Super Key)         | f                  | Opens Elfeed in Emacs    | emacs                     |
+       | *Mod4* (Super Key)         | t                  | Opens Telega in Emacs    | emacs                     |
+* Main configuration
+  :PROPERTIES:
+  :header-args: :tangle ~/.config/qtile/config.py
+  :END:
+  If you open this file in =Emacs=, this section has a property drawer that tangles every source code blocks in this section to =config.py=.
+** Header
+   Qtile will look for user configuration at =~/.config/qtile/config.py=, so we'll start there.
+   #+name: header
+   #+begin_src python :shebang #!/usr/bin/env python
+     """Qtile configuration file.
+
+     Copyright (c) 2010 Aldo Cortesi
+     Copyright (c) 2010, 2014 dequis
+     Copyright (c) 2012 Randall Ma
+     Copyright (c) 2012-2014 Tycho Andersen
+     Copyright (c) 2012 Craig Barnes
+     Copyright (c) 2013 horsik
+     Copyright (c) 2013 Tao Sauvage
+     Permission is hereby granted, free of charge, to any person obtaining a copy
+     of this software and associated documentation files (the "Software"), to deal
+     in the Software without restriction, including without limitation the rights
+     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+     copies of the Software, and to permit persons to whom the Software is
+     furnished to do so, subject to the following conditions:
+     The above copyright notice and this permission notice shall be included in
+     all copies or substantial portions of the Software.
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+     # SOFTWARE.
+     """
+   #+end_src
+   Since I'm basing from the default config, use their license header for now, also note in =org-mode=, if a source code block is using =:shebang= arguments, it'll set the file as executable, it's not required for /qtile/ actually, but a good habit nonetheless.
+** Imports
+   This is what the default configuration listed:
+   #+begin_src python
+     from typing import List  # noqa: F401
+
+     from libqtile import bar, layout, widget, hook
+     from libqtile.config import Click, Drag, Group, Key, Match, Screen
+     from libqtile.lazy import lazy
+
+   #+end_src
+   - Imports for custom function.
+     #+begin_src python
+       import psutil
+       import subprocess
+       import os
+       import json
+       from datetime import datetime
+     #+end_src
+** Variables
+   Subtitutes the actual keys.
+   #+begin_src python :padline y
+     mod = "mod4"
+     alt = "mod1"
+     altgr = "mod5"
+     shift = "shift"
+     control = "control"
+
+     left = "h"
+     right = "l"
+     down = "j"
+     up = "k"
+  #+end_src
+
+  Other variables
+  #+begin_src python :padline y
+    terminal = "termite"
+    groups = [Group(i) for i in "123456789"]
+    dgroups_key_binder = None
+    dgroups_app_rules = []  # type: List
+    follow_mouse_focus = True
+    bring_front_click = True
+    cursor_warp = True
+    auto_fullscreen = True
+    focus_on_window_activation = "smart"
+    reconfigure_screens = True
+    auto_minimize = True
+    wmname = "LG3D"
+    home = os.getenv("HOME")
+
+    wlan_interface = "wlo1"
+
+    if os.getenv("XDG_CONFIG_HOME"):
+        xdg_config_home = os.getenv("XDG_CONFIG_HOME")
+    else:
+        xdg_config_home = os.path.join(home, ".config")
+
+    if os.getenv("XDG_CACHE_HOME"):
+        xdg_cache_home = os.getenv("XDG_CACHE_HOME")
+    else:
+        xdg_cache_home = os.path.join(home, ".cache")
+
+    if os.getenv("XDG_DATA_HOME"):
+        xdg_data_home = os.getenv("XDG_DATA_HOME")
+    else:
+        xdg_data_home = os.path.join(home, ".local/share")
+
+    if os.getenv("XDG_PICTURES_DIR"):
+        xdg_pictures_dir = os.getenv("XDG_PICTURES_DIR")
+    else:
+        xdg_pictures_dir = os.path.join(home, "Pictures")
+
+    if os.path.exists("/usr/share/backgrounds/archlinux"):
+        wallpaper_dir = "/usr/share/backgrounds/archlinux"
+    elif os.path.exists(os.path.join(home, xdg_pictures_dir + "Wallpapers")):
+        wallpaper_dir = os.path.join(home, xdg_pictures_dir + "Wallpapers")
+    elif os.path.exists(os.path.join(xdg_data_home, "backgrounds")):
+        wallpaper_dir = os.path.join(home, xdg_data_home + "backgrounds")
+
+    color_file = "wal/colors.json"
+    colors_absolute = os.path.join(xdg_cache_home, color_file)
+
+   #+end_src
+   Variables and import list will obviously changed depending on the settings I use.
+** Functions
+   - Check running process.
+     #+begin_src python :padline y
+
+       def checkIfProcessRunning(processName):
+             """Check if process running.
+
+             Check if there is any running process that contains
+             the given name processName.
+             """
+             # Iterate over the all the running process
+             for proc in psutil.process_iter():
+                 try:
+                       # Check if process name contains the given name string.
+                     if processName.lower() in proc.name().lower():
+                         return True
+                 except (psutil.NoSuchProcess,
+                         psutil.AccessDenied,
+                         psutil.ZombieProcess):
+                     pass
+             return False
+
+     #+end_src
+   - maim
+     - fullscreen
+       #+begin_src python :padline yes
+         def maimFullScreen():
+             now = datetime.now()
+             screenshotfile = os.path.join(screenshots_dir,
+                                           now.strftime("%Y_%m_%d-%H_%M_%S")
+                                           + ".png")
+             return subprocess.Popen(["maim", screenshotfile])
+
+       #+end_src
+   - Parse Xresources
+     #+begin_src python :padline y
+       if os.path.isfile(colors_absolute):
+           with open(colors_absolute, encoding="utf-8") as colorfile:
+               color_list = json.load(colorfile)
+               xcursor = color_list['special']['cursor']
+               xbackground = color_list['special']['background']
+               xforeground = color_list['special']['foreground']
+               xcolor0 = color_list['colors']['color0']
+               xcolor1 = color_list['colors']['color1']
+               xcolor2 = color_list['colors']['color2']
+               xcolor3 = color_list['colors']['color3']
+               xcolor4 = color_list['colors']['color4']
+               xcolor5 = color_list['colors']['color5']
+               xcolor6 = color_list['colors']['color6']
+               xcolor7 = color_list['colors']['color7']
+               xcolor8 = color_list['colors']['color8']
+               xcolor9 = color_list['colors']['color9']
+               xcolor10 = color_list['colors']['color10']
+               xcolor11 = color_list['colors']['color11']
+               xcolor12 = color_list['colors']['color12']
+               xcolor13 = color_list['colors']['color13']
+               xcolor14 = color_list['colors']['color14']
+               xcolor15 = color_list['colors']['color15']
+
+     #+end_src
+** TODO Keys
+   :LOGBOOK:
+   - State "TODO"       from              [2022-03-15 Tue 04:54]
+   :END:
+   Definitely will be tweaking these. I also break the keybindings into several sections.
+   - navigations
+     #+begin_src python
+       keys = []
+       # Navigation
+
+       keys.extend([
+           # Window Navigation
+           Key([mod], left,
+               lazy.layout.left()),
+           Key([mod], down,
+               lazy.layout.down()),
+           Key([mod], up,
+               lazy.layout.up()),
+           Key([mod], right,
+               lazy.layout.right()),
+           ]
+       )
+     #+end_src
+   - Window movement
+     #+begin_src python
+       keys.extend([
+           # Window movement
+           Key([mod, shift], left,
+               lazy.layout.shuffle_left()),
+           Key([mod, shift], down,
+               lazy.layout.shuffle_down()),
+           Key([mod, shift], up,
+               lazy.layout.shuffle_up()),
+           Key([mod, shift], right,
+               lazy.layout.shuffle_right()),
+           ]
+       )
+     #+end_src
+   - resize
+     #+begin_src python
+       keys.extend([
+           # window resize
+           Key([mod, control], left,
+               lazy.layout.grow_left()),
+           Key([mod, control], down,
+               lazy.layout.grow_down()),
+           Key([mod, control], up,
+               lazy.layout.grow_up()),
+           Key([mod, control], right,
+               lazy.layout.grow_right()),
+           ]
+       )
+     #+end_src
+   - commands
+     #+begin_src python
+       keys.extend([
+           Key([mod], "Tab",
+               lazy.screen.toggle_group()),
+           Key([mod, alt], "Tab",
+               lazy.next_layout()),
+           Key([mod], "F4",
+               lazy.window.kill()),
+           Key([mod, "control"], "r",
+               lazy.reload_config()),
+           Key([mod, "control"], "q",
+               lazy.shutdown()),
+           Key([mod], "d",
+               lazy.spawncmd()),
+           Key([mod], "space",
+               lazy.layout.next()),
+           ]
+       )
+     #+end_src
+   - apps
+     #+begin_src python
+       keys.extend([
+           Key([mod], "F2",
+               lazy.spawn("picom-trans -c -5"),
+               desc="Decrease transparency by 5%"),
+           Key([mod], "F3",
+               lazy.spawn("picom-trans -c +5"),
+               desc="Increase transparency by 5%"),
+           # Hardware keys
+           Key([], "XF86MonBrightnessUp",
+               lazy.spawn("brightnessctl set +1%"),
+               desc="Increase brightness by 1%"),
+           Key([], "XF86MonBrightnessDown",
+               lazy.spawn("brightnessctl set 1%-"),
+               desc="Decrease brightness by 1%"),
+           Key([], "XF86AudioLowerVolume",
+               lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -1%"),
+               desc="Decrease volume by 1%"),
+           Key([], "XF86AudioRaiseVolume",
+               lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +1%"),
+               desc="Increase volume by 1%"),
+           Key([], "XF86AudioMute",
+               lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+               desc="Toggle volume on/off"),
+           Key([], "XF86AudioPlay",
+               lazy.spawn("playerctl play-pause"),
+               desc="Toggle play/pause"),
+           Key([], "XF86AudioNext",
+               lazy.spawn("playerctl next"),
+               desc="Play next"),
+          Key([], "XF86AudioPrev",
+               lazy.spawn("playerctl previous"),
+               desc="Play previous"),
+           Key([mod], "Return",
+               lazy.spawn(terminal)),
+           Key([mod, shift], "Return",
+               lazy.spawn("emacsclient -ce '(vterm)'")),
+           Key([mod], "e",
+               lazy.spawn("thunar")),
+           Key([], "XF86MyComputer",
+               lazy.spawn("thunar")),
+           Key([mod], "b",
+               lazy.spawn("firefox")),
+           Key([mod], "n",
+               lazy.spawn("emacsclient -c -a \"\"")),
+           Key([mod], "m",
+               lazy.spawn("emacsclient -c -e '(notmuch)'")),
+           Key([], "XF86Mail",
+               lazy.spawn("emacsclient -c -e '(notmuch)'")),
+           Key([mod, shift], "m",
+               lazy.spawn("emacsclient -c -e '(emms-browse-by-artist)'")),
+           Key([mod], "f",
+               lazy.spawn("emacsclient -c -e '(elfeed)'")),
+           Key([mod], "t",
+               lazy.spawn("emacsclient -c -e '(telega)'")),
+
+           # Print
+           Key([], "Print",
+               lazy.spawn("sh -c \"maim \
+               ~/Pictures/Screenshots/screenshot_$(date +%Y_%m_%d-%H_%M-%S).png\"")),
+           Key([mod], "Print",
+               lazy.spawn("sh -c \"maim -o -s -u \
+               ~/Pictures/Screenshots/screenshot_selection_$(date +%Y_%m_%d-%H_%M-%S).png\"")),
+           ]
+       )
+     #+end_src
+** Groups
+   The default already set a /for loop/ for group keybindings, it's also what I set in other /window manager/ so I'm using it.
+   #+begin_src python
+     for i in groups:
+         keys.extend(
+             [
+                 # mod1 + letter of group = switch to group
+                 Key(
+                     [mod],
+                     i.name,
+                     lazy.group[i.name].toscreen(),
+                     desc="Switch to group {}".format(i.name),
+                 ),
+                 # mod1 + shift + letter of group = switch to &
+                 # move focused window to group
+                 Key(
+                     [mod, "shift"],
+                     i.name,
+                     lazy.window.togroup(i.name, switch_group=True),
+                     desc="Switch and move window > group {}".format(i.name),
+                 ),
+                 # Or, use below if you prefer not to switch to that group.
+                 # # mod1 + shift + letter of group = move focused window to group
+                 # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+                 #     desc="move focused window to group {}".format(i.name)),
+             ]
+         )
+
+   #+end_src
+** TODO Layout
+   :LOGBOOK:
+   - State "TODO"       from              [2022-03-15 Tue 04:59]
+   :END:
+   I'll try all of them one by one when I have the time, but the /Max/ and /Column/ will be the ones I'll use often.
+   #+begin_src python
+     layout_defaults = {
+         "border_width": 3,
+         "margin": 9,
+         "border_focus": xcolor14,
+         "border_normal": xcolor15,
+     }
+
+     layouts = [
+         layout.Columns(
+             border_focus_stack=[xcolor3, xcolor8],
+             grow_amount=5,
+             ,**layout_defaults
+         ),
+         layout.Max(**layout_defaults),
+         layout.MonadTall(
+             ,**layout_defaults
+         ),
+     ]
+   #+end_src
+** TODO Widgets, extensions and screens
+   :LOGBOOK:
+   - State "TODO"       from              [2022-03-15 Tue 05:00]
+   :END:
+   #+begin_src python
+     widget_defaults = dict(
+         font="Source Code Pro",
+         background=xbackground,
+         fontsize=10,
+         padding=4,
+     )
+
+     extension_defaults = widget_defaults.copy()
+
+     screens = [
+         Screen(
+             bottom=bar.Bar(
+                 [
+                     widget.CurrentLayout(
+                         background=xbackground,
+                         foreground=xcolor3),
+                     widget.GroupBox(
+                         active=xforeground,
+                         foreground=xcolor2,
+                         highlight_color=[xbackground, xforeground],
+                         inactive=xcolor1,
+                         other_current_screen_border=xcolor14,
+                         other_screen_border=xcolor14,
+                         this_current_screen_border=xcolor4,
+                         this_screen_border=xcolor4,
+                         urgent_border=xcolor9,
+                         urgent_text=xforeground),
+                     widget.Prompt(),
+                     widget.WindowName(
+                         format="{state}{name}",
+                         foreground=xcolor4),
+                     widget.Backlight(
+                         foreground=xcolor10,
+                         backlight_name="intel_backlight",
+                         change_command="xbacklight -set {0}",
+                         format=" {percent:2.0%}",
+                         step=5
+                     ),
+                     widget.Wlan(
+                         foreground=xcolor12,
+                         interface=wlan_interface,
+                         format=" {essid} {percent:2.0%}"),
+                     widget.Battery(
+                         foreground=xcolor11,
+                         charge_char="",
+                         discharge_char="",
+                         empty_char="",
+                         format="{char} {percent:2.0%} {hour:d}:{min:02d}"
+                     ),
+                     widget.PulseVolume(
+                         foreground=xcolor14,
+                         fmt=" {}"),
+                     widget.Maildir(
+                         foreground=xcolor6,
+                         maildir_path="~/.mail",
+                         sub_folders=[
+                             {'label': '', 'path': 'gmail/Inbox'},
+                             {'label': '', 'path': 'hotmail/Inbox'},
+                             {'label': '', 'path': 'yahoo/Inbox'},
+                             {'label': '', 'path': 'ymail/Inbox'},
+                         ],
+                         subfolder_fmt="{label} {value}",
+                         update_interval=300
+                     ),
+                     widget.Clock(
+                         foreground=xcolor11,
+                         format="%Y-%m-%d %a %I:%M %p"),
+                     widget.Systray(),
+                 ],
+                 20,
+                 opacity=1.0,
+                 background=xbackground
+             ),
+         ),
+     ]
+   #+end_src
+** Mouse
+   I don't think I'll be modifying these.
+   #+begin_src python
+     # Drag floating layouts.
+     mouse = [
+         Drag([mod], "Button1",
+              lazy.window.set_position_floating(),
+              start=lazy.window.get_position()),
+         Drag([mod], "Button3",
+              lazy.window.set_size_floating(),
+              start=lazy.window.get_size()),
+         Click([mod], "Button2",
+               lazy.window.bring_to_front()),
+     ]
+
+   #+end_src
+** TODO Floating layout rules
+   :LOGBOOK:
+   - State "TODO"       from              [2022-03-15 Tue 05:03]
+   :END:
+   Eventually it'll reflects various apps I use.
+   #+begin_src python
+     floating_layout = layout.Floating(
+         float_rules=[
+             # Run the utility of `xprop`
+             # to see the wm class and name of an X client.
+             *layout.Floating.default_float_rules,
+             Match(wm_class="confirmreset"),  # gitk
+             Match(wm_class="makebranch"),  # gitk
+             Match(wm_class="maketag"),  # gitk
+             Match(wm_class="ssh-askpass"),  # ssh-askpass
+             Match(title="branchdialog"),  # gitk
+             Match(title="pinentry"),  # GPG key password entry
+         ]
+     )
+   #+end_src
+** Hooks
+   #+begin_src python
+     @hook.subscribe.startup_once
+     def startup():
+         """Run after qtile initialization."""
+         processes = [
+             ["xrdb", "-merge", "~/.Xresources"],
+             ["picom"],
+             ["unclutter"],
+             ["xsettingsd"],
+             ["udiskie", "-t"],
+             ["nm-applet"],
+             ["blueman-applet"],
+             ["wal", "-i", wallpaper_dir],
+             ["emacs", "--debug-init", "--daemon"],
+             ["dunst"],
+             ["/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"]
+         ]
+         for p in processes:
+             if not checkIfProcessRunning(p[0]):
+                 subprocess.Popen(p)
+   #+end_src
