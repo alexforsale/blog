@@ -1,0 +1,10 @@
+#+title: intro
+#+date: <2022-03-20 Sun>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+
+*One hour a day!*
+------
+
+This page is a record of my *supposedly* habit of trying to learn something new everyday for at least one hour.

@@ -145,6 +145,26 @@ publishing directory. Returns output file name."
          :html-head ,me/website-html-head
          :html-preamble posts/website-html-preamble
          :html-postamble posts/website-html-postamble)
+        ("onehouraday"
+         :base-directory "onehouraday/"
+         :base-extension "org"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "./public/onehouraday/"
+         :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+         :auto-sitemap t
+         :sitemap-filename "index.org"
+         :sitemap-title "What I've learned so far..."
+         :sitemap-format-entry me/org-sitemap-format-entry
+         :sitemap-style list
+         :sitemap-sort-files anti-chronologically
+         :html-link-home "/"
+         :html-link-up "/"
+         :html-head-include-scripts t
+         :html-head-include-default-style nil
+         :html-head ,me/website-html-head
+         :html-preamble posts/website-html-preamble
+         :html-postamble posts/website-html-postamble)
         ("pages"
          :base-directory ,(expand-file-name (getenv "PWD"))
          :base-extension "org"
@@ -191,7 +211,7 @@ publishing directory. Returns output file name."
          :exclude ".*"
          :include ("index.org")
          :table-of-contents nil)
-        ("all" :components ("posts" "pages" "css" "images" "assets" "rss"))))
+        ("all" :components ("posts" "pages" "onehouraday" "css" "images" "assets" "rss"))))
 
 (provide ':publish)
 ;;; publish.el ends here
