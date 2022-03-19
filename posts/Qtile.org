@@ -20,10 +20,10 @@
      | Modifier Key     | Key |               Function |
      |------------------+-----+------------------------|
      | <l>              | <c> |                    <r> |
-     | *Mod4* (Super Key) |   h |  Switch to left window |
-     | *Mod4* (Super Key) |   j | Switch to lower window |
-     | *Mod4* (Super Key) |   k | Switch to upper window |
-     | *Mod4* (Super Key) |   l | Switch to right window |
+     | *Mod4* (Super Key) |  h  |  Switch to left window |
+     | *Mod4* (Super Key) |  j  | Switch to lower window |
+     | *Mod4* (Super Key) |  k  | Switch to upper window |
+     | *Mod4* (Super Key) |  l  | Switch to right window |
    - Window Movement
      #+caption: Window Movement
      #+attr_html: :frame border :border 2 :rules all
@@ -614,3 +614,5 @@
              if not checkIfProcessRunning(p[0]):
                  subprocess.Popen(p)
    #+end_src
+
+#+include: ../utterances.inc
