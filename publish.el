@@ -148,7 +148,7 @@ publishing directory. Returns output file name."
         ("pages"
          :base-directory ,(expand-file-name (getenv "PWD"))
          :base-extension "org"
-         :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+         :exclude ,(regexp-opt '("README.org" "draft" "404.org" "template.org"))
          :recursive nil
          :publishing-function org-html-publish-to-html
          :publishing-directory "public/"
