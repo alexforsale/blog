@@ -94,7 +94,7 @@
 
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
-                "ico" "cur" "css" "js" "woff" "html" "pdf"))
+                "ico" "cur" "css" "js" "woff" "html" "pdf" "txt"))
   "File types that are published as static files.")
 
 
