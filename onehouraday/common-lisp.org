@@ -1,0 +1,76 @@
+#+title: Common Lisp
+#+date: <2022-03-20 Sun>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+filetags: common-lisp
+#+options: d:t
+* DONE Day One                                                        :clisp:
+  CLOSED: [2022-03-21 Mon 00:40]
+  :PROPERTIES:
+  :header-args: :results verbatim :exports both
+  :END:
+  :LOGBOOK:
+  - State "DONE"       from              [2022-03-21 Mon 00:40]
+  :END:
+** Getting Started                                                     :sbcl:
+   :LOGBOOK:
+   CLOCK: [2022-03-20 Sun 23:53]
+   :END:
+   [[https://en.wikipedia.org/wiki/Steel_Bank_Common_Lisp][Steel Bank Common Lisp]] is supposedly one of many various /lisp/ implementation, which features high-perfomance native compiler, unicode support and threading. On many /linux/ distributions /sbcl/ should be available from their main repositories.
+** SBCL REPL
+   Stands for *READ*, *EVAL*, *PRINT*, *LOOP*, the interactive interpreter for /SBCL/, out of the box doesn't support arrow keys, also it lacks history. One option is to use =rlwrap= package. Or simply just use =Emacs=.
+** Libraries
+   Many of the libraries are documented here:
+*** [[https://quickdocs.org/][quickdocs]]
+*** [[https://github.com/CodyReichert/awesome-cl][awesome-cl]]
+*** [[https://www.cliki.net/][cliki]]
+** [[https://www.quicklisp.org/beta/][Quicklisp]]
+   The package manager, installation is straight-forward once you have /sbcl/ installed.
+*** Installing packages via quicklisp
+    For example if we want to install =cl-ppcre= (regular expression package):
+    #+begin_src lisp
+      (ql:quickload "cl-ppcre")
+    #+end_src
+
+    #+RESULTS:
+    : ("cl-ppcre")
+    We can then use this library whenever we needed it.
+    #+begin_src lisp
+      (require "cl-ppcre")
+      (cl-ppcre:regex-replace "fo+" "foo bar" "frob")
+    #+end_src
+
+    #+RESULTS:
+    : "frob bar"
+    : T
+
+    #+begin_src lisp
+      (asdf/source-registry:default-user-source-registry)
+    #+end_src
+*** Configuration management
+    These are the locations which the interpreter will look for libraries:
+    #+RESULTS:
+    : (:SOURCE-REGISTRY (:TREE (:HOME "common-lisp/"))
+    :  (:DIRECTORY (:HOME ".sbcl/systems/"))
+    :  (:DIRECTORY #P"/home/alexforsale/.local/share/common-lisp/systems/")
+    :  (:TREE #P"/home/alexforsale/.local/share/common-lisp/source/")
+    :  :INHERIT-CONFIGURATION)
+
+    Also, libraries installed here will be available for every projects:
+    #+begin_src lisp
+      (print asdf:*central-registry*)
+    #+end_src
+
+    #+RESULTS:
+    : (#P"/home/alexforsale/.local/share/quicklisp/quicklisp/")
+** The basics
+*** Expressions
+    One of the simple /lisp/ expression that can be read, evaluated, and printed is a number. In /lisp/, anything within a parentheses is a list, for example:
+    #+begin_src lisp
+      (+ 2 3)
+    #+end_src
+
+    #+RESULTS:
+    : 5
+    is a list of three elements, the symbol =+=, and the number =2= and =3=. In general, /lisp/ evaluates lists by treating the first element as the name of the function and the rest of the elements as expressions to be evaluated to yield the arguments to the function.
