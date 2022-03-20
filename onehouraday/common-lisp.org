@@ -15,7 +15,8 @@
   :END:
 ** Getting Started                                                     :sbcl:
    :LOGBOOK:
-   CLOCK: [2022-03-20 Sun 23:53]
+   CLOCK: [2022-03-20 Sun 23:53]--[2022-03-21 Mon 00:47] =>  0:54
+   - Done
    :END:
    [[https://en.wikipedia.org/wiki/Steel_Bank_Common_Lisp][Steel Bank Common Lisp]] is supposedly one of many various /lisp/ implementation, which features high-perfomance native compiler, unicode support and threading. On many /linux/ distributions /sbcl/ should be available from their main repositories.
 ** SBCL REPL
