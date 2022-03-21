@@ -46,12 +46,12 @@
     #+RESULTS:
     : "frob bar"
     : T
-
+*** Configuration management
+    These are the locations which the interpreter will look for libraries:
     #+begin_src lisp
       (asdf/source-registry:default-user-source-registry)
     #+end_src
-*** Configuration management
-    These are the locations which the interpreter will look for libraries:
+
     #+RESULTS:
     : (:SOURCE-REGISTRY (:TREE (:HOME "common-lisp/"))
     :  (:DIRECTORY (:HOME ".sbcl/systems/"))
