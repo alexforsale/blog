@@ -5,7 +5,7 @@
 #+language: en
 #+filetags: common-lisp
 #+options: d:t
-#+startup: overview
+#+startup: overview hideblocks
 * DONE Day One                                                        :clisp:
   CLOSED: [2022-03-21 Mon 00:40]
   :PROPERTIES:
