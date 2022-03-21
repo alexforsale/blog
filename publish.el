@@ -56,7 +56,7 @@
 <link rel='stylesheet' href='/css/custom.css' type='text/css'/>
 <link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
 
-(defun posts/website-html-preamble (plist)
+(defun onelevel/website-html-preamble (plist)
   "PLIST: An entry."
   (if (org-export-get-date plist this-date-format)
         (plist-put plist
@@ -64,14 +64,48 @@
                                (org-export-get-date plist this-date-format)
                                (car (plist-get plist :author)))))
   ;; Preamble
-  (with-temp-buffer
-    (insert-file-contents "../html-templates/preamble.html") (buffer-string)))
+  (if (boundp '+publish-as-user)
+      (with-temp-buffer
+        (insert-file-contents "../html-templates/local-preamble.html") (buffer-string))
+    (with-temp-buffer
+      (insert-file-contents "../html-templates/preamble.html") (buffer-string))
+    )
+  )
 
-(defun posts/website-html-postamble (plist)
+(defun onelevel/website-html-postamble (plist)
   "PLIST."
   (concat (format
-           (with-temp-buffer
-             (insert-file-contents "../html-templates/postamble.html") (buffer-string))
+           (if (boundp '+publish-as-user)
+               (with-temp-buffer
+                 (insert-file-contents "../html-templates/local-postamble.html") (buffer-string))
+             (with-temp-buffer
+               (insert-file-contents "../html-templates/postamble.html") (buffer-string)))
+           (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
+
+(defun root/website-html-preamble (plist)
+  "PLIST: An entry."
+  (if (org-export-get-date plist this-date-format)
+        (plist-put plist
+             :subtitle (format "Published on %s by %s."
+                               (org-export-get-date plist this-date-format)
+                               (car (plist-get plist :author)))))
+  ;; Preamble
+  (if (boundp '+publish-as-user)
+      (with-temp-buffer
+        (insert-file-contents "html-templates/local-preamble.html") (buffer-string))
+    (with-temp-buffer
+      (insert-file-contents "html-templates/preamble.html") (buffer-string))
+    )
+  )
+
+(defun root/website-html-postamble (plist)
+  "PLIST."
+  (concat (format
+           (if (boundp '+publish-as-user)
+               (with-temp-buffer
+                 (insert-file-contents "html-templates/local-postamble.html") (buffer-string))
+             (with-temp-buffer
+               (insert-file-contents "html-templates/postamble.html") (buffer-string)))
            (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
 (defvar site-attachments
@@ -129,8 +163,8 @@ publishing directory. Returns output file name."
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble posts/website-html-preamble
-         :html-postamble posts/website-html-postamble)
+         :html-preamble onelevel/website-html-preamble
+         :html-postamble onelevel/website-html-postamble)
         ("onehouraday"
          :base-directory "onehouraday/"
          :base-extension "org"
@@ -149,8 +183,8 @@ publishing directory. Returns output file name."
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble posts/website-html-preamble
-         :html-postamble posts/website-html-postamble)
+         :html-preamble onelevel/website-html-preamble
+         :html-postamble onelevel/website-html-postamble)
         ("pages"
          :base-directory ,(expand-file-name (getenv "PWD"))
          :base-extension "org"
@@ -164,8 +198,8 @@ publishing directory. Returns output file name."
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble posts/website-html-preamble
-         :html-postamble posts/website-html-postamble)
+         :html-preamble root/website-html-preamble
+         :html-postamble root/website-html-postamble)
         ("css"
          :base-directory "./css"
          :base-extension "css"
