@@ -116,6 +116,10 @@ PROJECT: `posts in this case."
         (t entry)))
 
 
+(setq +publish-root (if (boundp '+publish-as-user)
+                          (concat "/~" user-login-name "/")
+                        "/"))
+
 (defun me/org-reveal-publish-to-html (plist filename pub-dir)
   "Publish an org file to reveal.js HTML Presentation.
 FILENAME is the filename of the Org file to be published.  PLIST
@@ -138,8 +142,8 @@ publishing directory. Returns output file name."
          :sitemap-format-entry me/org-sitemap-format-entry
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
-         :html-link-home "/"
-         :html-link-up "/"
+         :html-link-home ,+publish-root
+         :html-link-up ,+publish-root
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
@@ -158,8 +162,8 @@ publishing directory. Returns output file name."
          :sitemap-format-entry me/org-sitemap-format-entry
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
-         :html-link-home "/"
-         :html-link-up "/"
+         :html-link-home ,+publish-root
+         :html-link-up ,+publish-root
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
@@ -172,8 +176,8 @@ publishing directory. Returns output file name."
          :recursive nil
          :publishing-function org-html-publish-to-html
          :publishing-directory "public/"
-         :html-link-home "/"
-         :html-link-up "/"
+         :html-link-home ,+publish-root
+         :html-link-up ,+publish-root
          :auto-sitemap nil
          :html-head-include-scripts t
          :html-head-include-default-style nil
