@@ -64,9 +64,15 @@
 ** Autostarts
    The variable =*initializing*= is only set to =T= when /stumpwm/ is starting up. Which means once per session. Useful for starting up applications that only needed at startup.
    #+begin_src lisp
-      (when *initializing*
-        (run-shell-command "xsetroot -cursor_name left_ptr")
-        (run-shell-command "bash ~/.config/stumpwm/autostart.sh"))
+     (when *initializing*
+       (progn
+         (run-shell-command "xsetroot -cursor_name left_ptr")
+         (run-shell-command "nm-applet")
+         (run-shell-command "dunst")
+         (run-shell-command "unclutter")
+         (run-shell-command "blueman-applet")
+         (run-shell-command "xsettingsd")
+         (run-shell-command "udiskie -t"))
    #+end_src
 ** mode-line
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
