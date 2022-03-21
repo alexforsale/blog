@@ -74,24 +74,6 @@
              (insert-file-contents "../html-templates/postamble.html") (buffer-string))
            (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
-(defun pages/website-html-preamble (plist)
-  "PLIST: An entry."
-  (if (org-export-get-date plist this-date-format)
-        (plist-put plist
-             :subtitle (format "Published on %s by %s."
-                               (org-export-get-date plist this-date-format)
-                               (car (plist-get plist :author)))))
-  ;; Preamble
-  (with-temp-buffer
-    (insert-file-contents "html-templates/preamble.html") (buffer-string)))
-
-(defun pages/website-html-postamble (plist)
-  "PLIST."
-  (concat (format
-           (with-temp-buffer
-             (insert-file-contents "html-templates/postamble.html") (buffer-string))
-           (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
-
 (defvar site-attachments
   (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
                 "ico" "cur" "css" "js" "woff" "html" "pdf" "txt"))
@@ -182,8 +164,8 @@ publishing directory. Returns output file name."
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
-         :html-preamble pages/website-html-preamble
-         :html-postamble pages/website-html-postamble)
+         :html-preamble posts/website-html-preamble
+         :html-postamble posts/website-html-postamble)
         ("css"
          :base-directory "./css"
          :base-extension "css"
