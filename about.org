@@ -1,9 +1,12 @@
 #+title: About
 #+author: Kristian Alexander P
 #+email: alexforsale@yahoo.com
+#+html_head_extra: <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 #+filetags: about
 
-#+attr_html: <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="alexforsale" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/alexforsale?trk=profile-badge">Kristian Alexander P</a></div>
+#+attr_html: :class center no-border
+#+html: <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="alexforsale" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/alexforsale?trk=profile-badge">Kristian Alexander P</a></div>
+
 I actually hate making blogs, I love tinkering, but I'm a failure at documenting every discoveries I've found so far. When I heard about [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] and how it's basically built-in inside /Emacs/ with [[https://orgmode.org/][org-mode]], maybe it's the time to really start using it.
 
 The blog itself is completely build from /org-mode/, managed with several /Emacs-lisp/ functions, scripted using /GNU [[https://github.com/alexforsale/alexforsale.github.io/blob/main/Makefile][Makefiles]]/. The /Emacs lisp/ build file [[https://github.com/alexforsale/alexforsale.github.io/blob/main/publish.el][publish.el]] is independent and can be run using vanilla /Emacs/ with no configuration.
