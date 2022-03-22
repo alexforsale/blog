@@ -51,7 +51,9 @@ publish_local_user: publish.el
 	${EMACS} --batch --no-init --eval "(setq +publish-as-user t)" --load publish.el --eval "(org-publish-all :force)"
 	rm -rf ${SERVER_LOCAL_PATH}/*
 	mv ./public/* ${SERVER_LOCAL_PATH}
-	chown -R ${SERVER_LOCAL_USER} ${SERVER_LOCAL_PATH}
+	sudo setfacl -R -m u:${SERVER_USER}:rwx ${SERVER_LOCAL_PATH}
+	sudo chown -R ${SERVER_LOCAL_USER}:${SERVER_USER} ${SERVER_LOCAL_PATH}/*
+
 clean:
 	@echo "Cleaning up.."
 	@rm -rvf *.elc
