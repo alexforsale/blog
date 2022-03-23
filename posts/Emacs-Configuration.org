@@ -644,6 +644,11 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      #+begin_src emacs-lisp
        (setq org-image-actual-width nil)
      #+end_src
+**** links
+     Set to relative path
+     #+begin_src emacs-lisp
+       (setq org-link-file-path-type 'relative)
+     #+end_src
 **** org-directory
      #+begin_src emacs-lisp
        (unless (boundp 'org-directory)
