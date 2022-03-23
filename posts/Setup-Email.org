@@ -1,0 +1,298 @@
+#+title: Mail Configuration Using msmtp, isync, goimapnotify and notmuch
+#+subtitle: Part of Living your live in text mode series
+#+date: <2022-03-23 Wed>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+startup: hideblocks overview
+* Mail
+  As per other posts in this blog, this is my actual configuration used in various machines. One benefit I can think of is with this setup is that I can use different clients[fn:1], of course here I'm using /notmuch-emacs/.
+  I have four accounts configured in this setup:
+  1. Gmail
+     My primary account.
+  2. Yahoo
+     My "bulk" mail, usually for subscribing to news, mailing lists and such.
+  3. Hotmail
+     A.K.A /windowslive/. Not used often but still needed for connecting to /ms/ stuffs.
+  4. ymail
+     Few mailing lists and stuffs.
+** msmtp
+   Configuration can be stored in =~/.msmtprc= or =~/.config/msmtp/config=.
+   #+begin_src conf :tangle ~/.config/msmtp/config :mkdirp t
+     # Set default values for all following accounts.
+     defaults
+     auth           on
+     tls            on
+     tls_trust_file /etc/ssl/certs/ca-certificates.crt
+     logfile        ~/.local/share/mail/msmtp.log
+
+     # Gmail
+     account        gmail
+     host           smtp.gmail.com
+     port           587
+     from           alexarians@gmail.com
+     user           alexarians
+     passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-gmail.gpg"
+
+     # Yahoo service
+     account        yahoo
+     auth           on
+     tls            on
+     tls_trust_file /etc/ssl/certs/ca-certificates.crt
+     host           smtp.mail.yahoo.com
+     port           587
+     from           alexforsale@yahoo.com
+     user           alexforsale
+     passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-yahoo.gpg"
+
+     # Hotmail
+     account        hotmail
+     auth           on
+     tls            on
+     tls_trust_file /etc/ssl/certs/ca-certificates.crt
+     #tls_certcheck  off
+     host           smtp-mail.outlook.com
+     port           587
+     from           christian.alexander@windowslive.com
+     user           christian.alexander@windowslive.com
+     passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-hotmail.gpg"
+
+     # Ymail service
+     account        ymail
+     auth           on
+     tls            on
+     tls_trust_file /etc/ssl/certs/ca-certificates.crt
+     host           smtp.mail.yahoo.com
+     port           587
+     from           christian.alexander@ymail.com
+     user           christian.alexander@ymail.com
+     passwordeval   "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-ymail.gpg"
+
+     # Set a default account
+     account default : yahoo
+
+   #+end_src
+   To easily encript the files in =~/.local/etc/mail/=, open the file in /Emacs/ and save it with =.gpg= extension, if you've setup gpg(see arch wiki for [[https://wiki.archlinux.org/title/GnuPG][that]]) it'll prompt you for the key to encrypt. Another option is to use /password-store/ to store the password, details also in [[https://wiki.archlinux.org/title/Msmtp][arch wiki]].
+** isync
+   This is what I configured in =~/.mbsyncrc=:
+   #+begin_src conf :tangle ~/.mbsyncrc
+     IMAPAccount gmail
+     # Address to connect to
+     Host imap.gmail.com
+     User alexarians@gmail.com
+     # Pass ***************
+     # To store the password in an encrypted file use PassCmd instead of Pass
+     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-gmail.gpg"
+     #
+     # Use SSL
+     SSLType IMAPS
+     # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+     CertificateFile /etc/ssl/certs/ca-certificates.crt
+     #CertificateFile ~/.cert/imap.gmail.com.pem
+     #CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+     IMAPAccount yahoo
+     Host imap.mail.yahoo.com
+     User alexforsale@yahoo.com
+     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-yahoo.gpg"
+     SSLType IMAPS
+     CertificateFile /etc/ssl/certs/ca-certificates.crt
+     PipelineDepth 10
+
+     IMAPAccount ymail
+     Host imap.mail.yahoo.com
+     User christian.alexander@ymail.com
+     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-ymail.gpg"
+     SSLType IMAPS
+     CertificateFile /etc/ssl/certs/ca-certificates.crt
+     PipelineDepth 10
+
+     IMAPAccount hotmail
+     Host imap-mail.outlook.com
+     User christian.alexander@windowslive.com
+     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-hotmail.gpg"
+     SSLType IMAPS
+     CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+     IMAPStore gmail-remote
+     Account gmail
+
+     MaildirStore gmail-local
+     SubFolders Verbatim
+     # The trailing "/" is important
+     Path /home/alexforsale/.mail/gmail/
+     Inbox /home/alexforsale/.mail/gmail/Inbox
+
+     Channel gmail-trash
+     Far :gmail-remote:"[Gmail]/Trash"
+     Near :gmail-local:trash
+     Create Near
+
+
+     Channel gmail-sent
+     Far :gmail-remote:"[Gmail]/Sent Mail"
+     Near :gmail-local:sent
+     Create Near
+
+     Channel gmail-drafts
+     Far :gmail-remote:"[Gmail]/Drafts"
+     Near :gmail-local:drafts
+     Create Near
+
+     Channel gmail-allmail
+     Far :gmail-remote:"[Gmail]/All Mail"
+     Near :gmail-local:archived
+     Create Near
+
+     Channel gmail-default
+     Far :gmail-remote:
+     Near :gmail-local:
+     # Exclude everything under the internal [Gmail] folder, except the interesting folders
+     #Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+     #Patterns "INBOX" ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/All Mail" "[Gmail]/Trash"
+     Patterns "INBOX" ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+     # Or include everything
+     #Patterns *
+     # Automatically create missing mailboxes, both locally and on the server
+     Create Both
+     # Sync the movement of messages between folders and deletions, add after making sure the sync works
+     # Expunge Both
+     # Save the synchronization state files in the relevant directory
+     SyncState *
+
+     Group gmail
+     Channel gmail-default
+     Channel gmail-sent
+     Channel gmail-drafts
+     Channel gmail-trash
+     Channel gmail-allmail
+
+     IMAPStore yahoo-remote
+     Account yahoo
+
+     MaildirStore yahoo-local
+     SubFolders Verbatim
+     Path /home/alexforsale/.mail/yahoo/
+     Inbox /home/alexforsale/.mail/yahoo/Inbox
+
+     Channel yahoo
+     Far :yahoo-remote:
+     Near :yahoo-local:
+     Patterns "INBOX" Draft Sent Archive Spam
+     Create Both
+     SyncState *
+     CopyArrivalDate yes
+
+     IMAPStore hotmail-remote
+     Account hotmail
+
+     MaildirStore hotmail-local
+     SubFolders Verbatim
+     Path /home/alexforsale/.mail/hotmail/
+     Inbox /home/alexforsale/.mail/hotmail/Inbox
+
+     Channel hotmail
+     Far :hotmail-remote:
+     Near :hotmail-local:
+     Patterns *
+     Create Both
+
+     IMAPStore ymail-remote
+     Account ymail
+
+     MaildirStore ymail-local
+     SubFolders Verbatim
+     Path /home/alexforsale/.mail/ymail/
+     Inbox /home/alexforsale/.mail/ymail/Inbox
+
+     Channel ymail
+     Far :ymail-remote:
+     Near :ymail-local:
+     Patterns *
+     Create Both
+   #+end_src
+   Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
+** notmuch
+   run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
+** goimapnotify
+   Needs separate configuration file for each accounts, here I'm using /password-store/.
+   - gmail
+     #+begin_src conf :tangle ~/.config/imapnotify/gmail.conf :mkdirp t
+       {
+       "host": "imap.gmail.com",
+       "port": 993,
+       "tls": true,
+       "tlsOptions": {
+       "rejectUnauthorized": false
+       },
+       "username": "alexarians@gmail.com",
+       "password": "",
+       "passwordCmd": "pass show google.com/app_pass/alexarians@gmail.com | head -n1",
+       "onNewMail": "mbsync gmail",
+       "onNewMailPost": "notmuch new",
+       "wait": 20,
+       "boxes": [ "Inbox" ]
+       }
+     #+end_src
+   - yahoo
+     #+begin_src conf :tangle ~/.config/imapnotify/yahoo.conf
+       {
+       "host": "imap.mail.yahoo.com",
+       "port": 993,
+       "tls": true,
+       "tlsOptions": {
+       "rejectUnauthorized": false
+       },
+       "username": "alexforsale@yahoo.com",
+       "password": "",
+       "passwordCmd": "pass show login.yahoo.com/app_pass/alexforsale@yahoo.com | head -n1",
+       "onNewMail": "mbsync yahoo",
+       "onNewMailPost": "notmuch new",
+       "wait": 20,
+       "boxes": [ "Inbox" ]
+       }
+     #+end_src
+   - hotmail
+     #+begin_src conf :tangle ~/.config/imapnotify/hotmail.conf
+       {
+       "host": "imap-mail.outlook.com",
+       "port": 993,
+       "tls": true,
+       "tlsOptions": {
+       "rejectUnauthorized": false
+       },
+       "username": "christian.alexander@windowslive.com",
+       "password": "",
+       "passwordCmd": "pass show outlook.live.com/christian.alexander@windowslive.com | head -n1",
+       "onNewMail": "mbsync hotmail",
+       "onNewMailPost": "notmuch new",
+       "wait": 20,
+       "boxes": [ "Inbox" ]
+       }
+     #+end_src
+   - ymail
+     #+begin_src conf :tangle ~/.config/imapnotify/ymail.conf
+       {
+       "host": "imap.mail.yahoo.com",
+       "port": 993,
+       "tls": true,
+       "tlsOptions": {
+       "rejectUnauthorized": false
+       },
+       "username": "christian.alexander@ymail.com",
+       "password": "",
+       "passwordCmd": "pass show login.yahoo.com/app_pass/christian.alexander@ymail.com | head -n1",
+       "onNewMail": "mbsync ymail",
+       "onNewMailPost": "notmuch new",
+       "wait": 20,
+       "boxes": [ "Inbox" ]
+       }
+     #+end_src
+     Notice how each account calls /mbsync/ separately. Enable the systemd user units
+     #+begin_src sh
+       systemctl --user enable --now goimapnotify@{gmail,yahoo,hotmail,ymail}
+     #+end_src
+
+* Footnotes
+
+[fn:1] see [[https://notmuchmail.org/frontends/][here]] for the list of available frontends.
