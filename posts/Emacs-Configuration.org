@@ -3094,3 +3094,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     (provide 'config)
     ;;; config.el ends here
   #+end_src
+
+
+#+include: ../utterances.inc

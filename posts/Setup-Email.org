@@ -296,3 +296,5 @@
 * Footnotes
 
 [fn:1] see [[https://notmuchmail.org/frontends/][here]] for the list of available frontends.
+
+#+include: ../utterances.inc

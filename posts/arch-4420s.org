@@ -503,3 +503,5 @@ This is how I setup my /archlinux/ on [[https://support.hp.com/id-en/document/c0
     Mar 13 17:23:22 arch-4420s grive-sync.sh[61459]: Listening for changes in ~/Documents/google-drive
     #+end_example
     It depends on /inotify-tools/ so make sure it's [[*additional packages for grive][installed]].
+
+#+include: ../utterances.inc
