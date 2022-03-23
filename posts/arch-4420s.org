@@ -792,12 +792,3 @@ This is how I setup my /archlinux/ on [[https://support.hp.com/id-en/document/c0
        #+begin_src sh
          systemctl --user enable --now goimapnotify@{gmail,yahoo,hotmail,ymail}
        #+end_src
-*** Emacs
-**** lsp
-     - python
-       install /pylint/ via pip
-       #+begin_src sh
-         pip install pylint
-       #+end_src
-
-#+include: ../utterances.inc
