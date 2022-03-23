@@ -1190,10 +1190,9 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    - gcal
      #+begin_src emacs-lisp
        (require 'org-gcal)
-       (with-eval-after-load 'pass
-         (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
-         (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
-         (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret")))
+       (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
+       (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
+       (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret"))
      #+end_src
    - org-protocol handler and capture templates
      #+begin_src emacs-lisp
