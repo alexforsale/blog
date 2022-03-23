@@ -4,7 +4,14 @@
 #+author: Kristian Alexander P
 #+email: alexforsale@yahoo.com
 #+language: en
-#+startup: hideblocks overview
+#+startup: hideblocks overview inlineimages
+
+#+attr_html: :class center no-border :width 75% :height 75%
+#+attr_org: :width 200
+[[file:~/Documents/google-drive/org/blog/images/posts/notmuch1.png][file:../images/posts/notmuch1.png]]
+#+attr_html: :class center no-border :width 75% :height 75%
+#+attr_org: :width 200
+[[file:~/Documents/google-drive/org/blog/images/posts/notmuch2.png][file:../images/posts/notmuch2.png]]
 * Mail
   As per other posts in this blog, this is my actual configuration used in various machines. One benefit I can think of is with this setup is that I can use different clients[fn:1], of course here I'm using /notmuch-emacs/.
   I have four accounts configured in this setup:
