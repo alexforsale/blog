@@ -2995,99 +2995,458 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/site-lisp/websites.el :mkdirp t
    :END:
-   Configuration for org-generated website, using /fniessen/ [[https://github.com/fniessen/org-html-themes][org-html-themes]].
-   - commented header
-     #+begin_src emacs-lisp
-       ;;; websites.el --- Summary
-       ;;
-       ;;; Commentary:
-       ;;; Code:
-     #+end_src
-   - required packages
-     #+begin_src emacs-lisp
-       (require 'ox-html)
-       (require 'ox-publish)
-     #+end_src
-   - I got this somewhere on the net, basically it put time for each link in =org-sitemap=.
-     #+begin_src emacs-lisp
-       (defun my/org-sitemap-date-entry-format (entry style project)
-         "Format ENTRY in org-publish PROJECT Sitemap format ENTRY ENTRY STYLE format that includes date."
-         (let ((filename (org-publish-find-title entry project)))
-           (if (= (length filename) 0)
-               (format "*%s*" entry)
-             (format "{{{timestamp(%s)}}} [[file:%s][%s]]"
-                     (format-time-string "%Y-%m-%d"
-                                         (org-publish-find-date entry project))
-                     entry
-                     filename))))
+   Configuration for org-generated website, this is basically from my [[https://git.java281.dynv6.net/alexforsale/java281.dynv6.net][website]] =publish.el=.
+*** commented header
+    #+begin_src emacs-lisp
+      ;;; websites.el --- org-publish configurations
+      ;;
+      ;;; Commentary:
+      ;; I will try to avoid any hardcoded variables here.
+      ;;; Code:
+    #+end_src
+*** required packages
+    Most of these already built-in except for /reveal/
+    #+begin_src emacs-lisp
+      (require 'org)
+      (require 'ox-html)
+      (require 'ox-publish)
+      (require 'ox-rss)
+      (straight-use-package 'ox-reveal)
+      (require 'ox-reveal)
+      (straight-use-package 'htmlize)
+      (require 'htmlize)
+    #+end_src
+*** Setup org-export
+    #+begin_src emacs-lisp
+      (setq org-export-with-section-numbers nil
+            org-export-with-smart-quotes t
+            org-export-with-toc nil)
+    #+end_src
+*** define =this-date-format= variable
+    #+begin_src emacs-lisp
+      (defvar this-date-format "%b %d, %Y")
+    #+end_src
+*** Setup the html stuffs
+    #+begin_src emacs-lisp
+      (setq org-html-divs '((preamble "header" "top")
+                            (content "main" "content")
+                            (postamble "footer" "postamble"))
+            org-html-container-element "section"
+            org-html-metadata-timestamp-format this-date-format
+            org-html-checkbox-type 'html
+            org-html-html5-fancy t
+            org-html-validation-link t
+            org-html-doctype "html5"
+            org-html-htmlize-output-type 'css)
+    #+end_src
+*** Create custom variable for html-head
+    #+begin_src emacs-lisp
+      (defvar me/website-html-head
+        "<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/>
+      <meta name='viewport' content='width=device-width, initial-scale=1'>
+      <link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>
+      <link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
+      <link rel='stylesheet' href='/css/custom.css' type='text/css'/>
+      <link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
+    #+end_src
+*** Pre/Post amble
+    #+begin_src emacs-lisp
+      (defun +website/website-html-preamble (plist)
+        "PLIST: An entry."
+        (if (org-export-get-date plist this-date-format)
+            (plist-put plist
+                       :subtitle (format "Published on %s by %s."
+                                         (org-export-get-date plist this-date-format)
+                                         (car (plist-get plist :author)))))
+        ;; Preamble
+        (with-temp-buffer
+          (insert-file-contents
+           (expand-file-name
+            "html-templates/preamble.html"
+            +website-directory)) (buffer-string)))
 
-       (setq org-export-global-macros
-             '(("timestamp" . "@@html:<span class=\"timestamp\">[$1]</span>@@")))
-     #+end_src
-   - define the variables for =org-publish-project-alist=.
-     #+begin_src emacs-lisp
-       (defvar +blog-directory (file-name-directory buffer-file-name)
-         "Set current directory as `+blog-directory'.")
-       (defvar +publish-directory "/srv/http/"
-         "Location for publishing.")
-     #+end_src
-   - and the function itself.
-     #+begin_src emacs-lisp
-       (setq org-publish-project-alist
-             `(("pages"
-                :base-directory ,+blog-directory
-                :base-extension "org"
-                :recursive nil
-                :publishing-directory ,+publish-directory
-                :publishing-function org-html-publish-to-html
-                :html-doctype "html5"
-                :html-html5-fancy t
-                :html-head-include-scripts nil
-                :html-head-include-default-style nil
-                :html-head ,(concat
-                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/htmlize.css\"/>\n"
-                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/readtheorg.css\"/>\n")
-                :html-scripts ,(concat
-                                "<script type=\"text/javascript\" src=\"lib/js/jquery.min.js\"></script>\n"
-                                "<script type=\"text/javascript\" src=\"lib/js/bootstrap.min.js\"></script>\n"
-                                "<script type=\"text/javascript\" src=\"lib/js/jquery.stickytableheaders.min.js\"></script>\n"
-                                "<script type=\"text/javascript\" src=\"js/readtheorg.js\"></script>"))
-               ("blog"
-                :base-directory ,(expand-file-name "posts/" +blog-directory)
-                :base-extension "org"
-                :publishing-directory ,(expand-file-name "posts/" +publish-directory)
-                :publishing-function org-html-publish-to-html
-                :auto-sitemap t
-                :sitemap-title "Blog Posts"
-                :sitemap-filename "index.org"
-                :sitemap-format-entry my/org-sitemap-date-entry-format
-                :sitemap-sort-files anti-chronologically
-                :html-doctype "html5"
-                :html-html5-fancy t
-                :html-head-include-scripts nil
-                :html-head-include-default-style nil
-                :html-head ,(concat
-                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/htmlize.css\"/>"
-                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/readtheorg.css\"/>")
-                :html-scripts ,(concat
-                                "<script type=\"text/javascript\" src=\"lib/js/jquery.min.js\"></script>"
-                                "<script type=\"text/javascript\" src=\"lib/js/bootstrap.min.js\"></script>"
-                                "<script type=\"text/javascript\" src=\"lib/js/jquery.stickytableheaders.min.js\"></script>"
-                                "<script type=\"text/javascript\" src=\"js/readtheorg.js\"></script>")
-                :html-postamble "<nav><a href=\"/\">Home</a></nav><div id=\"updated\">Updated: %C</div>")
-               ("static"
-                :base-directory ,+blog-directory
-                :base-extension "css\\|txt\\|jpg\\|gif\\|png\\|js"
-                :recursive t
-                :publishing-directory ,+publish-directory
-                :publishing-function org-publish-attachment)
+      (defun +website/website-html-postamble (plist)
+        "PLIST."
+        (concat (format
+                 (with-temp-buffer
+                   (insert-file-contents
+                    (expand-file-name
+                     "html-templates/postamble.html"
+                     +website-directory)) (buffer-string))
+                 (format-time-string this-date-format
+                                     (plist-get plist :time))
+                 (plist-get plist :creator))))
+    #+end_src
+*** =site-attachment= variable
+    #+begin_src emacs-lisp
+      (defvar site-attachments
+        (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
+                      "ico" "cur" "css" "js" "woff" "html" "pdf" "txt"))
+        "File types that are published as static files.")
+    #+end_src
+*** =me/org-sitemap-format-entry= function
+    #+begin_src emacs-lisp
+      (defun me/org-sitemap-format-entry (entry style project)
+        "Format posts with author and published data in the index page.
 
-               ("websites" :components ("pages" "static" "blog"))))
-     #+end_src
-   - the footer
-     #+begin_src emacs-lisp
+      ENTRY: file-name
+      STYLE:
+      PROJECT: `posts in this case."
+        (cond ((not (directory-name-p entry))
+               (format "*[[file:%s][%s]]*
+                       ,#+HTML: <p class='pubdate'>by %s on %s.</p>"
+                       entry
+                       (org-publish-find-title entry project)
+                       (car (org-publish-find-property entry :author project))
+                       (format-time-string this-date-format
+                                           (org-publish-find-date entry project))))
+              ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
+              (t entry)))
+    #+end_src
+*** =+publish-root= variable
+    #+begin_src emacs-lisp
+      (defvar +website-publish-root (if (boundp '+publish-as-user)
+                              (concat "/~" user-login-name "/")
+                            "/"))
+    #+end_src
+*** reveal stuffs
+    Currently unused, I'll keep this for now just in case.
+    #+begin_src emacs-lisp
+      (defun me/org-reveal-publish-to-html (plist filename pub-dir)
+        "Publish an org file to reveal.js HTML Presentation.
+      FILENAME is the filename of the Org file to be published.  PLIST
+      is the property list for the given project.  PUB-DIR is the
+      publishing directory. Returns output file name."
+        (let ((org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
+          (org-publish-org-to 'reveal filename ".html" plist pub-dir)))
+    #+end_src
+*** The =+website-directory= variable
+    This is where the /website/ /org/ directory placed.
+    #+begin_src emacs-lisp
+      (defvar +website-directory
+        (expand-file-name "website/" org-directory)
+        "Location of the website directory.")
+    #+end_src
+*** =+website-url= variable
+    #+begin_src emacs-lisp
+      (defvar +website-url "https://java281.dynv6.net"
+        "The url for the website.")
+    #+end_src
+*** =+website-publish-directory=
+    #+begin_src emacs-lisp
+      (defvar +website-publish-directory "/srv/http"
+        "Location to serve the website.")
+    #+end_src
+*** =org-publish-project-alist=
+    The meat of this configuration.
+    #+begin_src emacs-lisp
+      (setq org-publish-project-alist
+            `(("website-posts"
+               :base-directory ,(expand-file-name "posts/" +website-directory)
+               :base-extension "org"
+               :recursive t
+               :publishing-function org-html-publish-to-html
+               :publishing-directory ,(expand-file-name "posts" +website-publish-directory)
+               :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+               :auto-sitemap t
+               :sitemap-filename "index.org"
+               :sitemap-title "Index"
+               :sitemap-format-entry me/org-sitemap-format-entry
+               :sitemap-style list
+               :sitemap-sort-files anti-chronologically
+               :html-link-home ,+website-publish-root
+               :html-link-up ,+website-publish-root
+               :html-head-include-scripts t
+               :html-head-include-default-style nil
+               :html-head ,me/website-html-head
+               :html-preamble +website/website-html-preamble
+               :html-postamble +website/website-html-postamble)
+              ("website-pages"
+               :base-directory ,+website-directory
+               :base-extension "org"
+               :exclude ,(regexp-opt '("README.org" "draft" "404.org" "template.org"))
+               :recursive nil
+               :publishing-function org-html-publish-to-html
+               :publishing-directory ,+website-publish-directory
+               :html-link-home ,+website-publish-root
+               :html-link-up ,+website-publish-root
+               :auto-sitemap nil
+               :html-head-include-scripts t
+               :html-head-include-default-style nil
+               :html-head ,me/website-html-head
+               :html-preamble +website/website-html-preamble
+               :html-postamble +website/website-html-postamble)
+              ("website-css"
+               :base-directory ,(expand-file-name "css/" +website-directory)
+               :base-extension "css"
+               :publishing-directory ,(expand-file-name "css/" +website-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("website-images"
+               :base-directory ,(expand-file-name "images/" +website-directory)
+               :base-extension ,site-attachments
+               :publishing-directory ,(expand-file-name "images/" +website-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("website-assets"
+               :base-directory ,(expand-file-name "assets/" +website-directory)
+               :base-extension ,site-attachments
+               :publishing-directory ,(expand-file-name "assets/" +website-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("website-rss"
+               :base-directory ,(expand-file-name "posts/" +website-directory)
+               :base-extension "org"
+               :html-link-home ,+website-url
+               :rss-link-home ,+website-url
+               :html-link-use-abs-url t
+               :rss-extension "xml"
+               :publishing-directory ,+website-publish-directory
+               :publishing-function (org-rss-publish-to-rss)
+               :section-number nil
+               :exclude ".*"
+               :include ("index.org")
+               :table-of-contents nil)
+              ("website" :components ("website-posts"
+                                      "website-pages"
+                                      "website-css"
+                                      "website-images"
+                                      "website-assets"
+                                      "website-rss"))))
+    #+end_src
+*** the footer
+    #+begin_src emacs-lisp
        (provide 'websites)
        ;;; websites.el ends here
+     #+end_src
+** blog
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/site-lisp/blog.el :mkdirp t
+   :END:
+   Configuration for org-generated blog.
+*** commented header
+    #+begin_src emacs-lisp
+      ;;; blog.el --- org-publish configurations
+      ;;
+      ;;; Commentary:
+      ;; I will try to avoid any hardcoded variables here.
+      ;;; Code:
+    #+end_src
+*** required packages
+    Most of these already built-in except for /reveal/
+    #+begin_src emacs-lisp
+      (require 'org)
+      (require 'ox-html)
+      (require 'ox-publish)
+      (require 'ox-rss)
+      (straight-use-package 'ox-reveal)
+      (require 'ox-reveal)
+      (straight-use-package 'htmlize)
+      (require 'htmlize)
+    #+end_src
+*** Setup org-export
+    #+begin_src emacs-lisp
+      (setq org-export-with-section-numbers nil
+            org-export-with-smart-quotes t
+            org-export-with-toc nil)
+    #+end_src
+*** define =this-date-format= variable
+    #+begin_src emacs-lisp
+      (defvar this-date-format "%b %d, %Y")
+    #+end_src
+*** Setup the html stuffs
+    #+begin_src emacs-lisp
+      (setq org-html-divs '((preamble "header" "top")
+                            (content "main" "content")
+                            (postamble "footer" "postamble"))
+            org-html-container-element "section"
+            org-html-metadata-timestamp-format this-date-format
+            org-html-checkbox-type 'html
+            org-html-html5-fancy t
+            org-html-validation-link t
+            org-html-doctype "html5"
+            org-html-htmlize-output-type 'css)
+    #+end_src
+*** Create custom variable for html-head
+    #+begin_src emacs-lisp
+      (defvar me/website-html-head
+        "<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/>
+      <meta name='viewport' content='width=device-width, initial-scale=1'>
+      <link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>
+      <link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
+      <link rel='stylesheet' href='/css/custom.css' type='text/css'/>
+      <link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
+    #+end_src
+*** Pre/Post amble
+    #+begin_src emacs-lisp
+      (defun +blog/website-html-preamble (plist)
+        "PLIST: An entry."
+        (if (org-export-get-date plist this-date-format)
+            (plist-put plist
+                       :subtitle (format "Published on %s by %s."
+                                         (org-export-get-date plist this-date-format)
+                                         (car (plist-get plist :author)))))
+        ;; Preamble
+        (with-temp-buffer
+          (insert-file-contents
+           (expand-file-name
+            "html-templates/preamble.html"
+            +blog-directory)) (buffer-string)))
+
+      (defun +blog/website-html-postamble (plist)
+        "PLIST."
+        (concat (format
+                 (with-temp-buffer
+                   (insert-file-contents
+                    (expand-file-name
+                     "html-templates/postamble.html"
+                     +blog-directory)) (buffer-string))
+                 (format-time-string this-date-format
+                                     (plist-get plist :time))
+                 (plist-get plist :creator))))
+    #+end_src
+*** =site-attachment= variable
+    #+begin_src emacs-lisp
+      (defvar site-attachments
+        (regexp-opt '("jpg" "jpeg" "gif" "png" "svg"
+                      "ico" "cur" "css" "js" "woff" "html" "pdf" "txt"))
+        "File types that are published as static files.")
+    #+end_src
+*** =me/org-sitemap-format-entry= function
+    #+begin_src emacs-lisp
+      (defun me/org-sitemap-format-entry (entry style project)
+        "Format posts with author and published data in the index page.
+
+      ENTRY: file-name
+      STYLE:
+      PROJECT: `posts in this case."
+        (cond ((not (directory-name-p entry))
+               (format "*[[file:%s][%s]]*
+                       ,#+HTML: <p class='pubdate'>by %s on %s.</p>"
+                       entry
+                       (org-publish-find-title entry project)
+                       (car (org-publish-find-property entry :author project))
+                       (format-time-string this-date-format
+                                           (org-publish-find-date entry project))))
+              ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
+              (t entry)))
+    #+end_src
+*** =+publish-root= variable
+    #+begin_src emacs-lisp
+      (defvar +blog-publish-root (if (boundp '+publish-as-user)
+                              (concat "/~" user-login-name "/")
+                            "/"))
+    #+end_src
+*** reveal stuffs
+    Currently unused, I'll keep this for now just in case.
+    #+begin_src emacs-lisp
+      (defun me/org-reveal-publish-to-html (plist filename pub-dir)
+        "Publish an org file to reveal.js HTML Presentation.
+      FILENAME is the filename of the Org file to be published.  PLIST
+      is the property list for the given project.  PUB-DIR is the
+      publishing directory. Returns output file name."
+        (let ((org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
+          (org-publish-org-to 'reveal filename ".html" plist pub-dir)))
+    #+end_src
+*** The =+blog-directory= variable
+    This is where the /website/ /org/ directory placed.
+    #+begin_src emacs-lisp
+      (defvar +website-directory
+        (expand-file-name "blog/" org-directory)
+        "Location of the website directory.")
+    #+end_src
+*** =+blog-url= variable
+    #+begin_src emacs-lisp
+      (defvar +blog-url "https://java281.dynv6.net/~alexforsale/"
+        "The url for the website.")
+    #+end_src
+*** =+website-publish-directory=
+    #+begin_src emacs-lisp
+      (defvar +blog-publish-directory "~/public_html"
+        "Location to serve the website.")
+    #+end_src
+*** =org-publish-project-alist=
+    The meat of this configuration.
+    #+begin_src emacs-lisp
+      (setq org-publish-project-alist
+            (append org-publish-project-alist
+            `(("blog-posts"
+               :base-directory ,(expand-file-name "posts/" +blog-directory)
+               :base-extension "org"
+               :recursive t
+               :publishing-function org-html-publish-to-html
+               :publishing-directory ,(expand-file-name "posts" +blog-publish-directory)
+               :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+               :auto-sitemap t
+               :sitemap-filename "index.org"
+               :sitemap-title "Index"
+               :sitemap-format-entry me/org-sitemap-format-entry
+               :sitemap-style list
+               :sitemap-sort-files anti-chronologically
+               :html-link-home ,+blog-publish-root
+               :html-link-up ,+blog-publish-root
+               :html-head-include-scripts t
+               :html-head-include-default-style nil
+               :html-head ,me/website-html-head
+               :html-preamble +blog/website-html-preamble
+               :html-postamble +blog/website-html-postamble)
+              ("blog-pages"
+               :base-directory ,+blog-directory
+               :base-extension "org"
+               :exclude ,(regexp-opt '("README.org" "draft" "404.org" "template.org"))
+               :recursive nil
+               :publishing-function org-html-publish-to-html
+               :publishing-directory ,+blog-publish-directory
+               :html-link-home ,+blog-publish-root
+               :html-link-up ,+blog-publish-root
+               :auto-sitemap nil
+               :html-head-include-scripts t
+               :html-head-include-default-style nil
+               :html-head ,me/website-html-head
+               :html-preamble +blog/website-html-preamble
+               :html-postamble +blog/website-html-postamble)
+              ("blog-css"
+               :base-directory ,(expand-file-name "css/" +blog-directory)
+               :base-extension "css"
+               :publishing-directory ,(expand-file-name "css/" +blog-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("blog-images"
+               :base-directory ,(expand-file-name "images/" +blog-directory)
+               :base-extension ,site-attachments
+               :publishing-directory ,(expand-file-name "images/" +blog-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("blog-assets"
+               :base-directory ,(expand-file-name "assets/" +blog-directory)
+               :base-extension ,site-attachments
+               :publishing-directory ,(expand-file-name "assets/" +blog-publish-directory)
+               :publishing-function org-publish-attachment
+               :recursive t)
+              ("blog-rss"
+               :base-directory ,(expand-file-name "posts/" +blog-directory)
+               :base-extension "org"
+               :html-link-home ,+blog-url
+               :rss-link-home ,+blog-url
+               :html-link-use-abs-url t
+               :rss-extension "xml"
+               :publishing-directory ,+blog-publish-directory
+               :publishing-function (org-rss-publish-to-rss)
+               :section-number nil
+               :exclude ".*"
+               :include ("index.org")
+               :table-of-contents nil)
+              ("blog" :components ("blog-posts"
+                                      "blog-pages"
+                                      "blog-css"
+                                      "blog-images"
+                                      "blog-assets"
+                                      "blog-rss")))))
+    #+end_src
+*** the footer
+    #+begin_src emacs-lisp
+       (provide 'blog)
+       ;;; blog.el ends here
      #+end_src
 * set footer for =config.el=
   :PROPERTIES:
