@@ -767,7 +767,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      #+begin_src emacs-lisp
        (setq org-todo-keywords
              '((sequence "TODO(t!)"
-                         "PROG(s@/!)"
+                         "PROG(p@/!)"
                          "WAITING(w@/!)"
                          "NEXT(n@/!)"
                          "MAYBE(m!)"
