@@ -48,13 +48,24 @@
       org-html-htmlize-output-type 'css
       org-src-fontify-natively t)
 
+(defvar +publish-as-user nil
+  "Set publish as user.")
+
+(defvar +html-head-root "/"
+  "Location of html-root.")
+
+(if +publish-as-user
+    (setq +html-head-root (concat "/~" user-login-name "/"))
+  (setq +html-head-root "/"))
+
 (defvar me/website-html-head
-  "<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>
-<link rel='stylesheet' href='/css/site.css?v=2' type='text/css'/>
-<link rel='stylesheet' href='/css/custom.css' type='text/css'/>
-<link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>")
+  (concat
+   "<link rel='icon' type='image/x-icon' href='" +html-head-root "images/favicon.jpg'/>"
+   "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+   "<link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>"
+   "<link rel='stylesheet' href='" +html-head-root "css/site.css' type='text/css'/>"
+   "<link rel='stylesheet' href='" +html-head-root "css/custom.css' type='text/css'/>"
+   "<link rel='stylesheet' href='" +html-head-root "css/syntax-coloring.css' type='text/css'/>"))
 
 (defun onelevel/website-html-preamble (plist)
   "PLIST: An entry."
@@ -64,7 +75,7 @@
                                (org-export-get-date plist this-date-format)
                                (car (plist-get plist :author)))))
   ;; Preamble
-  (if (boundp '+publish-as-user)
+  (if '+publish-as-user
       (with-temp-buffer
         (insert-file-contents "../html-templates/local-preamble.html") (buffer-string))
     (with-temp-buffer
