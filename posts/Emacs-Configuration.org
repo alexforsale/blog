@@ -1189,10 +1189,11 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        #+end_src
    - gcal
      #+begin_src emacs-lisp
-       (require 'org-gcal)
-       (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
-       (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
-       (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret"))
+       (with-eval-after-load 'pass
+         (require 'org-gcal)
+         (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
+         (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
+         (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret")))
      #+end_src
    - org-protocol handler and capture templates
      #+begin_src emacs-lisp
@@ -3447,6 +3448,78 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
        (provide 'blog)
        ;;; blog.el ends here
+     #+end_src
+** Roam Publish
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/site-lisp/roam-publish.el :mkdirp t
+   :END:
+*** commented header
+    #+begin_src emacs-lisp
+      ;;; roam-publish.el --- org-publish configurations
+      ;;
+      ;;; Commentary:
+      ;; I will try to avoid any hardcoded variables here.
+      ;;; Code:
+      (require 'blog)
+    #+end_src
+*** =+roam-sitemap= function
+    #+begin_src emacs-lisp
+      (defun +roam-sitemap (title list)
+        (concat "#+options: ^:nil author:nil html-postamble:nil\n"
+                "#+title: " title "\n\n"
+                "\nfile:sitemap.svg\n\n"
+                (org-list-to-org list) ))
+    #+end_src
+*** =+roam-publication-wrapper= function
+    #+begin_src emacs-lisp
+      (defvar +roam-publish-time 0)   ; see the next section for context
+      (defun +roam-publication-wrapper (plist filename pubdir)
+        (org-roam-graph)
+        (org-html-publish-to-html plist filename pubdir)
+        (setq +roam-publish-time (cadr (current-time))))
+        #+end_src
+*** =org-publish-project-alist=
+    The meat of this configuration.
+    #+begin_src emacs-lisp
+      (setq org-publish-project-alist
+            (append org-publish-project-alist
+                    `(("roam"
+                       :base-directory ,org-roam-directory
+                       :publishing-function +roam-publication-wrapper
+                       :publishing-directory ,(expand-file-name "notes" +blog-publish-directory)
+                       :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+                       :auto-sitemap t
+                       :sitemap-filename "index.org"
+                       :sitemap-title "Roam Notes"
+                       :sitemap-function +roam-sitemap
+                       :html-head-include-scripts t
+                       :html-head-include-default-style nil
+                       :html-head ,me/website-html-head
+                       :section-number nil
+                       :table-of-content nil
+                       ))))
+    #+end_src
+*** =+org-roam-custom-link-builder= function
+    #+begin_src emacs-lisp
+      (defun +org-roam-custom-link-builder (node)
+        (let ((file (org-roam-node-file node)))
+          (concat (file-name-base file) ".html")))
+
+      (setq org-roam-graph-link-builder '+org-roam-custom-link-builder)
+    #+end_src
+*** Hook for copying generated file to the export directory
+    #+begin_src emacs-lisp
+      (setq org-roam-graph-viewer "emacsclient")
+      (add-hook 'org-roam-graph-generation-hook
+                (lambda (dot svg) (if (< (- (cadr (current-time)) +roam-publish-time) 5)
+                                      (progn (copy-file svg (expand-file-name "notes/sitemap.svg" +blog-publish-directory) 't)
+                                              ;(kill-buffer (file-name-nondirectory svg))
+                                             (setq +roam-publish-time 0)))))
+    #+end_src
+*** the footer
+    #+begin_src emacs-lisp
+       (provide 'roam-publish)
+       ;;; roam-publish.el ends here
      #+end_src
 * set footer for =config.el=
   :PROPERTIES:
