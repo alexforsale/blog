@@ -5,10 +5,11 @@
  ******************************/
 .title  { text-align: center;
            margin-bottom: .2em; }
-.subtitle { color: #aaa;
-            font-size: 18px;}
-.todo   { font-family: monospace; color: red; }
-.done   { font-family: monospace; color: green; }
+.subtitle { color: #657b83;
+            font-size: 16px;
+            text-align: right;}
+.todo   { font-family: monospace; color: #dc322f; }
+.done   { font-family: monospace; color: #2aa198; }
 .priority { font-family: monospace; color: orange; }
 .tag    { background-color: #eee; font-family: monospace;
           padding: 2px; font-size: 80%; font-weight: normal; }
@@ -136,7 +137,8 @@ pre.src-nxml:before { content: 'XML'; }
    (add-to-list 'org-latex-listings-langs '(conf \" \")) in .emacs */
 pre.src-conf:before { content: 'Configuration File'; }
 
-table { border-collapse:collapse; }
+table { border-collapse:collapse;
+        color: #657b83;}
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
 td, th { vertical-align:top;  }

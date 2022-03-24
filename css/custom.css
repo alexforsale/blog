@@ -9,6 +9,8 @@ body .pubdate {
     text-align:left;
 }
 figcaption {
+    font-size: 12px;
+    color: #657b83;
     text-align: center;
 }
 .video-container {
