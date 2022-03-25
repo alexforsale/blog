@@ -175,7 +175,10 @@ publishing directory. Returns output file name."
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
          :html-preamble onelevel/website-html-preamble
-         :html-postamble onelevel/website-html-postamble)
+         :html-postamble onelevel/website-html-postamble
+         :with-drawers t
+         :with-priority t
+         :with-properties t)
         ("onehouraday"
          :base-directory "onehouraday/"
          :base-extension "org"
@@ -195,7 +198,10 @@ publishing directory. Returns output file name."
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
          :html-preamble onelevel/website-html-preamble
-         :html-postamble onelevel/website-html-postamble)
+         :html-postamble onelevel/website-html-postamble
+         :with-drawers t
+         :with-priority t
+         :with-properties t)
         ("pages"
          :base-directory ,(expand-file-name (getenv "PWD"))
          :base-extension "org"
@@ -210,7 +216,10 @@ publishing directory. Returns output file name."
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
          :html-preamble root/website-html-preamble
-         :html-postamble root/website-html-postamble)
+         :html-postamble root/website-html-postamble
+         :with-drawers t
+         :with-priority t
+         :with-properties t)
         ("css"
          :base-directory "./css"
          :base-extension "css"
