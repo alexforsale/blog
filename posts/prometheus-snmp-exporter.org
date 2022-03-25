@@ -88,4 +88,4 @@ Setting up /prometheus/'s /snmp-exporter/ isn't as straight-forward as many blog
   #+end_src
   The additional =walk= is for =IP-MIB= and =IPV6-MIB=, on /arch/ it's available at =/usr/share/snmp/mibs= (provided you've installed =net-snmp=).
 
-  #+include: ../utterances.inc
+#+include: ../utterances.inc
