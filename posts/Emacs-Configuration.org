@@ -3487,6 +3487,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
             (append org-publish-project-alist
                     `(("roam"
                        :base-directory ,org-roam-directory
+                       :base-extension "org"
                        :publishing-function +roam-publication-wrapper
                        :publishing-directory ,(expand-file-name "roam" +blog-publish-directory)
                        :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
