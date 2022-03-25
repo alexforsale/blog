@@ -42,7 +42,7 @@ pre.src:before {
   padding: 3px;
   border: 1px solid black;
   background-color: #C792EA;
-  color: #F57373;
+  color: #212121;
 }
 pre.src:hover:before { display: inline;}
 /* Languages per Org manual */
