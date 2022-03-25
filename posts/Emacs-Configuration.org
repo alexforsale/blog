@@ -3428,78 +3428,80 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (setq org-publish-project-alist
             (append org-publish-project-alist
-            `(("blog-posts"
-               :base-directory ,(expand-file-name "posts/" +blog-directory)
-               :base-extension "org"
-               :recursive t
-               :publishing-function org-html-publish-to-html
-               :publishing-directory ,(expand-file-name "posts" +blog-publish-directory)
-               :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
-               :auto-sitemap t
-               :sitemap-filename "index.org"
-               :sitemap-title "Index"
-               :sitemap-format-entry me/org-sitemap-format-entry
-               :sitemap-style list
-               :sitemap-sort-files anti-chronologically
-               :html-link-home ,+blog-publish-root
-               :html-link-up ,+blog-publish-root
-               :html-head-include-scripts t
-               :html-head-include-default-style nil
-               :html-head ,me/website-html-head
-               :html-preamble +blog/website-html-preamble
-               :html-postamble +blog/website-html-postamble)
-              ("blog-pages"
-               :base-directory ,+blog-directory
-               :base-extension "org"
-               :exclude ,(regexp-opt '("README.org" "draft" "404.org" "template.org"))
-               :recursive nil
-               :publishing-function org-html-publish-to-html
-               :publishing-directory ,+blog-publish-directory
-               :html-link-home ,+blog-publish-root
-               :html-link-up ,+blog-publish-root
-               :auto-sitemap nil
-               :html-head-include-scripts t
-               :html-head-include-default-style nil
-               :html-head ,me/website-html-head
-               :html-preamble +blog/website-html-preamble
-               :html-postamble +blog/website-html-postamble)
-              ("blog-css"
-               :base-directory ,(expand-file-name "css/" +blog-directory)
-               :base-extension "css"
-               :publishing-directory ,(expand-file-name "css/" +blog-publish-directory)
-               :publishing-function org-publish-attachment
-               :recursive t)
-              ("blog-images"
-               :base-directory ,(expand-file-name "images/" +blog-directory)
-               :base-extension ,site-attachments
-               :publishing-directory ,(expand-file-name "images/" +blog-publish-directory)
-               :publishing-function org-publish-attachment
-               :recursive t)
-              ("blog-assets"
-               :base-directory ,(expand-file-name "assets/" +blog-directory)
-               :base-extension ,site-attachments
-               :publishing-directory ,(expand-file-name "assets/" +blog-publish-directory)
-               :publishing-function org-publish-attachment
-               :recursive t)
-              ("blog-rss"
-               :base-directory ,(expand-file-name "posts/" +blog-directory)
-               :base-extension "org"
-               :html-link-home ,+blog-url
-               :rss-link-home ,+blog-url
-               :html-link-use-abs-url t
-               :rss-extension "xml"
-               :publishing-directory ,+blog-publish-directory
-               :publishing-function (org-rss-publish-to-rss)
-               :section-number nil
-               :exclude ".*"
-               :include ("index.org")
-               :table-of-contents nil)
-              ("blog" :components ("blog-posts"
-                                      "blog-pages"
-                                      "blog-css"
-                                      "blog-images"
-                                      "blog-assets"
-                                      "blog-rss")))))
+                    `(("blog-posts"
+                       :base-directory ,(expand-file-name "posts/" +blog-directory)
+                       :base-extension "org"
+                       :recursive t
+                       :publishing-function org-html-publish-to-html
+                       :publishing-directory ,(expand-file-name "posts" +blog-publish-directory)
+                       :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
+                       :auto-sitemap t
+                       :sitemap-filename "index.org"
+                       :sitemap-title "Index"
+                       :sitemap-format-entry me/org-sitemap-format-entry
+                       :sitemap-style list
+                       :sitemap-sort-files anti-chronologically
+                       :html-link-home ,+blog-publish-root
+                       :html-link-up ,+blog-publish-root
+                       :html-head-include-scripts t
+                       :html-head-include-default-style nil
+                       :html-head ,me/website-html-head
+                       :html-preamble +blog/website-html-preamble
+                       :html-postamble +blog/website-html-postamble
+                       :with-drawers t)
+                      ("blog-pages"
+                       :base-directory ,+blog-directory
+                       :base-extension "org"
+                       :exclude ,(regexp-opt '("README.org" "draft" "404.org" "template.org"))
+                       :recursive nil
+                       :publishing-function org-html-publish-to-html
+                       :publishing-directory ,+blog-publish-directory
+                       :html-link-home ,+blog-publish-root
+                       :html-link-up ,+blog-publish-root
+                       :auto-sitemap nil
+                       :html-head-include-scripts t
+                       :html-head-include-default-style nil
+                       :html-head ,me/website-html-head
+                       :html-preamble +blog/website-html-preamble
+                       :html-postamble +blog/website-html-postamble
+                       :with-drawers t)
+                      ("blog-css"
+                       :base-directory ,(expand-file-name "css/" +blog-directory)
+                       :base-extension "css"
+                       :publishing-directory ,(expand-file-name "css/" +blog-publish-directory)
+                       :publishing-function org-publish-attachment
+                       :recursive t)
+                      ("blog-images"
+                       :base-directory ,(expand-file-name "images/" +blog-directory)
+                       :base-extension ,site-attachments
+                       :publishing-directory ,(expand-file-name "images/" +blog-publish-directory)
+                       :publishing-function org-publish-attachment
+                       :recursive t)
+                      ("blog-assets"
+                       :base-directory ,(expand-file-name "assets/" +blog-directory)
+                       :base-extension ,site-attachments
+                       :publishing-directory ,(expand-file-name "assets/" +blog-publish-directory)
+                       :publishing-function org-publish-attachment
+                       :recursive t)
+                      ("blog-rss"
+                       :base-directory ,(expand-file-name "posts/" +blog-directory)
+                       :base-extension "org"
+                       :html-link-home ,+blog-url
+                       :rss-link-home ,+blog-url
+                       :html-link-use-abs-url t
+                       :rss-extension "xml"
+                       :publishing-directory ,+blog-publish-directory
+                       :publishing-function (org-rss-publish-to-rss)
+                       :section-number nil
+                       :exclude ".*"
+                       :include ("index.org")
+                       :table-of-contents nil)
+                      ("blog" :components ("blog-posts"
+                                           "blog-pages"
+                                           "blog-css"
+                                           "blog-images"
+                                           "blog-assets"
+                                           "blog-rss")))))
     #+end_src
 *** the footer
     #+begin_src emacs-lisp
@@ -3561,6 +3563,9 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                        :html-head ,me/website-html-head
                        :section-number nil
                        :table-of-content nil
+                       :with-drawers t
+                       :with-properties t
+                       :with-priority t
                        ))))
     #+end_src
 *** =+org-roam-custom-link-builder= function
