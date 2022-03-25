@@ -187,7 +187,24 @@
   | =~=             | org-agenda-limit-interactively               |
   |---------------+----------------------------------------------|
 
-  And one key that I couldn't figure out how to put in to table: ~|~ for =org-agenda-filter-remove-all=.
+  And one key that I couldn't figure out how to put in to table: ~|~ for =org-agenda-filter-remove-all=. By the way, the list of those commands can be found with =M-x describe-variable RET org-agenda-mode-map=, or with the default keybinding: =C-h v org-agenda-mode-map=. Right now it's kinda pointless describing each and every functions in the above before we setup the =org-agenda-files=.
+* The =org-agenda-files=
+  From the documentation (get used to it, you'll find more information here than anywhere else):
+  #+begin_quote
+  The files to be used for agenda display.
+
+  If an entry is a directory, all files in that directory that are matched
+  by org-agenda-file-regexp will be part of the file list.
+
+  If the value of the variable is not a list but a single file name, then
+  the list of agenda files is actually stored and maintained in that file,
+  one agenda file per line.  In this file paths can be given relative to
+  org-directory.  Tilde expansion and environment variable substitution
+  are also made.
+
+  Entries may be added to this list with M-x org-agenda-file-to-front
+and removed with M-x org-remove-file.
+  #+end_quote
 * Footnotes
 
 [fn:1] https://orgmode.org/manual/Agenda-Views.html
