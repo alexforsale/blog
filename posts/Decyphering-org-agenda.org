@@ -1,0 +1,191 @@
+#+title: Decyphering org-agenda-view
+#+date: <2022-03-25 Fri>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+* PROG What is Org-agenda?
+  :LOGBOOK:
+  - State "PROG"       from              [2022-03-25 Fri 18:22] \\
+    Do more with this stuff
+  :END:
+  For short, it's a display of six criteria[fn:1]:
+  - =agenda= :: it's basically a calendar view.
+  - =TODO list= :: covers all unfinished action items.
+  - =match view= :: showing headlines based on /tags/, /properties/, and /TODO/ state associated with them.
+  - =text search= :: showing all entries that contains specific /keywords/.
+  - =stuck projects= :: showing /projects/ that currently do not move along.
+  - =custom views= :: special searches and combinations of different views
+
+  The extracted information is displayed in a special agenda buffer. This buffer is read-only, but provides commands to visit the corresponding locations in the original Org files, and even to edit these files remotely.
+
+  When I first got to know /Emacs/ I didn't really use the /agenda/ functionality, I thought there's no way this is more customizeable than say /google calendar/ and such. Back then I was more "what can it do for me?" rather than "what can I do with it?". Well, you get the idea...
+
+  First, to get to the /agenda view/, run =M-x org-agenda=, if you're used to it, try binding it to a key. You'll be greeted by this:
+  #+caption: This is vanilla Emacs btw
+  #+attr_org: :width 300
+  #+ATTR_HTML: :class center no-border :width 75% :height 75%
+  [[../images/org-agenda/org-agenda-1.png]]
+
+  Back then, this was the reason I backed out from exploring /org-agenda/, what to do with this window? Many stuffs apparently:
+
+  |---------------+----------------------------------------------|
+  | Key           | Function                                     |
+  |---------------+----------------------------------------------|
+  | ~!~             | org-agenda-toggle-deadlines                  |
+  | ~#~             | org-agenda-dim-blocked-tasks                 |
+  | ~$~             | org-agenda-archive                           |
+  | ~%~             | org-agenda-bulk-mark-regexp                  |
+  | ~*~             | org-agenda-bulk-mark-all                     |
+  | ~+~             | org-agenda-priority-up                       |
+  | ~,~             | org-agenda-priority                          |
+  | ~-~             | org-agenda-priority-down                     |
+  | ~.~             | org-agenda-goto-today                        |
+  | ~/~             | org-agenda-filter                            |
+  | ~0~             | digit-argument                               |
+  | ~1~             | digit-argument                               |
+  | ~2~             | digit-argument                               |
+  | ~3~             | digit-argument                               |
+  | ~4~             | digit-argument                               |
+  | ~5~             | digit-argument                               |
+  | ~6~             | digit-argument                               |
+  | ~7~             | digit-argument                               |
+  | ~8~             | digit-argument                               |
+  | ~9~             | digit-argument                               |
+  | ~:~             | org-agenda-set-tags                          |
+  | ~;~             | org-timer-set-timer                          |
+  | ~<~             | org-agenda-filter-by-category                |
+  | ~C-S-left~      | org-agenda-todo-previousset                  |
+  | ~C-S-right~     | org-agenda-todo-nextset                      |
+  | ~M-down~        | org-agenda-drag-line-forward                 |
+  | ~M-up~          | org-agenda-drag-line-backward                |
+  | ~S-down~        | org-agenda-priority-down                     |
+  | ~S-left~        | org-agenda-do-date-earlier                   |
+  | ~S-right~       | org-agenda-do-date-later                     |
+  | ~S-up~          | org-agenda-priority-up                       |
+  | ~backspace~     | org-agenda-show-scroll-down                  |
+  | ~down~          | org-agenda-next-line                         |
+  | ~mouse-2~       | org-agenda-goto-mouse                        |
+  | ~mouse-3~       | org-agenda-show-mouse                        |
+  | ~tab~           | org-agenda-goto                              |
+  | ~undo~          | org-agenda-undo                              |
+  | ~up~            | org-agenda-previous-line                     |
+  | ~=~             | org-agenda-filter-by-regexp                  |
+  | ~>~             | org-agenda-date-prompt                       |
+  | ~?~             | org-agenda-show-the-flagging-note            |
+  | ~A~             | org-agenda-append-agenda                     |
+  | ~B~             | org-agenda-bulk-action                       |
+  | ~C~             | org-agenda-convert-date                      |
+  | ~C-/~           | org-agenda-undo                              |
+  | ~C-_~           | org-agenda-undo                              |
+  | ~C-c $~         | org-agenda-archive                           |
+  | ~C-c ,~         | org-agenda-priority                          |
+  | ~C-c C-a~       | org-attach                                   |
+  | ~C-c C-c~       | org-agenda-ctrl-c-ctrl-c                     |
+  | ~C-c C-d~       | org-agenda-deadline                          |
+  | ~C-c C-n~       | org-agenda-next-date-line                    |
+  | ~C-c C-o~       | org-agenda-open-link                         |
+  | ~C-c C-p~       | org-agenda-previous-date-line                |
+  | ~C-c C-q~       | org-agenda-set-tags                          |
+  | ~C-c C-s~       | org-agenda-schedule                          |
+  | ~C-c C-t~       | org-agenda-todo                              |
+  | ~C-c C-w~       | org-agenda-refile                            |
+  | ~C-c C-x !~     | org-reload                                   |
+  | ~C-c C-x <~     | org-agenda-set-restriction-lock-from-agenda  |
+  | ~C-c C-x down~  | org-agenda-priority-down                     |
+  | ~C-c C-x left~  | org-agenda-do-date-earlier                   |
+  | ~C-c C-x right~ | org-agenda-do-date-later                     |
+  | ~C-c C-x up~    | org-agenda-priority-up                       |
+  | ~C-c C-x >~     | org-agenda-remove-restriction-lock           |
+  | ~C-c C-x A~     | org-agenda-archive-to-archive-sibling        |
+  | ~C-c C-x C-a~   | org-agenda-archive-default                   |
+  | ~C-c C-x C-c~   | org-agenda-columns                           |
+  | ~C-c C-x C-e~   | org-clock-modify-effort-estimate             |
+  | ~C-c C-x C-j~   | org-clock-goto                               |
+  | ~C-c C-x C-o~   | org-agenda-clock-out                         |
+  | ~C-c C-x C-s~   | org-agenda-archive                           |
+  | ~C-c C-x C-x~   | org-agenda-clock-cancel                      |
+  | ~C-c C-x I~     | org-info-find-node                           |
+  | ~C-c C-x RET g~ | org-mobile-pull                              |
+  | ~C-c C-x RET p~ | org-mobile-push                              |
+  | ~C-c C-x TAB~   | org-agenda-clock-in                          |
+  | ~C-c C-x _~     | org-timer-stop                               |
+  | ~C-c C-x a~     | org-agenda-toggle-archive-tag                |
+  | ~C-c C-x b~     | org-agenda-tree-to-indirect-buffer           |
+  | ~C-c C-x e~     | org-agenda-set-effort                        |
+  | ~C-c C-x p~     | org-agenda-set-property                      |
+  | ~C-c C-z~       | org-agenda-add-note                          |
+  | ~C-e~           | org-agenda-end-of-line                       |
+  | ~C-k~           | org-agenda-kill                              |
+  | ~C-n~           | org-agenda-next-line                         |
+  | ~C-p~           | org-agenda-previous-line                     |
+  | ~C-x C-s~       | org-save-all-org-buffers                     |
+  | ~C-x C-w~       | org-agenda-write                             |
+  | ~C-x u~         | org-agenda-undo                              |
+  | ~D~             | org-agenda-toggle-diary                      |
+  | ~DEL~           | org-agenda-show-scroll-down                  |
+  | ~E~             | org-agenda-entry-text-mode                   |
+  | ~F~             | org-agenda-follow-mode                       |
+  | ~G~             | org-agenda-toggle-time-grid                  |
+  | ~H~             | org-agenda-holidays                          |
+  | ~I~             | org-agenda-clock-in                          |
+  | ~J~             | org-agenda-clock-goto                        |
+  | ~L~             | org-agenda-recenter                          |
+  | ~M~             | org-agenda-phases-of-moon                    |
+  | ~M-*~           | org-agenda-bulk-toggle-all                   |
+  | ~M-m~           | org-agenda-bulk-toggle                       |
+  | ~M-{~           | org-agenda-backward-block                    |
+  | ~M-}~           | org-agenda-forward-block                     |
+  | ~N~             | org-agenda-next-item                         |
+  | ~O~             | org-agenda-clock-out                         |
+  | ~P~             | org-agenda-previous-item                     |
+  | ~Q~             | org-agenda-Quit                              |
+  | ~R~             | org-agenda-clockreport-mode                  |
+  | ~RET~           | org-agenda-switch-to                         |
+  | ~S~             | org-agenda-sunrise-sunset                    |
+  | ~SPC~           | org-agenda-show-and-scroll-up                |
+  | ~T~             | org-agenda-show-tags                         |
+  | ~TAB~           | org-agenda-goto                              |
+  | ~U~             | org-agenda-bulk-unmark-all                   |
+  | ~X~             | org-agenda-clock-cancel                      |
+  | ~[~             | org-agenda-manipulate-query-add              |
+  | ~\~             | org-agenda-filter-by-tag                     |
+  | ~]~             | org-agenda-manipulate-query-subtract         |
+  | ~^~             | org-agenda-filter-by-top-headline            |
+  | ~_~             | org-agenda-filter-by-effort                  |
+  | ~a~             | org-agenda-archive-default-with-confirmation |
+  | ~b~             | org-agenda-earlier                           |
+  | ~c~             | org-agenda-goto-calendar                     |
+  | ~d~             | org-agenda-day-view                          |
+  | ~e~             | org-agenda-set-effort                        |
+  | ~f~             | org-agenda-later                             |
+  | ~g~             | org-agenda-redo-all                          |
+  | ~h~             | org-agenda-holidays                          |
+  | ~i~             | org-agenda-diary-entry                       |
+  | ~j~             | org-agenda-goto-date                         |
+  | ~k~             | org-agenda-capture                           |
+  | ~l~             | org-agenda-log-mode                          |
+  | ~m~             | org-agenda-bulk-mark                         |
+  | ~n~             | org-agenda-next-line                         |
+  | ~o~             | delete-other-windows                         |
+  | ~p~             | org-agenda-previous-line                     |
+  | ~q~             | org-agenda-quit                              |
+  | ~r~             | org-agenda-redo                              |
+  | ~s~             | org-save-all-org-buffers                     |
+  | ~t~             | org-agenda-todo                              |
+  | ~u~             | org-agenda-bulk-unmark                       |
+  | ~v~             | org-agenda-view-mode-dispatch                |
+  | ~w~             | org-agenda-week-view                         |
+  | ~x~             | org-agenda-exit                              |
+  | ~y~             | org-agenda-year-view                         |
+  | ~z~             | org-agenda-add-note                          |
+  | ~{~             | org-agenda-manipulate-query-add-re           |
+  | ~}~             | org-agenda-manipulate-query-subtract-re      |
+  | =~=             | org-agenda-limit-interactively               |
+  |---------------+----------------------------------------------|
+
+  And one key that I couldn't figure out how to put in to table: ~|~ for =org-agenda-filter-remove-all=.
+* Footnotes
+
+[fn:1] https://orgmode.org/manual/Agenda-Views.html
