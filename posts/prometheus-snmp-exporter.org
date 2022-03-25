@@ -1,0 +1,91 @@
+#+title: prometheus-snmp-exporter
+#+date: <2022-03-25 Fri>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+I need to write this down before I forgot.
+
+Setting up /prometheus/'s /snmp-exporter/ isn't as straight-forward as many blogs and tutorial on the internet. Mostly those articles only covers the installation part, without diving much to the /snmp/ side of things. So here's what I think is the important part.
+* Make sure you have a running /snmpd/ daemon                            :snmp:
+  And verify it, even better, run =snmpwalk= from another remote machine to also making sure there's no firewall issues. If /snmp/ and /snmp exporter/ is in the same machine, I suppose it's safe to use /snmp/ version /1/ or /2c/. There's already too much documentations on /snmp/ (on /arch/, there's a =net-snmp= package in the repository). As far as /snmp/ side, this is basically it.
+* snmp-exporter
+  This is where I got lost initially. From their official github repo readme, the example config looks like this:
+  #+name: /etc/prometheus/prometheus.yml
+  #+begin_src yaml
+    scrape_configs:
+    - job_name: 'snmp'
+      static_configs:
+        - targets:
+          - 192.168.1.2  # SNMP device.
+          - switch.local # SNMP device.
+      metrics_path: /snmp
+      params:
+        module: [if_mib]
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: 127.0.0.1:9116  # The SNMP exporter's real hostname:port.
+  #+end_src
+  This is assuming =if-mib= is sufficient. Unfortunately, I needed more /MIB's/. Since =prometheus-snmp-exporter= is an /AUR/ package, it's  not in the wiki. There's a /readme/ file though, especially for the /generator/ because this is what I'm looking for. In /archlinux/ the /generator/ binary is in =/usr/bin/prometheus-snmp-generator=. What's left is the =generator.yml= file, there's a sample config file in the /generator readme/. But for someone not familiar with /snmp/ like me this is too vague. Luckily there's another [[https://github.com/prometheus/snmp_exporter/blob/main/generator/generator.yml][sample configuration file in their github repo]]. I removed all that I don't use and eventually left with this:
+  #+name: generator.yml
+  #+begin_src yaml
+    modules:
+      # Default IF-MIB interfaces table with ifIndex.
+      if_mib:
+        walk: [sysUpTime, interfaces, ifXTable]
+        lookups:
+          - source_indexes: [ifIndex]
+            lookup: ifAlias
+          - source_indexes: [ifIndex]
+            # Uis OID to avoid conflict with PaloAlto PAN-COMMON-MIB.
+            lookup: 1.3.6.1.2.1.2.2.1.2 # ifDescr
+          - source_indexes: [ifIndex]
+            # Use OID to avoid conflict with Netscaler NS-ROOT-MIB.
+            lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+        overrides:
+          ifAlias:
+            ignore: true # Lookup metric
+          ifDescr:
+            ignore: true # Lookup metric
+          ifName:
+            ignore: true # Lookup metric
+          ifType:
+            type: EnumAsInfo
+  #+end_src
+  Save this as =generator.yml= and run ~prometheus-snmp-generator generate~ in the same directory, and you'll get the =snmp.yml=. This is still not enough for me since what I'm looking for is actually in the =IP-MIB= =OID=. I could manually list all the /OID's/, but that'll take a while, a quick /google/ search and I got [[https://oidref.com/1.3.6.1.2.1.4][this]]. And I modify the =generator.yml= file:
+  #+begin_src yaml
+    modules:
+      if_mib:
+        walk:
+          - interfaces
+          - sysUpTime
+          - ifXTable
+          - 1.3.6.1.2.1.4
+          - 1.3.6.1.2.1.55
+        lookups:
+          - source_indexes: [ifIndex]
+            lookup: ifAlias
+          - source_indexes: [ifIndex]
+            lookup: 1.3.6.1.2.1.2.2.1.2 # ifDescr
+          - source_indexes: [ifIndex]
+            lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+        overrides:
+          ifAlias:
+            ignore: true # Lookup metric
+          ifDescr:
+            ignore: true # Lookup metric
+          ifName:
+            ignore: true # Lookup metric
+          ifType:
+            type: EnumAsInfo
+        auth:
+          community: ro_java281
+  #+end_src
+  The additional =walk= is for =IP-MIB= and =IPV6-MIB=, on /arch/ it's available at =/usr/share/snmp/mibs= (provided you've installed =net-snmp=).
+
+  #+include: ../utterances.inc
