@@ -1040,7 +1040,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
              `(("d" "Dashboard"
                 ((agenda "" ((org-deadline-warning-days 3)))
                  (tags-todo "+habit+TODO=\"TODO\"" ((org-agenda-overriding-header "Routine")))
-                 (tags-todo "+project-TODO=\"DONE\"-TODO=\"SOMEDAY\"-TODO=\"LEARN\""
+                 (tags-todo "+project+projects-TODO=\"DONE\"-TODO=\"SOMEDAY\"-TODO=\"LEARN\""
                             ((org-agenda-overriding-header "Projects:")))
                  (tags-todo "+followup" ((org-agenda-overriding-header "Needs Follow Up")))
                  (tags "+TODO=\"NEXT\"+learning+" ((org-agenda-overriding-header "Learning:")))
