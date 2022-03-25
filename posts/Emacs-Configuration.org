@@ -3488,7 +3488,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                     `(("roam"
                        :base-directory ,org-roam-directory
                        :publishing-function +roam-publication-wrapper
-                       :publishing-directory ,(expand-file-name "notes" +blog-publish-directory)
+                       :publishing-directory ,(expand-file-name "roam" +blog-publish-directory)
                        :exclude ,(regexp-opt '("README.org" "draft" "404.org"))
                        :auto-sitemap t
                        :sitemap-filename "index.org"
@@ -3514,7 +3514,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (setq org-roam-graph-viewer "emacsclient")
       (add-hook 'org-roam-graph-generation-hook
                 (lambda (dot svg) (if (< (- (cadr (current-time)) +roam-publish-time) 5)
-                                      (progn (copy-file svg (expand-file-name "notes/sitemap.svg" +blog-publish-directory) 't)
+                                      (progn (copy-file svg (expand-file-name "roam/sitemap.svg" +blog-publish-directory) 't)
                                               ;(kill-buffer (file-name-nondirectory svg))
                                              (setq +roam-publish-time 0)))))
     #+end_src
