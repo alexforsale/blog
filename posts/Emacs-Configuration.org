@@ -128,7 +128,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
   #+begin_src emacs-lisp
     ;;; init.el --- Main Emacs configuration file -*- lexical-binding: t -*-
     ;;; Commentary:
-    ;; This file is auto-generated from config.org
+    ;; This file is auto-generated from `config.org'
+    ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
     ;;; Code:
   #+end_src
   [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html][The Emacs initialization file]].
@@ -239,6 +240,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
   #+begin_src emacs-lisp
     ;;; config-defaults-variables.el --- Summary -*- lexical-binding: t -*-
     ;;; Commentary:
+    ;; This file is auto-generated from `config.org'
+    ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
     ;;; Code:
   #+end_src
   This tangles into =~/.config/emacs/modules/config-defaults-variables.el=
@@ -309,6 +312,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-defaults.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - other builtin data file
@@ -344,9 +349,11 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     :header-args: :tangle ~/.config/emacs/modules/config-defaults-ui.el :mkdirp t
     :END:
     #+begin_src emacs-lisp
-     ;;; config-defaults-ui.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;;; Code:
+      ;;; config-defaults-ui.el --- Summary -*- lexical-binding: t -*-
+      ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+      ;;; Code:
     #+end_src
 **** Default fonts
      Got this from [[https://emacsredux.com/blog/2021/12/22/check-if-a-font-is-available-with-emacs-lisp/][emacsredux]]:
@@ -456,6 +463,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
       (require 'config-defaults-variables)
     #+end_src
@@ -565,6 +574,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-defaults-org.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
       (require 'org)
     #+end_src
@@ -840,6 +851,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
 **** =desktop-save-mode=
@@ -967,6 +980,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-defaults-keybindings.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
 **** recentf
@@ -986,6 +1001,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-org.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - use +built-in+ ='org=.
@@ -1416,6 +1433,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-ui.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - clone the packages
@@ -1710,6 +1729,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-editing.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - packages
@@ -1870,6 +1891,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-ide.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - packages
@@ -1965,6 +1988,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-completion.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
     - Clone the packages.
@@ -2205,6 +2230,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-eshell.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
     - Eshell and emacs-server, from [[https://www.emacswiki.org/emacs/EshellAndEmacsServer][emacswiki]]. If using /chemacs,/ to actually run this outside /emacs/, use: ~emacsclient -a "" -s <chemacs-profile> -c -e '(+server-eshell)'~
@@ -2257,6 +2284,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-vterm.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
     - clone the vterm package when not in /guix/. "${DISTRO}" is a variable set by my [[file:~/.profile][~/.profile]]
@@ -2281,6 +2310,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+begin_src emacs-lisp
      ;;; config-tools.el --- Summary -*- lexical-binding: t -*-
      ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
    - packages
@@ -2616,6 +2647,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       ;;; config-notmuch.el --- Summary -*- lexical-binding: t -*-
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
     - packages
@@ -2704,6 +2737,13 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-exwm.el
    :END:
+   #+begin_src emacs-lisp
+     ;;; config-exwm.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+   #+end_src
    - the packages
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
@@ -3004,6 +3044,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       ;;; websites.el --- org-publish configurations
       ;;
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;; I will try to avoid any hardcoded variables here.
       ;;; Code:
     #+end_src
@@ -3232,6 +3274,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       ;;; blog.el --- org-publish configurations
       ;;
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;; I will try to avoid any hardcoded variables here.
       ;;; Code:
     #+end_src
@@ -3471,6 +3515,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       ;;; roam-publish.el --- org-publish configurations
       ;;
       ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;; I will try to avoid any hardcoded variables here.
       ;;; Code:
       (require 'blog)
