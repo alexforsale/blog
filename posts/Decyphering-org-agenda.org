@@ -5,6 +5,8 @@
 #+language: en
 #+select_tags: export
 #+exclude_tags: noexport
+#+options: d:t
+#+startup: overview hideblocks
 * PROG What is Org-agenda?
   :LOGBOOK:
   - State "PROG"       from              [2022-03-25 Fri 18:22] \\
