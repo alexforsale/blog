@@ -2328,9 +2328,9 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
          (defvar +quicklisp-path "~/.local/share/quicklisp")
          (setq inferior-lisp-program "sbcl")
          (require 'slime)
-         (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path)
+         (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path))
                              (load (expand-file-name "slime-helper.el" +quicklisp-path))
-                             (slime-setup '(slime-fancy)))))
+                             (slime-setup '(slime-fancy))))
      #+end_src
      + Fontify *SLIME Description* buffer for SBCL
        #+begin_src emacs-lisp
