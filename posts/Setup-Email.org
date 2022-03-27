@@ -82,143 +82,176 @@
    To easily encript the files in =~/.local/etc/mail/=, open the file in /Emacs/ and save it with =.gpg= extension, if you've setup gpg(see arch wiki for [[https://wiki.archlinux.org/title/GnuPG][that]]) it'll prompt you for the key to encrypt. Another option is to use /password-store/ to store the password, details also in [[https://wiki.archlinux.org/title/Msmtp][arch wiki]].
 ** isync
    This is what I configured in =~/.mbsyncrc=:
-   #+begin_src conf :tangle ~/.mbsyncrc
-     IMAPAccount gmail
-     # Address to connect to
-     Host imap.gmail.com
-     User alexarians@gmail.com
-     # Pass ***************
-     # To store the password in an encrypted file use PassCmd instead of Pass
-     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-gmail.gpg"
-     #
-     # Use SSL
-     SSLType IMAPS
-     # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
-     CertificateFile /etc/ssl/certs/ca-certificates.crt
-     #CertificateFile ~/.cert/imap.gmail.com.pem
-     #CertificateFile ~/.cert/Equifax_Secure_CA.pem
+*** IMAP Account
+    This set up the necessary information on connecting to the IMAP server.
+    #+begin_src conf :tangle ~/.mbsyncrc
+      IMAPAccount gmail
+      # Address to connect to
+      Host imap.gmail.com
+      User alexarians@gmail.com
+      # Pass ***************
+      # To store the password in an encrypted file use PassCmd instead of Pass
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-gmail.gpg"
+      #
+      # Use SSL
+      SSLType IMAPS
+      # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+      CertificateFile /etc/ssl/certs/ca-certificates.crt
+      #CertificateFile ~/.cert/imap.gmail.com.pem
+      #CertificateFile ~/.cert/Equifax_Secure_CA.pem
 
-     IMAPAccount yahoo
-     Host imap.mail.yahoo.com
-     User alexforsale@yahoo.com
-     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-yahoo.gpg"
-     SSLType IMAPS
-     CertificateFile /etc/ssl/certs/ca-certificates.crt
-     PipelineDepth 10
+      IMAPAccount yahoo
+      Host imap.mail.yahoo.com
+      User alexforsale@yahoo.com
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-yahoo.gpg"
+      SSLType IMAPS
+      CertificateFile /etc/ssl/certs/ca-certificates.crt
+      PipelineDepth 10
 
-     IMAPAccount ymail
-     Host imap.mail.yahoo.com
-     User christian.alexander@ymail.com
-     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-ymail.gpg"
-     SSLType IMAPS
-     CertificateFile /etc/ssl/certs/ca-certificates.crt
-     PipelineDepth 10
+      IMAPAccount ymail
+      Host imap.mail.yahoo.com
+      User christian.alexander@ymail.com
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-ymail.gpg"
+      SSLType IMAPS
+      CertificateFile /etc/ssl/certs/ca-certificates.crt
+      PipelineDepth 10
 
-     IMAPAccount hotmail
-     Host imap-mail.outlook.com
-     User christian.alexander@windowslive.com
-     PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-hotmail.gpg"
-     SSLType IMAPS
-     CertificateFile /etc/ssl/certs/ca-certificates.crt
+      IMAPAccount hotmail
+      Host imap-mail.outlook.com
+      User christian.alexander@windowslive.com
+      PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-hotmail.gpg"
+      SSLType IMAPS
+      CertificateFile /etc/ssl/certs/ca-certificates.crt
+     #+end_src
+*** Gmail
+     #+begin_src conf :tangle ~/.mbsyncrc
+       IMAPStore gmail-remote
+       Account gmail
 
-     IMAPStore gmail-remote
-     Account gmail
+       MaildirStore gmail-local
+       SubFolders Verbatim
+       # The trailing "/" is important
+       Path /home/alexforsale/.mail/gmail/
+       Inbox /home/alexforsale/.mail/gmail/Inbox
 
-     MaildirStore gmail-local
-     SubFolders Verbatim
-     # The trailing "/" is important
-     Path /home/alexforsale/.mail/gmail/
-     Inbox /home/alexforsale/.mail/gmail/Inbox
+       Channel gmail-trash
+       Far :gmail-remote:"[Gmail]/Trash"
+       Near :gmail-local:trash
+       Create Near
+       CopyArrivalDate yes
 
-     Channel gmail-trash
-     Far :gmail-remote:"[Gmail]/Trash"
-     Near :gmail-local:trash
-     Create Near
+       Channel gmail-sent
+       Far :gmail-remote:"[Gmail]/Sent Mail"
+       Near :gmail-local:sent
+       Create Near
+       CopyArrivalDate yes
 
+       Channel gmail-drafts
+       Far :gmail-remote:"[Gmail]/Drafts"
+       Near :gmail-local:drafts
+       Create Near
+       CopyArrivalDate yes
 
-     Channel gmail-sent
-     Far :gmail-remote:"[Gmail]/Sent Mail"
-     Near :gmail-local:sent
-     Create Near
+       Channel gmail-allmail
+       Far :gmail-remote:"[Gmail]/All Mail"
+       Near :gmail-local:archived
+       Create Near
+       CopyArrivalDate yes
 
-     Channel gmail-drafts
-     Far :gmail-remote:"[Gmail]/Drafts"
-     Near :gmail-local:drafts
-     Create Near
+       Channel gmail-spam
+       Far :gmail-remote:"[Gmail]/Spam"
+       Near :gmail-local:spam
+       Create Near
+       CopyArrivalDate yes
 
-     Channel gmail-allmail
-     Far :gmail-remote:"[Gmail]/All Mail"
-     Near :gmail-local:archived
-     Create Near
+       Channel gmail-default
+       Far :gmail-remote:
+       Near :gmail-local:
+       # Exclude everything under the internal [Gmail] folder, except the interesting folders
+       #Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+       #Patterns "INBOX" ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/All Mail" "[Gmail]/Trash"
+       Patterns Inbox ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+       # Or include everything
+       #Patterns *
+       # Automatically create missing mailboxes, both locally and on the server
+       Create Near
+       # Sync the movement of messages between folders and deletions, add after making sure the sync works
+       # Expunge Both
+       # Save the synchronization state files in the relevant directory
+       SyncState *
+       CopyArrivalDate yes
 
-     Channel gmail-default
-     Far :gmail-remote:
-     Near :gmail-local:
-     # Exclude everything under the internal [Gmail] folder, except the interesting folders
-     #Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
-     #Patterns "INBOX" ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/All Mail" "[Gmail]/Trash"
-     Patterns "INBOX" ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
-     # Or include everything
-     #Patterns *
-     # Automatically create missing mailboxes, both locally and on the server
-     Create Both
-     # Sync the movement of messages between folders and deletions, add after making sure the sync works
-     # Expunge Both
-     # Save the synchronization state files in the relevant directory
-     SyncState *
+       Group gmail
+       Channel gmail-default
+       Channel gmail-sent
+       Channel gmail-drafts
+       Channel gmail-trash
+       Channel gmail-allmail
+       Channel gmail-spam
+    #+end_src
+*** Yahoo
+    #+begin_src conf :tangle ~/.mbsyncrc
+      IMAPStore yahoo-remote
+      Account yahoo
 
-     Group gmail
-     Channel gmail-default
-     Channel gmail-sent
-     Channel gmail-drafts
-     Channel gmail-trash
-     Channel gmail-allmail
+      MaildirStore yahoo-local
+      SubFolders Verbatim
+      Path /home/alexforsale/.mail/yahoo/
+      Inbox /home/alexforsale/.mail/yahoo/Inbox
 
-     IMAPStore yahoo-remote
-     Account yahoo
+      Channel yahoo
+      Far :yahoo-remote:
+      Near :yahoo-local:
+      Patterns Inbox Draft Sent Archive Spam Trash
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+    #+end_src
+*** Hotmail
+    #+begin_src conf :tangle ~/.mbsyncrc
+      IMAPStore hotmail-remote
+      Account hotmail
 
-     MaildirStore yahoo-local
-     SubFolders Verbatim
-     Path /home/alexforsale/.mail/yahoo/
-     Inbox /home/alexforsale/.mail/yahoo/Inbox
+      MaildirStore hotmail-local
+      SubFolders Verbatim
+      Path /home/alexforsale/.mail/hotmail/
+      Inbox /home/alexforsale/.mail/hotmail/Inbox
 
-     Channel yahoo
-     Far :yahoo-remote:
-     Near :yahoo-local:
-     Patterns "INBOX" Draft Sent Archive Spam
-     Create Both
-     SyncState *
-     CopyArrivalDate yes
+      Channel hotmail
+      Far :hotmail-remote:
+      Near :hotmail-local:
+      Patterns *
+      Create Near
+      CopyArrivalDate yes
+    #+end_src
+*** Ymail
+    #+begin_src conf :tangle ~/.mbsyncrc
+      IMAPStore ymail-remote
+      Account ymail
 
-     IMAPStore hotmail-remote
-     Account hotmail
+      MaildirStore ymail-local
+      SubFolders Verbatim
+      Path /home/alexforsale/.mail/ymail/
+      Inbox /home/alexforsale/.mail/ymail/Inbox
 
-     MaildirStore hotmail-local
-     SubFolders Verbatim
-     Path /home/alexforsale/.mail/hotmail/
-     Inbox /home/alexforsale/.mail/hotmail/Inbox
+      Channel ymail-spam
+      Far :ymail-remote:"Bulk Mail"
+      Near :ymail-local:Spam
+      Create Near
+      CopyArrivalDate yes
 
-     Channel hotmail
-     Far :hotmail-remote:
-     Near :hotmail-local:
-     Patterns *
-     Create Both
+      Channel ymail-default
+      Far :ymail-remote:
+      Near :ymail-local:
+      Patterns * "!Bulk Mail"
+      Create Near
+      CopyArrivalDate yes
 
-     IMAPStore ymail-remote
-     Account ymail
-
-     MaildirStore ymail-local
-     SubFolders Verbatim
-     Path /home/alexforsale/.mail/ymail/
-     Inbox /home/alexforsale/.mail/ymail/Inbox
-
-     Channel ymail
-     Far :ymail-remote:
-     Near :ymail-local:
-     Patterns *
-     Create Both
-   #+end_src
-   Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
+      Group ymail
+      Channel ymail-default
+      Channel ymail-spam
+    #+end_src
+    Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
 ** notmuch
    run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
 ** goimapnotify
