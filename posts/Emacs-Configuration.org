@@ -2651,88 +2651,95 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
       ;;; Code:
     #+end_src
-    - packages
-      #+begin_src emacs-lisp
-        (straight-use-package 'notmuch)
-        (straight-use-package 'ol-notmuch)
-        (straight-use-package 'gnus-alias)
-        (straight-use-package '(notmuch-alerts
-                                :type git
-                                :host github
-                                :repo "publicimageltd/notmuch-alerts"))
-        (straight-use-package '(notmuch-bookmarks
-                                :type git
-                                :host github
-                                :repo "publicimageltd/notmuch-bookmarks"))
-      #+end_src
-    - location for notmuch-init-file
-      #+begin_src emacs-lisp
-        (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
-      #+end_src
-    - message auto save directory
-      #+begin_src emacs-lisp
-        (setq message-auto-save-directory (expand-file-name "mail/auto-save" +emacs-data-dir))
-        (unless (file-directory-p message-auto-save-directory)
-          (make-directory message-auto-save-directory :parents))
-      #+end_src
-    - sign outgoing mail by default
-      #+begin_src emacs-lisp
-        (require 'notmuch)
-        (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-      #+end_src
-    - saved-searches, this is the default.
-      #+begin_src emacs-lisp
-        (setq notmuch-saved-searches
-              '((:name "inbox" :query "tag:inbox" :key "i")
-                (:name "unread" :query "tag:unread" :key "u")
-                (:name "flagged" :query "tag:flagged" :key "f") ;starred in gmail
-                (:name "sent" :query "tag:sent" :key "t")
-                (:name "drafts" :query "tag:draft" :key "d")
-                (:name "all mail" :query "*" :key "a")))
-      #+end_src
-    - search oldest first
-      #+begin_src emacs-lisp
-        (setq notmuch-search-oldest-first nil)
-      #+end_src
-    - gnus-alias
-      #+begin_src emacs-lisp
-        (add-hook 'message-setup-hook
-                  (lambda ()
-                    (gnus-alias-determine-identity)
-                    (define-key message-mode-map (kbd "C-c f")
-                      (lambda ()
-                        (interactive)
-                        (message-remove-header "Fcc")
-                        (message-remove-header "Organization")
-                        (gnus-alias-select-identity)
-                        (notmuch-fcc-header-setup)))))
-      #+end_src
-    - msmtp
-      #+begin_src emacs-lisp
-        (setq send-mail-function 'sendmail-send-it
-              ;; sendmail is a symlink to msmtp
-              sendmail-program "/usr/bin/sendmail"
-              mail-specify-envelope-from t
-              message-sendmail-envelope-from 'header
-              mail-envelope-from 'header)
-      #+end_src
-    - notmuch-bookmarks
-      #+begin_src emacs-lisp
-        (notmuch-bookmarks-mode)
-      #+end_src
-    - notmuch-alerts
-      #+begin_src emacs-lisp
-        (notmuch-alert-mode)
-      #+end_src
-    - keybindings
-      #+begin_src emacs-lisp
-        (global-set-key (kbd "C-c M") 'notmuch)
-      #+end_src
-    - end of config-notmuch.el
-      #+begin_src emacs-lisp
-        (provide 'config-notmuch)
-        ;;; config-notmuch.el ends here
-      #+end_src
+**** packages
+     #+begin_src emacs-lisp
+       (straight-use-package 'notmuch)
+       (straight-use-package 'ol-notmuch)
+       (straight-use-package 'gnus-alias)
+       (straight-use-package '(notmuch-alerts
+                               :type git
+                               :host github
+                               :repo "publicimageltd/notmuch-alerts"))
+       (straight-use-package '(notmuch-bookmarks
+                               :type git
+                               :host github
+                               :repo "publicimageltd/notmuch-bookmarks"))
+     #+end_src
+**** set =message-directory=
+     This is the directory from which all other mail file variables are derived.
+     #+begin_src emacs-lisp
+       (customize-set-variable 'message-directory (expand-file-name ".mail" (getenv "HOME")))
+     #+end_src
+**** location for notmuch-init-file
+     #+begin_src emacs-lisp
+       (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
+     #+end_src
+**** message auto save directory
+     Directory where Message auto-saves buffers if Gnus isn't running.
+     #+begin_src emacs-lisp
+       (setq message-auto-save-directory (expand-file-name "mail/auto-save" +emacs-data-dir))
+       (unless (file-directory-p message-auto-save-directory)
+         (make-directory message-auto-save-directory :parents))
+     #+end_src
+**** sign outgoing mail by default
+     Adds MML tag to encrypt/sign the entire message.
+     #+begin_src emacs-lisp
+       (require 'notmuch)
+       (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+     #+end_src
+**** saved-searches, this is the default.
+     #+begin_src emacs-lisp
+       (setq notmuch-saved-searches
+             '((:name "inbox" :query "tag:inbox" :key "i")
+               (:name "unread" :query "tag:unread" :key "u")
+               (:name "flagged" :query "tag:flagged" :key "f") ;starred in gmail
+               (:name "sent" :query "tag:sent" :key "t")
+               (:name "drafts" :query "tag:draft" :key "d")
+               (:name "all mail" :query "*" :key "a")))
+     #+end_src
+**** search oldest first
+     #+begin_src emacs-lisp
+       (customize-set-variable 'notmuch-search-oldest-first nil)
+     #+end_src
+**** gnus-alias
+     #+begin_src emacs-lisp
+       (add-hook 'message-setup-hook
+                 (lambda ()
+                   (gnus-alias-determine-identity)
+                   (define-key message-mode-map (kbd "C-c f")
+                     (lambda ()
+                       (interactive)
+                       (message-remove-header "Fcc")
+                       (message-remove-header "Organization")
+                       (gnus-alias-select-identity)
+                       (notmuch-fcc-header-setup)))))
+     #+end_src
+**** msmtp
+     #+begin_src emacs-lisp
+       (setq send-mail-function 'sendmail-send-it
+             ;; sendmail is a symlink to msmtp
+             sendmail-program "/usr/bin/sendmail"
+             mail-specify-envelope-from t
+             message-sendmail-envelope-from 'header
+             mail-envelope-from 'header)
+     #+end_src
+**** notmuch-bookmarks
+     #+begin_src emacs-lisp
+       (notmuch-bookmarks-mode)
+     #+end_src
+**** notmuch-alerts
+     #+begin_src emacs-lisp
+       (notmuch-alert-mode)
+     #+end_src
+**** keybindings
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-c M") 'notmuch)
+     #+end_src
+**** end of config-notmuch.el
+     #+begin_src emacs-lisp
+       (provide 'config-notmuch)
+       ;;; config-notmuch.el ends here
+     #+end_src
 ** exwm
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-exwm.el
