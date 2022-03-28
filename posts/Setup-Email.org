@@ -139,30 +139,43 @@
        Near :gmail-local:trash
        Create Near
        CopyArrivalDate yes
+       SyncState *
 
        Channel gmail-sent
        Far :gmail-remote:"[Gmail]/Sent Mail"
        Near :gmail-local:sent
        Create Near
        CopyArrivalDate yes
+       SyncState *
 
        Channel gmail-drafts
        Far :gmail-remote:"[Gmail]/Drafts"
        Near :gmail-local:drafts
        Create Near
        CopyArrivalDate yes
+       SyncState *
 
        Channel gmail-allmail
        Far :gmail-remote:"[Gmail]/All Mail"
        Near :gmail-local:archived
        Create Near
        CopyArrivalDate yes
+       SyncState *
 
        Channel gmail-spam
        Far :gmail-remote:"[Gmail]/Spam"
        Near :gmail-local:spam
        Create Near
        CopyArrivalDate yes
+       SyncState *
+
+       Channel gmail-yearly
+       Far :gmail-remote:
+       Near :gmail-local:
+       Patterns "*-archive"
+       Create Near
+       CopyArrivalDate yes
+       SyncState *
 
        Channel gmail-default
        Far :gmail-remote:
@@ -187,6 +200,7 @@
        Channel gmail-drafts
        Channel gmail-trash
        Channel gmail-allmail
+       Channel gmail-yearly
        Channel gmail-spam
     #+end_src
 *** Yahoo
