@@ -150,14 +150,14 @@
 
        Channel gmail-drafts
        Far :gmail-remote:"[Gmail]/Drafts"
-       Near :gmail-local:drafts
+       Near :gmail-local:draft
        Create Near
        CopyArrivalDate yes
        SyncState *
 
        Channel gmail-allmail
        Far :gmail-remote:"[Gmail]/All Mail"
-       Near :gmail-local:archived
+       Near :gmail-local:archive
        Create Near
        CopyArrivalDate yes
        SyncState *
@@ -177,13 +177,13 @@
        CopyArrivalDate yes
        SyncState *
 
-       Channel gmail-default
-       Far :gmail-remote:
-       Near :gmail-local:
+       Channel gmail-inbox
+       Far :gmail-remote:INBOX
+       Near :gmail-local:Inbox
        # Exclude everything under the internal [Gmail] folder, except the interesting folders
        #Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
        #Patterns "INBOX" ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/All Mail" "[Gmail]/Trash"
-       Patterns Inbox ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+       #Patterns INBOX ![Gmail]* #"[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
        # Or include everything
        #Patterns *
        # Automatically create missing mailboxes, both locally and on the server
@@ -195,7 +195,7 @@
        CopyArrivalDate yes
 
        Group gmail
-       Channel gmail-default
+       Channel gmail-inbox
        Channel gmail-sent
        Channel gmail-drafts
        Channel gmail-trash
@@ -213,13 +213,65 @@
       Path /home/alexforsale/.mail/yahoo/
       Inbox /home/alexforsale/.mail/yahoo/Inbox
 
-      Channel yahoo
-      Far :yahoo-remote:
-      Near :yahoo-local:
-      Patterns Inbox Draft Sent Archive Spam Trash
+      Channel yahoo-draft
+      Far :yahoo-remote:Draft
+      Near :yahoo-local:draft
       Create Near
       SyncState *
       CopyArrivalDate yes
+
+      Channel yahoo-trash
+      Far :yahoo-remote:Trash
+      Near :yahoo-local:trash
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel yahoo-sent
+      Far :yahoo-remote:Sent
+      Near :yahoo-local:sent
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel yahoo-spam
+      Far :yahoo-remote:"Bulk Mail"
+      Near :yahoo-local:spam
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel yahoo-archive
+      Far :yahoo-remote:Archive
+      Near :yahoo-local:archive
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel yahoo-yearly
+      Far :yahoo-remote:
+      Near :yahoo-local:
+      Create Near
+      Patterns "*-archive"
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel yahoo-inbox
+      Far :yahoo-remote:INBOX
+      Near :yahoo-local:Inbox
+      #Patterns Inbox Draft Sent Archive Spam Trash
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Group yahoo
+      Channel yahoo-spam
+      Channel yahoo-inbox
+      Channel yahoo-draft
+      Channel yahoo-sent
+      Channel yahoo-archive
+      Channel yahoo-trash
+      Channel yahoo-yearly
     #+end_src
 *** Hotmail
     #+begin_src conf :tangle ~/.mbsyncrc
@@ -231,12 +283,70 @@
       Path /home/alexforsale/.mail/hotmail/
       Inbox /home/alexforsale/.mail/hotmail/Inbox
 
-      Channel hotmail
-      Far :hotmail-remote:
-      Near :hotmail-local:
-      Patterns *
+      Channel hotmail-sent
+      Far :hotmail-remote:Sent
+      Near :hotmail-local:sent
       Create Near
+      SyncState *
       CopyArrivalDate yes
+
+      Channel hotmail-inbox
+      Far :hotmail-remote:INBOX
+      Near :hotmail-local:Inbox
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-archive
+      Far :hotmail-remote:Archive
+      Near :hotmail-local:archive
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-trash
+      Far :hotmail-remote:Deleted
+      Near :hotmail-local:trash
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-draft
+      Far :hotmail-remote:Drafts
+      Near :hotmail-local:draft
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-spam
+      Far :hotmail-remote:Junk
+      Near :hotmail-local:spam
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-notes
+      Far :hotmail-remote:Notes
+      Near :hotmail-local:notes
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel hotmail-outbox
+      Far :hotmail-remote:Outbox
+      Near :hotmail-local:outbox
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Group hotmail
+      Channel hotmail-inbox
+      Channel hotmail-sent
+      Channel hotmail-archive
+      Channel hotmail-trash
+      Channel hotmail-draft
+      Channel hotmail-spam
+      Channel hotmail-notes
     #+end_src
 *** Ymail
     #+begin_src conf :tangle ~/.mbsyncrc
@@ -250,20 +360,53 @@
 
       Channel ymail-spam
       Far :ymail-remote:"Bulk Mail"
-      Near :ymail-local:Spam
+      Near :ymail-local:spam
       Create Near
+      SyncState *
       CopyArrivalDate yes
 
-      Channel ymail-default
-      Far :ymail-remote:
-      Near :ymail-local:
-      Patterns * "!Bulk Mail"
+      Channel ymail-draft
+      Far :ymail-remote:Draft
+      Near :ymail-local:draft
       Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel ymail-inbox
+      Far :ymail-remote:INBOX
+      Near :ymail-local:Inbox
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel ymail-sent
+      Far :ymail-remote:Sent
+      Near :ymail-local:sent
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel ymail-trash
+      Far :ymail-remote:Trash
+      Near :ymail-local:trash
+      Create Near
+      SyncState *
+      CopyArrivalDate yes
+
+      Channel ymail-archive
+      Far :ymail-remote:Archive
+      Near :ymail-local:archive
+      Create Near
+      SyncState *
       CopyArrivalDate yes
 
       Group ymail
-      Channel ymail-default
+      Channel ymail-inbox
       Channel ymail-spam
+      Channel ymail-draft
+      Channel ymail-sent
+      Channel ymail-trash
+      Channel ymail-archive
     #+end_src
     Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
 ** notmuch
