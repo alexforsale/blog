@@ -2295,6 +2295,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       #+end_src
     - keybindings
       #+begin_src emacs-lisp
+        (require 'vterm)
         (global-set-key (kbd "C-c t t") 'vterm)
         (global-set-key (kbd "C-c t o") 'vterm-other-window)
         (define-key vterm-mode-map (kbd "C-[") 'vterm-send-escape)
