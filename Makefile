@@ -38,7 +38,7 @@ all: publish
 
 publish: publish.el
 	@echo "Publishing..."
-	${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
+	${EMACS} --batch --no-init --eval "(setq +publish-as-user nil)" --load publish.el --eval "(org-publish-all :force)"
 
 publish_local: publish.el
 	@echo "Publishing to server"
