@@ -2689,8 +2689,9 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        (require 'notmuch)
        (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
      #+end_src
-**** saved-searches, this is the default.
-     #+begin_src emacs-lisp
+**** saved-searches
+     This is the default saved-searches, for reference.
+     #+begin_src emacs-lisp :tangle no
        (setq notmuch-saved-searches
              '((:name "inbox" :query "tag:inbox" :key "i")
                (:name "unread" :query "tag:unread" :key "u")
@@ -2698,6 +2699,33 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                (:name "sent" :query "tag:sent" :key "t")
                (:name "drafts" :query "tag:draft" :key "d")
                (:name "all mail" :query "*" :key "a")))
+     #+end_src
+     Since I've used =afew= to modify /tags/ based on the accounts /maildir/ directories
+     #+begin_src emacs-lisp
+       (setq notmuch-saved-searches
+             '((:name "inbox" :query "tag:inbox" :key "i")
+               (:name "unread" :query "tag:unread" :key "u")
+               (:name "spam" :query "tag:spam")
+               (:name "gmail/inbox" :query "tag:gmail/Inbox")
+               (:name "gmail/sent" :query "tag:gmail/sent")
+               (:name "gmail/draft" :query "tag:gmail/draft")
+               (:name "gmail/archive" :query "tag:gmail/archive")
+               (:name "gmail/spam" :query "tag:gmail/spam")
+               (:name "yahoo/inbox" :query "tag:yahoo/Inbox")
+               (:name "yahoo/sent" :query "tag:yahoo/sent")
+               (:name "yahoo/draft" :query "tag:yahoo/draft")
+               (:name "yahoo/archive" :query "tag:yahoo/archive")
+               (:name "yahoo/spam" :query "tag:yahoo/spam")
+               (:name "hotmail/inbox" :query "tag:hotmail/Inbox")
+               (:name "hotmail/sent" :query "tag:hotmail/sent")
+               (:name "hotmail/draft" :query "tag:hotmail/draft")
+               (:name "hotmail/archive" :query "tag:hotmail/archive")
+               (:name "hotmail/spam" :query "tag:hotmail/spam")
+               (:name "ymail/inbox" :query "tag:ymail/Inbox")
+               (:name "ymail/sent" :query "tag:ymail/sent")
+               (:name "ymail/draft" :query "tag:ymail/draft")
+               (:name "ymail/archive" :query "tag:ymail/archive")
+               (:name "ymail/spam" :query "tag:ymail/spam")))
      #+end_src
 **** search oldest first
      #+begin_src emacs-lisp
