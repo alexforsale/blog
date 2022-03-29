@@ -80,7 +80,12 @@
 
    #+end_src
    To easily encript the files in =~/.local/etc/mail/=, open the file in /Emacs/ and save it with =.gpg= extension, if you've setup gpg(see arch wiki for [[https://wiki.archlinux.org/title/GnuPG][that]]) it'll prompt you for the key to encrypt. Another option is to use /password-store/ to store the password, details also in [[https://wiki.archlinux.org/title/Msmtp][arch wiki]].
-** isync
+** CANCELLED isync
+   CLOSED: [2022-03-29 Tue 21:12]
+   :LOGBOOK:
+   - State "CANCELLED"  from              [2022-03-29 Tue 21:12]
+   :END:
+   For a while, /isync/ works greate for me, but synchronizing around 86000 emails took a while, which meant using imapnotify is kinda pointless (I need to manually kill and restart /mbsync/ to pull new mails). I'm keeping this configuration here just in case I need to revert back.
    This is what I configured in =~/.mbsyncrc=:
 *** IMAP Account
     This set up the necessary information on connecting to the IMAP server.
@@ -506,6 +511,195 @@
     Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
 ** notmuch
    run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
+** offlineimap
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/offlineimap/config :mkdirp t
+   :END:
+   The configuration file can be stored at =~/.offlineimaprc= or =~/.config/offlineimap/config=, I chose the latter.
+*** General options
+    List the accounts that will be managed by offlineimap
+    #+begin_src python
+      [general]
+      accounts = gmail, hotmail, ymail, yahoo
+    #+end_src
+*** Controls how many accounts may be synced simultaneously
+    #+begin_src python
+      maxsyncaccounts = 1
+    #+end_src
+*** Set =pythonfile=
+    This is an helper script used by /offlineimap/. If this file is not located within =$PATH=, provide full path.
+    #+begin_src python
+      pythonfile = ~/.local/share/offlineimap/offlineimap.py
+    #+end_src
+**** The =offlineimap.py= content
+     #+begin_src python :tangle ~/.local/share/offlineimap/offlineimap.py :mkdirp t :shebang #!/usr/bin/env python
+       """Offlineimap helper script."""
+
+       from subprocess import check_output
+
+
+       def get_pass(account):
+           """Return password for ACCOUNT."""
+           match account:
+               case "yahoo":
+                   return check_output(
+                       "pass login.yahoo.com/app_pass/alexforsale@yahoo.com",
+                       shell=True).decode('utf-8').strip('\n')
+               case "ymail":
+                   return check_output(
+                       "pass login.yahoo.com/app_pass/christian.alexander@ymail.com",
+                       shell=True).decode('utf-8').strip('\n')
+               case "gmail":
+                   return check_output(
+                       "pass google.com/app_pass/alexarians@gmail.com",
+                       shell=True).decode('utf-8').strip('\n')
+               case "hotmail":
+                   return check_output(
+                       "pass outlook.live.com/christian.alexander@windowslive.com",
+                       shell=True).decode('utf-8').strip('\n')
+     #+end_src
+*** Credentials for gmail account
+    #+begin_src python
+      [Account gmail]
+      localrepository = gmail-local
+      remoterepository = gmail-remote
+      synclabels = yes
+      labelsheader = X-Keywords
+      autorefresh = 5
+      quick = 10
+
+      [Repository gmail-local]
+      Type = GmailMaildir
+      localfolders = ~/.mail/gmail
+      sync_deletes = yes
+      nametrans = lambda f: re.sub('spam', '[Gmail]/Spam',
+                           re.sub('draft', '[Gmail]/Drafts',
+                           re.sub('inbox', 'INBOX',
+                           re.sub('sent', '[Gmail]/Sent Mail',
+                           re.sub('trash', '[Gmail]/Trash',
+                           re.sub('archive', '[Gmail]/All Mail', f))))))
+
+      [Repository gmail-remote]
+      Type = Gmail
+      remoteuser = alexarians@gmail.com
+      remotepasseval = get_pass("gmail")
+      nametrans = lambda f: re.sub('.*All Mail$', 'archive',
+                                   re.sub('.*Drafts$', 'draft',
+                                          re.sub('.*Spam$', 'spam',
+                                                 re.sub('.*Sent Mail$', 'sent',
+                                                        re.sub('.*Trash$', 'trash',
+                                                               re.sub('INBOX', 'inbox', f))))))
+
+      folderfilter = lambda foldername: foldername not in ['[Gmail]/Important', '[Gmail]/Starred']
+      sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+      ssl_version = tls1_2
+      usecompression = yes
+    #+end_src
+*** Yahoo
+    #+begin_src python
+      [Account yahoo]
+      localrepository = yahoo-local
+      remoterepository = yahoo-remote
+      autorefresh = 5
+      quick = 10
+
+      [Repository yahoo-local]
+      Type = Maildir
+      localfolders = ~/.mail/yahoo
+      sync_deletes = yes
+      nametrans = lambda f: re.sub('spam', 'Bulk Mail',
+                           re.sub('draft', 'Draft',
+                           re.sub('inbox', 'Inbox',
+                           re.sub('sent', 'Sent',
+                           re.sub('trash', 'Trash',
+                           re.sub('archive', 'Archive', f))))))
+
+      [Repository yahoo-remote]
+      Type = IMAP
+      remotehost = imap.mail.yahoo.com
+      remoteuser = alexforsale@yahoo.com
+      remotepasseval = get_pass("yahoo")
+      nametrans = lambda f: re.sub('.*Archive$', 'archive',
+                                   re.sub('.*Draft$', 'draft',
+                                          re.sub('.*Bulk Mail$', 'spam',
+                                                 re.sub('.*Sent$', 'sent',
+                                                        re.sub('.*Trash$', 'trash',
+                                                               re.sub('Inbox', 'inbox', f))))))
+      sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+      ssl_version = tls1_2
+      usecompression = no
+    #+end_src
+*** Hotmail
+    #+begin_src python
+      [Account hotmail]
+      localrepository = hotmail-local
+      remoterepository = hotmail-remote
+      autorefresh = 5
+      quick = 10
+
+      [Repository hotmail-local]
+      Type = Maildir
+      localfolders = ~/.mail/hotmail
+      sync_deletes = yes
+      nametrans = lambda f: re.sub('spam', 'Junk',
+                           re.sub('draft', 'Drafts',
+                           re.sub('inbox', 'Inbox',
+                           re.sub('sent', 'Sent',
+                           re.sub('trash', 'Deleted',
+                           re.sub('notes', 'Notes',
+                           re.sub('outbox', 'Outbox',
+                           re.sub('archive', 'Archive', f))))))))
+      [Repository hotmail-remote]
+      Type = IMAP
+      remotehost = imap-mail.outlook.com
+      remoteuser = christian.alexander@windowslive.com
+      remotepasseval = get_pass("hotmail")
+      nametrans = lambda f: re.sub('.*Archive$', 'archive',
+                            re.sub('.*Drafts$', 'draft',
+                            re.sub('.*Junk$', 'spam',
+                            re.sub('.*Sent$', 'sent',
+                            re.sub('.*Deleted$', 'trash',
+                            re.sub('.*Outbox$', 'outbox',
+                            re.sub('.*Notes$', 'notes',
+                            re.sub('Inbox', 'inbox', f))))))))
+      sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+      ssl_version = tls1_2
+      usecompression = no
+    #+end_src
+*** Ymail
+    #+begin_src python
+      [Account ymail]
+      localrepository = ymail-local
+      remoterepository = ymail-remote
+      autorefresh = 5
+      quick = 10
+
+      [Repository ymail-local]
+      Type = Maildir
+      localfolders = ~/.mail/ymail
+      sync_deletes = yes
+      nametrans = lambda f: re.sub('spam', 'Bulk Mail',
+                           re.sub('draft', 'Draft',
+                           re.sub('inbox', 'Inbox',
+                           re.sub('sent', 'Sent',
+                           re.sub('trash', 'Trash',
+                           re.sub('archive', 'Archive', f))))))
+
+      [Repository ymail-remote]
+      Type = IMAP
+      remotehost = imap.mail.yahoo.com
+      remoteuser = christian.alexander@ymail.com
+      remotepasseval = get_pass("ymail")
+      nametrans = lambda f: re.sub('.*Archive$', 'archive',
+                                   re.sub('.*Draft$', 'draft',
+                                          re.sub('.*Bulk Mail$', 'spam',
+                                                 re.sub('.*Sent$', 'sent',
+                                                        re.sub('.*Trash$', 'trash',
+                                                               re.sub('Inbox', 'inbox', f))))))
+      sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+      ssl_version = tls1_2
+      usecompression = no
+    #+end_src
 ** goimapnotify
    Needs separate configuration file for each accounts, here I'm using /password-store/.
    - gmail
@@ -520,7 +714,7 @@
        "username": "alexarians@gmail.com",
        "password": "",
        "passwordCmd": "pass show google.com/app_pass/alexarians@gmail.com | head -n1",
-       "onNewMail": "mbsync gmail",
+       "onNewMail": "offlineimap -sa gmail",
        "onNewMailPost": "notmuch new",
        "wait": 20,
        "boxes": [ "Inbox" ]
@@ -538,7 +732,7 @@
        "username": "alexforsale@yahoo.com",
        "password": "",
        "passwordCmd": "pass show login.yahoo.com/app_pass/alexforsale@yahoo.com | head -n1",
-       "onNewMail": "mbsync yahoo",
+       "onNewMail": "offlineimap -sa yahoo",
        "onNewMailPost": "notmuch new",
        "wait": 20,
        "boxes": [ "Inbox" ]
@@ -556,7 +750,7 @@
        "username": "christian.alexander@windowslive.com",
        "password": "",
        "passwordCmd": "pass show outlook.live.com/christian.alexander@windowslive.com | head -n1",
-       "onNewMail": "mbsync hotmail",
+       "onNewMail": "offlineimap -sa hotmail",
        "onNewMailPost": "notmuch new",
        "wait": 20,
        "boxes": [ "Inbox" ]
@@ -574,7 +768,7 @@
        "username": "christian.alexander@ymail.com",
        "password": "",
        "passwordCmd": "pass show login.yahoo.com/app_pass/christian.alexander@ymail.com | head -n1",
-       "onNewMail": "mbsync ymail",
+       "onNewMail": "offlineimap -sa ymail",
        "onNewMailPost": "notmuch new",
        "wait": 20,
        "boxes": [ "Inbox" ]
