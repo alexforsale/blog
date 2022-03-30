@@ -2298,7 +2298,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
         (require 'vterm)
         (global-set-key (kbd "C-c t t") 'vterm)
         (global-set-key (kbd "C-c t o") 'vterm-other-window)
-        (define-key vterm-mode-map (kbd "C-[") 'vterm-send-escape)
+        (unless (display-graphic-p)
+          (define-key vterm-mode-map (kbd "C-[") 'vterm-send-escape))
       #+end_src
     - end of config-vterm.el
       #+begin_src emacs-lisp
