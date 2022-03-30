@@ -73,7 +73,7 @@
          (run-shell-command "unclutter")
          (run-shell-command "blueman-applet")
          (run-shell-command "xsettingsd")
-         (run-shell-command "udiskie -t"))
+         (run-shell-command "udiskie -t")))
    #+end_src
 ** mode-line
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
