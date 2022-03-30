@@ -102,7 +102,8 @@
 ** Enabling =which-key-mode=
    Similar to /Emacs/'s =which-key=, this function will display the currently available keybindings.
    #+begin_src lisp
-     (which-key-mode)
+     (unless 'which-key-mode
+       (which-key-mode))
    #+end_src
 ** The Keybindings
    There are several variables that defines when a /keybinding/ is used:
