@@ -515,7 +515,7 @@
    :PROPERTIES:
    :header-args: :tangle ~/.config/offlineimap/config :mkdirp t
    :END:
-   The configuration file can be stored at =~/.offlineimaprc= or =~/.config/offlineimap/config=, I chose the latter.
+   The configuration file can be stored at =~/.offlineimaprc= or =~/.config/offlineimap/config=, I chose the latter. I'm using the /python3/ version of /offlineimap/.
 *** General options
     List the accounts that will be managed by offlineimap
     #+begin_src python
@@ -559,14 +559,15 @@
                        shell=True).decode('utf-8').strip('\n')
      #+end_src
 *** Credentials for gmail account
+    The configuration itself will vary depending to how you will use /offlineimap/, if you're using it as a /daemon/ (continously running in the background) you should uncomment the =autorefresh= and =quick= option. I'm not using it as a daemon since I want the /offlineimap/ process only run when called by /notmuch/ via hooks. Also check the full configuration directives at their [[https://github.com/OfflineIMAP/offlineimap3/blob/master/offlineimap.conf][github repo]].
     #+begin_src python
       [Account gmail]
       localrepository = gmail-local
       remoterepository = gmail-remote
       synclabels = yes
       labelsheader = X-Keywords
-      autorefresh = 5
-      quick = 10
+      #autorefresh = 5
+      #quick = 10
 
       [Repository gmail-local]
       Type = GmailMaildir
@@ -596,12 +597,13 @@
       usecompression = yes
     #+end_src
 *** Yahoo
+    I have to use =maxconnections = 1= for /yahoo/ and /ymail/ since they bound to generate error regarding /UID/ when using the default.
     #+begin_src python
       [Account yahoo]
       localrepository = yahoo-local
       remoterepository = yahoo-remote
-      autorefresh = 5
-      quick = 10
+      #autorefresh = 5
+      #quick = 10
 
       [Repository yahoo-local]
       Type = Maildir
@@ -634,8 +636,8 @@
       [Account hotmail]
       localrepository = hotmail-local
       remoterepository = hotmail-remote
-      autorefresh = 5
-      quick = 10
+      #autorefresh = 5
+      #quick = 10
 
       [Repository hotmail-local]
       Type = Maildir
@@ -671,8 +673,8 @@
       [Account ymail]
       localrepository = ymail-local
       remoterepository = ymail-remote
-      autorefresh = 5
-      quick = 10
+      #autorefresh = 5
+      #quick = 10
 
       [Repository ymail-local]
       Type = Maildir
