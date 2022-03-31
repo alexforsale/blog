@@ -1,4 +1,4 @@
-#+title: Mail Configuration Using msmtp, isync, goimapnotify and notmuch
+#+title: Mail Configuration Using msmtp, offlineimap, goimapnotify and notmuch
 #+subtitle: Part of Living your live in text mode series
 #+date: <2022-03-23 Wed>
 #+author: Kristian Alexander P
