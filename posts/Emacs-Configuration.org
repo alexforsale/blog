@@ -1047,7 +1047,10 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                  (alltodo ""
                           ((org-agenda-overriding-header "Inbox")))
                  (tags-todo "TODO=\"TODO\"-project-reading-errands-video"
-                            ((org-agenda-skip-function 'my-org-agenda-skip-scheduled)
+                            ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
+                             (org-agenda-skip-function
+                              `(org-agenda-skip-entry-if
+                                'notregexp ,(format "\\[#%s\\]" (char-to-string org-priority-highest))))
                              (org-agenda-prefix-format "%-6e ")
                              (org-agenda-max-entries nil)
                              (org-agenda-overriding-header "Unscheduled TODO entries: ")
