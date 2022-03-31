@@ -744,6 +744,30 @@
        #+end_src
 ** notmuch
    run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
+*** Hooks
+    Notmuch provides 3 hooks:
+    - pre-new :: Invoked by =notmuch new= command before scanning or importing new messages into the database. If this hook exits with a non-zero status, notmuch will abort further processing of the =notmuch new= command.
+    - post-new :: This hook is invoked by the =notmuch new= command after new messages have been imported into the database and initial tags have been applied. The hook will not be run if there have been any errors during the scan or import.
+    - post-insert :: This hook is invoked by the =notmuch insert= command after the message has been delivered, added to the database, and initial tags have been applied. The hook will not be run if there have been any errors during the message delivery; what is regarded as successful delivery depends on the =--keep= option.
+    I'll be using the =pre-new= hooks for /afew/ and also /offlineimap/ while the =post-new= hooks will be used by /afew/ to tag new mails. Usually the =hook directory= resides inside the =mail= directory set in =notmuch-config=.
+**** Pre New Hook
+     #+begin_src sh :tangle ~/.mail/.notmuch/hooks/pre-new :shebang #!/bin/sh :mkdirp t
+       _AFEW="$(command -v afew)"
+       _OFFLINEIMAP="$(command -v offlineimap)"
+
+       [ -n "${_AFEW}" ] &&
+           "${_AFEW}" -m --notmuch-args=--no-hooks -vv
+
+       [ -n "${_OFFLINEIMAP}" ] &&
+           "${_OFFLINEIMAP}" -s
+     #+end_src
+**** Post New Hook
+     #+begin_src sh :tangle ~/.mail/.notmuch/hooks/post-new :shebang #!/bin/sh :mkdirp t
+       _AFEW="$(command -v afew)"
+
+       [ -n "${_AFEW}" ] &&
+           "${_AFEW}" --tag --new -vv
+     #+end_src
 ** offlineimap
    :PROPERTIES:
    :header-args: :tangle ~/.config/offlineimap/config :mkdirp t
