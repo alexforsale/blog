@@ -512,7 +512,7 @@
     Run ~mbsync -Va~ for verbose logging to stdout. After that you could create a [[https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically][systemd user unit]], or use /goimapnotify/ to get push notification(almost?).
 ** afew
    :PROPERTIES:
-   :header-args: :tangle ~/.config/afew/config
+   :header-args: :tangle ~/.config/afew/config :mkdirp t
    :END:
    It's an initial tagging script for notmuch.
 *** SpamFilter
