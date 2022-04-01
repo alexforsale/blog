@@ -6,7 +6,7 @@
 #+startup: overview hideblocks
 * Configuration file
   :PROPERTIES:
-  :header-args: :tangle ~/.config/stumpwm/config
+  :header-args: :tangle ~/.config/stumpwm/config :mkdirp t
   :END:
 ** Header
    Needed so /Emacs/ will use /lisp major-mode/ for this file since it's not using /.lisp/ extension.
