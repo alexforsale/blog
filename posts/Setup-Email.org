@@ -846,7 +846,7 @@
                                           re.sub('.*Spam$', 'spam',
                                                  re.sub('.*Sent Mail$', 'sent',
                                                         re.sub('.*Trash$', 'trash',
-                                                               re.sub('INBOX', 'inbox', f))))))
+                                                               re.sub('INBOX', 'inbox', f.lower()))))))
 
       folderfilter = lambda foldername: foldername not in ['[Gmail]/Important', '[Gmail]/Starred']
       sslcacertfile = /etc/ssl/certs/ca-certificates.crt
@@ -882,7 +882,7 @@
                                           re.sub('.*Bulk Mail$', 'spam',
                                                  re.sub('.*Sent$', 'sent',
                                                         re.sub('.*Trash$', 'trash',
-                                                               re.sub('Inbox', 'inbox', f))))))
+                                                               re.sub('Inbox', 'inbox', f.lower()))))))
       maxconnections = 1
       sslcacertfile = /etc/ssl/certs/ca-certificates.crt
       ssl_version = tls1_2
@@ -920,7 +920,7 @@
                             re.sub('.*Deleted$', 'trash',
                             re.sub('.*Outbox$', 'outbox',
                             re.sub('.*Notes$', 'notes',
-                            re.sub('Inbox', 'inbox', f))))))))
+                            re.sub('Inbox', 'inbox', f.lower()))))))))
       sslcacertfile = /etc/ssl/certs/ca-certificates.crt
       ssl_version = tls1_2
       usecompression = no
@@ -954,7 +954,7 @@
                                           re.sub('.*Bulk Mail$', 'spam',
                                                  re.sub('.*Sent$', 'sent',
                                                         re.sub('.*Trash$', 'trash',
-                                                               re.sub('Inbox', 'inbox', f))))))
+                                                               re.sub('Inbox', 'inbox', f.lower()))))))
       maxconnections = 1
       sslcacertfile = /etc/ssl/certs/ca-certificates.crt
       ssl_version = tls1_2
