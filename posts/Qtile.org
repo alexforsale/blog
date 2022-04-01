@@ -104,7 +104,7 @@
        | *Mod4* (Super Key)         |         t          |    Opens Telega in Emacs | emacs                     |
 * Main configuration
   :PROPERTIES:
-  :header-args: :tangle ~/.config/qtile/config.py
+  :header-args: :tangle ~/.config/qtile/config.py :mkdirp t
   :END:
   If you open this file in =Emacs=, this section has a property drawer that tangles every source code blocks in this section to =config.py=.
 ** Header
