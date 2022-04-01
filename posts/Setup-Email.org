@@ -836,13 +836,13 @@
                            re.sub('sent', '[Gmail]/Sent Mail',
                            re.sub('trash', '[Gmail]/Trash',
                            re.sub('archive*', 'Archive',
-                           re.sub('^archive$', '[Gmail]/All Mail', f)))))))
+                           re.sub('archive$', '[Gmail]/All Mail', f)))))))
 
       [Repository gmail-remote]
       Type = Gmail
       remoteuser = alexarians@gmail.com
       remotepasseval = get_pass("gmail")
-      nametrans = lambda f: re.sub('.*All Mail$', 'archive$',
+      nametrans = lambda f: re.sub('.*All Mail$', 'archive',
                             re.sub('^Archive', 'archive',
                             re.sub('.*Drafts$', 'draft',
                             re.sub('.*Spam$', 'spam',
