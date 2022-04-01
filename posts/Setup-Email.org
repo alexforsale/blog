@@ -602,84 +602,84 @@
       #+begin_src conf
         [Filter.21]
         query = date:2021
-        tags = +archive2021;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2021;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2021-archive
       #+end_src
 ***** 2020
       #+begin_src conf
         [Filter.20]
         query = date:2020
-        tags = +archive2020;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2020;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2020-archive
       #+end_src
 ***** 2019
       #+begin_src conf
         [Filter.19]
         query = date:2019
-        tags = +archive2019;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2019;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2019-archive
       #+end_src
 ***** 2018
       #+begin_src conf
         [Filter.18]
         query = date:2018
-        tags = +archive2018;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2018;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2018-archive
       #+end_src
 ***** 2017
       #+begin_src conf
         [Filter.17]
         query = date:2017
-        tags = +archive2017;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2017;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2017-archive
       #+end_src
 ***** 2016
       #+begin_src conf
         [Filter.16]
         query = date:2016
-        tags = +archive2016;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2016;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2016-archive
       #+end_src
 ***** 2015
       #+begin_src conf
         [Filter.15]
         query = date:2015
-        tags = +archive2015;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2015;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2015-archive
       #+end_src
 ***** 2014
       #+begin_src conf
         [Filter.14]
         query = date:2014
-        tags = +archive2014;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2014;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2014-archive
       #+end_src
 ***** 2013
       #+begin_src conf
         [Filter.13]
         query = date:2013
-        tags = +archive2013;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2013;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2013-archive
       #+end_src
 ***** 2012
       #+begin_src conf
         [Filter.12]
         query = date:2012
-        tags = +archive2012;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2012;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2012-archive
       #+end_src
 ***** 2011
       #+begin_src conf
         [Filter.11]
         query = date:2011
-        tags = +archive2011;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2011;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2011-archive
       #+end_src
 ***** 2010
       #+begin_src conf
         [Filter.10]
         query = date:2010
-        tags = +archive2010;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2010;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive
         message = tagged 2010-archive
       #+end_src
 *** Mail Mover
