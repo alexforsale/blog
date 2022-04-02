@@ -2821,15 +2821,24 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
          (defun +config/exwm-init-hook ()
            (with-eval-after-load 'perspective
              ;; Launch apps that will run in the background
-             (+config/run-in-background "wal -R")
-             (+config/run-in-background "feh -rz --bg-fill /usr/share/backgrounds/archlinux")
-             (+config/run-in-background "dbus-launch dunst -conf ~/.config/dunst/dunstrc")
-             (+config/run-in-background "dbus-launch nm-applet")
-             (+config/run-in-background "picom")
-             (+config/run-in-background "unclutter")
-             (+config/run-in-background "xsettingsd")
-             (+config/run-in-background "udiskie -t")
-             (+config/run-in-background "dbus-launch blueman-applet"))
+             (when (executable-find "wal")
+               (+config/run-in-background "wal -R"))
+             (when (executable-find "feh")
+               (+config/run-in-background "feh -rz --bg-fill /usr/share/backgrounds/archlinux"))
+             (when (executable-find "dunst")
+               (+config/run-in-background "dbus-launch dunst -conf ~/.config/dunst/dunstrc"))
+             (when (executable-find "nm-applet")
+               (+config/run-in-background "dbus-launch nm-applet"))
+             (when (executable-find "picom")
+               (+config/run-in-background "picom"))
+             (when (executable-find "unclutter")
+               (+config/run-in-background "unclutter"))
+             (when (executable-find "xsettingsd")
+               (+config/run-in-background "xsettingsd"))
+             (when (executable-find "udiskie")
+               (+config/run-in-background "udiskie -t"))
+             (when (executable-find "blueman-applet")
+               (+config/run-in-background "dbus-launch blueman-applet")))
            (which-key-setup-side-window-right-bottom))
 
          (setq +config/exwm-last-workspaces '(1))
@@ -2889,8 +2898,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                          :workspace-index 2
                          :persp-name "browser"))
              ("nyxt" (perspective-exwm-assign-window
-                         :workspace-index 2
-                         :persp-name "browser"))
+                      :workspace-index 2
+                      :persp-name "browser"))
              ("mpv" (lambda ()
                       (perspective-exwm-assign-window
                        :workspace-index 4
@@ -2966,7 +2975,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                  ([?\s-d] . (lambda (command)
                               (interactive (list (read-shell-command "$ ")))
                               (start-process-shell-command command nil command)))
-                 ([s-f10] . +config/start-panel)
+                 (when (executable-find "polybar")
+                   ([s-f10] . +config/start-panel))
                  ([s-return] . vterm)
                  ;;([S-s-return] . (start-process-shell-command "xterm" "*xterm*" "xterm"))
                  ;; Switch workspace
@@ -3030,44 +3040,46 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        #+end_src
      + polybar
        #+begin_src emacs-lisp
-         (defvar +config/polybar-process nil
-           "Holds the process of the running Polybar instance, if any")
-         (defun +config/kill-panel ()
-           (interactive)
-           (when +config/polybar-process
-             (ignore-errors
-               (kill-process +config/polybar-process)))
-           (setq +config/polybar-process nil))
+         (when (executable-find "polybar")
+           (defvar +config/polybar-process nil
+             "Holds the process of the running Polybar instance, if any")
+           (defun +config/kill-panel ()
+             (interactive)
+             (when +config/polybar-process
+               (ignore-errors
+                 (kill-process +config/polybar-process)))
+             (setq +config/polybar-process nil))
 
-         (defun +config/start-panel ()
-           (interactive)
-           (+config/kill-panel)
-           (setq +config/polybar-process (start-process-shell-command "polybar" nil "polybar panel")))
+           (defun +config/start-panel ()
+             (interactive)
+             (+config/kill-panel)
+             (setq +config/polybar-process (start-process-shell-command "polybar" nil "polybar panel")))
 
-         (defun +config/send-polybar-hook (module-name hook-index)
-           (start-process-shell-command "polybar-msg" nil (format "polybar-msg hook %s %s" module-name hook-index)))
+           (defun +config/send-polybar-hook (module-name hook-index)
+             (start-process-shell-command "polybar-msg" nil (format "polybar-msg hook %s %s" module-name hook-index)))
 
-         (defun +config/send-polybar-exwm-workspace ()
-           (+config/send-polybar-hook "exwm-workspace" 1))
+           (defun +config/send-polybar-exwm-workspace ()
+             (+config/send-polybar-hook "exwm-workspace" 1))
 
-         ;; Update panel indicator when workspace changes
-         (add-hook 'exwm-workspace-switch-hook #'+config/send-polybar-exwm-workspace)
-         (add-hook 'exwm-init-hook #'+config/start-panel)
+           ;; Update panel indicator when workspace changes
+           (add-hook 'exwm-workspace-switch-hook #'+config/send-polybar-exwm-workspace)
+           (add-hook 'exwm-init-hook #'+config/start-panel))
        #+end_src
      + dunst
        Probably should bind this someday.
        #+begin_src emacs-lisp
-         (defun +config/disable-desktop-notifications ()
-           (interactive)
-           (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\""))
+         (when (executable-find "dunst")
+           (defun +config/disable-desktop-notifications ()
+             (interactive)
+             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\""))
 
-         (defun +config/enable-desktop-notifications ()
-           (interactive)
-           (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
+           (defun +config/enable-desktop-notifications ()
+             (interactive)
+             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
 
-         (defun +config/toggle-desktop-notifications ()
-           (interactive)
-           (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
+           (defun +config/toggle-desktop-notifications ()
+             (interactive)
+             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\"")))
        #+end_src
    - end of config-exwm.el
      #+begin_src emacs-lisp
