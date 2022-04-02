@@ -173,7 +173,10 @@
 
   Other variables
   #+begin_src python :padline y
-    terminal = "termite"
+    if os.getenv("TERMINAL"):
+        terminal = os.getenv("TERMINAL")
+    else:
+        terminal = "xterm"
     groups = [Group(i) for i in "123456789"]
     dgroups_key_binder = None
     dgroups_app_rules = []  # type: List
