@@ -2973,8 +2973,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
                  ([?\s-d] . (lambda (command)
                               (interactive (list (read-shell-command "$ ")))
                               (start-process-shell-command command nil command)))
-                 (when (executable-find "polybar")
-                   ([s-f10] . +config/start-panel))
+                 ([s-f10] . +config/start-panel)
                  ([s-return] . vterm)
                  ;;([S-s-return] . (start-process-shell-command "xterm" "*xterm*" "xterm"))
                  ;; Switch workspace
