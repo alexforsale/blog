@@ -118,6 +118,14 @@
        (set-prefix-key (kbd "s-d"))
     #+end_src
     The =kbd= itself is a function specific to /stumpwm/.
+*** Media Keys
+**** Volume
+     Using /PulseAudio/.
+     #+begin_src lisp
+       (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec pactl -- set-sink-volume @DEFAULT_SINK@ -5%")
+       (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec pactl -- set-sink-volume @DEFAULT_SINK@ +5%")
+       (define-key *top-map* (kbd "XF86AudioMute") "exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle")
+     #+end_src
 *** Group selections
     #+begin_src lisp
        ;; group movement
