@@ -73,7 +73,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        "Location for Emacs data files.")
    #+end_src
    This will set the variable /+emacs-data-dir/ to =~/.local/share/emacs=, or to =~/.local/share/emacs/<chemacs-profile-name= if using /chemacs/.
-** Increase the GC threshold for faster startup, the default is 800 kilobytes.  Measured in bytes.
+** Increase the GC threshold for faster startup
+   The default is 800 kilobytes, measured in bytes.
    #+begin_src emacs-lisp
      (setq gc-cons-threshold (* 50 1000 1000))
    #+end_src
