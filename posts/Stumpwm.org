@@ -25,6 +25,10 @@
    - =merge-pathnames= is similar to /python/'s =os.path.join()=.
    - The variable =user-homedir-pathname= returns a [[http://www.lispworks.com/documentation/HyperSpec/Body/26_glo_p.htm#pathname][pathname]] without any name, type or version component (those component are all /nil/) for the user's home directory on /host (not used here)/.
    - =probe-file= tests whether a file exists[fn:1]
+** load stumpwm from quicklisp
+   #+begin_src lisp
+     (ql:quickload :stumpwm)
+   #+end_src
 ** Swank
    Requires =swank= (from the package =slime=) in order to run the function =swank-loader=. Again I use the special operator =let= to dynamically creates the /stumpwm/ command =swank=, this command can be run inside /stumpwm/ for toggling /swank/.
    #+begin_src lisp
