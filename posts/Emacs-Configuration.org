@@ -2422,7 +2422,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        #+end_src
      + slime-contrib
        #+begin_src emacs-lisp
-         (setq slime-contribs '(slime-scratch slime-editing-commands))
+         (setq slime-contribs '(slime-fancy slime-hyperdoc))
        #+end_src
    - paredit
      #+begin_src emacs-lisp
