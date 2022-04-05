@@ -77,7 +77,8 @@
          (run-shell-command "unclutter")
          (run-shell-command "blueman-applet")
          (run-shell-command "xsettingsd")
-         (run-shell-command "udiskie -t")))
+         (run-shell-command "udiskie -t")
+         (which-key-mode)))
    #+end_src
 ** mode-line
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
@@ -103,12 +104,6 @@
    - =*time-modeline-string*= :: The default time value to pass to the modeline. This is using the /GNU coreutils/ format, see ~info "(coreutils)Date conversion specifiers"~ for details.
    - =*mode-line-timeouts*= :: The modeline updates after each command, when a new window appears or an existing one disappears, and on a timer.  This variable controls how many seconds elapse between each update.  If this variable is changed while the modeline is visible, you must toggle the modeline to update timer.
    The last line =(enable-mode-line (current-screen) (current-head) t)= runs the mode-line.
-** Enabling =which-key-mode=
-   Similar to /Emacs/'s =which-key=, this function will display the currently available keybindings.
-   #+begin_src lisp
-     (unless 'which-key-mode
-       (which-key-mode))
-   #+end_src
 ** The Keybindings
    There are several variables that defines when a /keybinding/ is used:
    - =*root-map*= :: Known as the "/prefix-map/".
