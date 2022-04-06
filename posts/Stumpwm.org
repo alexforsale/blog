@@ -65,6 +65,28 @@
    - =*mouse-focus-policy*= :: This variable decide how the mouse affects input focus. Possible values are ~:ignore~, ~:sloppy~ and ~:click~.
    - =*run-or-raise-all-groups*= :: Defines how the =run-or-raise= function searches, in this case all groups.
    - =*run-or-raise-all-screens*= :: Same as above, but to /screens/.
+** Load contrib modules
+   Check if =~/.config/stumpwm/modules= exists, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
+   #+begin_src lisp
+     (let ((module-dir (truename "~/.config/stumpwm/modules")))
+       (when (directory-pathname-p module-dir)
+         (set-module-dir module-dir)))
+   #+end_src
+   The /modules/ directory itself is a git repository of the [[https://github.com/stumpwm/stumpwm-contrib.git][stumpwm-contrib]]. Currently the only dependency from the /contrib/ modules is [[https://github.com/stumpwm/stumpwm-contrib/blob/master/util/stumpish/stumpish][stumpish]], an interactive shell for /stumpwm/.
+   #+begin_src sh :tangle no
+     if ! test -d ~/.config/stumpwm/modules; then
+         git clone https://github.com/stumpwm/stumpwm-contrib.git ~/.config/stumpwm/modules
+     fi
+   #+end_src
+   Also create a symlink for /stumpish/ to =~/.local/bin=
+   #+begin_src sh :tangle no
+     [ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
+     pushd ~/.local/bin
+     [ ! -L stumpish ] && ln -sv ../../.config/stumpwm/modules/util/stumpish/stumpish stumpish
+     popd
+   #+end_src
+** Colors
+
 ** Autostarts
    The variable =*initializing*= is only set to =T= when /stumpwm/ is starting up. Which means once per session. Useful for starting up applications that only needed at startup.
    #+begin_src lisp
