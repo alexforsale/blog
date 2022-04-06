@@ -140,6 +140,43 @@
        (set-prefix-key (kbd "s-d"))
     #+end_src
     The =kbd= itself is a function specific to /stumpwm/.
+*** Undefine default keybindings
+    These are keybindings that I don't use very often, or at all.
+    #+begin_src lisp
+      ;; default to `exec' `xterm'
+      (dolist (xterm '((kbd "c") (kbd "C-c")))
+        undefine-key *root-map* xterm)
+
+      ;; default to `quit-confirm'
+      (undefine-key *root-map* (kbd "q"))
+
+      ;; *exchange-window-map*
+      ;; TODO: set this elsewhere
+      (undefine-key *root-map* (kbd "x"))
+    #+end_src
+*** Remap =colon=, and =quit-confirm=
+    Make it like /Emacs/'s ~M-x~
+    #+begin_src lisp
+      (define-key *top-map* (kbd "s-M-x") "colon")
+    #+end_src
+    I usually bind ~C-s-q~ for quitting /WM/'s.
+    #+begin_src lisp
+      (define-key *top-map* (kbd "C-s-q") "quit-confirm")
+    #+end_src
+*** Terminal Emulator
+    Although /XTerm/ is my default terminal-emulator, I sometimes try tinkering with other programs, so I set the =$TERMINAL= environment variable to set my current terminal-emulator.
+    #+begin_src lisp
+      (let ((terminal (or (getenv "TERMINAL")
+                          "xterm")))
+        (setf *terminal-emulator* terminal))
+
+      (defcommand terminal () ()
+        (run-or-raise *terminal-emulator* `(:class ,*terminal-emulator*)))
+    #+end_src
+    And my default keybinding is ~s-RET~.
+    #+begin_src lisp
+      (define-key *top-map* (kbd "s-RET") "terminal")
+    #+end_src
 *** Media Keys
 **** Volume
      Using /PulseAudio/.
@@ -167,7 +204,7 @@
 *** Custom functions, commands and macros
 **** colon1
      This is a custom command from the default configuration that prompt the user for an interactive command. The first arg is an optional initial contents.
-     #+begin_src lisp
+     #+begin_src lisp :tangle no
        (defcommand colon1 (&optional (initial "")) (:rest)
          (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
            (when cmd
@@ -176,7 +213,7 @@
      Note that in /stumpwm/ there's also the /command/ =colon= by default.
 **** make-web-jump
      Also from the default configuration, currently sets for /DuckDuckGo/ and /IMDB/.
-     #+begin_src lisp
+     #+begin_src lisp :tangle no
        (defmacro make-web-jump (name prefix)
          `(defcommand ,(intern name) (search) ((:rest ,(concatenate 'string name " search: ")))
             (nsubstitute #\+ #\Space search)
@@ -210,7 +247,7 @@
    Note that in order to run /stumpwm/ command without the ~stumpwm:~ prefix, you need to first run ~(in-package :stumpwm)~.
 *** imdb and duckduckgo
     This is from the default configuration, I don't use this often.
-    #+begin_src lisp
+    #+begin_src lisp :tangle no
        (define-key *root-map* (kbd "M-s") "duckduckgo")
        (define-key *root-map* (kbd "i") "imdb")
     #+end_src
