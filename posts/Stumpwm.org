@@ -86,7 +86,82 @@
      popd
    #+end_src
 ** Colors
-
+   Set the default color to =base16-materia=, palette from =wal= as a fallback if there's no =wal= cache file yet.
+   #+begin_src lisp
+     (defvar default-colors
+       '("#263238"
+         "#EC5F67"
+         "#8BD649"
+         "#FFCC00"
+         "#89DDFF"
+         "#82AAFF"
+         "#80CBC4"
+         "#CDD3DE"
+         "#707880"
+         "#EC5F67"
+         "#8BD649"
+         "#FFCC00"
+         "#89DDFF"
+         "#82AAFF"
+         "#80CBC4"
+         "#FFFFFF"))
+   #+end_src
+*** set the wal file
+    #+begin_src lisp
+      (defvar wal-colors-path "~/.cache/wal/colors")
+    #+end_src
+*** Function to get the colors palette
+    #+begin_src lisp
+      (defun get-color-palette ()
+        (let ((wal-colors (when (probe-file wal-colors-path)
+                            (uiop:read-file-lines wal-colors-path))))
+          (or wal-colors default-colors)))
+    #+end_src
+*** Function to associate names into the colors palette
+    #+begin_src lisp
+      (defun get-color (name)
+        (let ((colors (mapcar 'cons
+                              '("background"
+                                "color1"
+                                "color2"
+                                "color3"
+                                "color4"
+                                "color5"
+                                "color6"
+                                "foreground"
+                                "color8"
+                                "color9"
+                                "color10"
+                                "color11"
+                                "color12"
+                                "color13"
+                                "color14"
+                                "color15")
+                              (get-color-palette))))
+          (cdr (assoc name colors :test 'equal))))
+    #+end_src
+*** set color
+    #+begin_src lisp
+      (defun set-colors ()
+        (setq *colors* (list (get-color "background")
+                             (get-color "foreground")
+                             (get-color "color3")
+                             (get-color "color4")
+                             (get-color "color5")
+                             (get-color "color6")
+                             (get-color "color7")
+                             (get-color "color8")
+                             (get-color "color9")
+                             (get-color "color10")))
+        (update-color-map (current-screen))
+        (set-fg-color (get-color "foreground"))
+        (set-bg-color (get-color "background"))
+        (set-border-color (get-color "base02"))
+        (set-focus-color (get-color "base03"))
+        (set-unfocus-color (get-color "base03"))
+        (set-float-focus-color (get-color "base03"))
+        (set-float-unfocus-color (get-color "base03")))
+    #+end_src
 ** Autostarts
    The variable =*initializing*= is only set to =T= when /stumpwm/ is starting up. Which means once per session. Useful for starting up applications that only needed at startup.
    #+begin_src lisp
@@ -317,8 +392,8 @@
      (define-frame-preference "Default"
        ;; frame raise lock (lock AND raise == jumpto)
        (0 t nil :class "Konqueror" :role "...konqueror-mainwindow")
-       (1 t nil :class "XTerm")
-       (0 t t :class *terminal-emulator*))
+       (1 t nil :class "XTerm"))
+       ;;(0 t t :class *terminal-emulator*)
 
      (define-frame-preference "Ardour"
        (0 t   t   :instance "ardour_editor" :type :normal)
