@@ -102,14 +102,53 @@
          (run-shell-command "udiskie -t")
          (which-key-mode)))
    #+end_src
-** mode-line
+** mode-line helper functions
+   - show-battery-charge
+     #+begin_src lisp
+       (defun show-battery-charge ()
+         (let ((raw-battery (run-shell-command "acpi | cut -d, -f2" t)))
+           (substitute #\Space #\Newline raw-battery)))
+     #+end_src
+   - show-battery-state
+     #+begin_src lisp
+       (defun show-battery-state ()
+         (let ((raw-battery (run-shell-command "acpi | cut -d: -f2 | cut -d, -f1" t)))
+           (substitute #\Space #\Newline raw-battery)))
+     #+end_src
+   - show-brightness-value
+     #+begin_src lisp
+       (defun show-brightness-value ()
+         (let ((max-brightness
+                 (parse-integer (run-shell-command "brightnessctl max" t)))
+               (current-brightness
+                 (parse-integer (run-shell-command "brightnessctl get" t))))
+           (floor (* (/ current-brightness max-brightness) 100))))
+     #+end_src
+   - show-current-volume
+     #+begin_src lisp
+       (defun show-current-volume ()
+         (let ((current-volume
+                 (run-shell-command "pamixer --get-volume-human" t)))
+           (substitute #\Space #\Newline current-volume)))
+     #+end_src
+** The mode-line variable
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
    #+begin_src lisp
-      (setf *window-format* "%m%n%s%c")
-      (setf *screen-mode-line-format* (list "[^B%n^b] %W^>%d"))
-      (setf *time-modeline-string* "%a %b %e %k:%M")
-      (setf *mode-line-timeout* 2)
-      (enable-mode-line (current-screen) (current-head) t)
+     (setf *window-format* "%m%n%s%c")
+     ;;(setf *screen-mode-line-format* (list "[^B%n^b] %W^>%d"))
+     (setf *screen-mode-line-format*
+           (list
+            "[^B%n^b] %W"
+            "^>"
+            '(:eval (format nil "|Volume:~D" (show-current-volume)))
+            '(:eval (format nil "|Backlight: ~D%" (show-brightness-value)))
+            '(:eval (format nil "|Battery:~D" (show-battery-charge)))
+            '(:eval (format nil "State:~D" (show-battery-state)))
+            "|%d"
+            ))
+     (setf *time-modeline-string* "%a %b %e %k:%M")
+     (setf *mode-line-timeout* 2)
+     (enable-mode-line (current-screen) (current-head) t)
    #+end_src
    - =*window-format*= :: This variable decides how the window list is formatted.  It is a string with the following formatting options:
      - =%m= :: Draw a =#= if the window is marked.
@@ -184,6 +223,11 @@
        (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec pactl -- set-sink-volume @DEFAULT_SINK@ -5%")
        (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec pactl -- set-sink-volume @DEFAULT_SINK@ +5%")
        (define-key *top-map* (kbd "XF86AudioMute") "exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle")
+     #+end_src
+**** Backlight
+     #+begin_src lisp
+       (define-key *top-map* (kbd "XF86MonBrightnessDown") "exec brightnessctl set 5%-")
+       (define-key *top-map* (kbd "XF86MonBrightnessUp") "exec brightnessctl set +5%")
      #+end_src
 *** Group selections
     #+begin_src lisp
