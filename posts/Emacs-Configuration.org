@@ -314,12 +314,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      (setq timeclock-file (expand-file-name "timeclock" +emacs-data-dir))
      (setq type-break-file-name (expand-file-name "type-break.el" +emacs-data-dir))
    #+end_src
-** helper functions and macros
-   #+begin_src emacs-lisp
-     (defmacro +config-load (var code)
-       (when (bound-and-true-p var)
-         `(require ,code)))
-   #+end_src
 ** footer
    #+begin_src emacs-lisp
      (provide 'config-defaults-variables)
@@ -338,7 +332,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
-*** Other modules
+*** Other defaults modules
     #+begin_src emacs-lisp
       (require 'config-defaults-org)
       (require 'config-defaults-ui)
@@ -347,6 +341,10 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (require 'config-defaults-ide)
       (require 'config-defaults-email)
       (require 'config-defaults-keybindings)
+    #+end_src
+*** conditional modules
+    #+begin_src emacs-lisp
+      (+config-load +config-use-org-roam 'config-org-roam)
     #+end_src
 *** end of config-defaults.el
     #+begin_src emacs-lisp
@@ -590,6 +588,12 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      (require 'org)
    #+end_src
    This file stores the common /org-mode/ configuration.
+*** load org-contrib
+    #+begin_src emacs-lisp
+      (when (featurep 'straight)
+        (unless +config/is-guix-system
+          (straight-use-package 'org-contrib)))
+    #+end_src
 *** Sets the default directories
     #+begin_src emacs-lisp
       (progn
@@ -823,6 +827,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (global-set-key (kbd "C-c c") 'org-capture)
     #+end_src
 *** babel
+    see [[https://www.gnu.org/software/emacs/manual/html_node/org/Languages.html][here]] for available languages.
     #+begin_src emacs-lisp
       (org-babel-do-load-languages
        'org-babel-load-languages
@@ -917,6 +922,368 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (setq bookmark-file (concat +emacs-data-dir "/bookmarks"))
     #+end_src
+*** capture-templates
+    #+begin_src emacs-lisp
+        (setq org-capture-templates
+              '(("t" "Personal (t)Tasks")
+                ("tt" "(t)todo" entry
+                 (file+headline +org-capture-todo-file "Inbox")
+                 "** TODO [#A] %? %^G:followup:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom\t\"\"\t%U\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("ts" "(p)In Progress Tasks" entry
+                 (file+headline +org-capture-todo-file "Inbox")
+                 "** PROG [#B] %? %^G:followup:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"PROG\"\tfrom\t\"\"\t%U\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("tn" "(n)Notes" entry
+                 (file+headline +org-capture-notes-file "Notes")
+                 "** %? %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
+                 :empty-line 1
+                 :jump-to-captured t)
+                ("te" "(e)Next" entry
+                 (file+headline +org-capture-todo-file "Inbox")
+                 "** NEXT %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
+                 :empty-line 1
+                 :jump-to-captured t)
+                ("ti" "(I)Ideas" entry
+                 (file+headline +org-capture-notes-file "Ideas")
+                 "** MAYBE %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
+                 :empty-line 1
+                 :jump-to-captured t)
+                ("th" "(h)Habit" entry
+                 (file+headline +org-capture-habits-file "Recurring")
+                 "** TODO [#C] %? %^G:habit:\n SCHEDULED: %^t\n:PROPERTIES:\n:Style: habit\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
+                 :empty-line 1
+                 :jump-to-captured t)
+                ("td" "(d)Done" entry
+                 (file+headline +org-capture-notes-file "Inbox")
+                 "** DONE %?\nCLOSED: %U\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"DONE\"\tfrom \"\"\t%U\n:END:"
+                 :empty-lines 1
+                 :jump-to-captured t)
+                ("p" "Project")
+                ("pt" "Project (t)todo" entry
+                 (file+headline +org-capture-projects-file "Inbox")
+                 "** TODO [#A] %? %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("pe" "project (e)Next" entry
+                 (file+headline +org-capture-projects-file "Inbox")
+                 "** NEXT %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("pn" "project (n)Note" entry
+                 (file+headline +org-capture-projects-file "Notes")
+                 "** %? %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("pi" "project ()Ideas" entry
+                 (file+headline +org-capture-projects-file "Ideas")
+                 "** MAYBE %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
+                 :empty-line 1
+                 :clock-in t
+                 :clock-resume t
+                 :jump-to-captured t)
+                ("o" "org-protocol")
+                ("ot" "org-protocol TODO(t)"
+                 entry (file+headline +org-capture-todo-file "Inbox")
+                 "** TODO %?\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
+                 :empty-lines 1
+                 :jump-to-captured t)
+                ("ol" "org-protocol Links(l)"
+                 entry (file+headline +org-capture-links-file "Links")
+                 "** %a %^G:website:\n\n%U\n\n%:initial %?"
+                 :jump-to-capture t)
+                ("j" "Journal")
+                ("jt" "Journal Today" plain (function +org-journal-find-location)
+                 "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+                 :jump-to-captured t
+                 :immediate-finish t)
+                ("js" "Scheduled Journal" plain (function +org-journal-date-location)
+                 "** TODO %?\n <%(princ +org-journal--date-location-scheduled-time)>\n"
+                 :jump-to-captured t)
+                )
+              org-capture-default-templates "tt")
+        (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
+      #+end_src
+*** Additional org packages
+    This will be stored in each individual files.
+**** org-roam
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-org-roam.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-org-roam.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'org-roam)
+         (straight-use-package 'org-roam-ui))
+       (customize-set-variable 'org-roam-db-location (expand-file-name "org-roam.db" +emacs-data-dir))
+       (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
+       (setq org-roam-directory
+             (file-name-as-directory
+              (file-truename
+               (expand-file-name "roam" org-directory)))
+             org-roam-completion-everywhere t
+             org-roam-mode-section-functions
+             #'(org-roam-backlinks-section
+                org-roam-reflinks-section))
+       (unless (file-directory-p org-roam-directory)
+         (make-directory org-roam-directory :parents))
+       (org-roam-db-autosync-mode)
+       (require 'org-roam-dailies)
+       (setq org-roam-dailies-directory
+             (file-name-as-directory
+              (file-truename
+               (expand-file-name "daily" org-roam-directory))))
+       (require 'org-roam-graph)
+       (setq org-roam-node-display-template
+             (concat "${title:*} "
+                     (propertize "${tags:10}" 'face 'org-tag)))
+
+       (add-to-list 'display-buffer-alist
+                    '("\\*org-roam\\*"
+                      (display-buffer-in-side-window)
+                      (side . right)
+                      (slot . 0)
+                      (window-width . 0.33)
+                      (window-parameters . ((no-other-window . t)
+                                            (no-delete-other-windows . t)))))
+       (unless +config/is-guix-system
+         (setq org-roam-ui-sync-theme t
+               org-roam-ui-follow t
+               org-roam-ui-update-on-save t
+               org-roam-ui-open-on-start t))
+       (if (and (fboundp 'server-running-p)
+                (not (server-running-p)))
+           (server-start))
+       (require 'org-protocol)
+       (require 'org-roam-protocol)
+       (setq org-roam-capture-templates
+             (quote (("d" "default" plain
+                      "* ${title}\n%?" :if-new
+                      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                 "#+title: ${title}\n#+filetags:\n#+date: %<%Y-%m-%d>\n\n")
+                      :unnarrowed t)
+                     )))
+       (setq org-roam-capture-ref-templates
+             (quote (("r" "ref" plain
+                      "%?"
+                      :if-new (file+head
+                               "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}.org\" (current-time) t)"
+                               "#+title: ${title}\n#+filetags:\n#+date: %<%Y-%m-%d>\n\n")
+                      :unnarrowed t :jump-to-captured t))))
+       (setq org-roam-dailies-capture-templates
+             (quote (("d" "Default" plain
+                      "%?"
+                      :if-new (file+head
+                               "%(format-time-string \"%Y-%m-%d--journal.org\" (current-time) t)"
+                               "#+title: Journal %<%Y-%m-%d>\n#+date: %<%Y-%m-%d>\n#+journal: private journal\n\n\n")
+                      :unnarrowed t))))
+     #+end_src
+***** Keybindings
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "C-c r i") 'org-roam-node-insert)
+        (global-set-key (kbd "C-c r f") 'org-roam-node-find)
+        (global-set-key (kbd "C-c r c") 'org-roam-capture)
+        (global-set-key (kbd "C-c r b") 'org-roam-buffer-toggle)
+        (global-set-key (kbd "C-c r B") 'org-roam-buffer-display-dedicated)
+        (global-set-key (kbd "C-c r s") 'org-roam-db-sync)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-org-roam)
+        ;;; config-org-roam.el ends here
+      #+end_src
+**** org-elfeed
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-org-elfeed.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-org-elfeed.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'elfeed)
+         (straight-use-package 'elfeed-org))
+
+       (require 'elfeed)
+       (setq rmh-elfeed-org-files (list (concat org-directory "/elfeed.org")))
+       (eval-after-load 'elfeed
+         `(make-directory ,(expand-file-name "elfeed/" +emacs-data-dir) t))
+       (setq elfeed-db-directory (expand-file-name "elfeed/db/" +emacs-data-dir))
+       (setq elfeed-enclosure-default-dir (expand-file-name "elfeed/enclosures/" +emacs-data-dir))
+       (setq elfeed-score-score-file (expand-file-name "elfeed/score/score.el" +emacs-data-dir))
+       (elfeed-org)
+     #+end_src
+***** elfeed notification
+      #+begin_src emacs-lisp
+        (defvar +config/elfeed-update-complete-hook nil
+          "Functions called with no arguments when `elfeed-update' is finished.")
+
+        (defvar +config/elfeed-updates-in-progress 0
+          "Number of feed updates in-progress.")
+
+        (defvar +config/elfeed-search-update-filter nil
+          "The filter when `elfeed-update' is called.")
+
+        (defun +config/elfeed-update-complete-hook (&rest ignore)
+          "When update queue is empty, run `+config/elfeed-update-complete-hook' functions."
+          (when (= 0 +config/elfeed-updates-in-progress)
+            (run-hooks '+config/elfeed-update-complete-hook)))
+
+        (add-hook 'elfeed-update-hooks #'+config/elfeed-update-complete-hook)
+
+        (defun +config/elfeed-update-message-completed (&rest _ignore)
+          (message "Feeds updated")
+          (notifications-notify :title "Elfeed" :body "Feeds updated."))
+
+        (add-hook '+config/elfeed-update-complete-hook #'+config/elfeed-update-message-completed)
+
+        (defun +config/elfeed-search-update-restore-filter (&rest ignore)
+          "Restore filter after feeds update."
+          (when +config/elfeed-search-update-filter
+            (elfeed-search-set-filter +config/elfeed-search-update-filter)
+            (setq +config/elfeed-search-update-filter nil)))
+
+        (add-hook '+config/elfeed-update-complete-hook #'+config/elfeed-search-update-restore-filter)
+
+        (defun +config/elfeed-search-update-save-filter (&rest ignore)
+          "Save and change the filter while updating."
+          (setq +config/elfeed-search-update-filter elfeed-search-filter)
+          (setq elfeed-search-filter "#0"))
+
+        ;; NOTE: It would be better if this hook were run before starting the feed updates, but in
+        ;; `elfeed-update', it happens afterward.
+        (add-hook 'elfeed-update-init-hooks #'+config/elfeed-search-update-save-filter)
+
+        (defun +config/elfeed-update-counter-inc (&rest ignore)
+          (cl-incf +config/elfeed-updates-in-progress))
+
+        (advice-add #'elfeed-update-feed :before #'+config/elfeed-update-counter-inc)
+
+        (defun +config/elfeed-update-counter-dec (&rest ignore)
+          (cl-decf +config/elfeed-updates-in-progress)
+          (when (< +config/elfeed-updates-in-progress 0)
+            ;; Just in case
+            (setq +config/elfeed-updates-in-progress 0)))
+
+        (add-hook 'elfeed-update-hooks #'+config/elfeed-update-counter-dec)
+      #+end_src
+***** Keybinding
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "C-c e e") 'elfeed)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-org-elfeed)
+        ;;; config-org-elfeed.el ends here
+      #+end_src
+**** org-gcal
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-org-gcal.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-org-gcal.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'org-gcal)
+
+       (require 'config-pass)
+       (with-eval-after-load 'pass
+         (require 'org-gcal)
+         (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
+         (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
+         (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret")))
+     #+end_src
+***** Keybinding
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "C-c g s") 'org-gcal-sync)
+        (global-set-key (kbd "C-c g f") 'org-gcal-fetch)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-org-gcal)
+        ;;; config-org-gcal.el ends here
+      #+end_src
+**** org-journal
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-org-journal.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-org-journal.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'org-journal))
+       (setq org-journal-dir (expand-file-name "journal" org-directory)
+             org-journal-enable-agenda-integration t
+             org-journale-enable-cache t
+             org-journal-follow-mode t
+             org-journal-prefix-key "C-c j")
+
+       (defun +org-journal-find-location ()
+         "Open today's journal, but specify a non-nil prefix argument in order to
+         inhibit inserting the heading; org-capture will insert the heading."
+         (org-journal-new-entry t)
+         (unless (eq org-journal-file-type 'daily)
+           (org-narrow-to-subtree))
+         (goto-char (point-max)))
+
+       (defvar +org-journal--date-location-scheduled-time nil)
+
+       (defun +org-journal-date-location (&optional scheduled-time)
+         (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
+           (setq +org-journal--date-location-scheduled-time scheduled-time)
+           (org-journal-new-entry t (org-time-string-to-time scheduled-time))
+           (unless (eq org-journal-file-type 'daily)
+             (org-narrow-to-subtree))
+           (goto-char (point-max))))
+
+       (defun +org-journal-save-entry-and-exit()
+         "Simple convenience function.
+            Saves the buffer of the current day's entry and kills the window
+            Similar to org-capture like behavior"
+         (interactive)
+         (save-buffer)
+         (kill-buffer-and-window))
+
+       (require 'org-journal)
+       ;; this messes up org-clock
+       ;;(define-key org-journal-mode-map (kbd "C-x C-s") '+org-journal-save-entry-and-exit)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-org-journal)
+        ;;; config-org-gcal.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-org)
@@ -1106,362 +1473,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** org
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-org.el :mkdirp t
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-org.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - use +built-in+ ='org=.
-     #+begin_src emacs-lisp
-       ;;(straight-use-package 'org)
-     #+end_src
-   - clone additional packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (straight-use-package 'org-contrib))
-
-       (unless +config/is-guix-system
-         (straight-use-package 'org-roam)
-         (straight-use-package 'elfeed)
-         (straight-use-package 'elfeed-org)
-         (straight-use-package 'org-roam-ui)
-         (straight-use-package 'org-journal))
-       (straight-use-package 'org-gcal)
-
-     #+end_src
-   - org-roam
-     #+begin_src emacs-lisp
-       (customize-set-variable 'org-roam-db-location (expand-file-name "org-roam.db" +emacs-data-dir))
-       (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
-       (setq org-roam-directory
-             (file-name-as-directory
-              (file-truename
-               (expand-file-name "roam" org-directory)))
-             org-roam-completion-everywhere t
-             org-roam-mode-section-functions
-             #'(org-roam-backlinks-section
-                org-roam-reflinks-section))
-       (unless (file-directory-p org-roam-directory)
-         (make-directory org-roam-directory :parents))
-       (org-roam-db-autosync-mode)
-       (require 'org-roam-dailies)
-       (setq org-roam-dailies-directory
-             (file-name-as-directory
-              (file-truename
-               (expand-file-name "daily" org-roam-directory))))
-       (require 'org-roam-graph)
-       (setq org-roam-node-display-template
-             (concat "${title:*} "
-                     (propertize "${tags:10}" 'face 'org-tag)))
-
-       (add-to-list 'display-buffer-alist
-                    '("\\*org-roam\\*"
-                      (display-buffer-in-side-window)
-                      (side . right)
-                      (slot . 0)
-                      (window-width . 0.33)
-                      (window-parameters . ((no-other-window . t)
-                                            (no-delete-other-windows . t)))))
-       (unless +config/is-guix-system
-         (setq org-roam-ui-sync-theme t
-               org-roam-ui-follow t
-               org-roam-ui-update-on-save t
-               org-roam-ui-open-on-start t))
-     #+end_src
-   - elfeed
-     #+begin_src emacs-lisp
-       (require 'elfeed)
-       (setq rmh-elfeed-org-files (list (concat org-directory "/elfeed.org")))
-       (eval-after-load 'elfeed
-         `(make-directory ,(expand-file-name "elfeed/" +emacs-data-dir) t))
-       (setq elfeed-db-directory (expand-file-name "elfeed/db/" +emacs-data-dir))
-       (setq elfeed-enclosure-default-dir (expand-file-name "elfeed/enclosures/" +emacs-data-dir))
-       (setq elfeed-score-score-file (expand-file-name "elfeed/score/score.el" +emacs-data-dir))
-       (elfeed-org)
-     #+end_src
-     + elfeed notification
-       From [[https://www.reddit.com/r/emacs/comments/gpoaaa/updating_elfeed_using_seperate_emacs_process/][reddit]]
-       #+begin_src emacs-lisp
-         (defvar +config/elfeed-update-complete-hook nil
-           "Functions called with no arguments when `elfeed-update' is finished.")
-
-         (defvar +config/elfeed-updates-in-progress 0
-           "Number of feed updates in-progress.")
-
-         (defvar +config/elfeed-search-update-filter nil
-           "The filter when `elfeed-update' is called.")
-
-         (defun +config/elfeed-update-complete-hook (&rest ignore)
-           "When update queue is empty, run `+config/elfeed-update-complete-hook' functions."
-           (when (= 0 +config/elfeed-updates-in-progress)
-             (run-hooks '+config/elfeed-update-complete-hook)))
-
-         (add-hook 'elfeed-update-hooks #'+config/elfeed-update-complete-hook)
-
-         (defun +config/elfeed-update-message-completed (&rest _ignore)
-           (message "Feeds updated")
-           (notifications-notify :title "Elfeed" :body "Feeds updated."))
-
-         (add-hook '+config/elfeed-update-complete-hook #'+config/elfeed-update-message-completed)
-
-         (defun +config/elfeed-search-update-restore-filter (&rest ignore)
-           "Restore filter after feeds update."
-           (when +config/elfeed-search-update-filter
-             (elfeed-search-set-filter +config/elfeed-search-update-filter)
-             (setq +config/elfeed-search-update-filter nil)))
-
-         (add-hook '+config/elfeed-update-complete-hook #'+config/elfeed-search-update-restore-filter)
-
-         (defun +config/elfeed-search-update-save-filter (&rest ignore)
-           "Save and change the filter while updating."
-           (setq +config/elfeed-search-update-filter elfeed-search-filter)
-           (setq elfeed-search-filter "#0"))
-
-         ;; NOTE: It would be better if this hook were run before starting the feed updates, but in
-         ;; `elfeed-update', it happens afterward.
-         (add-hook 'elfeed-update-init-hooks #'+config/elfeed-search-update-save-filter)
-
-         (defun +config/elfeed-update-counter-inc (&rest ignore)
-           (cl-incf +config/elfeed-updates-in-progress))
-
-         (advice-add #'elfeed-update-feed :before #'+config/elfeed-update-counter-inc)
-
-         (defun +config/elfeed-update-counter-dec (&rest ignore)
-           (cl-decf +config/elfeed-updates-in-progress)
-           (when (< +config/elfeed-updates-in-progress 0)
-             ;; Just in case
-             (setq +config/elfeed-updates-in-progress 0)))
-
-         (add-hook 'elfeed-update-hooks #'+config/elfeed-update-counter-dec)
-       #+end_src
-   - gcal
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'pass
-         (require 'org-gcal)
-         (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
-         (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
-         (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret")))
-     #+end_src
-   - org-protocol handler and capture templates
-     #+begin_src emacs-lisp
-       (if (and (fboundp 'server-running-p)
-                (not (server-running-p)))
-           (server-start))
-       (require 'org-protocol)
-       (require 'org-roam-protocol)
-       (setq org-roam-capture-templates
-             (quote (("d" "default" plain
-                      "* ${title}\n%?" :if-new
-                      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                 "#+title: ${title}\n#+filetags:\n#+date: %<%Y-%m-%d>\n\n")
-                      :unnarrowed t)
-                     )))
-       (setq org-roam-capture-ref-templates
-             (quote (("r" "ref" plain
-                      "%?"
-                      :if-new (file+head
-                               "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}.org\" (current-time) t)"
-                               "#+title: ${title}\n#+filetags:\n#+date: %<%Y-%m-%d>\n\n")
-                      :unnarrowed t :jump-to-captured t))))
-       (setq org-roam-dailies-capture-templates
-             (quote (("d" "Default" plain
-                      "%?"
-                      :if-new (file+head
-                               "%(format-time-string \"%Y-%m-%d--journal.org\" (current-time) t)"
-                               "#+title: Journal %<%Y-%m-%d>\n#+date: %<%Y-%m-%d>\n#+journal: private journal\n\n\n")
-                      :unnarrowed t))))
-     #+end_src
-     + Capture templates.
-       #+begin_src emacs-lisp
-         (setq org-capture-templates
-               '(("t" "Personal (t)Tasks")
-                 ("tt" "(t)todo" entry
-                  (file+headline +org-capture-todo-file "Inbox")
-                  "** TODO [#A] %? %^G:followup:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom\t\"\"\t%U\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("ts" "(p)In Progress Tasks" entry
-                  (file+headline +org-capture-todo-file "Inbox")
-                  "** PROG [#B] %? %^G:followup:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"PROG\"\tfrom\t\"\"\t%U\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("tn" "(n)Notes" entry
-                  (file+headline +org-capture-notes-file "Notes")
-                  "** %? %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
-                  :empty-line 1
-                  :jump-to-captured t)
-                 ("te" "(e)Next" entry
-                  (file+headline +org-capture-todo-file "Inbox")
-                  "** NEXT %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
-                  :empty-line 1
-                  :jump-to-captured t)
-                 ("ti" "(I)Ideas" entry
-                  (file+headline +org-capture-notes-file "Ideas")
-                  "** MAYBE %^G\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n"
-                  :empty-line 1
-                  :jump-to-captured t)
-                 ("th" "(h)Habit" entry
-                  (file+headline +org-capture-habits-file "Recurring")
-                  "** TODO [#C] %? %^G:habit:\n SCHEDULED: %^t\n:PROPERTIES:\n:Style: habit\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
-                  :empty-line 1
-                  :jump-to-captured t)
-                 ("td" "(d)Done" entry
-                  (file+headline +org-capture-notes-file "Inbox")
-                  "** DONE %?\nCLOSED: %U\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"DONE\"\tfrom \"\"\t%U\n:END:"
-                  :empty-lines 1
-                  :jump-to-captured t)
-                 ("p" "Project")
-                 ("pt" "Project (t)todo" entry
-                  (file+headline +org-capture-projects-file "Inbox")
-                  "** TODO [#A] %? %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("pe" "project (e)Next" entry
-                  (file+headline +org-capture-projects-file "Inbox")
-                  "** NEXT %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("pn" "project (n)Note" entry
-                  (file+headline +org-capture-projects-file "Notes")
-                  "** %? %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("pi" "project ()Ideas" entry
-                  (file+headline +org-capture-projects-file "Ideas")
-                  "** MAYBE %^G:project:\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n:END:"
-                  :empty-line 1
-                  :clock-in t
-                  :clock-resume t
-                  :jump-to-captured t)
-                 ("o" "org-protocol")
-                 ("ot" "org-protocol TODO(t)"
-                  entry (file+headline +org-capture-todo-file "Inbox")
-                  "** TODO %?\n:PROPERTIES:\n:Via: %a\n:Note:\n:END:\n:LOGBOOK:\n- State \"TODO\"\tfrom \"\"\t%U\n:END:"
-                  :empty-lines 1
-                  :jump-to-captured t)
-                 ("ol" "org-protocol Links(l)"
-                  entry (file+headline +org-capture-links-file "Links")
-                  "** %a %^G:website:\n\n%U\n\n%:initial %?"
-                  :jump-to-capture t)
-                 ("j" "Journal")
-                 ("jt" "Journal Today" plain (function +org-journal-find-location)
-                  "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-                  :jump-to-captured t
-                  :immediate-finish t)
-                 ("js" "Scheduled Journal" plain (function +org-journal-date-location)
-                  "** TODO %?\n <%(princ +org-journal--date-location-scheduled-time)>\n"
-                  :jump-to-captured t)
-                 )
-               org-capture-default-templates "tt")
-         (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
-       #+end_src
-   - org-journal
-     #+begin_src emacs-lisp
-       (setq org-journal-dir (expand-file-name "journal" org-directory)
-             org-journal-enable-agenda-integration t
-             org-journale-enable-cache t
-             org-journal-follow-mode t
-             org-journal-prefix-key "C-c j")
-
-       (defun +org-journal-find-location ()
-         "Open today's journal, but specify a non-nil prefix argument in order to
-         inhibit inserting the heading; org-capture will insert the heading."
-         (org-journal-new-entry t)
-         (unless (eq org-journal-file-type 'daily)
-           (org-narrow-to-subtree))
-         (goto-char (point-max)))
-
-       (defvar +org-journal--date-location-scheduled-time nil)
-
-       (defun +org-journal-date-location (&optional scheduled-time)
-         (let ((scheduled-time (or scheduled-time (org-read-date nil nil nil "Date:"))))
-           (setq +org-journal--date-location-scheduled-time scheduled-time)
-           (org-journal-new-entry t (org-time-string-to-time scheduled-time))
-           (unless (eq org-journal-file-type 'daily)
-             (org-narrow-to-subtree))
-           (goto-char (point-max))))
-
-       (defun +org-journal-save-entry-and-exit()
-         "Simple convenience function.
-            Saves the buffer of the current day's entry and kills the window
-            Similar to org-capture like behavior"
-         (interactive)
-         (save-buffer)
-         (kill-buffer-and-window))
-
-       (require 'org-journal)
-       ;; this messes up org-clock
-       ;;(define-key org-journal-mode-map (kbd "C-x C-s") '+org-journal-save-entry-and-exit)
-     #+end_src
-   - keybindings
-     + org-roam
-       #+begin_src emacs-lisp
-         (global-set-key (kbd "C-c r i") 'org-roam-node-insert)
-         (global-set-key (kbd "C-c r f") 'org-roam-node-find)
-         (global-set-key (kbd "C-c r c") 'org-roam-capture)
-         (global-set-key (kbd "C-c r b") 'org-roam-buffer-toggle)
-         (global-set-key (kbd "C-c r B") 'org-roam-buffer-display-dedicated)
-         (global-set-key (kbd "C-c r s") 'org-roam-db-sync)
-       #+end_src
-     + org-gcal
-       #+begin_src emacs-lisp
-         (global-set-key (kbd "C-c g s") 'org-gcal-sync)
-         (global-set-key (kbd "C-c g f") 'org-gcal-fetch)
-       #+end_src
-     + elfeed
-       #+begin_src emacs-lisp
-         (global-set-key (kbd "C-c e e") 'elfeed)
-         (define-key elfeed-search-mode-map (kbd "C-c e u") 'elfeed-update)
-       #+end_src
-   - org-babel
-     see [[https://www.gnu.org/software/emacs/manual/html_node/org/Languages.html][here]] for available languages.
-     #+begin_src emacs-lisp
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)
-          (awk . t)
-          (C . t)
-          (css . t)
-          (calc . t)
-          (screen . t)
-          (dot . t )
-          (haskell . t)
-          (java . t)
-          (js . t)
-          (latex . t)
-          (lisp . t)
-          (lua . t)
-          (org . t)
-          (perl . t)
-          (python .t)
-          (ruby . t)
-          (shell . t)
-          (sed . t)
-          (scheme . t)
-          (sql . t)
-          (sqlite . t)))
-     #+end_src
-   - end of config-org.el
-     #+begin_src emacs-lisp
-       (provide 'config-org)
-       ;;; config-org.el ends here
-     #+end_src
 ** UI
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-ui.el
