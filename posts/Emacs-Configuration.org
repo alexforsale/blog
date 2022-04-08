@@ -314,6 +314,12 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      (setq timeclock-file (expand-file-name "timeclock" +emacs-data-dir))
      (setq type-break-file-name (expand-file-name "type-break.el" +emacs-data-dir))
    #+end_src
+** helper functions and macros
+   #+begin_src emacs-lisp
+     (defmacro +config-load (var code)
+       (when (bound-and-true-p var)
+         `(require ,code)))
+   #+end_src
 ** footer
    #+begin_src emacs-lisp
      (provide 'config-defaults-variables)
@@ -321,7 +327,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+end_src
 * modules
   With this modular design, I can include per files configuration only.
-** Sane defaults
+** defaults
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-defaults.el
    :END:
