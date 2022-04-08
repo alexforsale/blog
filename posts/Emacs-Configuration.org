@@ -340,11 +340,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (require 'config-defaults-various)
       (require 'config-defaults-ide)
       (require 'config-defaults-email)
+      (require 'config-defaults-tools)
       (require 'config-defaults-keybindings)
-    #+end_src
-*** conditional modules
-    #+begin_src emacs-lisp
-      (+config-load +config-use-org-roam 'config-org-roam)
     #+end_src
 *** end of config-defaults.el
     #+begin_src emacs-lisp
@@ -1322,6 +1319,121 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (provide 'config-defaults-email)
       ;;; config-defaults-email.el ends here
+    #+end_src
+** Default Tools
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-tools.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+**** password-store
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-pass.el
+     :END:
+    #+begin_src emacs-lisp
+      ;;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
+      ;;; Commentary:
+      ;; This file is auto-generated from `config.org'
+      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+      ;;; Code:
+      (require 'config-defaults-variables)
+    #+end_src
+    #+begin_src emacs-lisp
+      (unless +config/is-guix-system
+        (straight-use-package 'pass))
+      (setq password-store-password-length 12)
+      (auth-source-pass-enable)
+    #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-pass)
+        ;;; config-pass.el ends here
+      #+end_src
+**** magit
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-magit.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-magit.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'magit)
+         (straight-use-package 'diff-hl))
+       (customize-set-variable 'transient-levels-file (expand-file-name "transient/levels.el" +emacs-data-dir))
+       (customize-set-variable 'transient-values-file (expand-file-name "transient/values.el" +emacs-data-dir))
+       (customize-set-variable 'transient-history-file (expand-file-name "transient/history.el" +emacs-data-dir))
+       (require 'magit)
+       (require 'diff-hl)
+       (transient-append-suffix 'magit-log "a"
+         '("w" "Wip" magit-wip-log-current))
+       (transient-append-suffix 'magit-log "-A"
+         '("-m" "Omit merge commits" "--no-merges"))
+       (setq magit-log-arguments '("-n100" "--graph" "--decorate"))
+       (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+       (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
+       (add-hook 'magit-mode-hook #'hl-line-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-magit)
+        ;;; config-magit.el ends here
+      #+end_src
+**** slime
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-slime.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-slime.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'slime))
+       (when (executable-find "sbcl")
+         (defvar +quicklisp-path "~/.local/share/quicklisp")
+         (setq inferior-lisp-program "sbcl")
+         (require 'slime)
+         (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path))
+           (load (expand-file-name "slime-helper.el" +quicklisp-path))
+           (slime-setup '(slime-fancy))))
+       (when (executable-find "sbcl")
+         (defun slime-description-fontify ()
+           "Fontify sections of SLIME Description."
+           (with-current-buffer "*SLIME Description*"
+             (highlight-regexp
+              (concat "^Function:\\|"
+                      "^Macro-function:\\|"
+                      "^Its associated name.+?) is\\|"
+                      "^The .+'s arguments are:\\|"
+                      "^Function documentation:$\\|"
+                      "^Its.+\\(is\\|are\\):\\|"
+                      "^On.+it was compiled from:$")
+              'hi-green-b)))
+
+         (defadvice slime-show-description (after slime-description-fontify activate)
+           "Fontify sections of SLIME Description."
+           (slime-description-fontify)))
+     #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-tools)
+      ;;; config-defaults-tools.el ends here
     #+end_src
 ** Various other defaults
    :PROPERTIES:
@@ -2365,11 +2477,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    - packages
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'pass)
-         (straight-use-package 'auth-source-pass)
          (straight-use-package 'pdf-tools)
-         (straight-use-package 'magit)
-         (straight-use-package 'diff-hl)
          (straight-use-package 'paredit)
          (straight-use-package 'slime)
          (straight-use-package 'emms)
@@ -2378,28 +2486,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
          (straight-use-package 'telega))
        (straight-use-package 'gist)
        (straight-use-package 'vlc)
-     #+end_src
-   - password-store
-     #+begin_src emacs-lisp
-       (setq password-store-password-length 12)
-       (auth-source-pass-enable)
-     #+end_src
-   - magit & diff-hl
-     #+begin_src emacs-lisp
-       (customize-set-variable 'transient-levels-file (expand-file-name "transient/levels.el" +emacs-data-dir))
-       (customize-set-variable 'transient-values-file (expand-file-name "transient/values.el" +emacs-data-dir))
-       (customize-set-variable 'transient-history-file (expand-file-name "transient/history.el" +emacs-data-dir))
-
-       (require 'magit)
-       (require 'diff-hl)
-       (transient-append-suffix 'magit-log "a"
-         '("w" "Wip" magit-wip-log-current))
-       (transient-append-suffix 'magit-log "-A"
-         '("-m" "Omit merge commits" "--no-merges"))
-       (setq magit-log-arguments '("-n100" "--graph" "--decorate"))
-       (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-       (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
-       (add-hook 'magit-mode-hook #'hl-line-mode)
      #+end_src
    - slime
      #+begin_src emacs-lisp
