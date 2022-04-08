@@ -344,6 +344,8 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (require 'config-defaults-ui)
       (require 'config-defaults-editings)
       (require 'config-defaults-various)
+      (require 'config-defaults-ide)
+      (require 'config-defaults-email)
       (require 'config-defaults-keybindings)
     #+end_src
 *** end of config-defaults.el
@@ -584,6 +586,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;; This file is auto-generated from `config.org'
      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
+     (require 'config-defaults-variables)
      (require 'org)
    #+end_src
    This file stores the common /org-mode/ configuration.
@@ -918,6 +921,40 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (provide 'config-defaults-org)
       ;;; config-defaults-org.el ends here
+    #+end_src
+** Default IDE
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ide.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-ide.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-ide)
+      ;;; config-defaults-ide.el ends here
+    #+end_src
+** Default Email
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ide.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-email.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-email)
+      ;;; config-defaults-email.el ends here
     #+end_src
 ** Various other defaults
    :PROPERTIES:
