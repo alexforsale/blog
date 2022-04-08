@@ -641,7 +641,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'which-key)
+         (straight-use-package 'which-key))
        (require 'which-key)
        (which-key-mode)
        (which-key-setup-side-window-right-bottom)
@@ -720,7 +720,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'perspective)
+         (straight-use-package 'perspective))
        (setq persp-initial-frame-name "Main")
        (setq persp-state-default-fle (expand-file-name "statesave" +emacs-data-dir))
        (unless (equal persp-mode t)
@@ -1283,7 +1283,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'ngix-mode))
+         (straight-use-package 'nginx-mode))
        (require 'nginx-mode)
        (add-to-list 'auto-mode-alist '("/nginx/sites-\\(?:available\\|enabled\\)/" . nginx-mode))
      #+end_src
@@ -3144,6 +3144,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
        ;;; Code:
        (require 'config-defaults-variables)
+       (require 'config-all-the-icons)
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
