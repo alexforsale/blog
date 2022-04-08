@@ -14,6 +14,7 @@ With that in mind, I'm breaking down this configuration into separate /pluggable
 By default this will creates an =emacs= directory insinde =~/.config= or wherever the =${XDG_CONFIG_HOME}= is set. If you're using [[https://github.com/plexus/chemacs2][chemacs]], or if you want to use the standard =~/.emacs.d= directory, modify the =:tangle= directive inside each heading's =:PROPERTIES:=.
 
 To easily toggle the additional packages, create a =config-user.el= file inside =user-emacs-directory=, unfortunately hardcoded here to =~/.config/emacs=. This file also generate =~/.config/emacs/config-user.el.example=:
+* Example =config-user.el=
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config-user.el.example
 ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
 ;;; Commentary:
