@@ -2213,6 +2213,127 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;;; Code:
      (require 'config-defaults-variables)
    #+end_src
+*** Additional Package
+**** flycheck
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-flycheck.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-flycheck.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'flycheck))
+       (when (featurep 'consult)
+           (straight-use-package 'consult-flycheck))
+       (global-flycheck-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-flycheck)
+        ;;; config-flycheck.el ends here
+      #+end_src
+**** projectile
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-projectile.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-projectile.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'projectile)
+       (customize-set-variable 'projectile-cache-file (expand-file-name "projectile.cache" +emacs-data-dir))
+       (customize-set-variable 'projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" +emacs-data-dir))
+       (projectile-mode +1)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-projectile)
+        ;;; config-projectile.el ends here
+      #+end_src
+**** lsp-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-lsp-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-lsp-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'lsp-mode)
+         (straight-use-package 'lsp-ui)
+         (when (featurep 'consult)
+           (straight-use-package 'consult-lsp)))
+       (setq lsp-keymap-prefix "C-c L")
+       (customize-set-variable 'lsp-completion-provider :none)
+       (customize-set-variable 'lsp-toml-cache-path (expand-file-name ".cache/lsp-toml" +emacs-data-dir))
+       (customize-set-variable 'lsp-clojure-workspace-cache-dir (expand-file-name ".cache/lsp-toml" +emacs-data-dir))
+       (defun +config/lsp-mode-setup-completion ()
+         (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+               '(orderless))) ;; Configure flex
+       (require 'lsp-mode)
+       (add-hook 'c-mode-hook #'lsp-deferred)
+       (add-hook 'c++-mode-hook #'lsp-deferred)
+       (add-hook 'shell-mode-hook #'lsp-deferred)
+       (add-hook 'yaml-mode-hook #'lsp-deferred)
+       (customize-set-variable 'lsp-yaml-schema-store-local-db (expand-file-name ".cache/lsp/lsp-yaml-schemas.json" +emacs-data-dir))
+       (add-hook 'rust-mode-hook #'lsp-deferred)
+       (add-hook 'toml-mode-hook #'lsp-deferred)
+       (add-hook 'python-mode-hook #'lsp-deferred)
+       (add-hook 'nix-mode-hook #'lsp-deferred)
+       (add-hook 'nginx-mode-hook #'lsp-deferred)
+       (add-hook 'markdown-mode-hook #'lsp-deferred)
+       (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+       (add-hook 'lsp-completion-mode-hook #'+config/lsp-mode-setup-completion)
+     #+end_src
+***** python deps
+      lsp server.
+      #+begin_src sh :tangle no
+        pip install 'python-lsp-server[all]'
+      #+end_src
+***** extra deps
+****** pyls-flake8
+       #+begin_src sh :tangle no
+         pip install pyls-flake8
+       #+end_src
+****** pyls-mypy
+       #+begin_src sh :tangle no
+         pip install pyls-mypy
+       #+end_src
+****** pyls-isort
+       #+begin_src sh :tangle no
+         pip install pyls-isort
+       #+end_src
+****** python-lsp-black
+       #+begin_src sh :tangle no
+         pip install python-lsp-black
+       #+end_src
+****** pyls-memestra
+       #+begin_src sh :tangle no
+         pip install pyls-memestra
+       #+end_src
+****** pylsp-rope
+       #+begin_src sh :tangle no
+         pip install pylsp-rope
+       #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-lsp-mode)
+        ;;; config-lsp-mode.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-ide)
@@ -2701,10 +2822,33 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
        ;;; Code:
        (require 'config-defaults-variables)
      #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'gist)
+     #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-gist)
         ;;; config-gist.el ends here
+      #+end_src
+**** ripgrep
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-ripgrep.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-ripgrep.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'ripgrep)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-ripgrep)
+        ;;; config-ripgrep.el ends here
       #+end_src
 *** Footer
     #+begin_src emacs-lisp
@@ -2861,102 +3005,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** IDE
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-ide.el
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-ide.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (straight-use-package 'flycheck))
-       (when (featurep 'consult)
-         (progn
-           (straight-use-package 'consult-flycheck)
-           (straight-use-package 'consult-lsp)))
-       (straight-use-package 'projectile)
-       (unless +config/is-guix-system
-         (straight-use-package 'lsp-mode)
-         (straight-use-package 'lsp-ui))
-       (straight-use-package 'ripgrep)
-     #+end_src
-   - flycheck
-     #+begin_src emacs-lisp
-       (global-flycheck-mode)
-     #+end_src
-   - projectile
-     #+begin_src emacs-lisp
-       (customize-set-variable 'projectile-cache-file (expand-file-name "projectile.cache" +emacs-data-dir))
-       (customize-set-variable 'projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" +emacs-data-dir))
-       (projectile-mode +1)
-       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-     #+end_src
-   - lsp
-     #+begin_src emacs-lisp
-       (setq lsp-keymap-prefix "C-c L")
-       (customize-set-variable 'lsp-completion-provider :none)
-       (customize-set-variable 'lsp-toml-cache-path (expand-file-name ".cache/lsp-toml" +emacs-data-dir))
-       (customize-set-variable 'lsp-clojure-workspace-cache-dir (expand-file-name ".cache/lsp-toml" +emacs-data-dir))
-       (defun +config/lsp-mode-setup-completion ()
-         (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-               '(orderless))) ;; Configure flex
-
-       (require 'lsp-mode)
-       (add-hook 'c-mode-hook #'lsp-deferred)
-       (add-hook 'c++-mode-hook #'lsp-deferred)
-       (add-hook 'shell-mode-hook #'lsp-deferred)
-       (add-hook 'yaml-mode-hook #'lsp-deferred)
-       (customize-set-variable 'lsp-yaml-schema-store-local-db (expand-file-name ".cache/lsp/lsp-yaml-schemas.json" +emacs-data-dir))
-       (add-hook 'rust-mode-hook #'lsp-deferred)
-       (add-hook 'toml-mode-hook #'lsp-deferred)
-       (add-hook 'python-mode-hook #'lsp-deferred)
-       (add-hook 'nix-mode-hook #'lsp-deferred)
-       (add-hook 'nginx-mode-hook #'lsp-deferred)
-       (add-hook 'markdown-mode-hook #'lsp-deferred)
-       (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-       (add-hook 'lsp-completion-mode-hook #'+config/lsp-mode-setup-completion)
-     #+end_src
-     + python deps
-       lsp server.
-       #+begin_src sh :tangle no
-         pip install 'python-lsp-server[all]'
-       #+end_src
-       + extra deps
-         + pyls-flake8
-           #+begin_src sh :tangle no
-             pip install pyls-flake8
-           #+end_src
-         + pyls-mypy
-           #+begin_src sh :tangle no
-             pip install pyls-mypy
-           #+end_src
-         + pyls-isort
-           #+begin_src sh :tangle no
-             pip install pyls-isort
-           #+end_src
-         + python-lsp-black
-           #+begin_src sh :tangle no
-             pip install python-lsp-black
-           #+end_src
-         + pyls-memestra
-           #+begin_src sh :tangle no
-             pip install pyls-memestra
-           #+end_src
-         + pylsp-rope
-           #+begin_src sh :tangle no
-             pip install pylsp-rope
-           #+end_src
-   - end of config-ide.el
-     #+begin_src emacs-lisp
-       (provide 'config-ide)
-       ;;; config-ide.el ends here
-     #+end_src
 ** Completions
 *** vertico
     :PROPERTIES:
