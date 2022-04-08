@@ -455,6 +455,539 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (dolist (mode '(org-mode-hook))
         (add-hook mode (lambda () (display-line-numbers-mode 0))))
     #+end_src
+*** add visual pulse when changing focus, like beacon but built-in, from [[https://karthinks.com/software/batteries-included-with-emacs/][karthinks.com]].
+    #+begin_src emacs-lisp
+      (defun +pulse-line (&rest _)
+        "Pulse the current line."
+        (pulse-momentary-highlight-one-line (point)))
+
+      (dolist (command '(scroll-up-command scroll-down-command
+                                           recenter-top-bottom other-window))
+        (advice-add command :after #'+pulse-line))
+    #+end_src
+*** eldoc
+    #+begin_src emacs-lisp
+      (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+      (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+      (add-hook 'ielm-mode-hook 'eldoc-mode)
+      (add-hook 'prog-mode-hook 'eldoc-mode)
+    #+end_src
+*** enable line numbering for some mode automatically.
+    #+begin_src emacs-lisp
+      (column-number-mode)
+
+      ;; Enable line numbers for some modes
+      (dolist (mode '(text-mode-hook
+                      prog-mode-hook
+                      conf-mode-hook))
+        (add-hook mode (lambda () (display-line-numbers-mode 1))))
+
+      ;; Override some modes which derive from the above
+      (dolist (mode '(org-mode-hook))
+        (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    #+end_src
+*** Additional Packages
+**** all-the-icons
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-all-the-icons.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-all-the-icons.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (when (display-graphic-p)
+           (straight-use-package 'all-the-icons)))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-all-the-icons)
+        ;;; config-all-the-icons.el ends here
+      #+end_src
+**** doom-modeline
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-doom-modelines.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-doom-modelines.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'doom-modeline))
+       (customize-set-variable 'doom-modeline-height 15)
+       (customize-set-variable 'doom-modeline-bar-width 6)
+       (customize-set-variable 'doom-modeline-minor-modes t)
+       (customize-set-variable 'doom-modeline-buffer-file-name-style 'truncate-except-project)
+       (add-hook 'after-init-hook 'doom-modeline-init)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-doom-modelines)
+        ;;; config-doom-modelines.el ends here
+      #+end_src
+**** doom-themes
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-doom-themes.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-doom-themes.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'doom-themes))
+       (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+             doom-themes-enable-italic t) ; if nil, italics is universally disabled
+       ;; Enable flashing mode-line on errors
+       (doom-themes-visual-bell-config)
+       ;; Enable custom neotree theme (all-the-icons must be installed!)
+       (doom-themes-neotree-config)
+       ;; or for treemacs users
+       (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+       (doom-themes-treemacs-config)
+       ;; Corrects (and improves) org-mode's native fontification.
+       (doom-themes-org-config)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-doom-themes)
+        ;;; config-doom-themes.el ends here
+      #+end_src
+**** theme-magic
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-theme-magic.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-theme-magic.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'theme-magic))
+       (when (executable-find "wal")
+         (theme-magic-export-theme-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-theme-magic)
+        ;;; config-theme-magic.el ends here
+      #+end_src
+**** helpful
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-helpful.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-helpful.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'elisp-demos)
+         (straight-use-package 'helpful))
+     #+end_src
+     #+begin_src emacs-lisp
+       (require 'helpful)
+       (define-key helpful-mode-map [remap revert-buffer] #'helpful-update)
+       (global-set-key [remap describe-command] #'helpful-command)
+       (global-set-key [remap describe-function] #'helpful-callable)
+       (global-set-key [remap describe-key] #'helpful-key)
+       (global-set-key [remap describe-symbol] #'helpful-symbol)
+       (global-set-key [remap describe-variable] #'helpful-variable)
+       (global-set-key (kbd "C-h F") #'helpful-function)
+       (global-set-key (kbd "C-h K") #'describe-keymap)
+       (require 'elisp-demos)
+       (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-helpful)
+        ;;; config-helpful.el ends here
+      #+end_src
+**** which-key
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-which-key.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-which-key.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'which-key)
+       (require 'which-key)
+       (which-key-mode)
+       (which-key-setup-side-window-right-bottom)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-which-key)
+        ;;; config-which-key.el ends here
+      #+end_src
+**** ace-window
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-ace-window.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-ace-window.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'ace-window))
+       (require 'ace-window)
+
+       (set-face-attribute
+        'aw-leading-char-face nil
+        :foreground "deep sky blue"
+        :weight 'bold
+        :height 3.0)
+
+       (set-face-attribute
+        'aw-mode-line-face nil
+        :inherit 'mode-line-buffer-id
+        :foreground "lawn green")
+
+       (setq aw-scope 'frame)
+       (setq aw-dispatch-always nil)
+       (setq aw-minibuffer-flag t)
+       (setq aw-keys '(?q ?w ?e ?r ?t ?a ?s ?d ?f))
+       (defvar aw-dispatch-alist
+         '((?x aw-delete-window "Delete Window")
+           (?m aw-swap-window "Swap Windows")
+           (?M aw-move-window "Move Window")
+           (?c aw-copy-window "Copy Window")
+           (?j aw-switch-buffer-in-window "Select Buffer")
+           (?n aw-flip-window)
+           (?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+           (?c aw-split-window-fair "Split Fair Window")
+           (?v aw-split-window-vert "Split Vert Window")
+           (?b aw-split-window-horz "Split Horz Window")
+           (?o delete-other-windows "Delete Other Windows")
+           (?? aw-show-dispatch-help))
+         "List of actions for `aw-dispatch-default'.")
+
+       (ace-window-display-mode t)
+       (global-set-key [remap other-window] 'ace-window)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-ace-window)
+        ;;; config-ace-window.el ends here
+      #+end_src
+**** perpective
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-perspective.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-perspective.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'perspective)
+       (setq persp-initial-frame-name "Main")
+       (setq persp-state-default-fle (expand-file-name "statesave" +emacs-data-dir))
+       (unless (equal persp-mode t)
+         (persp-mode))
+       (global-set-key (kbd "C-x b") 'persp-switch-to-buffer*)
+       (global-set-key (kbd "C-x k") 'persp-kill-buffer*)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-perspective)
+        ;;; config-perspective.el ends here
+      #+end_src
+**** centaur-tabs
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-centaur-tabs.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-centaur-tabs.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'centaur-tabs)
+       (add-hook 'dashboard-mode-hook #'centaur-tabs-local-mode)
+       (add-hook 'term-mode-hook #'centaur-tabs-local-mode)
+       (add-hook 'calendar-mode-hook #'centaur-tabs-local-mode)
+       (add-hook 'org-agenda-mode-hook #'centaur-tabs-local-mode)
+       (add-hook 'helpful-mode-hook #'centaur-tabs-local-mode)
+       (setq centaur-tabs-style "rounded"
+             centaur-tabs-set-icons t
+             centaur-tabs-set-bar 'under
+             x-underline-at-descent-line t
+             centaur-tabs-set-modified-marker t)
+       (centaur-tabs-mode t)
+       (global-set-key (kbd "C-c t p") 'centaur-tabs-backward)
+       (global-set-key (kbd "C-c t C-p") 'centaur-tabs-backward)
+       (global-set-key (kbd "C-c t n") 'centaur-tabs-forward)
+       (global-set-key (kbd "C-c t C-n") 'centaur-tabs-forward)
+       (global-set-key (kbd "C-c t M-p") 'centaur-tabs-backward-group)
+       (global-set-key (kbd "C-c t M-n") 'centaur-tabs-forward-group)
+
+       ;; buffer groups
+       (defun centaur-tabs-buffer-groups ()
+         "`centaur-tabs-buffer-groups' control buffers' group rules.
+
+          Group centaur-tabs with mode if buffer is derived from
+         `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+          All buffer name start with * will group to \"Emacs\".
+          Other buffer group by `centaur-tabs-get-group-name' with project name."
+         (list
+          (cond
+           ((or (string-equal "*" (substring (buffer-name) 0 1))
+                (memq major-mode '(magit-process-mode
+                                   magit-status-mode
+                                   magit-diff-mode
+                                   magit-log-mode
+                                   magit-file-mode
+                                   magit-blob-mode
+                                   magit-blame-mode
+                                   )))
+            "Emacs")
+           ((derived-mode-p 'prog-mode)
+            "Editing")
+           ((derived-mode-p 'dired-mode)
+            "Dired")
+           ((memq major-mode '(helpful-mode
+                               help-mode))
+            "Help")
+           ((memq major-mode '(org-mode
+                               org-agenda-clockreport-mode
+                               org-src-mode
+                               org-agenda-mode
+                               org-beamer-mode
+                               org-indent-mode
+                               org-bullets-mode
+                               org-cdlatex-mode
+                               org-agenda-log-mode
+                               diary-mode))
+            "OrgMode")
+           (t
+            (centaur-tabs-get-group-name (current-buffer))))))
+       (setq centaur-tabs--buffer-show-groups t)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-centaur-tabs)
+        ;;; config-centaur-tabs.el ends here
+      #+end_src
+**** rainbow-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-rainbow-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-rainbow-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'rainbow-mode))
+       (require 'rainbow-mode)
+       (add-hook 'css-mode-hook #'rainbow-mode)
+       ;; turn off word colors
+       (defun +rainbow-turn-off-words ()
+         "Turn off word colors in rainbow-mode."
+         (interactive)
+         (font-lock-remove-keywords
+          nil
+          `(,@rainbow-x-colors-font-lock-keywords
+            ,@rainbow-latex-rgb-colors-font-lock-keywords
+            ,@rainbow-r-colors-font-lock-keywords
+            ,@rainbow-html-colors-font-lock-keywords
+            ,@rainbow-html-rgb-colors-font-lock-keywords)))
+       ;; turn off hexadecimal colors
+       (defun +rainbow-turn-off-hexadecimal ()
+         "Turn off hexadecimal colors in rainbow-mode."
+         (interactive)
+         (font-lock-remove-keywords
+          nil
+          `(,@rainbow-hexadecimal-colors-font-lock-keywords)))
+       ;; TODO: set toggling and keybindings
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-rainbow-mode)
+        ;;; config-rainbow-mode.el ends here
+      #+end_src
+**** rainbow-delimiter
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-rainbow-delimiters.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-rainbow-delimiters.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'rainbow-delimiters))
+       (require 'rainbow-delimiters)
+       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+       (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-rainbow-delimiters)
+        ;;; config-rainbow-delimiters.el ends here
+      #+end_src
+**** hl-todo
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-hl-todo.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-hl-todo.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'hl-todo)
+       (require 'hl-todo)
+       (global-hl-todo-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-hl-todo)
+        ;;; config-hl-todo.el ends here
+      #+end_src
+**** diminish
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-diminish.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-diminish.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'diminish))
+       (require 'diminish)
+       (diminish 'rainbow-mode)
+       (diminish 'eldoc-mode)
+       (diminish 'subword-mode)
+       (diminish 'flycheck-mode)
+       (diminish 'projectile-mode)
+       (diminish 'yas-global-mode)
+       (diminish 'yas-extra-mode)
+       (diminish 'yas-minor-mode)
+       (diminish 'which-key-mode)
+       (diminish 'theme-magic-export-theme-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-diminish)
+        ;;; config-diminish.el ends here
+      #+end_src
+**** dashboard
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-dashboard.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-dashboard.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'dashboard))
+       (require 'dashboard)
+       (dashboard-setup-startup-hook)
+       (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+       (setq dashboard-center-content t)
+       (setq dashboard-items '((recents  . 5)
+                               (bookmarks . 5)
+                               (projects . 5)
+                               (agenda . 5)
+                               (registers . 5)))
+       (setq dashboard-set-heading-icons t)
+       (setq dashboard-set-file-icons t)
+       (setq dashboard-set-navigator t)
+       (setq dashboard-set-init-info t)
+       (setq dashboard-week-agenda t)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-dashboard)
+        ;;; config-dashboard.el ends here
+      #+end_src
+**** alert
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-alert.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-alert.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'alert))
+
+       (customize-set-variable 'alert-default-style #'notifications)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-alert)
+        ;;; config-alert.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-ui)
@@ -1332,6 +1865,43 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;;; Code:
      (require 'config-defaults-variables)
    #+end_src
+*** erc
+**** auto connect based on server
+     #+begin_src emacs-lisp
+       (customize-set-variable 'erc-nick user-login-name)
+       (customize-set-variable 'erc-user-full-name user-full-name)
+
+       (defun +erc/libera ()
+         (erc-tls :server "irc.libera.chat"
+                  :port "6697"))
+
+       (add-hook 'erc-after-connect
+                 `(lambda (SERVER NICK)
+                    (cond
+                     ((string-match "irc\\.libera\\.chat" SERVER)
+                      (erc-message "PRIVMSG" (concat "NickServ identify " (password-store-get "irc.libera.chat/alexforsale")))))))
+     #+end_src
+**** autojoin
+     #+begin_src emacs-lisp
+       (require 'erc)
+       (require 'erc-join)
+       (erc-autojoin-mode 1)
+       (setq erc-autojoin-channels-alist
+             '(("irc.libera.chat" "#emacs" "#emacs-beginners" "gnus" "#archlinux"
+                "archlinux-offtopic" "guix" "gentoo" )))
+     #+end_src
+**** only notify when nick or keywords mentioned.
+     #+begin_src emacs-lisp
+       (setq erc-current-nick-highlight-type 'nick)
+       (setq erc-keywords '("\\berc[-a-z]*\\b" "\\bemms[-a-z]*\\b"))
+
+       (setq erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE"))
+       (setq erc-track-use-faces t)
+       (setq erc-track-faces-priority-list
+             '(erc-current-nick-face erc-keyword-face))
+       (setq erc-track-priority-faces-only 'all)
+     #+end_src
+*** Additional Packages
 **** password-store
      :PROPERTIES:
      :header-args: :tangle ~/.config/emacs/modules/config-pass.el
@@ -1430,6 +2000,330 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
            "Fontify sections of SLIME Description."
            (slime-description-fontify)))
      #+end_src
+***** Improve usability of slime-apropos: slime-apropos-minor-mode
+      #+begin_src emacs-lisp
+          (when (executable-find "sbcl")
+            (defvar slime-apropos-anchor-regexp "^[^ ]")
+            (defun slime-apropos-next-anchor ()
+              (interactive)
+              (let ((pt (point)))
+                (forward-line 1)
+                (if (re-search-forward slime-apropos-anchor-regexp nil t)
+                    (goto-char (match-beginning 0))
+                  (goto-char pt)
+                  (error "anchor not found"))))
+
+            (defun slime-apropos-prev-anchor ()
+              (interactive)
+              (let ((p (point)))
+                (if (re-search-backward slime-apropos-anchor-regexp nil t)
+                    (goto-char (match-beginning 0))
+                  (goto-char p)
+                  (error "anchor not found"))))
+
+            (defvar slime-apropos-minor-mode-map (make-sparse-keymap))
+            (define-key slime-apropos-minor-mode-map "\C-m" 'slime-describe-symbol)
+            (define-key slime-apropos-minor-mode-map "l" 'slime-describe-symbol)
+            (define-key slime-apropos-minor-mode-map "j" 'slime-apropos-next-anchor)
+            (define-key slime-apropos-minor-mode-map "k" 'slime-apropos-prev-anchor)
+            (define-minor-mode slime-apropos-minor-mode "")
+
+            (defadvice slime-show-apropos (after slime-apropos-minor-mode activate)
+              ""
+              (when (get-buffer "*SLIME Apropos*")
+                (with-current-buffer "*SLIME Apropos*" (slime-apropos-minor-mode 1)))))
+      #+end_src
+***** slime-contrib
+      #+begin_src emacs-lisp
+        (setq slime-contribs '(slime-fancy slime-hyperdoc))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-slime)
+        ;;; config-slime.el ends here
+      #+end_src
+**** paredit
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-paredit.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-paredit.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'paredit))
+       (require 'paredit)
+       (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+       (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+       (add-hook 'ielm-mode-hook #'enable-paredit-mode)
+       (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+       (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+       (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+       (require 'eldoc)
+       (eldoc-add-command
+        'paredit-backward-delete
+        'paredit-close-round)
+       (add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1)))
+       ;; Stop SLIME's REPL from grabbing DEL,
+       (defun override-slime-repl-bindings-with-paredit ()
+         (define-key slime-repl-mode-map
+           (read-kbd-macro paredit-backward-delete-key) nil))
+       (add-hook 'slime-repl-mode-hook 'override-slime-repl-bindings-with-paredit)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-paredit)
+        ;;; config-paredit.el ends here
+      #+end_src
+**** telega
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-telega.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-telega.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'telega))
+       (unless +config/is-guix-system
+         (customize-set-variable 'telega-server-libs-prefix "/usr"))
+       (customize-set-variable 'telega-directory (expand-file-name "telega/" +emacs-data-dir))
+       (customize-set-variable 'telega-options-plist '(:online t :is-location-visible t))
+       (customize-set-variable 'telega-my-location '(:latitude -6.241586 :longitude 106.992416))
+       (customize-set-variable 'telega-use-image t)
+       (customize-set-variable 'telega-voip-allow-p2p t)
+       (customize-set-variable 'telega-appindicator-use-label t)
+       (customize-set-variable 'telega-active-locations-show-avatars t)
+       (customize-set-variable 'telega-appindicator-icon-colors
+                               '((offline "#ffffff" "#000000" nil)
+                                 (online "#ffffff" "#000000" "#00ff00")
+                                 (connecting "gray" "white" "white")))
+
+       (add-hook 'telega-load-hook 'telega-notifications-mode)
+       ;; not needed with notification
+       ;;(add-hook 'telega-load-hook 'telega-mode-line-mode)
+       (add-hook 'telega-load-hook 'telega-appindicator-mode)
+       (add-hook 'telega-open-file-hook 'telega-edit-file-mode)
+       (add-hook 'telega-load-hook 'telega-my-location-mode)
+       ;; needs better keybind
+       (add-hook 'telega-load-hook
+                 (lambda ()
+                   (define-key global-map (kbd "C-c t T") telega-prefix-map)))
+       (require 'telega)
+       ;; contrib packages
+       ;; org-mode links
+       (require 'ol-telega)
+       (customize-set-variable 'telega-status-history-logs-dir (expand-file-name "telega/history/" +emacs-data-dir))
+       (require 'telega-status-history)
+       (add-hook 'telega-load-hook 'global-telega-url-shorten-mode)
+       (require 'telega-url-shorten)
+       (customize-set-variable 'telega-url-shorten-use-images t)
+       (require 'telega-mnz)
+       (add-hook 'telega-load-hook 'global-telega-mnz-mode)
+       (require 'telega-transient)
+       (telega-transient-mode 1)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-telega)
+        ;;; config-telega.el ends here
+      #+end_src
+**** emms
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-emms.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-emms.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'emms)
+         (straight-use-package 'org-emms))
+       (customize-set-variable 'emms-directory (expand-file-name "emms" +emacs-data-dir))
+       (customize-set-variable 'emms-player-mpv-update-metadata t)
+       (require 'emms-setup)
+       (require 'emms-source-file)
+       (require 'emms-source-playlist)
+       (emms-all)
+       (emms-default-players)
+
+       ;; history
+       (emms-history-load)
+       (setq emms-source-file-default-directory +emms-music-dir
+             emms-source-playlist-default-format 'm3u
+             emms-playlist-mode-center-when-go t
+             emms-playlist-default-major-mode 'emms-playlist-mode
+             emms-show-format "NP: %s"
+             emms-playlist-buffer-name "*Music*"
+             emms-player-mpv-environment '("PULSnE_PROP_media.role=music")
+             emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
+     #+end_src
+***** notification
+      #+begin_src emacs-lisp
+        (defvar notify-method 'nil
+          "Method for sending notifications.")
+
+        ;; choose D-Bus to disseminate messages, if it is running.
+        (cond
+         ;; test to see if D-Bus notifications are available
+         ((if (and (require 'dbus nil t)
+                   (dbus-ping :session "org.freedesktop.Notifications"))
+              (progn
+                (setq notify-method 'notify-via-dbus-notifications)
+                (require 'notifications))))
+         ;; could use the message system otherwise
+         (t (setq notify-method 'notify-via-message)))
+
+        (defun notify-via-notifications (title msg icon)
+          "Send notification with TITLE, MSG via `D-Bus'."
+          (notifications-notify
+           :title title
+           :body msg
+           :app-icon icon
+           :urgency 'low))
+
+        (defun notify-via-messages (title msg)
+          "Send notification with TITLE, MSG to message."
+          (message "APPOINTMENT: %s" msg))
+
+        (defun emms-notifications-dbus (track-name)
+          "Share track name via `D-Bus'."
+          (let ((icon "/usr/share/icons/gnome/24x24/categories/applications-multimedia.png"))
+            (notify-via-notifications "EMMS is now playing:" track-name icon)))
+
+        (defun emms-notifications-message (track-name)
+          "Share track name via Emacs minibuffer."
+          (message "EMMS is now playing: %s" track-name))
+
+        (setq emms-player-next-function 'emms-notify-and-next)
+
+        (defun emms-notify-and-next ()
+          "Send a notification of track and start next."
+          (emms-next-noerror)
+          (let ((track-name (emms-track-description (emms-playlist-current-selected-track))))
+            (cond
+             ((eq notify-method 'notify-via-dbus-notifications)
+              (emms-notifications-dbus track-name))
+             (t (emms-notifications-message track-name)))))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-emms)
+        ;;; config-emms.el ends here
+      #+end_src
+**** w3m
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-w3m.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-w3m.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'w3m))
+       (when (executable-find "w3m")
+         (require 'w3m)
+         (require 'w3m-bookmark)
+         ;;(setq browse-url-browser-function 'w3m-goto-url-new-session)
+         (setq w3m-home-page "http://www.google.com")
+         (setq w3m-use-cookies t)
+         (setq w3m-use-header-line-title t)
+         (setq w3m-cookie-accept-bad-cookies t)
+         (setq w3m-view-this-url-new-session-in-background t)
+         (setq w3m-new-session-in-background t)
+         (setq w3m-session-time-format "%Y-%m-%d %A %H:%M")
+         (setq w3m-favicon-use-cache-file t)
+         (setq w3m-show-graphic-icons-in-mode-line t)
+         (setq w3m-keep-arrived-urls 50000)
+         (setq w3m-keep-cache-size 1000)
+         (setq w3m-edit-function (quote find-file-other-window))
+         (setq w3m-session-automatic-save t)
+         (setq w3m-session-deleted-save nil)
+         (setq w3m-default-display-inline-images nil)
+         (setq w3m-toggle-inline-images-permanently t)
+         (setq w3m-enable-google-feeling-lucky nil)
+         (setq w3m-use-filter t)
+         (setq w3m-filter-google-separator "")
+         (setq w3m-fb-mode t)
+         (setq w3m-session-load-crashed-sessions t)
+         (setq w3m-bookmark-file-coding-system 'utf-8)
+         (setq w3m-file-coding-system 'utf-8)
+         (setq w3m-file-name-coding-system 'utf-8)
+         (setq w3m-coding-system 'utf-8)
+         (setq w3m-default-coding-system 'utf-8)
+         (w3m-fb-mode 1))
+     #+end_src
+***** directories
+      #+begin_src emacs-lisp
+        (setq w3m-default-save-directory (getenv "XDG_DOWNLOAD_DIR"))
+        (setq w3m-bookmark-file (expand-file-name "w3m/bookmarks.html" +emacs-data-dir))
+        (setq w3m-cookie-file (expand-file-name "w3m/cookies" +emacs-data-dir))
+        (setq w3m-session-file (expand-file-name "w3m/sessions" +emacs-data-dir))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-w3m)
+        ;;; config-w3m.el ends here
+      #+end_src
+**** pdf-tools
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-pdf-tools.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-pdf-tools.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'pdf-tools)
+         (pdf-loader-install))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-pdf-tools)
+        ;;; config-pdf-tools.el ends here
+      #+end_src
+**** gist
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-gist.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-gist.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-gist)
+        ;;; config-gist.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-tools)
@@ -1585,302 +2479,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** UI
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-ui.el
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-ui.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - clone the packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (when (display-graphic-p)
-           (straight-use-package 'all-the-icons))
-         (straight-use-package 'doom-modeline)
-         (straight-use-package 'doom-themes)
-         (straight-use-package 'theme-magic)
-         (straight-use-package 'elisp-demos)
-         (straight-use-package 'helpful)
-         (straight-use-package 'which-key)
-         (straight-use-package 'ace-window)
-         (straight-use-package 'eldoc)
-         (straight-use-package 'perspective)
-         (straight-use-package 'rainbow-mode)
-         (straight-use-package 'rainbow-delimiters)
-         (straight-use-package 'diminish)
-         (straight-use-package 'dashboard)
-         (straight-use-package 'alert))
-       (straight-use-package 'hl-todo)
-       ;;(straight-use-package 'centaur-tabs)
-     #+end_src
-   - startup modeline after emacs initialization finished.
-     #+begin_src emacs-lisp
-       (add-hook 'after-init-hook 'doom-modeline-init)
-     #+end_src
-   - configure doom-modeline
-     #+begin_src emacs-lisp
-       (customize-set-variable 'doom-modeline-height 15)
-       (customize-set-variable 'doom-modeline-bar-width 6)
-       (customize-set-variable 'doom-modeline-minor-modes t)
-       (customize-set-variable 'doom-modeline-buffer-file-name-style 'truncate-except-project)
-     #+end_src
-   - make 'describe-*' more helpful
-     #+begin_src emacs-lisp
-       (require 'helpful)
-       (define-key helpful-mode-map [remap revert-buffer] #'helpful-update)
-       (global-set-key [remap describe-command] #'helpful-command)
-       (global-set-key [remap describe-function] #'helpful-callable)
-       (global-set-key [remap describe-key] #'helpful-key)
-       (global-set-key [remap describe-symbol] #'helpful-symbol)
-       (global-set-key [remap describe-variable] #'helpful-variable)
-       (global-set-key (kbd "C-h F") #'helpful-function)
-       (global-set-key (kbd "C-h K") #'describe-keymap)
-     #+end_src
-   - elisp-demos
-     #+begin_src emacs-lisp
-       (require 'elisp-demos)
-       (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
-     #+end_src
-   - add visual pulse when changing focus, like beacon but built-in, from [[https://karthinks.com/software/batteries-included-with-emacs/][karthinks.com]].
-     #+begin_src emacs-lisp
-       (defun +pulse-line (&rest _)
-         "Pulse the current line."
-         (pulse-momentary-highlight-one-line (point)))
-
-       (dolist (command '(scroll-up-command scroll-down-command
-                                            recenter-top-bottom other-window))
-         (advice-add command :after #'+pulse-line))
-     #+end_src
-   - theme-magic
-     #+begin_src emacs-lisp
-       (when (display-graphic-p)
-         (require 'theme-magic)
-         (theme-magic-export-theme-mode))
-     #+end_src
-   - which-key
-     #+begin_src emacs-lisp
-       (require 'which-key)
-       (which-key-mode)
-       (which-key-setup-side-window-right-bottom)
-     #+end_src
-   - ace-window
-     #+begin_src emacs-lisp
-       (require 'ace-window)
-
-       (set-face-attribute
-        'aw-leading-char-face nil
-        :foreground "deep sky blue"
-        :weight 'bold
-        :height 3.0)
-
-       (set-face-attribute
-        'aw-mode-line-face nil
-        :inherit 'mode-line-buffer-id
-        :foreground "lawn green")
-
-       (setq aw-scope 'frame)
-       (setq aw-dispatch-always nil)
-       (setq aw-minibuffer-flag t)
-       (setq aw-keys '(?q ?w ?e ?r ?t ?a ?s ?d ?f))
-       (defvar aw-dispatch-alist
-         '((?x aw-delete-window "Delete Window")
-           (?m aw-swap-window "Swap Windows")
-           (?M aw-move-window "Move Window")
-           (?c aw-copy-window "Copy Window")
-           (?j aw-switch-buffer-in-window "Select Buffer")
-           (?n aw-flip-window)
-           (?u aw-switch-buffer-other-window "Switch Buffer Other Window")
-           (?c aw-split-window-fair "Split Fair Window")
-           (?v aw-split-window-vert "Split Vert Window")
-           (?b aw-split-window-horz "Split Horz Window")
-           (?o delete-other-windows "Delete Other Windows")
-           (?? aw-show-dispatch-help))
-         "List of actions for `aw-dispatch-default'.")
-
-       (ace-window-display-mode t)
-       (global-set-key [remap other-window] 'ace-window)
-     #+end_src
-   - eldoc
-     #+begin_src emacs-lisp
-       (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-       (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-       (add-hook 'ielm-mode-hook 'eldoc-mode)
-       (add-hook 'prog-mode-hook 'eldoc-mode)
-     #+end_src
-   - enable line numbering for some mode automatically.
-     #+begin_src emacs-lisp
-       (column-number-mode)
-
-       ;; Enable line numbers for some modes
-       (dolist (mode '(text-mode-hook
-                       prog-mode-hook
-                       conf-mode-hook))
-         (add-hook mode (lambda () (display-line-numbers-mode 1))))
-
-       ;; Override some modes which derive from the above
-       (dolist (mode '(org-mode-hook))
-         (add-hook mode (lambda () (display-line-numbers-mode 0))))
-     #+end_src
-   - perspective
-     #+begin_src emacs-lisp
-       (setq persp-initial-frame-name "Main")
-       (setq persp-state-default-fle (expand-file-name "statesave" +emacs-data-dir))
-       (unless (equal persp-mode t)
-         (persp-mode))
-       (global-set-key (kbd "C-x b") 'persp-switch-to-buffer*)
-       (global-set-key (kbd "C-x k") 'persp-kill-buffer*)
-     #+end_src
-   - centaur-tabs
-     #+begin_src emacs-lisp :tangle no
-       (add-hook 'dashboard-mode-hook #'centaur-tabs-local-mode)
-       (add-hook 'term-mode-hook #'centaur-tabs-local-mode)
-       (add-hook 'calendar-mode-hook #'centaur-tabs-local-mode)
-       (add-hook 'org-agenda-mode-hook #'centaur-tabs-local-mode)
-       (add-hook 'helpful-mode-hook #'centaur-tabs-local-mode)
-       (setq centaur-tabs-style "rounded"
-             centaur-tabs-set-icons t
-             centaur-tabs-set-bar 'under
-             x-underline-at-descent-line t
-             centaur-tabs-set-modified-marker t)
-       (centaur-tabs-mode t)
-       (global-set-key (kbd "C-c t p") 'centaur-tabs-backward)
-       (global-set-key (kbd "C-c t C-p") 'centaur-tabs-backward)
-       (global-set-key (kbd "C-c t n") 'centaur-tabs-forward)
-       (global-set-key (kbd "C-c t C-n") 'centaur-tabs-forward)
-       (global-set-key (kbd "C-c t M-p") 'centaur-tabs-backward-group)
-       (global-set-key (kbd "C-c t M-n") 'centaur-tabs-forward-group)
-
-       ;; buffer groups
-       (defun centaur-tabs-buffer-groups ()
-         "`centaur-tabs-buffer-groups' control buffers' group rules.
-
-          Group centaur-tabs with mode if buffer is derived from
-         `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-          All buffer name start with * will group to \"Emacs\".
-          Other buffer group by `centaur-tabs-get-group-name' with project name."
-         (list
-          (cond
-           ((or (string-equal "*" (substring (buffer-name) 0 1))
-                (memq major-mode '(magit-process-mode
-                                   magit-status-mode
-                                   magit-diff-mode
-                                   magit-log-mode
-                                   magit-file-mode
-                                   magit-blob-mode
-                                   magit-blame-mode
-                                   )))
-            "Emacs")
-           ((derived-mode-p 'prog-mode)
-            "Editing")
-           ((derived-mode-p 'dired-mode)
-            "Dired")
-           ((memq major-mode '(helpful-mode
-                               help-mode))
-            "Help")
-           ((memq major-mode '(org-mode
-                               org-agenda-clockreport-mode
-                               org-src-mode
-                               org-agenda-mode
-                               org-beamer-mode
-                               org-indent-mode
-                               org-bullets-mode
-                               org-cdlatex-mode
-                               org-agenda-log-mode
-                               diary-mode))
-            "OrgMode")
-           (t
-            (centaur-tabs-get-group-name (current-buffer))))))
-       (setq centaur-tabs--buffer-show-groups t)
-     #+end_src
-   - rainbow-mode
-     #+begin_src emacs-lisp
-       (require 'rainbow-mode)
-       (add-hook 'css-mode-hook #'rainbow-mode)
-
-       ;; turn off word colors
-       (defun +rainbow-turn-off-words ()
-         "Turn off word colors in rainbow-mode."
-         (interactive)
-         (font-lock-remove-keywords
-          nil
-          `(,@rainbow-x-colors-font-lock-keywords
-            ,@rainbow-latex-rgb-colors-font-lock-keywords
-            ,@rainbow-r-colors-font-lock-keywords
-            ,@rainbow-html-colors-font-lock-keywords
-            ,@rainbow-html-rgb-colors-font-lock-keywords)))
-
-       ;; turn off hexadecimal colors
-       (defun +rainbow-turn-off-hexadecimal ()
-         "Turn off hexadecimal colors in rainbow-mode."
-         (interactive)
-         (font-lock-remove-keywords
-          nil
-          `(,@rainbow-hexadecimal-colors-font-lock-keywords)))
-       ;; TODO: set toggling and keybindings
-     #+end_src
-   - rainbow-delimiters
-     #+begin_src emacs-lisp
-       (require 'rainbow-delimiters)
-       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-       (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
-     #+end_src
-   - hl-todo
-     #+begin_src emacs-lisp
-       (require 'hl-todo)
-       (global-hl-todo-mode)
-     #+end_src
-   - diminish
-     #+begin_src emacs-lisp
-       (require 'diminish)
-
-       (diminish 'rainbow-mode)
-       (diminish 'eldoc-mode)
-       (diminish 'subword-mode)
-       (diminish 'flycheck-mode)
-       (diminish 'projectile-mode)
-       ;; yas
-       (diminish 'yas-global-mode)
-       (diminish 'yas-extra-mode)
-       (diminish 'yas-minor-mode)
-       (diminish 'which-key-mode)
-       (diminish 'theme-magic-export-theme-mode)
-     #+end_src
-   - dashboard
-     #+begin_src emacs-lisp
-       (require 'dashboard)
-       (dashboard-setup-startup-hook)
-       (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-       (setq dashboard-center-content t)
-       (setq dashboard-items '((recents  . 5)
-                               (bookmarks . 5)
-                               (projects . 5)
-                               (agenda . 5)
-                               (registers . 5)))
-       (setq dashboard-set-heading-icons t)
-       (setq dashboard-set-file-icons t)
-       (setq dashboard-set-navigator t)
-       (setq dashboard-set-init-info t)
-       (setq dashboard-week-agenda t)
-     #+end_src
-   - alert
-     #+begin_src emacs-lisp
-       (customize-set-variable 'alert-default-style #'notifications)
-     #+end_src
-   - terminal theme
-     #+begin_src emacs-lisp
-       (unless (display-graphic-p)
-         (load-theme 'wombat t))
-     #+end_src
-   - end of config-ui.el
-     #+begin_src emacs-lisp
-       (provide 'config-ui)
-       ;;; config-ui.el ends here
-     #+end_src
 ** Editing
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-editing.el
@@ -2463,316 +3061,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
         (provide 'config-vterm)
         ;;; config-vterm.el ends here
       #+end_src
-** Tools
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-tools.el
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-tools.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (straight-use-package 'pdf-tools)
-         (straight-use-package 'paredit)
-         (straight-use-package 'slime)
-         (straight-use-package 'emms)
-         (straight-use-package 'org-emms)
-         (straight-use-package 'w3m)
-         (straight-use-package 'telega))
-       (straight-use-package 'gist)
-       (straight-use-package 'vlc)
-     #+end_src
-   - slime
-     #+begin_src emacs-lisp
-       (when (executable-find "sbcl")
-         (defvar +quicklisp-path "~/.local/share/quicklisp")
-         (setq inferior-lisp-program "sbcl")
-         (require 'slime)
-         (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path))
-                             (load (expand-file-name "slime-helper.el" +quicklisp-path))
-                             (slime-setup '(slime-fancy))))
-     #+end_src
-     + Fontify *SLIME Description* buffer for SBCL
-       #+begin_src emacs-lisp
-         (when (executable-find "sbcl")
-           (defun slime-description-fontify ()
-             "Fontify sections of SLIME Description."
-             (with-current-buffer "*SLIME Description*"
-               (highlight-regexp
-                (concat "^Function:\\|"
-                        "^Macro-function:\\|"
-                        "^Its associated name.+?) is\\|"
-                        "^The .+'s arguments are:\\|"
-                        "^Function documentation:$\\|"
-                        "^Its.+\\(is\\|are\\):\\|"
-                        "^On.+it was compiled from:$")
-                'hi-green-b)))
-
-           (defadvice slime-show-description (after slime-description-fontify activate)
-             "Fontify sections of SLIME Description."
-             (slime-description-fontify)))
-       #+end_src
-     + Improve usability of slime-apropos: slime-apropos-minor-mode
-       #+begin_src emacs-lisp
-         (when (executable-find "sbcl")
-           (defvar slime-apropos-anchor-regexp "^[^ ]")
-           (defun slime-apropos-next-anchor ()
-             (interactive)
-             (let ((pt (point)))
-               (forward-line 1)
-               (if (re-search-forward slime-apropos-anchor-regexp nil t)
-                   (goto-char (match-beginning 0))
-                 (goto-char pt)
-                 (error "anchor not found"))))
-
-           (defun slime-apropos-prev-anchor ()
-             (interactive)
-             (let ((p (point)))
-               (if (re-search-backward slime-apropos-anchor-regexp nil t)
-                   (goto-char (match-beginning 0))
-                 (goto-char p)
-                 (error "anchor not found"))))
-
-           (defvar slime-apropos-minor-mode-map (make-sparse-keymap))
-           (define-key slime-apropos-minor-mode-map "\C-m" 'slime-describe-symbol)
-           (define-key slime-apropos-minor-mode-map "l" 'slime-describe-symbol)
-           (define-key slime-apropos-minor-mode-map "j" 'slime-apropos-next-anchor)
-           (define-key slime-apropos-minor-mode-map "k" 'slime-apropos-prev-anchor)
-           (define-minor-mode slime-apropos-minor-mode "")
-
-           (defadvice slime-show-apropos (after slime-apropos-minor-mode activate)
-             ""
-             (when (get-buffer "*SLIME Apropos*")
-               (with-current-buffer "*SLIME Apropos*" (slime-apropos-minor-mode 1)))))
-       #+end_src
-     + slime-contrib
-       #+begin_src emacs-lisp
-         (setq slime-contribs '(slime-fancy slime-hyperdoc))
-       #+end_src
-   - paredit
-     #+begin_src emacs-lisp
-       (require 'paredit)
-
-       (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-       (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-       (add-hook 'ielm-mode-hook #'enable-paredit-mode)
-       (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-       (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-       (add-hook 'scheme-mode-hook #'enable-paredit-mode)
-
-       (require 'eldoc)
-       (eldoc-add-command
-        'paredit-backward-delete
-        'paredit-close-round)
-
-       (add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1)))
-
-       ;; Stop SLIME's REPL from grabbing DEL,
-       (defun override-slime-repl-bindings-with-paredit ()
-         (define-key slime-repl-mode-map
-           (read-kbd-macro paredit-backward-delete-key) nil))
-       (add-hook 'slime-repl-mode-hook 'override-slime-repl-bindings-with-paredit)
-     #+end_src
-   - telega
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (customize-set-variable 'telega-server-libs-prefix "/usr"))
-       (customize-set-variable 'telega-directory (expand-file-name "telega/" +emacs-data-dir))
-       (customize-set-variable 'telega-options-plist '(:online t :is-location-visible t))
-       (customize-set-variable 'telega-my-location '(:latitude -6.241586 :longitude 106.992416))
-       (customize-set-variable 'telega-use-image t)
-       (customize-set-variable 'telega-voip-allow-p2p t)
-       (customize-set-variable 'telega-appindicator-use-label t)
-       (customize-set-variable 'telega-active-locations-show-avatars t)
-       (customize-set-variable 'telega-appindicator-icon-colors
-                               '((offline "#ffffff" "#000000" nil)
-                                 (online "#ffffff" "#000000" "#00ff00")
-                                 (connecting "gray" "white" "white")))
-
-       (add-hook 'telega-load-hook 'telega-notifications-mode)
-       ;; not needed with notification
-       ;;(add-hook 'telega-load-hook 'telega-mode-line-mode)
-       (add-hook 'telega-load-hook 'telega-appindicator-mode)
-       (add-hook 'telega-open-file-hook 'telega-edit-file-mode)
-       (add-hook 'telega-load-hook 'telega-my-location-mode)
-       ;; needs better keybind
-       (add-hook 'telega-load-hook
-                 (lambda ()
-                   (define-key global-map (kbd "C-c t T") telega-prefix-map)))
-       (require 'telega)
-       ;; contrib packages
-       ;; org-mode links
-       (require 'ol-telega)
-       (customize-set-variable 'telega-status-history-logs-dir (expand-file-name "telega/history/" +emacs-data-dir))
-       (require 'telega-status-history)
-       (add-hook 'telega-load-hook 'global-telega-url-shorten-mode)
-       (require 'telega-url-shorten)
-       (customize-set-variable 'telega-url-shorten-use-images t)
-       (require 'telega-mnz)
-       (add-hook 'telega-load-hook 'global-telega-mnz-mode)
-       (require 'telega-transient)
-       (telega-transient-mode 1)
-     #+end_src
-   - emms
-     #+begin_src emacs-lisp
-       (customize-set-variable 'emms-directory (expand-file-name "emms" +emacs-data-dir))
-       (customize-set-variable 'emms-player-mpv-update-metadata t)
-       (require 'emms-setup)
-       (require 'emms-source-file)
-       (require 'emms-source-playlist)
-       (emms-all)
-       (emms-default-players)
-
-       ;; history
-       (emms-history-load)
-       (setq emms-source-file-default-directory +emms-music-dir
-             emms-source-playlist-default-format 'm3u
-             emms-playlist-mode-center-when-go t
-             emms-playlist-default-major-mode 'emms-playlist-mode
-             emms-show-format "NP: %s"
-             emms-playlist-buffer-name "*Music*"
-             emms-player-mpv-environment '("PULSnE_PROP_media.role=music")
-             emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
-     #+end_src
-     + notification for emms
-       #+begin_src emacs-lisp
-         (defvar notify-method 'nil
-           "Method for sending notifications.")
-
-         ;; choose D-Bus to disseminate messages, if it is running.
-         (cond
-          ;; test to see if D-Bus notifications are available
-          ((if (and (require 'dbus nil t)
-                    (dbus-ping :session "org.freedesktop.Notifications"))
-               (progn
-                 (setq notify-method 'notify-via-dbus-notifications)
-                 (require 'notifications))))
-          ;; could use the message system otherwise
-          (t (setq notify-method 'notify-via-message)))
-
-         (defun notify-via-notifications (title msg icon)
-           "Send notification with TITLE, MSG via `D-Bus'."
-           (notifications-notify
-            :title title
-            :body msg
-            :app-icon icon
-            :urgency 'low))
-
-         (defun notify-via-messages (title msg)
-           "Send notification with TITLE, MSG to message."
-           (message "APPOINTMENT: %s" msg))
-
-         (defun emms-notifications-dbus (track-name)
-           "Share track name via `D-Bus'."
-           (let ((icon "/usr/share/icons/gnome/24x24/categories/applications-multimedia.png"))
-             (notify-via-notifications "EMMS is now playing:" track-name icon)))
-
-         (defun emms-notifications-message (track-name)
-           "Share track name via Emacs minibuffer."
-           (message "EMMS is now playing: %s" track-name))
-
-         (setq emms-player-next-function 'emms-notify-and-next)
-
-         (defun emms-notify-and-next ()
-           "Send a notification of track and start next."
-           (emms-next-noerror)
-           (let ((track-name (emms-track-description (emms-playlist-current-selected-track))))
-             (cond
-              ((eq notify-method 'notify-via-dbus-notifications)
-               (emms-notifications-dbus track-name))
-              (t (emms-notifications-message track-name)))))
-       #+end_src
-   - erc
-     + auto connect based on server
-       #+begin_src emacs-lisp
-         (customize-set-variable 'erc-nick user-login-name)
-         (customize-set-variable 'erc-user-full-name user-full-name)
-
-         (defun +erc/libera ()
-             (erc-tls :server "irc.libera.chat"
-                  :port "6697"))
-
-         (add-hook 'erc-after-connect
-                   `(lambda (SERVER NICK)
-                      (cond
-                       ((string-match "irc\\.libera\\.chat" SERVER)
-                        (erc-message "PRIVMSG" (concat "NickServ identify " (password-store-get "irc.libera.chat/alexforsale")))))))
-       #+end_src
-     + auto join
-       #+begin_src emacs-lisp
-         (require 'erc)
-         (require 'erc-join)
-         (erc-autojoin-mode 1)
-         (setq erc-autojoin-channels-alist
-               '(("irc.libera.chat" "#emacs" "#emacs-beginners" "gnus" "#archlinux"
-                  "archlinux-offtopic" "guix" "gentoo" )))
-       #+end_src
-     + only notify when nick or keywords mentioned.
-       #+begin_src emacs-lisp
-         (setq erc-current-nick-highlight-type 'nick)
-         (setq erc-keywords '("\\berc[-a-z]*\\b" "\\bemms[-a-z]*\\b"))
-
-         (setq erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE"))
-         (setq erc-track-use-faces t)
-         (setq erc-track-faces-priority-list
-               '(erc-current-nick-face erc-keyword-face))
-         (setq erc-track-priority-faces-only 'all)
-       #+end_src
-   - w3m
-     #+begin_src emacs-lisp
-       (when (executable-find "w3m")
-         (require 'w3m)
-         (require 'w3m-bookmark)
-         ;;(setq browse-url-browser-function 'w3m-goto-url-new-session)
-         (setq w3m-home-page "http://www.google.com")
-         (setq w3m-use-cookies t)
-         (setq w3m-use-header-line-title t)
-         (setq w3m-cookie-accept-bad-cookies t)
-         (setq w3m-view-this-url-new-session-in-background t)
-         (setq w3m-new-session-in-background t)
-         (setq w3m-session-time-format "%Y-%m-%d %A %H:%M")
-         (setq w3m-favicon-use-cache-file t)
-         (setq w3m-show-graphic-icons-in-mode-line t)
-         (setq w3m-keep-arrived-urls 50000)
-         (setq w3m-keep-cache-size 1000)
-         (setq w3m-edit-function (quote find-file-other-window))
-         (setq w3m-session-automatic-save t)
-         (setq w3m-session-deleted-save nil)
-         (setq w3m-default-display-inline-images nil)
-         (setq w3m-toggle-inline-images-permanently t)
-         (setq w3m-enable-google-feeling-lucky nil)
-         (setq w3m-use-filter t)
-         (setq w3m-filter-google-separator "")
-         (setq w3m-fb-mode t)
-         (setq w3m-session-load-crashed-sessions t)
-         (setq w3m-bookmark-file-coding-system 'utf-8)
-         (setq w3m-file-coding-system 'utf-8)
-         (setq w3m-file-name-coding-system 'utf-8)
-         (setq w3m-coding-system 'utf-8)
-         (setq w3m-default-coding-system 'utf-8)
-         (w3m-fb-mode 1))
-     #+end_src
-     + directories
-       #+begin_src emacs-lisp
-         (setq w3m-default-save-directory (getenv "XDG_DOWNLOAD_DIR"))
-         (setq w3m-bookmark-file (expand-file-name "w3m/bookmarks.html" +emacs-data-dir))
-         (setq w3m-cookie-file (expand-file-name "w3m/cookies" +emacs-data-dir))
-         (setq w3m-session-file (expand-file-name "w3m/sessions" +emacs-data-dir))
-       #+end_src
-   - vlc
-     #+begin_src emacs-lisp
-       (require 'vlc)
-     #+end_src
-   - end of config-tools.el
-     #+begin_src emacs-lisp
-       (provide 'config-tools)
-       ;;; config-tools.el ends here
-     #+end_src
 ** email
 *** notmuch
     :PROPERTIES:
