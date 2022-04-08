@@ -846,6 +846,74 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
          (sql . t)
          (sqlite . t)))
     #+end_src
+*** org-agenda
+    #+begin_src emacs-lisp
+      (require 'org-agenda)
+      (setq org-agenda-span 'day)
+      (setq org-agenda-window-setup (quote current-window))
+      (setq org-agenda-skip-deadlines-if-done t)
+      (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+      (setq org-agenda-custom-commands
+            `(("d" "Dashboard"
+               ((agenda "" ((org-deadline-warning-days 3)))
+                (tags-todo "+habit+TODO=\"TODO\"" ((org-agenda-overriding-header "Routine")))
+                (tags-todo "{project*}-TODO=\"DONE\"-TODO=\"SOMEDAY\"-TODO=\"LEARN\""
+                           ((org-agenda-overriding-header "Projects:")))
+                (tags-todo "+followup" ((org-agenda-overriding-header "Needs Follow Up")))
+                (tags "+TODO=\"NEXT\"+learning+" ((org-agenda-overriding-header "Learning:")))
+                (alltodo ""
+                         ((org-agenda-overriding-header "Inbox")))
+                (tags-todo "TODO=\"TODO\"-project-reading-errands-video"
+                           ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
+                            (org-agenda-skip-function
+                             `(org-agenda-skip-entry-if
+                               'notregexp ,(format "\\[#%s\\]" (char-to-string org-priority-highest))))
+                            (org-agenda-prefix-format "%-6e ")
+                            (org-agenda-max-entries nil)
+                            (org-agenda-overriding-header "Unscheduled TODO entries: ")
+                            (org-agenda-sorting-strategy '(priority-down effort-up tag-up category-keep))))))))
+      (setq org-agenda-include-diary t)
+      (setq org-clock-persist 'history)
+      (org-clock-persistence-insinuate)
+      (setq org-global-properties '(("Effort_ALL". "0 0:10 0:20 0:30 1:00 2:00 3:00 4:00 6:00 8:00")))
+      (setq org-columns-default-format '"%38ITEM(Details) %TAGS(Context) %7TODO(To Do) %5Effort(Time){:} %6CLOCKSUM(Clock)")
+    #+end_src
+*** refile and archive
+    #+begin_src emacs-lisp
+      (setq org-refile-targets
+            '((org-agenda-files :maxlevel . 9)))
+      (setq org-refile-use-cache t)
+      (setq org-refile-use-outline-path 'file)
+      (setq org-outline-path-complete-in-steps nil)
+      (setq org-refile-allow-creating-parent-nodes 'confirm)
+      (setq org-archive-location (concat +org-archives-file "::datetree/* Archived Tasks"))
+      (advice-add 'org-refile :after 'org-save-all-org-buffers)
+    #+end_src
+*** stuck-projects
+    #+begin_src emacs-lisp
+      (setq org-stuck-projects
+            '("+project/-MAYBE-DONE-SOMEDAY" ("TODO" "NEXT") nil ""))
+    #+end_src
+    This is a list of four items:
+    1. A tags/todo/property matcher string that is used to identify a project.
+       See the manual for a description of tag and property searches.
+       The entire tree below a headline matched by this is considered one project.
+    2. A list of TODO keywords identifying non-stuck projects.
+       If the project subtree contains any headline with one of these todo
+       keywords, the project is considered to be not stuck.  If you specify
+       "*" as a keyword, any TODO keyword will mark the project unstuck.
+    3. A list of tags identifying non-stuck projects.
+       If the project subtree contains any headline with one of these tags,
+       the project is considered to be not stuck.  If you specify "*" as
+       a tag, any tag will mark the project unstuck.  Note that this is about
+       the explicit presence of a tag somewhere in the subtree, inherited
+       tags do not count here.  If inherited tags make a project not stuck,
+       use "-TAG" in the tags part of the matcher under (1.) above.
+    4. An arbitrary regular expression matching non-stuck projects.
+*** move bookmark file to =+emacs-data-dir=
+    #+begin_src emacs-lisp
+      (setq bookmark-file (concat +emacs-data-dir "/bookmarks"))
+    #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-org)
@@ -1029,85 +1097,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
          (straight-use-package 'org-journal))
        (straight-use-package 'org-gcal)
 
-     #+end_src
-   - org-mode sane defaults
-   - org-agenda
-     #+begin_src emacs-lisp
-       (require 'org-agenda)
-
-       (setq org-agenda-span 'day)
-
-       (setq org-agenda-window-setup (quote current-window))
-
-       (setq org-agenda-skip-deadlines-if-done t)
-
-       (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-
-       (setq org-agenda-custom-commands
-             `(("d" "Dashboard"
-                ((agenda "" ((org-deadline-warning-days 3)))
-                 (tags-todo "+habit+TODO=\"TODO\"" ((org-agenda-overriding-header "Routine")))
-                 (tags-todo "{project*}-TODO=\"DONE\"-TODO=\"SOMEDAY\"-TODO=\"LEARN\""
-                            ((org-agenda-overriding-header "Projects:")))
-                 (tags-todo "+followup" ((org-agenda-overriding-header "Needs Follow Up")))
-                 (tags "+TODO=\"NEXT\"+learning+" ((org-agenda-overriding-header "Learning:")))
-                 (alltodo ""
-                          ((org-agenda-overriding-header "Inbox")))
-                 (tags-todo "TODO=\"TODO\"-project-reading-errands-video"
-                            ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
-                             (org-agenda-skip-function
-                              `(org-agenda-skip-entry-if
-                                'notregexp ,(format "\\[#%s\\]" (char-to-string org-priority-highest))))
-                             (org-agenda-prefix-format "%-6e ")
-                             (org-agenda-max-entries nil)
-                             (org-agenda-overriding-header "Unscheduled TODO entries: ")
-                             (org-agenda-sorting-strategy '(priority-down effort-up tag-up category-keep))))))))
-
-       (setq org-agenda-include-diary t)
-
-       (setq org-clock-persist 'history)
-       (org-clock-persistence-insinuate)
-
-       (setq org-global-properties '(("Effort_ALL". "0 0:10 0:20 0:30 1:00 2:00 3:00 4:00 6:00 8:00")))
-
-       (setq org-columns-default-format '"%38ITEM(Details) %TAGS(Context) %7TODO(To Do) %5Effort(Time){:} %6CLOCKSUM(Clock)")
-     #+end_src
-   - refile and archive
-     #+begin_src emacs-lisp
-       (setq org-refile-targets
-             '((org-agenda-files :maxlevel . 9)))
-       (setq org-refile-use-cache t)
-       (setq org-refile-use-outline-path 'file)
-       (setq org-outline-path-complete-in-steps nil)
-       (setq org-refile-allow-creating-parent-nodes 'confirm)
-       (setq org-archive-location (concat +org-archives-file "::datetree/* Archived Tasks"))
-       (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-     #+end_src
-   - stuck-projects
-     #+begin_src emacs-lisp
-       (setq org-stuck-projects
-             '("+project/-MAYBE-DONE-SOMEDAY" ("TODO" "NEXT") nil ""))
-     #+end_src
-     This is a list of four items:
-     1. A tags/todo/property matcher string that is used to identify a project.
-        See the manual for a description of tag and property searches.
-        The entire tree below a headline matched by this is considered one project.
-     2. A list of TODO keywords identifying non-stuck projects.
-        If the project subtree contains any headline with one of these todo
-        keywords, the project is considered to be not stuck.  If you specify
-        "*" as a keyword, any TODO keyword will mark the project unstuck.
-     3. A list of tags identifying non-stuck projects.
-        If the project subtree contains any headline with one of these tags,
-        the project is considered to be not stuck.  If you specify "*" as
-        a tag, any tag will mark the project unstuck.  Note that this is about
-        the explicit presence of a tag somewhere in the subtree, inherited
-        tags do not count here.  If inherited tags make a project not stuck,
-        use "-TAG" in the tags part of the matcher under (1.) above.
-     4. An arbitrary regular expression matching non-stuck projects.
-   - +move bookmark file to org-directory+ this was a bad idea.
-     #+begin_src emacs-lisp
-       (setq bookmark-file (concat +emacs-data-dir "/bookmarks"))
      #+end_src
    - org-roam
      #+begin_src emacs-lisp
