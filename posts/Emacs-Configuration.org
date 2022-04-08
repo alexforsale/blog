@@ -105,7 +105,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 
 (provide 'config-user)
 ;;; config-user.el ends here
-#+end_src>
+#+end_src
 * config.org
   :PROPERTIES:
   :header-args: :tangle ~/.config/emacs/config.el :mkdirp t
