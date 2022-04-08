@@ -1099,6 +1099,388 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (setq delete-by-moving-to-trash t)
     #+end_src
+*** Additional Packages
+**** multiple-cursors
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-multiple-cursors.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-multiple-cursors.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'multiple-cursors))
+       (setq mc/list-file (expand-file-name ".mc-lists.el" +emacs-data-dir))
+       (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+       (global-set-key (kbd "C-c M->") 'mc/mark-next-like-this)
+       (global-set-key (kbd "C-c M-<") 'mc/mark-previous-like-this)
+       (global-set-key (kbd "C-c M-a") 'mc/mark-all-like-this)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-multiple-cursors)
+        ;;; config-multiple-cursors.el ends here
+      #+end_src
+**** yasnippet
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-yasnippet.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-yasnippet.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'yasnippet)
+         (straight-use-package 'yasnippet-snippets))
+       (setq yas-snippet-dir `(,(expand-file-name "yasnippet/snippets/" +emacs-data-dir)))
+       (eval-after-load 'yasnippet
+         (make-directory (expand-file-name "yasnippet/snippets/" +emacs-data-dir) :parents))
+       (yas-global-mode 1)
+       (global-set-key (kbd "C-c y i") 'yas-insert-snippet)
+       (global-set-key (kbd "C-c y d") 'yas-describe-tables)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-yasnippet)
+        ;;; config-yasnippet.el ends here
+      #+end_src
+**** geiser
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-geiser.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-geiser.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'geiser)
+         (straight-use-package 'geiser-guile)
+         (straight-use-package 'geiser-racket))
+       (eval-after-load 'geiser
+         `(make-directory ,(expand-file-name "geiser/" +emacs-data-dir) t))
+       (setq geiser-repl-history-filename     (expand-file-name "geiser/repl-history" +emacs-data-dir))
+       (require 'geiser-impl)
+       (add-to-list 'geiser-implementations-alist '((regexp "\\.scm$") guile))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-geiser)
+        ;;; config-geiser.el ends here
+      #+end_src
+**** yaml-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-yaml-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-yaml-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'yaml-mode))
+       (require 'yaml-mode)
+       (add-to-list 'auto-mode-alist '("'\\.yaml\\'" . yaml-mode))
+       (add-to-list 'auto-mode-alist '("'\\.yml\\'" . yaml-mode))
+       (add-hook 'yaml-mode-hook
+                 #'(lambda ()
+                     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-yaml-mode)
+        ;;; config-yaml-mode.el ends here
+      #+end_src
+**** toml-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-toml-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-toml-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'toml-mode))
+       (add-to-list 'auto-mode-alist '("'\\.toml\\'" . toml-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-toml-mode)
+        ;;; config-toml-mode.el ends here
+      #+end_src
+**** nix-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-nix-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-nix-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'nix-mode))
+       (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-nix-mode)
+        ;;; config-nix-mode.el ends here
+      #+end_src
+**** nginx-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-toml-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-toml-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'toml-mode))
+       (add-to-list 'auto-mode-alist '("'\\.toml\\'" . toml-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-toml-mode)
+        ;;; config-toml-mode.el ends here
+      #+end_src
+**** nix-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-nginx-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-nginx-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'ngix-mode))
+       (require 'nginx-mode)
+       (add-to-list 'auto-mode-alist '("/nginx/sites-\\(?:available\\|enabled\\)/" . nginx-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-nginx-mode)
+        ;;; config-nginx-mode.el ends here
+      #+end_src
+**** markdown-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-markdown-mode.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-markdown-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'markdown-mode))
+       (autoload 'markdown-mode "markdown-mode"
+         "Major mode for editing Markdown files" t)
+       (add-to-list 'auto-mode-alist
+                    '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
+
+       (autoload 'gfm-mode "markdown-mode"
+         "Major mode for editing GitHub Flavored Markdown files" t)
+       (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-markdown-mode)
+        ;;; config-markdown-mode.el ends here
+      #+end_src
+**** visual-regexp
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-visual-regexp.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-visual-regexp.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'visual-regexp))
+       (require 'visual-regexp)
+       (define-key global-map (kbd "C-c R") 'vr/replace)
+       (define-key global-map (kbd "C-c q") 'vr/query-replace)
+       ;; if you use multiple-cursors, this is for you:
+       (when (featurep 'config-multiple-cursors)
+         (define-key global-map (kbd "C-c M-m") 'vr/mc-mark))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-visual-regexp)
+        ;;; config-visual-regexp.el ends here
+      #+end_src
+**** undo-fu
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-undo-fu.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-undo-fu.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'undo-fu)
+         (straight-use-package 'undo-fu-session))
+       (require 'undo-fu)
+       (setq undo-fu-session-directory (expand-file-name "undo-fu-session/" +emacs-data-dir))
+       (global-unset-key (kbd "C-z")) ; previously `suspend-frame'
+       (global-set-key (kbd "C-z") 'undo-fu-only-undo)
+       (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
+       (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+       (global-undo-fu-session-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-undo-fu)
+        ;;; config-undo-fu.el ends here
+      #+end_src
+**** block-nav
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-block-nav.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-block-nav.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'block-nav)
+       (defun +block-nav-previous-block ()
+         "Wrapper for `block-nav-previous-block'."
+         (interactive)
+         (block-nav-previous-block)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-p") '+block-nav-previous-block)
+            map)))
+       (defun +block-nav-next-block ()
+         "Wrapper for `block-nav-next-block'."
+         (interactive)
+         (block-nav-next-block)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-n") '+block-nav-next-block)
+            map)))
+       (defun +block-nav-previous-indentation-level ()
+         "Wrapper for `block-nav-previous-indentation-level'."
+         (interactive)
+         (block-nav-previous-indentation-level)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-P") '+block-nav-previous-indentation-level)
+            map)))
+       (defun +block-nav-next-indentation-level ()
+         "Wrapper for `block-nav-next-indentation-level'."
+         (interactive)
+         (block-nav-next-indentation-level)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-N") '+block-nav-next-indentation-level)
+            map)))
+
+       (setf block-nav-move-skip-shallower t
+             block-nav-center-after-scroll t)
+       (global-set-key (kbd "C-c M-p") '+block-nav-previous-block)
+       (global-set-key (kbd "C-c M-n") '+block-nav-next-block)
+       (global-set-key (kbd "C-c M-P") '+block-nav-previous-indentation-level)
+       (global-set-key (kbd "C-c M-N") '+block-nav-next-indentation-level)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-block-nav)
+        ;;; config-block-nav.el ends here
+      #+end_src
+**** rust-mode
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-block-nav.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-block-nav.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'rust-mode))
+       (require 'rust-mode)
+       (add-hook 'rust-mode-hook
+                 (lambda () (prettify-symbols-mode)))
+       (add-hook 'rust-mode-hook
+                 (lambda () (setq indent-tabs-mode nil)))
+       (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-rust-mode)
+        ;;; config-rust-mode.el ends here
+      #+end_src
+**** ansible
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-ansible.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-ansible.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'ansible)
+       (require 'ansible)
+       (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
+       (add-hook 'ansible-hook 'ansible-auto-decrypt-encrypt)
+       ;; set keybinding in yaml-mode since I usually set secrets in variable file
+       (define-key yaml-mode-map (kbd "C-c a d") 'ansible-decrypt-buffer)
+       (define-key yaml-mode-map (kbd "C-c a e") 'ansible-encrypt-buffer)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-ansible)
+        ;;; config-ansible.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-editings)
@@ -2479,168 +2861,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** Editing
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-editing.el
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-editing.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (straight-use-package 'multiple-cursors)
-         (straight-use-package 'yasnippet)
-         (straight-use-package 'yasnippet-snippets)
-         (straight-use-package 'geiser)
-         (straight-use-package 'geiser-guile)
-         (straight-use-package 'geiser-racket)
-         (straight-use-package 'yaml-mode)
-         (straight-use-package 'toml-mode)
-         (straight-use-package 'nix-mode)
-         (straight-use-package 'nginx-mode)
-         (straight-use-package 'markdown-mode)
-         (straight-use-package 'visual-regexp)
-         (straight-use-package 'undo-fu)
-         (straight-use-package 'undo-fu-session)
-         (straight-use-package 'rust-mode))
-       (straight-use-package 'block-nav)
-       ;;(straight-use-package 'ansible)
-     #+end_src
-   - multiple-cursors
-     #+begin_src emacs-lisp
-       (setq mc/list-file (expand-file-name ".mc-lists.el" +emacs-data-dir))
-       (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-       (global-set-key (kbd "C-c M->") 'mc/mark-next-like-this)
-       (global-set-key (kbd "C-c M-<") 'mc/mark-previous-like-this)
-       (global-set-key (kbd "C-c M-a") 'mc/mark-all-like-this)
-     #+end_src
-   - block-nav
-     #+begin_src emacs-lisp
-       (defun +block-nav-previous-block ()
-         "Wrapper for `block-nav-previous-block'."
-         (interactive)
-         (block-nav-previous-block)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-p") '+block-nav-previous-block)
-            map)))
-
-       (defun +block-nav-next-block ()
-         "Wrapper for `block-nav-next-block'."
-         (interactive)
-         (block-nav-next-block)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-n") '+block-nav-next-block)
-            map)))
-
-       (defun +block-nav-previous-indentation-level ()
-         "Wrapper for `block-nav-previous-indentation-level'."
-         (interactive)
-         (block-nav-previous-indentation-level)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-P") '+block-nav-previous-indentation-level)
-            map)))
-
-       (defun +block-nav-next-indentation-level ()
-         "Wrapper for `block-nav-next-indentation-level'."
-         (interactive)
-         (block-nav-next-indentation-level)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-N") '+block-nav-next-indentation-level)
-            map)))
-
-       (setf block-nav-move-skip-shallower t
-             block-nav-center-after-scroll t)
-       (global-set-key (kbd "C-c M-p") '+block-nav-previous-block)
-       (global-set-key (kbd "C-c M-n") '+block-nav-next-block)
-       (global-set-key (kbd "C-c M-P") '+block-nav-previous-indentation-level)
-       (global-set-key (kbd "C-c M-N") '+block-nav-next-indentation-level)
-     #+end_src
-   - yasnippet
-     #+begin_src emacs-lisp
-       (setq yas-snippet-dir `(,(expand-file-name "yasnippet/snippets/" +emacs-data-dir)))
-       (eval-after-load 'yasnippet
-         (make-directory (expand-file-name "yasnippet/snippets/" +emacs-data-dir) :parents))
-       (yas-global-mode 1)
-       (global-set-key (kbd "C-c y i") 'yas-insert-snippet)
-       (global-set-key (kbd "C-c y d") 'yas-describe-tables)
-         #+end_src
-   - geiser
-     #+begin_src emacs-lisp
-       (eval-after-load 'geiser
-         `(make-directory ,(expand-file-name "geiser/" +emacs-data-dir) t))
-       (setq geiser-repl-history-filename     (expand-file-name "geiser/repl-history" +emacs-data-dir))
-       (require 'geiser-impl)
-       (add-to-list 'geiser-implementations-alist '((regexp "\\.scm$") guile))
-     #+end_src
-   - yaml-mode
-     #+begin_src emacs-lisp
-       (require 'yaml-mode)
-       (add-to-list 'auto-mode-alist '("'\\.yaml\\'" . yaml-mode))
-       (add-to-list 'auto-mode-alist '("'\\.yml\\'" . yaml-mode))
-       (add-hook 'yaml-mode-hook
-                 #'(lambda ()
-                     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-     #+end_src
-   - rust-mode
-     #+begin_src emacs-lisp
-       (require 'rust-mode)
-       (add-hook 'rust-mode-hook
-                 (lambda () (prettify-symbols-mode)))
-       (add-hook 'rust-mode-hook
-                 (lambda () (setq indent-tabs-mode nil)))
-       (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-     #+end_src
-   - ansible
-     #+begin_src emacs-lisp :tangle no
-       (require 'ansible)
-       (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
-       (add-hook 'ansible-hook 'ansible-auto-decrypt-encrypt)
-
-       ;; set keybinding in yaml-mode since I usually set secrets in variable file
-       (define-key yaml-mode-map (kbd "C-c a d") 'ansible-decrypt-buffer)
-       (define-key yaml-mode-map (kbd "C-c a e") 'ansible-encrypt-buffer)
-     #+end_src
-   - nix-mode
-     #+begin_src emacs-lisp
-       (require 'nix-mode)
-       (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
-     #+end_src
-   - visual-regexp
-     #+begin_src emacs-lisp
-       (require 'visual-regexp)
-       (define-key global-map (kbd "C-c R") 'vr/replace)
-       (define-key global-map (kbd "C-c q") 'vr/query-replace)
-       ;; if you use multiple-cursors, this is for you:
-       (define-key global-map (kbd "C-c M-m") 'vr/mc-mark)
-     #+end_src
-   - undo-fu
-     #+begin_src emacs-lisp
-       (require 'undo-fu)
-       (setq undo-fu-session-directory (expand-file-name "undo-fu-session/" +emacs-data-dir))
-       (global-unset-key (kbd "C-z")) ; previously `suspend-frame'
-       (global-set-key (kbd "C-z")   'undo-fu-only-undo)
-       (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
-       (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-       (global-undo-fu-session-mode)
-     #+end_src
-   - toml-mode
-     #+begin_src emacs-lisp
-       (require 'toml-mode)
-     #+end_src
-   - end of config-editing.el
-     #+begin_src emacs-lisp
-       (provide 'config-editing)
-       ;;; config-editing.el ends here
-     #+end_src
 ** IDE
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-ide.el
