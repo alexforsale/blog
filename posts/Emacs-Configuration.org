@@ -12,29 +12,100 @@ This configuration was inspired by the [[https://github.com/SystemCrafters/ratio
 With that in mind, I'm breaking down this configuration into separate /pluggable/ files that can be /included/ on demand. But the general goal is to only use what's already built-in to /Emacs/ as much as possible. Just like many other /dotfiles/ I've used so far, this configuration will be generated from a single /org-mode/ file (the one you're reading right now).
 
 By default this will creates an =emacs= directory insinde =~/.config= or wherever the =${XDG_CONFIG_HOME}= is set. If you're using [[https://github.com/plexus/chemacs2][chemacs]], or if you want to use the standard =~/.emacs.d= directory, modify the =:tangle= directive inside each heading's =:PROPERTIES:=.
-* What should be inside the /sane-defaults/?
-** TODO UI enhancements
-   :LOGBOOK:
-   - State "TODO"       from              [2022-03-22 Tue 15:54]
-   :END:
-** TODO Editing configurations
-   :LOGBOOK:
-   - State "TODO"       from              [2022-03-22 Tue 15:54]
-   :END:
-** TODO Org-mode configurations
-   :LOGBOOK:
-   - State "TODO"       from              [2022-03-22 Tue 15:54]
-   :END:
-** TODO other /default apps/ configurations
-   :LOGBOOK:
-   - State "TODO"       from              [2022-03-22 Tue 15:54]
-   :END:
-   By /default apps/ I mean /modules/ that comes within /Emacs/, such as /eww/, /dired/, /erc/, and others.
-** TODO Additional keybindings
-   :LOGBOOK:
-   - State "TODO"       from              [2022-03-22 Tue 21:15]
-   :END:
-   This should not interfere with the defaults keybindings that come within vanilla /Emacs/.
+
+To easily toggle the additional packages, create a =config-user.el= file inside =user-emacs-directory=, unfortunately hardcoded here to =~/.config/emacs=. This file also generate =~/.config/emacs/config-user.el.example=:
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config-user.el.example
+;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
+;;; Commentary:
+;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+;; for details.
+;;; Code:
+
+(setq user-full-name "Kristian Alexander P"
+      user-mail-address "alexforsale@yahoo.com")
+(customize-set-variable 'org-directory (expand-file-name "Documents/google-drive/org/" (getenv "HOME")))
+(customize-set-variable '+org-archives-file (expand-file-name "archives.org" org-directory))
+(customize-set-variable '+org-capture-todo-file (expand-file-name "todo.org" org-directory))
+(customize-set-variable '+org-capture-links-file (expand-file-name "links.org" org-directory))
+(customize-set-variable '+org-capture-notes-file (expand-file-name "notes.org" org-directory))
+(customize-set-variable '+org-capture-habits-file (expand-file-name "habits.org" org-directory))
+(customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
+(customize-set-variable 'org-agenda-files (list org-directory))
+(customize-set-variable '+emms-music-dir "~/Music")
+
+;; UI Additional packages
+(require 'config-all-the-icons)
+(require 'config-doom-modelines)
+(require 'config-doom-themes)
+(require 'config-theme-magic)
+(require 'config-helpful)
+(require 'config-which-key)
+(require 'config-ace-window)
+(require 'config-perspective)
+(require 'config-centaur-tabs)
+(require 'config-rainbow-mode)
+(require 'config-rainbow-delimiters)
+(require 'config-hl-todo)
+(require 'config-diminish)
+(require 'config-dashboard)
+(require 'config-alert)
+
+;; Editing Additional packages
+(require 'config-multiple-cursors)
+(require 'config-yasnippet)
+(require 'config-geiser)
+(require 'config-yaml-mode)
+(require 'config-toml-mode)
+(require 'config-nix-mode)
+(require 'config-markdown-mode)
+(require 'config-rust-mode)
+(require 'config-visual-regexp)
+(require 'config-undo-fu)
+(require 'config-block-nav)
+(require 'config-ansible)
+
+;; Org Additional packages
+(require 'config-org-roam)
+(require 'config-org-elfeed)
+(require 'config-org-gcal)
+(require 'config-org-journal)
+
+;; IDE Additional packages
+(require 'config-flycheck)
+(require 'config-projectile)
+(require 'config-lsp-mode)
+
+;; Email Additional packages
+(require 'config-notmuch)
+(require 'config-gnus-alias)
+
+;; Shell Additional packages
+(require 'config-vterm)
+
+;; Completion packages
+(require 'config-vertico)
+(require 'config-orderless)
+(require 'config-marginalia)
+(require 'config-consult)
+(require 'config-embark)
+(require 'config-corfu)
+(require 'config-dabbrev)
+
+;; Misc tools packages
+(require 'config-pass)
+(require 'config-magit)
+(require 'config-slime)
+(require 'config-paredit)
+(require 'config-telega)
+(require 'config-emms)
+(require 'config-w3m)
+(require 'config-pdf-tools)
+(require 'config-gist)
+(require 'config-ripgrep)
+
+(provide 'config-user)
+;;; config-user.el ends here
+#+end_src>
 * config.org
   :PROPERTIES:
   :header-args: :tangle ~/.config/emacs/config.el :mkdirp t
