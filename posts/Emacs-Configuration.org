@@ -337,6 +337,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (require 'config-defaults-org)
       (require 'config-defaults-ui)
       (require 'config-defaults-editings)
+      (require 'config-defaults-completion)
       (require 'config-defaults-various)
       (require 'config-defaults-ide)
       (require 'config-defaults-email)
@@ -2341,7 +2342,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+end_src
 ** Default Email
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ide.el :mkdirp t
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-email.el :mkdirp t
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-email.el --- Summary -*- lexical-binding: t -*-
@@ -2355,6 +2356,360 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
     #+begin_src emacs-lisp
       (provide 'config-defaults-email)
       ;;; config-defaults-email.el ends here
+    #+end_src
+** Default Completion
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-completion.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-completion.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+*** Additional Packages
+**** vertico
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-vertico.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-vertico.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package '(vertico :files (:defaults "extensions/*")
+                                       :includes (vertico-indexed
+                                                  vertico-flat
+                                                  vertico-grid
+                                                  vertico-mouse
+                                                  vertico-quick
+                                                  vertico-buffer
+                                                  vertico-repeat
+                                                  vertico-reverse
+                                                  vertico-directory
+                                                  vertico-multiform
+                                                  vertico-unobtrusive
+                                                  )))
+       (defun crm-indicator (args)
+         (cons (concat "[CRM] " (car args)) (cdr args)))
+       (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+       ;; Do not allow the cursor in the minibuffer prompt
+       (setq minibuffer-prompt-properties
+             '(read-only t cursor-intangible t face minibuffer-prompt))
+       (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+       (setq tab-always-indent 'complete)
+       (customize-set-variable 'vertico-cycle t)
+
+       (require 'vertico)
+       (vertico-mode)
+
+       ;; Use `consult-completion-in-region' if Vertico is enabled.
+       ;; Otherwise use the default `completion--in-region' function.
+       (setq completion-in-region-function
+             (lambda (&rest args)
+               (apply (if vertico-mode
+                          #'consult-completion-in-region
+                        #'completion--in-region)
+                      args)))
+       (require 'vertico-directory)
+       (add-hook 'rfn-shadow-update-overlay-hook #'vertico-directory-tidy)
+
+       ;; tmm-menubar
+       (global-set-key [f10] #'tmm-menubar)
+       (advice-add #'tmm-add-prompt :after #'minibuffer-hide-completions)
+
+       ;; ffap-menu
+       (advice-add #'ffap-menu-ask :around (lambda (&rest args)
+                                             (cl-letf (((symbol-function #'minibuffer-completion-help)
+                                                        #'ignore))
+                                               (apply args))))
+       ;; prefix
+       (advice-add #'vertico--format-candidate :around
+                   (lambda (orig cand prefix suffix index _start)
+                     (setq cand (funcall orig cand prefix suffix index _start))
+                     (concat
+                      (if (= vertico--index index)
+                          (propertize "» " 'face 'vertico-current)
+                        "  ")
+                      cand)))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-vertico)
+        ;;; config-vertico.el ends here
+      #+end_src
+**** orderless
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-orderless.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-orderless.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'orderless))
+       (require 'orderless)
+       (setq completion-styles '(orderless)
+             completion-category-defaults nil
+             completion-category-overrides '((file (styles basic partial-completion))))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-orderless)
+        ;;; config-orderless.el ends here
+      #+end_src
+**** marginalia
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-marginalia.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-marginalia.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'marginalia))
+       (require 'marginalia)
+       (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
+       (marginalia-mode 1)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-marginalia)
+        ;;; config-marginalia.el ends here
+      #+end_src
+**** consult
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-consult.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-consult.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'consult))
+       (require 'consult)
+       (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+       (advice-add #'register-preview :override #'consult-register-window)
+       (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+       (setq register-preview-delay 0.5
+             register-preview-function #'consult-register-format)
+       (setq xref-show-xrefs-function #'consult-xref
+             xref-show-definitions-function #'consult-xref)
+       (consult-customize
+        consult-theme
+        :preview-key '(:debounce 0.2 any)
+        consult-ripgrep consult-git-grep consult-grep
+        consult-bookmark consult-recent-file consult-xref
+        consult--source-bookmark consult--source-recent-file
+        consult--source-project-recent-file
+        :preview-key (kbd "M-."))
+       (setq consult-narrow-key "<") ;; (kbd "C-+")
+       (global-set-key (kbd "C-c h") 'consult-history)
+       (global-set-key (kbd "C-c m") 'consult-mode-command)
+       (global-set-key (kbd "C-c k") 'consult-kmacro)
+       ;; C-x bindings (ctl-x-map)
+       (global-set-key (kbd "C-x M-:") 'consult-complex-command) ;; orig. repeat-complex-command
+       ;;(global-set-key (kbd "C-x b") 'consult-buffer) ;; orig. switch-to-buffer
+       (global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+       (global-set-key (kbd "C-x 5 b") 'consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+       (global-set-key (kbd "C-x r b") 'consult-bookmark)            ;; orig. bookmark-jump
+       (global-set-key (kbd "C-x p b") 'consult-project-buffer)      ;; orig. project-switch-to-buffer
+       ;; Custom M-# bindings for fast register access
+       (global-set-key (kbd "M-#") 'consult-register-load)
+       (global-set-key (kbd "M-'") 'consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+       (global-set-key (kbd "C-M-#") 'consult-register)
+       ;; Other custom bindings
+       (global-set-key (kbd "M-y") 'consult-yank-pop)                ;; orig. yank-pop
+       (global-set-key (kbd "<help> a") 'consult-apropos)            ;; orig. apropos-command
+       ;; M-g bindings (goto-map)
+       (global-set-key (kbd "M-g e") 'consult-compile-error)
+       (when (featurep 'flymake)
+         (global-set-key (kbd "M-g f") 'consult-flymake))               ;; Alternative: consult-flycheck
+       (when (featurep 'flycheck)
+         (global-set-key (kbd "M-g f") 'consult-flycheck))
+       (global-set-key (kbd "M-g g") 'consult-goto-line)             ;; orig. goto-line
+       (global-set-key (kbd "M-g M-g") 'consult-goto-line)           ;; orig. goto-line
+       (global-set-key (kbd "M-g o") 'consult-outline)               ;; Alternative: consult-org-heading
+       ;;(global-set-key (kbd "M-g m") 'consult-mark) ;;conflict with telega
+       (global-set-key (kbd "M-g k") 'consult-global-mark)
+       ;;(global-set-key (kbd "M-g i") 'consult-imenu) ;; conflict with telega
+       (global-set-key (kbd "M-g I") 'consult-imenu-multi)
+       ;; M-s bindings (search-map)
+       (global-set-key (kbd "M-s d") 'consult-find)
+       (global-set-key (kbd "M-s D") 'consult-locate)
+       (global-set-key (kbd "M-s g") 'consult-grep)
+       (global-set-key (kbd "M-s G") 'consult-git-grep)
+       (global-set-key (kbd "M-s r") 'consult-ripgrep)
+       (global-set-key (kbd "M-s l") 'consult-line)
+       (global-set-key (kbd "M-s L") 'consult-line-multi)
+       (global-set-key (kbd "M-s m") 'consult-multi-occur)
+       (global-set-key (kbd "M-s k") 'consult-keep-lines)
+       (global-set-key (kbd "M-s u") 'consult-focus-lines)
+       ;; Isearch integration
+       (global-set-key (kbd "M-s e") 'consult-isearch-history)
+       (define-key isearch-mode-map (kbd "M-e") #'consult-isearch-history)         ;; orig. isearch-edit-string
+       (define-key isearch-mode-map (kbd "M-s e") #'consult-isearch-history)       ;; orig. isearch-edit-string
+       (define-key isearch-mode-map (kbd "M-s l") #'consult-line)                  ;; needed by consult-line to detect isearch
+       (define-key isearch-mode-map (kbd "M-s L") #'consult-line-multi)           ;; needed by consult-line to detect isearch
+
+       (cond
+        ((featurep 'projectile)
+         (autoload 'projectile-project-root "projectile")
+         (setq consult-project-root-function #'projectile-project-root))
+        ((featurep 'project)
+         (setq consult-project-root-function #'consult--project-root-default-function))
+        ((featurep 'vc)
+         (setq consult-project-root-function #'vc-root-dir)))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-consult)
+        ;;; config-consult.el ends here
+      #+end_src
+**** embark
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-embark.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-embark.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'embark))
+       (when (featurep 'consult)
+         (straight-use-package 'embark-consult))
+       (require 'embark)
+       (global-set-key [remap describe-bindings] #'embark-bindings)
+       (global-set-key (kbd "C-c C-.") 'embark-act)
+       (setq prefix-help-command #'embark-prefix-help-command)
+       (add-to-list 'display-buffer-alist
+                    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                      nil
+                      (window-parameters (mode-line-format . none))))
+       (when (featurep 'consult)
+         (require 'embark-consult)
+         (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-embark)
+        ;;; config-embark.el ends here
+      #+end_src
+**** corfu
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-corfu.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-corfu.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'corfu))
+       (require 'corfu)
+       ;;(customize-set-variable 'corfu-cycle t)
+       (customize-set-variable 'corfu-auto t)
+       ;;(customize-set-variable 'corfu-preselect-first t)
+       (customize-set-variable 'corfu-quit-no-match 'separator)
+       ;;(customize-set-variable 'corfu-separator ?\s)
+       (setq completion-cycle-threshold 3
+             tab-always-indent 'complete)
+
+       (defun +corfu-enable-in-minibuffer ()
+         "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+         (when (where-is-internal #'completion-at-point (list (current-local-map)))
+           ;; (setq-local corfu-auto nil) Enable/disable auto completion
+           (corfu-mode 1)))
+       (add-hook 'minibuffer-setup-hook #'+corfu-enable-in-minibuffer)
+
+       (add-hook 'eshell-mode-hook
+                 (lambda ()
+                   (setq-local corfu-auto nil)
+                   (corfu-mode)))
+
+       (define-key corfu-map (kbd "TAB") 'corfu-next)
+       (define-key corfu-map (kbd "S-TAB") 'corfu-previous)
+
+       (defun +corfu-beginning-of-prompt ()
+         "Move to beginning of completion input."
+         (interactive)
+         (corfu--goto -1)
+         (goto-char (car completion-in-region--data)))
+
+       (defun +corfu-end-of-prompt ()
+         "Move to end of completion input."
+         (interactive)
+         (corfu--goto -1)
+         (goto-char (cadr completion-in-region--data)))
+
+       (define-key corfu-map [remap move-beginning-of-line] #'+corfu-beginning-of-prompt)
+       (define-key corfu-map [remap move-end-of-line] #'+corfu-end-of-prompt)
+
+       (corfu-global-mode)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-corfu)
+        ;;; config-corfu.el ends here
+      #+end_src
+**** dabbrev
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-dabbrev.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-dabbrev.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'dabbrev)
+       (require 'dabbrev)
+       (global-set-key (kbd "M-/") 'dabbrev-completion)
+       (global-set-key (kbd "C-M-/") 'dabbrev-expand)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-dabbrev)
+        ;;; config-dabbrev.el ends here
+      #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-completion)
+      ;;; config-defaults-completion.el ends here
     #+end_src
 ** Default Tools
    :PROPERTIES:
@@ -3005,248 +3360,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** Completions
-*** vertico
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-completion.el
-    :END:
-    #+begin_src emacs-lisp
-      ;;; config-completion.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-    #+end_src
-    - Clone the packages.
-      #+begin_src emacs-lisp
-        (straight-use-package '(vertico :files (:defaults "extensions/*")
-                                        :includes (vertico-indexed
-                                                   vertico-flat
-                                                   vertico-grid
-                                                   vertico-mouse
-                                                   vertico-quick
-                                                   vertico-buffer
-                                                   vertico-repeat
-                                                   vertico-reverse
-                                                   vertico-directory
-                                                   vertico-multiform
-                                                   vertico-unobtrusive
-                                                   )))
-        (straight-use-package 'embark-consult)
-        (straight-use-package 'dabbrev)
-        (unless +config/is-guix-system
-          (straight-use-package 'consult)
-          (straight-use-package 'orderless)
-          (straight-use-package 'marginalia)
-          (straight-use-package 'embark)
-          (straight-use-package 'corfu))
-      #+end_src
-    - Setup vertico suite
-      + General setup
-        #+begin_src emacs-lisp
-          (defun crm-indicator (args)
-            (cons (concat "[CRM] " (car args)) (cdr args)))
-          (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-          ;; Do not allow the cursor in the minibuffer prompt
-          (setq minibuffer-prompt-properties
-                '(read-only t cursor-intangible t face minibuffer-prompt))
-          (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-          (setq tab-always-indent 'complete)
-        #+end_src
-      + vertico
-        #+begin_src emacs-lisp
-          (customize-set-variable 'vertico-cycle t)
-
-          (require 'vertico)
-          (vertico-mode)
-
-          ;; Use `consult-completion-in-region' if Vertico is enabled.
-          ;; Otherwise use the default `completion--in-region' function.
-          (setq completion-in-region-function
-                (lambda (&rest args)
-                  (apply (if vertico-mode
-                             #'consult-completion-in-region
-                           #'completion--in-region)
-                         args)))
-          (require 'vertico-directory)
-          (add-hook 'rfn-shadow-update-overlay-hook #'vertico-directory-tidy)
-
-          ;; tmm-menubar
-          (global-set-key [f10] #'tmm-menubar)
-          (advice-add #'tmm-add-prompt :after #'minibuffer-hide-completions)
-
-          ;; ffap-menu
-          (advice-add #'ffap-menu-ask :around (lambda (&rest args)
-                                                (cl-letf (((symbol-function #'minibuffer-completion-help)
-                                                           #'ignore))
-                                                  (apply args))))
-          ;; prefix
-          (advice-add #'vertico--format-candidate :around
-                      (lambda (orig cand prefix suffix index _start)
-                        (setq cand (funcall orig cand prefix suffix index _start))
-                        (concat
-                         (if (= vertico--index index)
-                             (propertize "» " 'face 'vertico-current)
-                           "  ")
-                         cand)))
-        #+end_src
-      + orderless
-        #+begin_src emacs-lisp
-          (require 'orderless)
-          (setq completion-styles '(orderless)
-                completion-category-defaults nil
-                completion-category-overrides '((file (styles basic partial-completion))))
-        #+end_src
-      + marginalia
-        #+begin_src emacs-lisp
-          (require 'marginalia)
-          (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
-          (marginalia-mode 1)
-        #+end_src
-      + consult
-        #+begin_src emacs-lisp
-          (require 'consult)
-          (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
-          (advice-add #'register-preview :override #'consult-register-window)
-          (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-          (setq register-preview-delay 0.5
-                register-preview-function #'consult-register-format)
-          (setq xref-show-xrefs-function #'consult-xref
-                xref-show-definitions-function #'consult-xref)
-          (consult-customize
-           consult-theme
-           :preview-key '(:debounce 0.2 any)
-           consult-ripgrep consult-git-grep consult-grep
-           consult-bookmark consult-recent-file consult-xref
-           consult--source-bookmark consult--source-recent-file
-           consult--source-project-recent-file
-           :preview-key (kbd "M-."))
-          (setq consult-narrow-key "<") ;; (kbd "C-+")
-          (global-set-key (kbd "C-c h") 'consult-history)
-          (global-set-key (kbd "C-c m") 'consult-mode-command)
-          (global-set-key (kbd "C-c k") 'consult-kmacro)
-          ;; C-x bindings (ctl-x-map)
-          (global-set-key (kbd "C-x M-:") 'consult-complex-command) ;; orig. repeat-complex-command
-          ;;(global-set-key (kbd "C-x b") 'consult-buffer) ;; orig. switch-to-buffer
-          (global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-          (global-set-key (kbd "C-x 5 b") 'consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-          (global-set-key (kbd "C-x r b") 'consult-bookmark)            ;; orig. bookmark-jump
-          (global-set-key (kbd "C-x p b") 'consult-project-buffer)      ;; orig. project-switch-to-buffer
-          ;; Custom M-# bindings for fast register access
-          (global-set-key (kbd "M-#") 'consult-register-load)
-          (global-set-key (kbd "M-'") 'consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-          (global-set-key (kbd "C-M-#") 'consult-register)
-          ;; Other custom bindings
-          (global-set-key (kbd "M-y") 'consult-yank-pop)                ;; orig. yank-pop
-          (global-set-key (kbd "<help> a") 'consult-apropos)            ;; orig. apropos-command
-          ;; M-g bindings (goto-map)
-          (global-set-key (kbd "M-g e") 'consult-compile-error)
-          (when (featurep 'flymake)
-            (global-set-key (kbd "M-g f") 'consult-flymake))               ;; Alternative: consult-flycheck
-          (when (featurep 'flycheck)
-            (global-set-key (kbd "M-g f") 'consult-flycheck))
-          (global-set-key (kbd "M-g g") 'consult-goto-line)             ;; orig. goto-line
-          (global-set-key (kbd "M-g M-g") 'consult-goto-line)           ;; orig. goto-line
-          (global-set-key (kbd "M-g o") 'consult-outline)               ;; Alternative: consult-org-heading
-          ;;(global-set-key (kbd "M-g m") 'consult-mark) ;;conflict with telega
-          (global-set-key (kbd "M-g k") 'consult-global-mark)
-          ;;(global-set-key (kbd "M-g i") 'consult-imenu) ;; conflict with telega
-          (global-set-key (kbd "M-g I") 'consult-imenu-multi)
-          ;; M-s bindings (search-map)
-          (global-set-key (kbd "M-s d") 'consult-find)
-          (global-set-key (kbd "M-s D") 'consult-locate)
-          (global-set-key (kbd "M-s g") 'consult-grep)
-          (global-set-key (kbd "M-s G") 'consult-git-grep)
-          (global-set-key (kbd "M-s r") 'consult-ripgrep)
-          (global-set-key (kbd "M-s l") 'consult-line)
-          (global-set-key (kbd "M-s L") 'consult-line-multi)
-          (global-set-key (kbd "M-s m") 'consult-multi-occur)
-          (global-set-key (kbd "M-s k") 'consult-keep-lines)
-          (global-set-key (kbd "M-s u") 'consult-focus-lines)
-          ;; Isearch integration
-          (global-set-key (kbd "M-s e") 'consult-isearch-history)
-          (define-key isearch-mode-map (kbd "M-e") #'consult-isearch-history)         ;; orig. isearch-edit-string
-          (define-key isearch-mode-map (kbd "M-s e") #'consult-isearch-history)       ;; orig. isearch-edit-string
-          (define-key isearch-mode-map (kbd "M-s l") #'consult-line)                  ;; needed by consult-line to detect isearch
-          (define-key isearch-mode-map (kbd "M-s L") #'consult-line-multi)           ;; needed by consult-line to detect isearch
-
-          (cond
-           ((featurep 'projectile)
-            (autoload 'projectile-project-root "projectile")
-            (setq consult-project-root-function #'projectile-project-root))
-           ((featurep 'project)
-            (setq consult-project-root-function #'consult--project-root-default-function))
-           ((featurep 'vc)
-            (setq consult-project-root-function #'vc-root-dir)))
-        #+end_src
-      + embark
-        #+begin_src emacs-lisp
-          (require 'embark)
-          (global-set-key [remap describe-bindings] #'embark-bindings)
-          (global-set-key (kbd "C-c C-.") 'embark-act)
-          (setq prefix-help-command #'embark-prefix-help-command)
-          (add-to-list 'display-buffer-alist
-                       '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                         nil
-                         (window-parameters (mode-line-format . none))))
-          (require 'embark-consult)
-          (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-        #+end_src
-      + corfu
-        #+begin_src emacs-lisp
-          (require 'corfu)
-          ;;(customize-set-variable 'corfu-cycle t)
-          (customize-set-variable 'corfu-auto t)
-          ;;(customize-set-variable 'corfu-preselect-first t)
-          (customize-set-variable 'corfu-quit-no-match 'separator)
-          ;;(customize-set-variable 'corfu-separator ?\s)
-          (setq completion-cycle-threshold 3
-                tab-always-indent 'complete)
-
-          (defun +corfu-enable-in-minibuffer ()
-            "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-            (when (where-is-internal #'completion-at-point (list (current-local-map)))
-              ;; (setq-local corfu-auto nil) Enable/disable auto completion
-              (corfu-mode 1)))
-          (add-hook 'minibuffer-setup-hook #'+corfu-enable-in-minibuffer)
-
-          (add-hook 'eshell-mode-hook
-                    (lambda ()
-                      (setq-local corfu-auto nil)
-                      (corfu-mode)))
-
-          (define-key corfu-map (kbd "TAB") 'corfu-next)
-          (define-key corfu-map (kbd "S-TAB") 'corfu-previous)
-
-          (defun +corfu-beginning-of-prompt ()
-            "Move to beginning of completion input."
-            (interactive)
-            (corfu--goto -1)
-            (goto-char (car completion-in-region--data)))
-
-          (defun +corfu-end-of-prompt ()
-            "Move to end of completion input."
-            (interactive)
-            (corfu--goto -1)
-            (goto-char (cadr completion-in-region--data)))
-
-          (define-key corfu-map [remap move-beginning-of-line] #'+corfu-beginning-of-prompt)
-          (define-key corfu-map [remap move-end-of-line] #'+corfu-end-of-prompt)
-
-          (corfu-global-mode)
-        #+end_src
-      + dabbrev
-        #+begin_src emacs-lisp
-          (require 'dabbrev)
-          (global-set-key (kbd "M-/") 'dabbrev-completion)
-          (global-set-key (kbd "C-M-/") 'dabbrev-expand)
-        #+end_src
-    - end config-completion
-      #+begin_src emacs-lisp
-        (provide 'config-completion)
-        ;;; config-completion.el ends here
-      #+end_src
 ** shells
 *** Eshell
     :PROPERTIES:
