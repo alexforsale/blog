@@ -854,7 +854,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
         (provide 'config-rainbow-mode)
         ;;; config-rainbow-mode.el ends here
       #+end_src
-**** rainbow-delimiter
+**** rainbow-delimiters
      :PROPERTIES:
      :header-args: :tangle ~/.config/emacs/modules/config-rainbow-delimiters.el
      :END:
@@ -2353,6 +2353,119 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;;; Code:
      (require 'config-defaults-variables)
    #+end_src
+*** message-directory
+    #+begin_src emacs-lisp
+      (customize-set-variable 'message-directory (expand-file-name ".mail" (getenv "HOME")))
+    #+end_src
+*** message-auto-save-directory
+    #+begin_src emacs-lisp
+      (setq message-auto-save-directory (expand-file-name "mail/auto-save" +emacs-data-dir))
+      (unless (file-directory-p message-auto-save-directory)
+        (make-directory message-auto-save-directory :parents))
+    #+end_src
+*** sign outgoing mail by default
+    #+begin_src emacs-lisp
+      (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+    #+end_src
+*** msmtp
+    #+begin_src emacs-lisp
+      (setq send-mail-function 'sendmail-send-it
+            ;; sendmail is a symlink to msmtp
+            sendmail-program "/usr/bin/sendmail"
+            mail-specify-envelope-from t
+            message-sendmail-envelope-from 'header
+            mail-envelope-from 'header)
+    #+end_src
+*** Additional Packages
+**** notmuch
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-notmuch.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-notmuch.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'notmuch)
+       (straight-use-package 'ol-notmuch)
+       (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
+       (customize-set-variable 'notmuch-search-oldest-first nil)
+       (global-set-key (kbd "C-c M") 'notmuch)
+     #+end_src
+     This is the default saved-searches, for reference.
+     #+begin_src emacs-lisp :tangle no
+       (setq notmuch-saved-searches
+             '((:name "inbox" :query "tag:inbox" :key "i")
+               (:name "unread" :query "tag:unread" :key "u")
+               (:name "flagged" :query "tag:flagged" :key "f") ;starred in gmail
+               (:name "sent" :query "tag:sent" :key "t")
+               (:name "drafts" :query "tag:draft" :key "d")
+               (:name "all mail" :query "*" :key "a")))
+     #+end_src
+     Since I've used =afew= to modify /tags/ based on the accounts /maildir/ directories
+     #+begin_src emacs-lisp
+       (setq notmuch-saved-searches
+             '((:name "inbox" :query "tag:inbox" :key "i")
+               (:name "unread" :query "tag:unread" :key "u")
+               (:name "spam" :query "tag:spam")
+               (:name "gmail/inbox" :query "tag:gmail/inbox")
+               (:name "gmail/sent" :query "tag:gmail/sent")
+               (:name "gmail/draft" :query "tag:gmail/draft")
+               (:name "gmail/archive" :query "tag:gmail/archive")
+               (:name "gmail/spam" :query "tag:gmail/spam")
+               (:name "yahoo/inbox" :query "tag:yahoo/inbox")
+               (:name "yahoo/sent" :query "tag:yahoo/sent")
+               (:name "yahoo/draft" :query "tag:yahoo/draft")
+               (:name "yahoo/archive" :query "tag:yahoo/archive")
+               (:name "yahoo/spam" :query "tag:yahoo/spam")
+               (:name "hotmail/inbox" :query "tag:hotmail/inbox")
+               (:name "hotmail/sent" :query "tag:hotmail/sent")
+               (:name "hotmail/draft" :query "tag:hotmail/draft")
+               (:name "hotmail/archive" :query "tag:hotmail/archive")
+               (:name "hotmail/spam" :query "tag:hotmail/spam")
+               (:name "ymail/inbox" :query "tag:ymail/inbox")
+               (:name "ymail/sent" :query "tag:ymail/sent")
+               (:name "ymail/draft" :query "tag:ymail/draft")
+               (:name "ymail/archive" :query "tag:ymail/archive")
+               (:name "ymail/spam" :query "tag:ymail/spam")))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-notmuch)
+        ;;; config-notmuch.el ends here
+      #+end_src
+**** gnus-alias
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-gnus-alias.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-gnus-alias.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'gnus-alias)
+       (add-hook 'message-setup-hook
+                 (lambda ()
+                   (gnus-alias-determine-identity)
+                   (define-key message-mode-map (kbd "C-c f")
+                     (lambda ()
+                       (interactive)
+                       (message-remove-header "Fcc")
+                       (message-remove-header "Organization")
+                       (gnus-alias-select-identity)
+                       (notmuch-fcc-header-setup)))))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-gnus-alias)
+        ;;; config-gnus-alias.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-email)
@@ -3442,446 +3555,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** email
-*** notmuch
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-notmuch.el
-    :END:
-    #+begin_src emacs-lisp
-      ;;; config-notmuch.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-    #+end_src
-**** packages
-     #+begin_src emacs-lisp
-       (straight-use-package 'notmuch)
-       (straight-use-package 'ol-notmuch)
-       (straight-use-package 'gnus-alias)
-       (straight-use-package '(notmuch-alerts
-                               :type git
-                               :host github
-                               :repo "publicimageltd/notmuch-alerts"))
-       (straight-use-package '(notmuch-bookmarks
-                               :type git
-                               :host github
-                               :repo "publicimageltd/notmuch-bookmarks"))
-     #+end_src
-**** set =message-directory=
-     This is the directory from which all other mail file variables are derived.
-     #+begin_src emacs-lisp
-       (customize-set-variable 'message-directory (expand-file-name ".mail" (getenv "HOME")))
-     #+end_src
-**** location for notmuch-init-file
-     #+begin_src emacs-lisp
-       (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
-     #+end_src
-**** message auto save directory
-     Directory where Message auto-saves buffers if Gnus isn't running.
-     #+begin_src emacs-lisp
-       (setq message-auto-save-directory (expand-file-name "mail/auto-save" +emacs-data-dir))
-       (unless (file-directory-p message-auto-save-directory)
-         (make-directory message-auto-save-directory :parents))
-     #+end_src
-**** sign outgoing mail by default
-     Adds MML tag to encrypt/sign the entire message.
-     #+begin_src emacs-lisp
-       (require 'notmuch)
-       (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-     #+end_src
-**** saved-searches
-     This is the default saved-searches, for reference.
-     #+begin_src emacs-lisp :tangle no
-       (setq notmuch-saved-searches
-             '((:name "inbox" :query "tag:inbox" :key "i")
-               (:name "unread" :query "tag:unread" :key "u")
-               (:name "flagged" :query "tag:flagged" :key "f") ;starred in gmail
-               (:name "sent" :query "tag:sent" :key "t")
-               (:name "drafts" :query "tag:draft" :key "d")
-               (:name "all mail" :query "*" :key "a")))
-     #+end_src
-     Since I've used =afew= to modify /tags/ based on the accounts /maildir/ directories
-     #+begin_src emacs-lisp
-       (setq notmuch-saved-searches
-             '((:name "inbox" :query "tag:inbox" :key "i")
-               (:name "unread" :query "tag:unread" :key "u")
-               (:name "spam" :query "tag:spam")
-               (:name "gmail/inbox" :query "tag:gmail/inbox")
-               (:name "gmail/sent" :query "tag:gmail/sent")
-               (:name "gmail/draft" :query "tag:gmail/draft")
-               (:name "gmail/archive" :query "tag:gmail/archive")
-               (:name "gmail/spam" :query "tag:gmail/spam")
-               (:name "yahoo/inbox" :query "tag:yahoo/inbox")
-               (:name "yahoo/sent" :query "tag:yahoo/sent")
-               (:name "yahoo/draft" :query "tag:yahoo/draft")
-               (:name "yahoo/archive" :query "tag:yahoo/archive")
-               (:name "yahoo/spam" :query "tag:yahoo/spam")
-               (:name "hotmail/inbox" :query "tag:hotmail/inbox")
-               (:name "hotmail/sent" :query "tag:hotmail/sent")
-               (:name "hotmail/draft" :query "tag:hotmail/draft")
-               (:name "hotmail/archive" :query "tag:hotmail/archive")
-               (:name "hotmail/spam" :query "tag:hotmail/spam")
-               (:name "ymail/inbox" :query "tag:ymail/inbox")
-               (:name "ymail/sent" :query "tag:ymail/sent")
-               (:name "ymail/draft" :query "tag:ymail/draft")
-               (:name "ymail/archive" :query "tag:ymail/archive")
-               (:name "ymail/spam" :query "tag:ymail/spam")))
-     #+end_src
-**** search oldest first
-     #+begin_src emacs-lisp
-       (customize-set-variable 'notmuch-search-oldest-first nil)
-     #+end_src
-**** gnus-alias
-     #+begin_src emacs-lisp
-       (add-hook 'message-setup-hook
-                 (lambda ()
-                   (gnus-alias-determine-identity)
-                   (define-key message-mode-map (kbd "C-c f")
-                     (lambda ()
-                       (interactive)
-                       (message-remove-header "Fcc")
-                       (message-remove-header "Organization")
-                       (gnus-alias-select-identity)
-                       (notmuch-fcc-header-setup)))))
-     #+end_src
-**** msmtp
-     #+begin_src emacs-lisp
-       (setq send-mail-function 'sendmail-send-it
-             ;; sendmail is a symlink to msmtp
-             sendmail-program "/usr/bin/sendmail"
-             mail-specify-envelope-from t
-             message-sendmail-envelope-from 'header
-             mail-envelope-from 'header)
-     #+end_src
-**** notmuch-bookmarks
-     #+begin_src emacs-lisp
-       (notmuch-bookmarks-mode)
-     #+end_src
-**** notmuch-alerts
-     #+begin_src emacs-lisp
-       (notmuch-alert-mode)
-     #+end_src
-**** keybindings
-     #+begin_src emacs-lisp
-       (global-set-key (kbd "C-c M") 'notmuch)
-     #+end_src
-**** end of config-notmuch.el
-     #+begin_src emacs-lisp
-       (provide 'config-notmuch)
-       ;;; config-notmuch.el ends here
-     #+end_src
-** exwm
-   :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-exwm.el
-   :END:
-   #+begin_src emacs-lisp
-     ;;; config-exwm.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
-     ;; This file is auto-generated from `config.org'
-     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
-   #+end_src
-   - the packages
-     #+begin_src emacs-lisp
-       (unless +config/is-guix-system
-         (straight-use-package 'exwm)
-         (straight-use-package 'desktop-environment))
-       (straight-use-package 'perspective-exwm)
-     #+end_src
-   - the configuration
-     from systemcrafters:
-     + autostarter
-       #+begin_src emacs-lisp
-         (defun +config/run-in-background (command)
-           "Runs `command' in background.
-           Intended for applications that's uses system tray,
-           or applications that needs to start early after the desktop
-           initialized."
-           (let ((command-parts (split-string command "[ ]+")))
-             (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
-       #+end_src
-     + wallpaper setter
-       #+begin_src emacs-lisp
-         (defun +config/set-wallpaper ()
-           "Set the wallpaper.
-         Initially hardcoded to a specific file.
-         TODO: maybe set to `embark-act', when visiting image file."
-           (interactive)
-           ;; NOTE: You will need to update this to a valid background path!
-           (start-process-shell-command
-            ;; assuming there's a ~/.fehbg
-            "feh" nil  "~/.fehbg"))
-       #+end_src
-     + Custom function for ~exwm-init-hook~.
-       #+begin_src emacs-lisp
-         (defun +config/exwm-init-hook ()
-           (with-eval-after-load 'perspective
-             ;; Launch apps that will run in the background
-             (when (executable-find "wal")
-               (+config/run-in-background "wal -R"))
-             (when (executable-find "feh")
-               (+config/run-in-background "feh -rz --bg-fill /usr/share/backgrounds/archlinux"))
-             (when (executable-find "dunst")
-               (+config/run-in-background "dbus-launch dunst -conf ~/.config/dunst/dunstrc"))
-             (when (executable-find "nm-applet")
-               (+config/run-in-background "dbus-launch nm-applet"))
-             (when (executable-find "picom")
-               (+config/run-in-background "picom"))
-             (when (executable-find "unclutter")
-               (+config/run-in-background "unclutter"))
-             (when (executable-find "xsettingsd")
-               (+config/run-in-background "xsettingsd"))
-             (when (executable-find "udiskie")
-               (+config/run-in-background "udiskie -t"))
-             (when (executable-find "blueman-applet")
-               (+config/run-in-background "dbus-launch blueman-applet")))
-           (which-key-setup-side-window-right-bottom))
-
-         (setq +config/exwm-last-workspaces '(1))
-
-         (defun +config/exwm-store-last-workspace ()
-           "Save the last workspace to `+config/exwm-last-workspaces'."
-           (setq +config/exwm-last-workspaces
-                 (seq-uniq (cons exwm-workspace-current-index
-                                 +config/exwm-last-workspaces))))
-
-         (add-hook 'exwm-workspace-switch-hook
-                   #'+config/exwm-store-last-workspace)
-
-         (defun +config/fix-exwm-floating-windows ()
-           (setq-local exwm-workspace-warp-cursor nil)
-           (setq-local mouse-autoselect-window nil)
-           (setq-local focus-follows-mouse nil))
-
-         (add-hook 'exwm-floating-setup-hook #'+config/fix-exwm-floating-windows)
-
-         (defun +config/exwm-last-workspaces-clear ()
-           "Clean `+config/exwm-last-workspaces' from deleted workspaces."
-           (setq +config/exwm-last-workspaces
-                 (seq-filter
-                  (lambda (i) (nth i exwm-workspace--list))
-                  +config/exwm-last-workspaces)))
-
-         (defun +config/exwm-update-class ()
-           (exwm-workspace-rename-buffer exwm-class-name))
-
-         (defun +config/exwm-update-title ()
-           (pcase exwm-class-name
-             ("Firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))
-             ("libreoffice-writer" (exwm-workspace-rename-buffer (format "Writer: %s" exwm-title)))
-             ("libreoffice-calc" (exwm-workspace-rename-buffer (format "Calc: %s" exwm-title)))
-             ))
-
-         ;; This function isn't currently used, only serves as an example how to
-         ;; position a window
-         (defun +config/position-window ()
-           (let* ((pos (frame-position))
-                  (pos-x (car pos))
-                  (pos-y (cdr pos)))
-
-             (exwm-floating-move (- pos-x) (- pos-y))))
-
-         (defun +config/configure-window-by-class ()
-           (interactive)
-           (pcase exwm-class-name
-             ("xterm" (perspective-exwm-assign-window
-                       :workspace-index 0
-                       :persp-name "term"))
-             ("firefox" (perspective-exwm-assign-window
-                         :workspace-index 2
-                         :persp-name "browser"))
-             ("Firefox" (perspective-exwm-assign-window
-                         :workspace-index 2
-                         :persp-name "browser"))
-             ("nyxt" (perspective-exwm-assign-window
-                      :workspace-index 2
-                      :persp-name "browser"))
-             ("mpv" (lambda ()
-                      (perspective-exwm-assign-window
-                       :workspace-index 4
-                       :persp-name "media")
-                      (exwm-floating-toggle-floating)
-                      (exwm-layout-toggle-mode-line)))
-             ("vlc" (lambda ()
-                      (perspective-exwm-assign-window
-                       :workspace-index 4
-                       :persp-name "media")
-                      (exwm-floating-toggle-floating)
-                      (exwm-layout-toggle-mode-line)))))
-         ;; This function should be used only after configuring autorandr!
-         (defun +config/update-displays ()
-           (+config/run-in-background "autorandr --change --force")
-           (+config/set-wallpaper)
-           (message "Display config: %s"
-                    (string-trim (shell-command-to-string "autorandr --current"))))
-       #+end_src
-     + Originally using ~use-package~, so it need modifications.
-       #+begin_src emacs-lisp
-         (require 'perspective-exwm)
-         (require 'exwm)
-         ;; Set up perspective names on initial workspaces
-         (setq perspective-exwm-override-initial-name
-               '((0 . "term")
-                 (1 . "dev")
-                 (2 . "browser")
-                 (3 . "chat")
-                 (4 . "media")
-                 (5 . "games")
-                 (6 . "misc1")
-                 (7 . "misc2")
-                 (8 . "misc3")
-                 (9 . "misc4")))
-         (customize-set-variable 'exwm-workspace-number 6)
-         (add-hook 'exwm-update-class-hook #'+config/exwm-update-class)
-         (add-hook 'exwm-update-title-hook #'+config/exwm-update-title)
-         (add-hook 'exwm-manage-finish-hook #'+config/configure-window-by-class)
-         (add-hook 'exwm-init-hook #'+config/exwm-init-hook)
-         (require 'exwm-randr)
-         (exwm-randr-enable)
-         (+config/set-wallpaper)
-         (setq exwm-workspace-warp-cursor t)
-         (setq mouse-autoselect-window t
-               focus-follows-mouse t)
-         ;; These keys should always pass through to Emacs
-         (setq exwm-input-prefix-keys
-               '(?\C-x
-                 ?\C-u
-                 ?\C-h
-                 ?\M-x
-                 ?\M-`
-                 ?\M-&
-                 ?\M-:
-                 ?\C-\M-j  ;; Buffer list
-                 ?\C-\ ))  ;; Ctrl+Space
-         ;; Ctrl+Q will enable the next key to be sent directly
-         (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-         ;; Set up global key bindings.  These always work, no matter the input state!
-         ;; Keep in mind that changing this list after EXWM initializes has no effect.
-         (setq exwm-input-global-keys
-               `(
-                 ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-                 ([?\s-r] . exwm-reset)
-                 ;; Move between windows
-                 ([s-left] . windmove-left)
-                 ([s-right] . windmove-right)
-                 ([s-up] . windmove-up)
-                 ([s-down] . windmove-down)
-                 ([s-tab] . +config/exwm-workspace-switch-to-last)
-                 ;; Launch applications via shell command
-                 ([?\s-d] . (lambda (command)
-                              (interactive (list (read-shell-command "$ ")))
-                              (start-process-shell-command command nil command)))
-                 ([s-f10] . +config/start-panel)
-                 ([s-return] . vterm)
-                 ;;([S-s-return] . (start-process-shell-command "xterm" "*xterm*" "xterm"))
-                 ;; Switch workspace
-                 ([?\s-W] . perspective-exwm-switch-perspective)
-                 ([?\s-w] . exwm-workspace-switch)
-                 ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-                 ([?\s-f] . exwm-layout-toggle-fullscreen)
-                 ([?\s-i] . exwm-input-toggle-keyboard)
-                 ([?\s-m] . exwm-layout-toggle-mode-line)
-                 ([?\s-b] . exwm-workspace-toggle-minibuffer)
-                 ([?\s- ] . exwm-floating-toggle-floating)
-                 ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-                 ,@(mapcar (lambda (i)
-                             `(,(kbd (format "s-%d" i)) .
-                               (lambda ()
-                                 (interactive)
-                                 (exwm-workspace-switch-create ,i))))
-                           (number-sequence 0 9))))
-         (defun +config/exwm-logout ()
-           "Logout cleanly from EXWM."
-           (interactive)
-           (+config/kill-panel)
-           (recentf-save-list)
-           (save-some-buffers)
-           (save-buffers-kill-terminal))
-         (exwm-input-set-key (kbd "C-x C-c") '+config/exwm-logout)
-         (perspective-exwm-mode)
-         (exwm-enable)
-         (defvar +config/exwm-workspace--switch-history-hack (cons exwm-workspace-current-index '()))
-
-         (add-hook 'exwm-workspace-switch-hook
-                   (lambda ()
-                     (setq +config/exwm-workspace--switch-history-hack
-                           (cons exwm-workspace-current-index
-                                 (car +config/exwm-workspace--switch-history-hack)))))
-         (defun +config/exwm-workspace-switch-to-last ()
-           (interactive)
-           "Switch to the workspace that was used before current workspace"
-           (exwm-workspace-switch (cdr +config/exwm-workspace--switch-history-hack)))
-       #+end_src
-     + Additional package, ~desktop-environment~.
-       #+begin_src emacs-lisp
-         (require 'desktop-environment)
-         (customize-set-variable 'desktop-environment-brightness-small-increment "2%+")
-         (customize-set-variable 'desktop-environment-brightness-small-decrement "2%-")
-         (customize-set-variable 'desktop-environment-brightness-normal-increment "5%+")
-         (customize-set-variable 'desktop-environment-brightness-normal-decrement "5%-")
-         (customize-set-variable 'desktop-environment-screenshot-directory (expand-file-name "Screenshots/" (getenv "XDG_PICTURES_DIR")))
-         (unless (file-directory-p desktop-environment-screenshot-directory)
-           (make-directory desktop-environment-screenshot-directory :parents))
-
-         (desktop-environment-mode)
-       #+end_src
-     + start in server-mode
-       #+begin_src emacs-lisp
-         ;; Make sure the server is started (better to do this in your main Emacs config!)
-         ;; at this point of init, it should've started already, but just in case
-         (if (and (fboundp 'server-running-p)
-                  (not (server-running-p)))
-             (server-start))
-       #+end_src
-     + polybar
-       #+begin_src emacs-lisp
-         (when (executable-find "polybar")
-           (defvar +config/polybar-process nil
-             "Holds the process of the running Polybar instance, if any")
-           (defun +config/kill-panel ()
-             (interactive)
-             (when +config/polybar-process
-               (ignore-errors
-                 (kill-process +config/polybar-process)))
-             (setq +config/polybar-process nil))
-
-           (defun +config/start-panel ()
-             (interactive)
-             (+config/kill-panel)
-             (setq +config/polybar-process (start-process-shell-command "polybar" nil "polybar panel")))
-
-           (defun +config/send-polybar-hook (module-name hook-index)
-             (start-process-shell-command "polybar-msg" nil (format "polybar-msg hook %s %s" module-name hook-index)))
-
-           (defun +config/send-polybar-exwm-workspace ()
-             (+config/send-polybar-hook "exwm-workspace" 1))
-
-           ;; Update panel indicator when workspace changes
-           (add-hook 'exwm-workspace-switch-hook #'+config/send-polybar-exwm-workspace)
-           (add-hook 'exwm-init-hook #'+config/start-panel))
-       #+end_src
-     + dunst
-       Probably should bind this someday.
-       #+begin_src emacs-lisp
-         (when (executable-find "dunst")
-           (defun +config/disable-desktop-notifications ()
-             (interactive)
-             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\""))
-
-           (defun +config/enable-desktop-notifications ()
-             (interactive)
-             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
-
-           (defun +config/toggle-desktop-notifications ()
-             (interactive)
-             (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\"")))
-       #+end_src
-   - end of config-exwm.el
-     #+begin_src emacs-lisp
-       (provide 'config-exwm)
-       ;;; config-exwm.el ends here
-     #+end_src
 * site-lisp
 ** website
    :PROPERTIES:
