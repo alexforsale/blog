@@ -341,6 +341,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (require 'config-defaults-various)
       (require 'config-defaults-ide)
       (require 'config-defaults-email)
+      (require 'config-defaults-shell)
       (require 'config-defaults-tools)
       (require 'config-defaults-keybindings)
     #+end_src
@@ -2357,6 +2358,87 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-email)
       ;;; config-defaults-email.el ends here
     #+end_src
+** Default Shell
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-shell.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-shell.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+*** Eshell
+**** Eshell and emacs-server
+     From [[https://www.emacswiki.org/emacs/EshellAndEmacsServer][emacswiki]]. If using /chemacs,/ to actually run this outside /emacs/, use: ~emacsclient -a "" -s <chemacs-profile> -c -e '(+server-eshell)'~
+     #+begin_src emacs-lisp
+       (require 'cl-lib)
+       (defun +server-eshell ()
+         "Command to be called by emacs-client to start a new shell.
+
+       A new eshell will be created. When the frame is closed, the buffer is deleted or the shell exits,
+       then hooks will take care that the other actions happen. For example, when the frame is closed,
+       then the buffer will be deleted and the client disconnected.
+
+       Also creates a local binding of 'C-x #' to kill the buffer."
+         (lexical-let ((buf (eshell t))
+                       (client (first server-clients))
+                       (frame (selected-frame)))
+                      (labels ((close (&optional arg)
+                                      (when (not (boundp '+cve/recurse))
+                                        (let ((+cve/recurse t))
+                                          (delete-frame frame)
+                                          (kill-buffer buf)
+                                          (server-delete-client client)))))
+                              (add-hook 'eshell-exit-hook #'close t t)
+                              (add-hook 'delete-frame-functions #'close t t))
+                      (local-set-key (kbd "C-x #") (lambda () (interactive) (kill-buffer buf)))
+                      (delete-other-windows)
+                      nil))
+     #+end_src
+**** Set current directory in prompt.
+     #+begin_src emacs-lisp
+       (setq eshell-prompt-function
+             (lambda nil
+               (concat
+                (eshell/pwd)
+                " $ ")))
+     #+end_src
+**** keybinding
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-c t e") 'eshell)
+     #+end_src
+*** Additional Packages
+**** vterm
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-vterm.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-vterm.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'vterm))
+       (require 'vterm)
+       (global-set-key (kbd "C-c t t") 'vterm)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-vterm)
+        ;;; config-vterm.el ends here
+      #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-shell)
+      ;;; config-defaults-shell.el ends here
+    #+end_src
 ** Default Completion
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-defaults-completion.el :mkdirp t
@@ -3360,88 +3442,6 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       (provide 'config-defaults-keybindings)
       ;;; config-defaults-keybindings.el ends here
     #+end_src
-** shells
-*** Eshell
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-eshell.el
-    :END:
-    #+begin_src emacs-lisp
-      ;;; config-eshell.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-    #+end_src
-    - Eshell and emacs-server, from [[https://www.emacswiki.org/emacs/EshellAndEmacsServer][emacswiki]]. If using /chemacs,/ to actually run this outside /emacs/, use: ~emacsclient -a "" -s <chemacs-profile> -c -e '(+server-eshell)'~
-      #+begin_src emacs-lisp
-        (require 'cl-lib)
-        (defun +server-eshell ()
-          "Command to be called by emacs-client to start a new shell.
-
-        A new eshell will be created. When the frame is closed, the buffer is deleted or the shell exits,
-        then hooks will take care that the other actions happen. For example, when the frame is closed,
-        then the buffer will be deleted and the client disconnected.
-
-        Also creates a local binding of 'C-x #' to kill the buffer."
-          (lexical-let ((buf (eshell t))
-                        (client (first server-clients))
-                        (frame (selected-frame)))
-                       (labels ((close (&optional arg)
-                                       (when (not (boundp '+cve/recurse))
-                                         (let ((+cve/recurse t))
-                                           (delete-frame frame)
-                                           (kill-buffer buf)
-                                           (server-delete-client client)))))
-                               (add-hook 'eshell-exit-hook #'close t t)
-                               (add-hook 'delete-frame-functions #'close t t))
-                       (local-set-key (kbd "C-x #") (lambda () (interactive) (kill-buffer buf)))
-                       (delete-other-windows)
-                       nil))
-      #+end_src
-    - Set current directory in prompt.
-      #+begin_src emacs-lisp
-        (setq eshell-prompt-function
-              (lambda nil
-                (concat
-                 (eshell/pwd)
-                 " $ ")))
-      #+end_src
-    - keybinding
-      #+begin_src emacs-lisp
-        (global-set-key (kbd "C-c t e") 'eshell)
-      #+end_src
-    - End of eshell.el
-      #+begin_src emacs-lisp
-        (provide 'config-eshell)
-        ;;; config-eshell.el ends here
-      #+end_src
-*** [[https://github.com/akermu/emacs-libvterm][vterm]]
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-vterm.el
-    :END:
-    #+begin_src emacs-lisp
-      ;;; config-vterm.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-    #+end_src
-    - clone the vterm package when not in /guix/. "${DISTRO}" is a variable set by my [[file:~/.profile][~/.profile]]
-      #+begin_src emacs-lisp
-        (unless +config/is-guix-system
-          (straight-use-package 'vterm))
-      #+end_src
-    - keybindings
-      #+begin_src emacs-lisp
-        (require 'vterm)
-        (global-set-key (kbd "C-c t t") 'vterm)
-        (global-set-key (kbd "C-c t o") 'vterm-other-window)
-      #+end_src
-    - end of config-vterm.el
-      #+begin_src emacs-lisp
-        (provide 'config-vterm)
-        ;;; config-vterm.el ends here
-      #+end_src
 ** email
 *** notmuch
     :PROPERTIES:
