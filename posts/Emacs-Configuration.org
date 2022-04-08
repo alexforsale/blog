@@ -236,7 +236,7 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
    #+end_src
 * Variables
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/modules/config-defaults-variables.el
+  :header-args: :tangle ~/.config/emacs/modules/config-defaults-variables.el :mkdirp t
   :END:
   #+begin_src emacs-lisp
     ;;; config-defaults-variables.el --- Summary -*- lexical-binding: t -*-
@@ -1434,10 +1434,10 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
       #+end_src
 **** rust-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-block-nav.el
+     :header-args: :tangle ~/.config/emacs/modules/config-rust-mode.el
      :END:
      #+begin_src emacs-lisp
-       ;;; config-block-nav.el --- Summary -*- lexical-binding: t -*-
+       ;;; config-rust-mode.el --- Summary -*- lexical-binding: t -*-
        ;;; Commentary:
        ;; This file is auto-generated from `config.org'
        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
