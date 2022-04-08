@@ -5,7 +5,7 @@
 #+language: en
 #+startup: overview
 #+startup: hideblocks
-#+options: d:t
+#+options: d:t toc:t
 
 This configuration was inspired by the [[https://github.com/SystemCrafters/rational-emacs][rational-emacs configuration]] from the [[https://www.youtube.com/c/SystemCrafters/videos][systemcrafters series]]. So instead of blindly copying every snippets of /Emacs/ configuration I've found on the internet, I'm taking the lighter approach and *try* to only use what is necessary.
 
