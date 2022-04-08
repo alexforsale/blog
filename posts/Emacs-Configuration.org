@@ -299,6 +299,21 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      (setq auto-save-file-name-transform
            `((".*" ,(expand-file-name "auto-saves/" +emacs-backup-directory) t)))
    #+end_src
+** other builtin data file
+   #+begin_src emacs-lisp
+     (setq filesets-menu-cache-file (expand-file-name "filesets-menu-cache.el" +emacs-data-dir))
+     (setq gamegrid-user-score-file-directory (expand-file-name "gamegrid-user-score/" +emacs-data-dir))
+     (setq kkc-init-file-name (expand-file-name "kkc-init.el" +emacs-data-dir))
+     (setq multisession-directory (expand-file-name "multisession/" +emacs-data-dir))
+     (setq project-list-file (expand-file-name "project-list.el" +emacs-data-dir))
+     (setq quickurl-url-file (expand-file-name "quickurl-url.el" +emacs-data-dir))
+     (setq rcirc-log-directory (expand-file-name "rcirc-log/" +emacs-data-dir))
+     (setq srecode-map-save-file (expand-file-name "srecode-map.el" +emacs-data-dir))
+     (setq semanticdb-default-save-directory (expand-file-name "semantic/" +emacs-data-dir))
+     (setq shared-game-score-directory (expand-file-name "shared-game-score/" +emacs-data-dir))
+     (setq timeclock-file (expand-file-name "timeclock" +emacs-data-dir))
+     (setq type-break-file-name (expand-file-name "type-break.el" +emacs-data-dir))
+   #+end_src
 ** footer
    #+begin_src emacs-lisp
      (provide 'config-defaults-variables)
@@ -317,684 +332,669 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;;; Code:
    #+end_src
-   - other builtin data file
-     #+begin_src emacs-lisp
-       (setq filesets-menu-cache-file         (expand-file-name "filesets-menu-cache.el" +emacs-data-dir))
-       (setq gamegrid-user-score-file-directory (expand-file-name "gamegrid-user-score/" +emacs-data-dir))
-       (setq kkc-init-file-name               (expand-file-name "kkc-init.el" +emacs-data-dir))
-       (setq multisession-directory           (expand-file-name "multisession/" +emacs-data-dir))
-       (setq project-list-file                (expand-file-name "project-list.el" +emacs-data-dir))
-       (setq quickurl-url-file                (expand-file-name "quickurl-url.el" +emacs-data-dir))
-       (setq rcirc-log-directory              (expand-file-name "rcirc-log/" +emacs-data-dir))
-       (setq srecode-map-save-file            (expand-file-name "srecode-map.el" +emacs-data-dir))
-       (setq semanticdb-default-save-directory (expand-file-name "semantic/" +emacs-data-dir))
-       (setq shared-game-score-directory      (expand-file-name "shared-game-score/" +emacs-data-dir))
-       (setq timeclock-file                   (expand-file-name "timeclock" +emacs-data-dir))
-       (setq type-break-file-name             (expand-file-name "type-break.el" +emacs-data-dir))
-     #+end_src
-   - Other modules
-     #+begin_src emacs-lisp
-       (require 'config-defaults-org)
-       (require 'config-defaults-ui)
-       (require 'config-defaults-editings)
-       (require 'config-defaults-various)
-       (require 'config-defaults-keybindings)
-     #+end_src
-   - end of config-defaults.el
-     #+begin_src emacs-lisp
-       (provide 'config-defaults)
-       ;;; config-defaults.el ends here
-     #+end_src
-*** Default UI
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-defaults-ui.el :mkdirp t
-    :END:
+*** Other modules
     #+begin_src emacs-lisp
-      ;;; config-defaults-ui.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
+      (require 'config-defaults-org)
+      (require 'config-defaults-ui)
+      (require 'config-defaults-editings)
+      (require 'config-defaults-various)
+      (require 'config-defaults-keybindings)
     #+end_src
-**** Default fonts
-     Got this from [[https://emacsredux.com/blog/2021/12/22/check-if-a-font-is-available-with-emacs-lisp/][emacsredux]]:
-     #+begin_src emacs-lisp
-       (cond
-        ((find-font (font-spec :name "Source Code Pro"))
-         (set-frame-font "Source Code Pro-10"))
-        ((find-font (font-spec :name "Fira Code"))
-         (set-frame-font "Fire Code-10"))
-        ((find-font (font-spec :name "DejaVu Sans Mono"))
-         (set-frame-font "DejaVu Sans Mono-10"))
-        ((find-font (font-spec :name "Ubuntu Mono"))
-         (set-frame-font "Ubuntu Mono-12")))
-     #+end_src
-**** Load theme
-     #+begin_src emacs-lisp
-       (unless custom-enabled-themes
-         (load-theme 'manoj-dark t))
-     #+end_src
-**** Revert Dired and other buffers
-     #+begin_src emacs-lisp
-       (customize-set-variable 'global-auto-revert-non-file-buffers t)
-     #+end_src
-**** Revert buffers when the underlying file has changed
-     #+begin_src emacs-lisp
-       (global-auto-revert-mode 1)
-     #+end_src
-**** Make scrolling less stuttered
-     #+begin_src emacs-lisp
-       (setq auto-window-vscroll nil)
-       (customize-set-variable 'fast-but-imprecise-scrolling t)
-       (customize-set-variable 'scroll-conservatively 101)
-       (customize-set-variable 'scroll-margin 0)
-       (customize-set-variable 'scroll-preserve-screen-position t)
-     #+end_src
-**** enable visual-line-mode
-     #+begin_src emacs-lisp
-       (visual-line-mode 1)
-     #+end_src
-**** move point to help window
-     #+begin_src emacs-lisp
-       (setq help-window-select t)
-     #+end_src
-**** always maximize frame
-     #+begin_src emacs-lisp
-       (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-       (add-to-list 'default-frame-alist '(fullscreen . maximized))
-     #+end_src
-**** don't truncate lines
-     #+begin_src emacs-lisp
-       (setq truncate-lines 'nil)
-     #+end_src
-**** Lines should be 80 characters wide
-     #+begin_src emacs-lisp
-       (setq fill-column 80)
-     #+end_src
-**** Show empty lines after buffer end
-     #+begin_src emacs-lisp
-       (set-default 'indicate-empty-lines t)
-     #+end_src
-**** don't confirm when following symlink files
-     #+begin_src emacs-lisp
-       (setq vc-follow-symlinks t)
-     #+end_src
-**** Enable recursive minibuffers
-     #+begin_src emacs-lisp
-       (setq enable-recursive-minibuffers t)
-     #+end_src
-**** uniquify
-     #+begin_src emacs-lisp
-       (require 'uniquify)
-       (setq uniquify-buffer-name-style 'forward)
-     #+end_src
-**** Offer to create parent directories if they do not exists, from [[http://iqbalansari.github.io/blog/2014/12/07/automatically-create-parent-directories-on-visiting-a-new-file-in-emacs/][iqbalansari.github.io]]
-     #+begin_src emacs-lisp
-       (defun +my-create-non-existent-directory ()
-         (let ((parent-directory (file-name-directory buffer-file-name)))
-           (when (and (not (file-exists-p parent-directory))
-                      (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
-             (make-directory parent-directory t))))
-
-       (add-to-list 'find-file-not-found-functions '+my-create-non-existent-directory)
-     #+end_src
-**** line numbering for some modes
-     #+begin_src emacs-lisp
-       (column-number-mode)
-
-       ;; Enable line numbers for some modes
-       (dolist (mode '(text-mode-hook
-                       prog-mode-hook
-                       conf-mode-hook))
-         (add-hook mode (lambda () (display-line-numbers-mode 1))))
-
-       ;; Override some modes which derive from the above
-       (dolist (mode '(org-mode-hook))
-         (add-hook mode (lambda () (display-line-numbers-mode 0))))
-     #+end_src
-**** Footer
-     #+begin_src emacs-lisp
-       (provide 'config-defaults-ui)
-       ;;; config-defaults-ui.el ends here
-     #+end_src
-*** Default Editings
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-defaults-editings.el :mkdirp t
-    :END:
+*** end of config-defaults.el
     #+begin_src emacs-lisp
-      ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-      (require 'config-defaults-variables)
+      (provide 'config-defaults)
+      ;;; config-defaults.el ends here
     #+end_src
-**** Escape cancels all
-     #+begin_src emacs-lisp
-       (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     #+end_src
-**** Enable =show-paren-mode=
-     #+begin_src emacs-lisp
-       (show-paren-mode)
-     #+end_src
-**** Enable =electric-pair-mode=
-     #+begin_src emacs-lisp
-       (electric-pair-mode 1)
-     #+end_src
-**** Use spaces instead of tabs
-     #+begin_src emacs-lisp
-       (setq-default indent-tabs-mode nil)
-     #+end_src
-**** Use "y" and "n" to confirm/negate prompt instead of "yes" and "no".
-     #+begin_src emacs-lisp
-       (fset 'yes-or-no-p 'y-or-n-p)
-     #+end_src
-**** Don't save duplicates in =kill-ring=
-     #+begin_src emacs-lisp
-       (customize-set-variable 'kill-do-not-save-duplicates t)
-     #+end_src
-**** Better support for files with long lines.
-     #+begin_src emacs-lisp
-       (setq-default bidi-paragraph-direction 'left-to-right)
-       (setq-default bidi-inhibit-bpa t)
-       (global-so-long-mode 1)
-     #+end_src
-**** Make shebang (#!) file executable when saved.
-     #+begin_src emacs-lisp
-       (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-     #+end_src
-**** Remove text in active region if inserting text.
-     #+begin_src emacs-lisp
-       (delete-selection-mode 1)
-     #+end_src
-**** Mouse middle-click yanks where the point is, not where the mouse is.
-     #+begin_src emacs-lisp
-       (setq mouse-yank-at-point t)
-     #+end_src
-**** Delete trailing whitespace on save.
-     #+begin_src emacs-lisp
-       (add-hook 'before-save-hook 'delete-trailing-whitespace)
-     #+end_src
-**** Easily navigate sillycased words.
-     #+begin_src emacs-lisp
-       (global-subword-mode 1)
-     #+end_src
-**** Apropos commands will search more extensively.
-     #+begin_src emacs-lisp
-       (require 'apropos)
-       (setq apropos-do-all t)
-     #+end_src
-**** Turn on =recentf-mode=
-     #+begin_src emacs-lisp
-       (add-hook 'after-init-hook #'recentf-mode)
-       (setq recentf-save-file (expand-file-name "recentf" +emacs-data-dir))
-       (setq recentf-max-saved-items 100) ;; just 20 is too recent
-     #+end_src
-**** Enable =savehist-mode= for an command history
-     #+begin_src emacs-lisp
-       (savehist-mode 1)
-       (setq history-length 1000)
-       (setq savehist-file (expand-file-name "history" +emacs-backup-directory))
-       (setq savehist-additional-variables
-             '(kill-ring
-               search-ring
-               regexp-search-ring))
-     #+end_src
-**** Enable =save-place-mode=
-     #+begin_src emacs-lisp
-       (setq save-place-mode 1)
-       (setq save-place-file (expand-file-name "save-place.el" +emacs-data-dir))
-     #+end_src
-**** =abbrev-mode=
-     #+begin_src emacs-lisp
-       (setq abbrev-file-name (expand-file-name "abbrev_defs" +emacs-data-dir))
-     #+end_src
-**** =auto-insert= mode
-***** auto-insert-directory
-      #+begin_src emacs-lisp
-        (setq auto-insert-directory (expand-file-name "auto-insert/" +emacs-data-dir))
-      #+end_src
-***** TODO =auto-insert-alist=
-      :LOGBOOK:
-      - State "TODO"       from              [2022-03-22 Tue 16:45]
-      :END:
-
-**** Move files to trash when deleting.
-     #+begin_src emacs-lisp
-       (setq delete-by-moving-to-trash t)
-     #+end_src
-**** Footer
-     #+begin_src emacs-lisp
-       (provide 'config-defaults-editings)
-       ;;; config-defaults-editings.el ends here
-     #+end_src
-*** Default Org Configurations
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-defaults-org.el :mkdirp t
-    :END:
+** Default UI
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ui.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-ui.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+   #+end_src
+*** Default fonts
+    Got this from [[https://emacsredux.com/blog/2021/12/22/check-if-a-font-is-available-with-emacs-lisp/][emacsredux]]:
     #+begin_src emacs-lisp
-      ;;; config-defaults-org.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
-      (require 'org)
+      (cond
+       ((find-font (font-spec :name "Source Code Pro"))
+        (set-frame-font "Source Code Pro-10"))
+       ((find-font (font-spec :name "Fira Code"))
+        (set-frame-font "Fire Code-10"))
+       ((find-font (font-spec :name "DejaVu Sans Mono"))
+        (set-frame-font "DejaVu Sans Mono-10"))
+       ((find-font (font-spec :name "Ubuntu Mono"))
+        (set-frame-font "Ubuntu Mono-12")))
     #+end_src
-    This file stores the common /org-mode/ configuration.
-**** Sets the default directories
-     #+begin_src emacs-lisp
-       (progn
-         `(make-directory ,(expand-file-name "org/" +emacs-data-dir) t)
-         (setq org-clock-persist-file (expand-file-name "org/clock-persist.el" +emacs-data-dir))
-         (setq org-id-locations-file (expand-file-name "org/id-locations.el" +emacs-data-dir))
-         (setq org-persist-directory (expand-file-name "org/persist/" +emacs-data-dir))
-         (setq org-publish-timestamp-directory  (expand-file-name "org/timestamps/" +emacs-data-dir))
-         (setq org-generic-id-locations-file (expand-file-name ".org-generic-id-locations" +emacs-data-dir)))
-     #+end_src
-**** =org-structure-template-alist=
-     This is an /alist/ of keys and block types, with this, a block can be inserted by pressing ~TAB~ after the string =<KEY=.
-     #+begin_src emacs-lisp
-       (require 'org-tempo)
-       (add-to-list 'org-modules 'org-tempo t)
-       (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-       (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-       (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
-       (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
-       (add-to-list 'org-structure-template-alist '("py" . "src python"))
-       (add-to-list 'org-structure-template-alist '("go" . "src go"))
-       (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
-       (add-to-list 'org-structure-template-alist '("json" . "src json"))
-     #+end_src
-**** Startup variables
-     #+begin_src emacs-lisp
-       (setq org-startup-truncated nil
-             org-startup-indented nil
-             org-startup-align-all-tables t
-             org-startup-with-inline-images t
-             org-startup-with-latex-preview t
-             org-hide-block-startup t)
-     #+end_src
-**** sound and notifications
-     #+begin_src emacs-lisp
-       (setq org-clock-sound t)
-       (setq org-show-notification-handler "notify-send")
-     #+end_src
-**** hide leading stars
-     #+begin_src emacs-lisp
-       (setq org-hide-leading-stars t)
-     #+end_src
-**** adapt indentation
-     #+begin_src emacs-lisp
-       (setq org-adapt-indentation t)
-     #+end_src
-**** org-priorities
-     #+begin_src emacs-lisp
-       (setq org-highest-priority ?A
-             org-lowest-priority ?C
-             org-default-priority ?C)
-       (setq org-priority-faces '((?A . (:foreground "#dc322f" :weight bold))
-                                  (?B . (:foreground "#fdf6e3"))
-                                  (?C . (:foreground "#859900"))))
-     #+end_src
-**** fontify
-     #+begin_src emacs-lisp
-       (setq org-fontify-quote-and-verse-blocks t)
-     #+end_src
-**** footnote
-     #+begin_src emacs-lisp
-       (setq org-footnote-auto-adjust t)
-     #+end_src
-**** invisible edits
-     #+begin_src emacs-lisp
-       (setq org-catch-invisible-edits 'smart)
-     #+end_src
-**** hide emphasis-marker
-     #+begin_src emacs-lisp
-       (setq org-hide-emphasis-markers t)
-     #+end_src
-**** images
-     #+begin_src emacs-lisp
-       (setq org-image-actual-width nil)
-     #+end_src
-**** links
-     Set to relative path
-     #+begin_src emacs-lisp
-       (setq org-link-file-path-type 'relative)
-     #+end_src
-**** org-directory
-     #+begin_src emacs-lisp
-       (unless (boundp 'org-directory)
-         (customize-set-variable 'org-directory (expand-file-name "Documents/org/" (getenv "HOME"))))
-     #+end_src
-**** org-agenda
-     #+begin_src emacs-lisp
-       (require 'org-agenda)
-       (setq org-agenda-files (list org-directory)
-             org-agenda-span 'day
-             org-agenda-window-setup (quote current-window)
-             org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-             org-agenda-include-diary t
-             org-clock-persist 'history)
-     #+end_src
-**** org-capture
-     #+begin_src emacs-lisp
-       (defvar +org-capture-todo-file "todo.org"
-         "Default target for todo entries.
-                     Relative to `org-directory', unless it is absolute.")
-
-       (defun +org-capture-todo-file ()
-         "Expand `+org-capture-todo-file' from `org-directory'.
-                     If it is an absolute path return `+org-capture-todo-file' verbatim."
-         (expand-file-name +org-capture-todo-file org-directory))
-
-       (defvar +org-capture-notes-file "notes.org"
-         "Default target for storing notes.
-       Used as a fall back file for org-capture.el, for templates that do not specify a
-       target file. Is relative to `org-directory', unless it is absolute.")
-
-       (defun +org-capture-notes-file ()
-         "Expand `+org-capture-notes-file' from `org-directory'.
-       If it is an absolute path return `+org-capture-notes-file' verbatim."
-         (defvar +org-capture-notes-file org-directory))
-
-       (defvar +org-capture-links-file "links.org"
-         "Default target for storing timestamped journal entries.
-       Is relative to `org-directory', unless it is absolute.")
-
-       (defun +org-capture-links-file ()
-         "Expand `+org-capture-links-file' from `org-directory'.
-       If it is an absolute path return `+org-capture-links-file' verbatim."
-         (expand-file-name +org-capture-links-file org-directory))
-
-       (defvar +org-capture-habits-file "habits.org"
-         "Default target for storing repeated entries.
-       Is relative to `org-directory', unless it is absolute.")
-
-       (defun +org-capture-habits-file ()
-         "Expand `+org-capture-habits-file' from `org-directory'.
-       If it is an absolute path return `+org-capture-habits-file' verbatim."
-         (expand-file-name +org-capture-habits-file org-directory))
-
-       (defvar +org-capture-projects-file "projects.org"
-         "Default target for storing project entries.
-       Is relative to `org-directory', unless it is absolute.")
-
-       (defun +org-capture-projects-file ()
-         "Expand `+org-capture-projects-file' from `org-directory'.
-       If it is an absolute path return `+org-capture-projects-file' verbatim."
-         (expand-file-name +org-capture-projects-file org-directory))
-
-       (require 'org-capture)
-       (setq org-default-notes-file +org-capture-notes-file)
-     #+end_src
-**** org-archive
-     #+begin_src emacs-lisp
-       (defvar +org-archives-file "archives.org"
-         "Default target for storing archived entries.
-       Is relative to `org-directory', unless it is absolute.")
-
-       (defun +org-archives-file ()
-         "Expand `+org-archives-file' from `org-directory'.
-       If it is an absolute path return `+org-archives-file' verbatim."
-         (expand-file-name +org-archives-file org-directory))
-     #+end_src
-**** Sets the defaults directories
-     #+begin_src emacs-lisp
-       (setq org-default-notes-file
-             (expand-file-name +org-capture-notes-file org-directory)
-             +org-capture-links-file
-             (expand-file-name +org-capture-links-file org-directory)
-             +org-capture-projects-file
-             (expand-file-name +org-capture-projects-file org-directory)
-             +org-capture-habits-file
-             (expand-file-name +org-capture-habits-file org-directory))
-     #+end_src
-**** Logging
-     #+begin_src emacs-lisp
-       (setq org-log-done 'time
-             org-log-refile 'time
-             org-log-redeadline 'time
-             org-log-note-clock-out t
-             org-log-into-drawer t
-             org-log-note-headings '((done . "CLOSING NOTE %t")
-                                     (state . "State %-12s from %-12S %t")
-                                     (note . "Note taken on %t")
-                                     (reschedule . "Rescheduled from %S on %t")
-                                     (delschedule . "Not scheduled, was %S on %t")
-                                     (redeadline . "New deadline from %S on %t")
-                                     (deldeadline . "Removed deadline, was %S on %t")
-                                     (refile . "Refiled on %t")
-                                     (clock-out . "")))
-     #+end_src
-**** habits
-     #+begin_src emacs-lisp
-       (add-to-list 'org-modules 'org-habit t)
-       (setq org-habit-preceeding-days 7)
-       (setq org-habit-following-days 3)
-       (setq org-habit-graph-column 80)
-       (setq org-habit-show-habits-only-for-today nil)
-       (setq org-treat-insert-todo-heading-as-state-change t)
-     #+end_src
-**** Todos and tags
-     #+begin_src emacs-lisp
-       (setq org-todo-keywords
-             '((sequence "TODO(t!)"
-                         "PROG(p@/!)"
-                         "WAITING(w@/!)"
-                         "NEXT(n@/!)"
-                         "MAYBE(m!)"
-                         "|"
-                         "DONE(d!)"
-                         "CANCELLED(c@/!)")))
-
-       (setq org-todo-keyword-faces
-             '(("TODO" . (:foreground "#dc322f" :weight bold))
-               ("PROG" . (:foreground "#b58900"))
-               ("WAITING" . (:foreground "#859900"))
-               ("DONE" . (:foreground "#2aa198"))
-               ("MAYBE" . (:foreground "#FF2AFC"))
-               ("CANCELLED" . (:foreground "#657b83"))))
-       (setq org-complete-tags-always-offer-all-agenda-tags nil)
-     #+end_src
-**** Attach
-     #+begin_src emacs-lisp
-       (setq org-attach-directory (expand-file-name "data" org-directory))
-       (setq org-attach-dir-relative t)
-       (setq org-attach-archive-delete 'query)
-       (add-hook 'dired-mode-hook
-                 (lambda ()
-                   (define-key dired-mode-map
-                     (kbd "C-c C-x a")
-                     #'org-attach-dired-to-subtree)))
-     #+end_src
-**** Global keybindings
-     #+begin_src emacs-lisp
-       (global-set-key (kbd "C-c l") 'org-store-link)
-       (global-set-key (kbd "C-c a") 'org-agenda)
-       (global-set-key (kbd "C-c c") 'org-capture)
-     #+end_src
-**** babel
-     #+begin_src emacs-lisp
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)
-          (awk . t)
-          (C . t)
-          (css . t)
-          (calc . t)
-          (screen . t)
-          (dot . t )
-          (haskell . t)
-          (java . t)
-          (js . t)
-          (latex . t)
-          (lisp . t)
-          (lua . t)
-          (org . t)
-          (perl . t)
-          (python .t)
-          (ruby . t)
-          (shell . t)
-          (sed . t)
-          (scheme . t)
-          (sql . t)
-          (sqlite . t)))
-     #+end_src
-**** Footer
-     #+begin_src emacs-lisp
-       (provide 'config-defaults-org)
-       ;;; config-defaults-org.el ends here
-     #+end_src
-*** Various other defaults
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-defaults-various.el :mkdirp t
-    :END:
+*** Load theme
     #+begin_src emacs-lisp
-      ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
+      (unless custom-enabled-themes
+        (load-theme 'manoj-dark t))
     #+end_src
-**** =desktop-save-mode=
-     #+begin_src emacs-lisp
-       (eval-after-load 'desktop
-         `(make-directory ,(expand-file-name "desktop/" +emacs-data-dir) t))
-       (setq desktop-dirname (expand-file-name "desktop/" +emacs-data-dir))
-       (setq desktop-path (list desktop-dirname))
-     #+end_src
-**** Browser
-     #+begin_src emacs-lisp
-       (setq browse-url-generic-program "xdg-open")
-     #+end_src
-**** calendar and diary
-     #+begin_src emacs-lisp
-       (require 'calendar)
-       (setq diary-file "~/Documents/google-drive/Notes/diary")
-       (add-hook 'diary-list-entries-hook 'diary-sort-entries t)
-       (setq calendar-intermonth-spacing 1)
-     #+end_src
-**** calc file
-     #+begin_src emacs-lisp
-       (setq calc-settings-file (expand-file-name "calc-settings.el" +emacs-data-dir))
-     #+end_src
-**** ecomplete database
-     #+begin_src emacs-lisp
-       (setq ecomplete-database-file (expand-file-name "ecomplete-database.el" +emacs-data-dir))
-     #+end_src
-**** ede cache file
-     #+begin_src emacs-lisp
-       (setq ede-project-placeholder-cache-file (expand-file-name "ede-projects.el" +emacs-data-dir))
-     #+end_src
-**** =erc=
-     #+begin_src emacs-lisp
-       (eval-after-load 'erc
-         `(make-directory ,(expand-file-name "erc/dcc/" +emacs-data-dir) t))
-       (setq erc-dcc-get-default-directory    (expand-file-name "erc/dcc/" +emacs-data-dir))
-       (setq erc-log-channels-directory       (expand-file-name "erc/log-channels/" +emacs-data-dir))
-     #+end_src
-**** =eshell=
-     #+begin_src emacs-lisp
-       (eval-after-load 'eshell
-         `(make-directory ,(expand-file-name "eshell/" +emacs-data-dir) t))
-       (setq eshell-aliases-file              (expand-file-name "eshell/aliases" +emacs-data-dir))
-       (setq eshell-directory-name            (expand-file-name "eshell/" +emacs-data-dir))
-     #+end_src
-**** eudc
-     #+begin_src emacs-lisp
-       (setq eudc-options-file (expand-file-name "eudc-options.el" +emacs-data-dir))
-     #+end_src
-**** =eww=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'eww
-         `(make-directory ,(expand-file-name "eww/" +emacs-data-dir) t)
-         (setq eww-bookmarks-directory (expand-file-name "eww/" +emacs-data-dir)))
-     #+end_src
-**** =gnus=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'gnus
-         `(make-directory ,(expand-file-name "gnus/dribble/" +emacs-data-dir) t)
-         (setq gnus-dribble-directory (expand-file-name "gnus/dribble/" +emacs-data-dir))
-         (setq gnus-init-file (expand-file-name "gnus/init.el" +emacs-data-dir)))
-     #+end_src
-**** =ido=
-     #+begin_src emacs-lisp
-       (eval-after-load 'ido
-         (setq ido-save-directory-list-file (expand-file-name "ido-save-directory-list.el" +emacs-data-dir)))
-     #+end_src
-**** =dired=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'dired
-         (setq image-dired-db-file (expand-file-name "image-dired/db.el" +emacs-data-dir))
-         (setq image-dired-dir (expand-file-name "image-dired/" +emacs-data-dir))
-         (setq image-dired-gallery-dir (expand-file-name "image-dired/gallery/" +emacs-data-dir))
-         (setq image-dired-temp-image-file (expand-file-name "image-dired/temp-image" +emacs-data-dir))
-         (setq image-dired-temp-rotate-image-file (expand-file-name "image-dired/temp-rotate-image" +emacs-data-dir)))
-     #+end_src
-**** =newsticker=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'newsticker
-         `(make-directory ,(expand-file-name "newsticker/" +emacs-data-dir) t)
-         (setq newsticker-cache-filename (expand-file-name "newsticker/cache.el" +emacs-data-dir))
-         (setq newsticker-dir (expand-file-name "newsticker/data/" +emacs-data-dir)))
-     #+end_src
-**** =nsm=
-     #+begin_src emacs-lisp
-       (eval-after-load 'nsm
-         (setq nsm-settings-file (expand-file-name "nsm-settings.el" +emacs-data-dir)))
-     #+end_src
-**** =tramp=
-     #+begin_src emacs-lisp
-       (setq tramp-auto-save-directory (expand-file-name "tramp/auto-save/" +emacs-data-dir))
-       (setq tramp-persistency-file-name (expand-file-name "tramp/persistency.el" +emacs-data-dir))
-     #+end_src
-**** =shadowfile=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'shadowfile
-         `(make-directory ,(expand-file-name "shadow/" +emacs-data-dir) t)
-         (setq shadow-info-file (expand-file-name "shadow/info.el" +emacs-data-dir))
-         (setq shadow-todo-file (expand-file-name "shadow/todo.el" +emacs-data-dir)))
-     #+end_src
-**** =url=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'url
-         (setq url-cache-directory (expand-file-name "url/cache/" +emacs-data-dir))
-         (setq url-configuration-directory (expand-file-name "url/" +emacs-data-dir))
-         (setq url-cookie-file (expand-file-name "url/cookies.el" +emacs-data-dir))
-         (setq url-history-file (expand-file-name "url/history.el" +emacs-data-dir)))
-     #+end_src
-**** =remember=
-     #+begin_src emacs-lisp
-       (with-eval-after-load 'remember
-         (setq remember-data-file (expand-file-name "remember/data" +emacs-data-dir))
-         (setq remember-data-directory (expand-file-name "remember/data.d/" +emacs-data-dir)))
-     #+end_src
-**** Footer
-     #+begin_src emacs-lisp
-       (provide 'config-defaults-various)
-       ;;; config-defaults-various.el ends here
-     #+end_src
-*** Defaults keybindings
-    :PROPERTIES:
-    :header-args: :tangle ~/.config/emacs/modules/config-defaults-keybindings.el
-    :END:
+*** Revert Dired and other buffers
     #+begin_src emacs-lisp
-      ;;; config-defaults-keybindings.el --- Summary -*- lexical-binding: t -*-
-      ;;; Commentary:
-      ;; This file is auto-generated from `config.org'
-      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-      ;;; Code:
+      (customize-set-variable 'global-auto-revert-non-file-buffers t)
     #+end_src
-**** recentf
-     Previously unbound
+*** Revert buffers when the underlying file has changed
+    #+begin_src emacs-lisp
+      (global-auto-revert-mode 1)
+    #+end_src
+*** Make scrolling less stuttered
+    #+begin_src emacs-lisp
+      (setq auto-window-vscroll nil)
+      (customize-set-variable 'fast-but-imprecise-scrolling t)
+      (customize-set-variable 'scroll-conservatively 101)
+      (customize-set-variable 'scroll-margin 0)
+      (customize-set-variable 'scroll-preserve-screen-position t)
+    #+end_src
+*** enable visual-line-mode
+    #+begin_src emacs-lisp
+      (visual-line-mode 1)
+    #+end_src
+*** move point to help window
+    #+begin_src emacs-lisp
+      (setq help-window-select t)
+    #+end_src
+*** always maximize frame
+    #+begin_src emacs-lisp
+      (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+      (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    #+end_src
+*** don't truncate lines
+    #+begin_src emacs-lisp
+      (setq truncate-lines 'nil)
+    #+end_src
+*** Lines should be 80 characters wide
+    #+begin_src emacs-lisp
+      (setq fill-column 80)
+    #+end_src
+*** Show empty lines after buffer end
+    #+begin_src emacs-lisp
+      (set-default 'indicate-empty-lines t)
+    #+end_src
+*** don't confirm when following symlink files
+    #+begin_src emacs-lisp
+      (setq vc-follow-symlinks t)
+    #+end_src
+*** Enable recursive minibuffers
+    #+begin_src emacs-lisp
+      (setq enable-recursive-minibuffers t)
+    #+end_src
+*** uniquify
+    #+begin_src emacs-lisp
+      (require 'uniquify)
+      (setq uniquify-buffer-name-style 'forward)
+    #+end_src
+*** Offer to create parent directories if they do not exists, from [[http://iqbalansari.github.io/blog/2014/12/07/automatically-create-parent-directories-on-visiting-a-new-file-in-emacs/][iqbalansari.github.io]]
+    #+begin_src emacs-lisp
+      (defun +my-create-non-existent-directory ()
+        (let ((parent-directory (file-name-directory buffer-file-name)))
+          (when (and (not (file-exists-p parent-directory))
+                     (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
+            (make-directory parent-directory t))))
+
+      (add-to-list 'find-file-not-found-functions '+my-create-non-existent-directory)
+    #+end_src
+*** line numbering for some modes
+    #+begin_src emacs-lisp
+      (column-number-mode)
+
+      ;; Enable line numbers for some modes
+      (dolist (mode '(text-mode-hook
+                      prog-mode-hook
+                      conf-mode-hook))
+        (add-hook mode (lambda () (display-line-numbers-mode 1))))
+
+      ;; Override some modes which derive from the above
+      (dolist (mode '(org-mode-hook))
+        (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-ui)
+      ;;; config-defaults-ui.el ends here
+    #+end_src
+** Default Editings
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-editings.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'config-defaults-variables)
+   #+end_src
+*** Escape cancels all
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    #+end_src
+*** Enable =show-paren-mode=
+    #+begin_src emacs-lisp
+      (show-paren-mode)
+    #+end_src
+*** Enable =electric-pair-mode=
+    #+begin_src emacs-lisp
+      (electric-pair-mode 1)
+    #+end_src
+*** Use spaces instead of tabs
+    #+begin_src emacs-lisp
+      (setq-default indent-tabs-mode nil)
+    #+end_src
+*** Use "y" and "n" to confirm/negate prompt instead of "yes" and "no".
+    #+begin_src emacs-lisp
+      (fset 'yes-or-no-p 'y-or-n-p)
+    #+end_src
+*** Don't save duplicates in =kill-ring=
+    #+begin_src emacs-lisp
+      (customize-set-variable 'kill-do-not-save-duplicates t)
+    #+end_src
+*** Better support for files with long lines.
+    #+begin_src emacs-lisp
+      (setq-default bidi-paragraph-direction 'left-to-right)
+      (setq-default bidi-inhibit-bpa t)
+      (global-so-long-mode 1)
+    #+end_src
+*** Make shebang (#!) file executable when saved.
+    #+begin_src emacs-lisp
+      (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+    #+end_src
+*** Remove text in active region if inserting text.
+    #+begin_src emacs-lisp
+      (delete-selection-mode 1)
+    #+end_src
+*** Mouse middle-click yanks where the point is, not where the mouse is.
+    #+begin_src emacs-lisp
+      (setq mouse-yank-at-point t)
+    #+end_src
+*** Delete trailing whitespace on save.
+    #+begin_src emacs-lisp
+      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+    #+end_src
+*** Easily navigate sillycased words.
+    #+begin_src emacs-lisp
+      (global-subword-mode 1)
+    #+end_src
+*** Apropos commands will search more extensively.
+    #+begin_src emacs-lisp
+      (require 'apropos)
+      (setq apropos-do-all t)
+    #+end_src
+*** Turn on =recentf-mode=
+    #+begin_src emacs-lisp
+      (add-hook 'after-init-hook #'recentf-mode)
+      (setq recentf-save-file (expand-file-name "recentf" +emacs-data-dir))
+      (setq recentf-max-saved-items 100) ;; just 20 is too recent
+    #+end_src
+*** Enable =savehist-mode= for an command history
+    #+begin_src emacs-lisp
+      (savehist-mode 1)
+      (setq history-length 1000)
+      (setq savehist-file (expand-file-name "history" +emacs-backup-directory))
+      (setq savehist-additional-variables
+            '(kill-ring
+              search-ring
+              regexp-search-ring))
+    #+end_src
+*** Enable =save-place-mode=
+    #+begin_src emacs-lisp
+      (setq save-place-mode 1)
+      (setq save-place-file (expand-file-name "save-place.el" +emacs-data-dir))
+    #+end_src
+*** =abbrev-mode=
+    #+begin_src emacs-lisp
+      (setq abbrev-file-name (expand-file-name "abbrev_defs" +emacs-data-dir))
+    #+end_src
+*** =auto-insert= mode
+**** auto-insert-directory
      #+begin_src emacs-lisp
-       (global-set-key (kbd "C-x M-f") 'recentf-open-files)
+       (setq auto-insert-directory (expand-file-name "auto-insert/" +emacs-data-dir))
      #+end_src
-**** Footer
-     #+begin_src emacs-lisp
-       (provide 'config-defaults-keybindings)
-       ;;; config-defaults-keybindings.el ends here
-     #+end_src
+**** TODO =auto-insert-alist=
+     :LOGBOOK:
+     - State "TODO"       from              [2022-03-22 Tue 16:45]
+     :END:
+
+*** Move files to trash when deleting.
+    #+begin_src emacs-lisp
+      (setq delete-by-moving-to-trash t)
+    #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-editings)
+      ;;; config-defaults-editings.el ends here
+    #+end_src
+** Default Org Configurations
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-org.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-org.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+     (require 'org)
+   #+end_src
+   This file stores the common /org-mode/ configuration.
+*** Sets the default directories
+    #+begin_src emacs-lisp
+      (progn
+        `(make-directory ,(expand-file-name "org/" +emacs-data-dir) t)
+        (setq org-clock-persist-file (expand-file-name "org/clock-persist.el" +emacs-data-dir))
+        (setq org-id-locations-file (expand-file-name "org/id-locations.el" +emacs-data-dir))
+        (setq org-persist-directory (expand-file-name "org/persist/" +emacs-data-dir))
+        (setq org-publish-timestamp-directory  (expand-file-name "org/timestamps/" +emacs-data-dir))
+        (setq org-generic-id-locations-file (expand-file-name ".org-generic-id-locations" +emacs-data-dir)))
+    #+end_src
+*** =org-structure-template-alist=
+    This is an /alist/ of keys and block types, with this, a block can be inserted by pressing ~TAB~ after the string =<KEY=.
+    #+begin_src emacs-lisp
+      (require 'org-tempo)
+      (add-to-list 'org-modules 'org-tempo t)
+      (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+      (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+      (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+      (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+      (add-to-list 'org-structure-template-alist '("py" . "src python"))
+      (add-to-list 'org-structure-template-alist '("go" . "src go"))
+      (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+      (add-to-list 'org-structure-template-alist '("json" . "src json"))
+    #+end_src
+*** Startup variables
+    #+begin_src emacs-lisp
+      (setq org-startup-truncated nil
+            org-startup-indented nil
+            org-startup-align-all-tables t
+            org-startup-with-inline-images t
+            org-startup-with-latex-preview t
+            org-hide-block-startup t)
+    #+end_src
+*** sound and notifications
+    #+begin_src emacs-lisp
+      (setq org-clock-sound t)
+      (setq org-show-notification-handler "notify-send")
+    #+end_src
+*** hide leading stars
+    #+begin_src emacs-lisp
+      (setq org-hide-leading-stars t)
+    #+end_src
+*** adapt indentation
+    #+begin_src emacs-lisp
+      (setq org-adapt-indentation t)
+    #+end_src
+*** org-priorities
+    #+begin_src emacs-lisp
+      (setq org-highest-priority ?A
+            org-lowest-priority ?C
+            org-default-priority ?C)
+      (setq org-priority-faces '((?A . (:foreground "#dc322f" :weight bold))
+                                 (?B . (:foreground "#fdf6e3"))
+                                 (?C . (:foreground "#859900"))))
+    #+end_src
+*** fontify
+    #+begin_src emacs-lisp
+      (setq org-fontify-quote-and-verse-blocks t)
+    #+end_src
+*** footnote
+    #+begin_src emacs-lisp
+      (setq org-footnote-auto-adjust t)
+    #+end_src
+*** invisible edits
+    #+begin_src emacs-lisp
+      (setq org-catch-invisible-edits 'smart)
+    #+end_src
+*** hide emphasis-marker
+    #+begin_src emacs-lisp
+      (setq org-hide-emphasis-markers t)
+    #+end_src
+*** images
+    #+begin_src emacs-lisp
+      (setq org-image-actual-width nil)
+    #+end_src
+*** links
+    Set to relative path
+    #+begin_src emacs-lisp
+      (setq org-link-file-path-type 'relative)
+    #+end_src
+*** org-directory
+    #+begin_src emacs-lisp
+      (unless (boundp 'org-directory)
+        (customize-set-variable 'org-directory (expand-file-name "Documents/org/" (getenv "HOME"))))
+    #+end_src
+*** org-agenda
+    #+begin_src emacs-lisp
+      (require 'org-agenda)
+      (setq org-agenda-files (list org-directory)
+            org-agenda-span 'day
+            org-agenda-window-setup (quote current-window)
+            org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+            org-agenda-include-diary t
+            org-clock-persist 'history)
+    #+end_src
+*** org-capture
+    #+begin_src emacs-lisp
+      (defvar +org-capture-todo-file "todo.org"
+        "Default target for todo entries.
+                    Relative to `org-directory', unless it is absolute.")
+
+      (defun +org-capture-todo-file ()
+        "Expand `+org-capture-todo-file' from `org-directory'.
+                    If it is an absolute path return `+org-capture-todo-file' verbatim."
+        (expand-file-name +org-capture-todo-file org-directory))
+
+      (defvar +org-capture-notes-file "notes.org"
+        "Default target for storing notes.
+      Used as a fall back file for org-capture.el, for templates that do not specify a
+      target file. Is relative to `org-directory', unless it is absolute.")
+
+      (defun +org-capture-notes-file ()
+        "Expand `+org-capture-notes-file' from `org-directory'.
+      If it is an absolute path return `+org-capture-notes-file' verbatim."
+        (defvar +org-capture-notes-file org-directory))
+
+      (defvar +org-capture-links-file "links.org"
+        "Default target for storing timestamped journal entries.
+      Is relative to `org-directory', unless it is absolute.")
+
+      (defun +org-capture-links-file ()
+        "Expand `+org-capture-links-file' from `org-directory'.
+      If it is an absolute path return `+org-capture-links-file' verbatim."
+        (expand-file-name +org-capture-links-file org-directory))
+
+      (defvar +org-capture-habits-file "habits.org"
+        "Default target for storing repeated entries.
+      Is relative to `org-directory', unless it is absolute.")
+
+      (defun +org-capture-habits-file ()
+        "Expand `+org-capture-habits-file' from `org-directory'.
+      If it is an absolute path return `+org-capture-habits-file' verbatim."
+        (expand-file-name +org-capture-habits-file org-directory))
+
+      (defvar +org-capture-projects-file "projects.org"
+        "Default target for storing project entries.
+      Is relative to `org-directory', unless it is absolute.")
+
+      (defun +org-capture-projects-file ()
+        "Expand `+org-capture-projects-file' from `org-directory'.
+      If it is an absolute path return `+org-capture-projects-file' verbatim."
+        (expand-file-name +org-capture-projects-file org-directory))
+
+      (require 'org-capture)
+      (setq org-default-notes-file +org-capture-notes-file)
+    #+end_src
+*** org-archive
+    #+begin_src emacs-lisp
+      (defvar +org-archives-file "archives.org"
+        "Default target for storing archived entries.
+      Is relative to `org-directory', unless it is absolute.")
+
+      (defun +org-archives-file ()
+        "Expand `+org-archives-file' from `org-directory'.
+      If it is an absolute path return `+org-archives-file' verbatim."
+        (expand-file-name +org-archives-file org-directory))
+    #+end_src
+*** Sets the defaults directories
+    #+begin_src emacs-lisp
+      (setq org-default-notes-file
+            (expand-file-name +org-capture-notes-file org-directory)
+            +org-capture-links-file
+            (expand-file-name +org-capture-links-file org-directory)
+            +org-capture-projects-file
+            (expand-file-name +org-capture-projects-file org-directory)
+            +org-capture-habits-file
+            (expand-file-name +org-capture-habits-file org-directory))
+    #+end_src
+*** Logging
+    #+begin_src emacs-lisp
+      (setq org-log-done 'time
+            org-log-refile 'time
+            org-log-redeadline 'time
+            org-log-note-clock-out t
+            org-log-into-drawer t
+            org-log-note-headings '((done . "CLOSING NOTE %t")
+                                    (state . "State %-12s from %-12S %t")
+                                    (note . "Note taken on %t")
+                                    (reschedule . "Rescheduled from %S on %t")
+                                    (delschedule . "Not scheduled, was %S on %t")
+                                    (redeadline . "New deadline from %S on %t")
+                                    (deldeadline . "Removed deadline, was %S on %t")
+                                    (refile . "Refiled on %t")
+                                    (clock-out . "")))
+    #+end_src
+*** habits
+    #+begin_src emacs-lisp
+      (add-to-list 'org-modules 'org-habit t)
+      (setq org-habit-preceeding-days 7)
+      (setq org-habit-following-days 3)
+      (setq org-habit-graph-column 80)
+      (setq org-habit-show-habits-only-for-today nil)
+      (setq org-treat-insert-todo-heading-as-state-change t)
+    #+end_src
+*** Todos and tags
+    #+begin_src emacs-lisp
+      (setq org-todo-keywords
+            '((sequence "TODO(t!)"
+                        "PROG(p@/!)"
+                        "WAITING(w@/!)"
+                        "NEXT(n@/!)"
+                        "MAYBE(m!)"
+                        "|"
+                        "DONE(d!)"
+                        "CANCELLED(c@/!)")))
+
+      (setq org-todo-keyword-faces
+            '(("TODO" . (:foreground "#dc322f" :weight bold))
+              ("PROG" . (:foreground "#b58900"))
+              ("WAITING" . (:foreground "#859900"))
+              ("DONE" . (:foreground "#2aa198"))
+              ("MAYBE" . (:foreground "#FF2AFC"))
+              ("CANCELLED" . (:foreground "#657b83"))))
+      (setq org-complete-tags-always-offer-all-agenda-tags nil)
+    #+end_src
+*** Attach
+    #+begin_src emacs-lisp
+      (setq org-attach-directory (expand-file-name "data" org-directory))
+      (setq org-attach-dir-relative t)
+      (setq org-attach-archive-delete 'query)
+      (add-hook 'dired-mode-hook
+                (lambda ()
+                  (define-key dired-mode-map
+                    (kbd "C-c C-x a")
+                    #'org-attach-dired-to-subtree)))
+    #+end_src
+*** Global keybindings
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-c l") 'org-store-link)
+      (global-set-key (kbd "C-c a") 'org-agenda)
+      (global-set-key (kbd "C-c c") 'org-capture)
+    #+end_src
+*** babel
+    #+begin_src emacs-lisp
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((emacs-lisp . t)
+         (awk . t)
+         (C . t)
+         (css . t)
+         (calc . t)
+         (screen . t)
+         (dot . t )
+         (haskell . t)
+         (java . t)
+         (js . t)
+         (latex . t)
+         (lisp . t)
+         (lua . t)
+         (org . t)
+         (perl . t)
+         (python .t)
+         (ruby . t)
+         (shell . t)
+         (sed . t)
+         (scheme . t)
+         (sql . t)
+         (sqlite . t)))
+    #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-org)
+      ;;; config-defaults-org.el ends here
+    #+end_src
+** Various other defaults
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-various.el :mkdirp t
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+   #+end_src
+*** =desktop-save-mode=
+    #+begin_src emacs-lisp
+      (eval-after-load 'desktop
+        `(make-directory ,(expand-file-name "desktop/" +emacs-data-dir) t))
+      (setq desktop-dirname (expand-file-name "desktop/" +emacs-data-dir))
+      (setq desktop-path (list desktop-dirname))
+    #+end_src
+*** Browser
+    #+begin_src emacs-lisp
+      (setq browse-url-generic-program "xdg-open")
+    #+end_src
+*** calendar and diary
+    #+begin_src emacs-lisp
+      (require 'calendar)
+      (setq diary-file "~/Documents/google-drive/Notes/diary")
+      (add-hook 'diary-list-entries-hook 'diary-sort-entries t)
+      (setq calendar-intermonth-spacing 1)
+    #+end_src
+*** calc file
+    #+begin_src emacs-lisp
+      (setq calc-settings-file (expand-file-name "calc-settings.el" +emacs-data-dir))
+    #+end_src
+*** ecomplete database
+    #+begin_src emacs-lisp
+      (setq ecomplete-database-file (expand-file-name "ecomplete-database.el" +emacs-data-dir))
+    #+end_src
+*** ede cache file
+    #+begin_src emacs-lisp
+      (setq ede-project-placeholder-cache-file (expand-file-name "ede-projects.el" +emacs-data-dir))
+    #+end_src
+*** =erc=
+    #+begin_src emacs-lisp
+      (eval-after-load 'erc
+        `(make-directory ,(expand-file-name "erc/dcc/" +emacs-data-dir) t))
+      (setq erc-dcc-get-default-directory    (expand-file-name "erc/dcc/" +emacs-data-dir))
+      (setq erc-log-channels-directory       (expand-file-name "erc/log-channels/" +emacs-data-dir))
+    #+end_src
+*** =eshell=
+    #+begin_src emacs-lisp
+      (eval-after-load 'eshell
+        `(make-directory ,(expand-file-name "eshell/" +emacs-data-dir) t))
+      (setq eshell-aliases-file              (expand-file-name "eshell/aliases" +emacs-data-dir))
+      (setq eshell-directory-name            (expand-file-name "eshell/" +emacs-data-dir))
+    #+end_src
+*** eudc
+    #+begin_src emacs-lisp
+      (setq eudc-options-file (expand-file-name "eudc-options.el" +emacs-data-dir))
+    #+end_src
+*** =eww=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'eww
+        `(make-directory ,(expand-file-name "eww/" +emacs-data-dir) t)
+        (setq eww-bookmarks-directory (expand-file-name "eww/" +emacs-data-dir)))
+    #+end_src
+*** =gnus=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'gnus
+        `(make-directory ,(expand-file-name "gnus/dribble/" +emacs-data-dir) t)
+        (setq gnus-dribble-directory (expand-file-name "gnus/dribble/" +emacs-data-dir))
+        (setq gnus-init-file (expand-file-name "gnus/init.el" +emacs-data-dir)))
+    #+end_src
+*** =ido=
+    #+begin_src emacs-lisp
+      (eval-after-load 'ido
+        (setq ido-save-directory-list-file (expand-file-name "ido-save-directory-list.el" +emacs-data-dir)))
+    #+end_src
+*** =dired=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'dired
+        (setq image-dired-db-file (expand-file-name "image-dired/db.el" +emacs-data-dir))
+        (setq image-dired-dir (expand-file-name "image-dired/" +emacs-data-dir))
+        (setq image-dired-gallery-dir (expand-file-name "image-dired/gallery/" +emacs-data-dir))
+        (setq image-dired-temp-image-file (expand-file-name "image-dired/temp-image" +emacs-data-dir))
+        (setq image-dired-temp-rotate-image-file (expand-file-name "image-dired/temp-rotate-image" +emacs-data-dir)))
+    #+end_src
+*** =newsticker=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'newsticker
+        `(make-directory ,(expand-file-name "newsticker/" +emacs-data-dir) t)
+        (setq newsticker-cache-filename (expand-file-name "newsticker/cache.el" +emacs-data-dir))
+        (setq newsticker-dir (expand-file-name "newsticker/data/" +emacs-data-dir)))
+    #+end_src
+*** =nsm=
+    #+begin_src emacs-lisp
+      (eval-after-load 'nsm
+        (setq nsm-settings-file (expand-file-name "nsm-settings.el" +emacs-data-dir)))
+    #+end_src
+*** =tramp=
+    #+begin_src emacs-lisp
+      (setq tramp-auto-save-directory (expand-file-name "tramp/auto-save/" +emacs-data-dir))
+      (setq tramp-persistency-file-name (expand-file-name "tramp/persistency.el" +emacs-data-dir))
+    #+end_src
+*** =shadowfile=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'shadowfile
+        `(make-directory ,(expand-file-name "shadow/" +emacs-data-dir) t)
+        (setq shadow-info-file (expand-file-name "shadow/info.el" +emacs-data-dir))
+        (setq shadow-todo-file (expand-file-name "shadow/todo.el" +emacs-data-dir)))
+    #+end_src
+*** =url=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'url
+        (setq url-cache-directory (expand-file-name "url/cache/" +emacs-data-dir))
+        (setq url-configuration-directory (expand-file-name "url/" +emacs-data-dir))
+        (setq url-cookie-file (expand-file-name "url/cookies.el" +emacs-data-dir))
+        (setq url-history-file (expand-file-name "url/history.el" +emacs-data-dir)))
+    #+end_src
+*** =remember=
+    #+begin_src emacs-lisp
+      (with-eval-after-load 'remember
+        (setq remember-data-file (expand-file-name "remember/data" +emacs-data-dir))
+        (setq remember-data-directory (expand-file-name "remember/data.d/" +emacs-data-dir)))
+    #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-various)
+      ;;; config-defaults-various.el ends here
+    #+end_src
+** Defaults keybindings
+   :PROPERTIES:
+   :header-args: :tangle ~/.config/emacs/modules/config-defaults-keybindings.el
+   :END:
+   #+begin_src emacs-lisp
+     ;;; config-defaults-keybindings.el --- Summary -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; This file is auto-generated from `config.org'
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;;; Code:
+   #+end_src
+*** recentf
+    Previously unbound
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-x M-f") 'recentf-open-files)
+    #+end_src
+*** Footer
+    #+begin_src emacs-lisp
+      (provide 'config-defaults-keybindings)
+      ;;; config-defaults-keybindings.el ends here
+    #+end_src
 ** org
    :PROPERTIES:
    :header-args: :tangle ~/.config/emacs/modules/config-org.el :mkdirp t
