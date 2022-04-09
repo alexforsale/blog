@@ -16,96 +16,97 @@ By default this will creates an =emacs= directory insinde =~/.config= or whereve
 To easily toggle the additional packages, create a =config-user.el= file inside =user-emacs-directory=, unfortunately hardcoded here to =~/.config/emacs=. This file also generate =~/.config/emacs/config-user.el.example=:
 * Example =config-user.el=
 #+begin_src emacs-lisp :tangle ~/.config/emacs/config-user.el.example
-;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
-;;; Commentary:
-;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-;; for details.
-;;; Code:
+  ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
+  ;;; Commentary:
+  ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+  ;; for details.
+  ;;; Code:
 
-(setq user-full-name "Kristian Alexander P"
-      user-mail-address "alexforsale@yahoo.com")
-(customize-set-variable 'org-directory (expand-file-name "Documents/google-drive/org/" (getenv "HOME")))
-(customize-set-variable '+org-archives-file (expand-file-name "archives.org" org-directory))
-(customize-set-variable '+org-capture-todo-file (expand-file-name "todo.org" org-directory))
-(customize-set-variable '+org-capture-links-file (expand-file-name "links.org" org-directory))
-(customize-set-variable '+org-capture-notes-file (expand-file-name "notes.org" org-directory))
-(customize-set-variable '+org-capture-habits-file (expand-file-name "habits.org" org-directory))
-(customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
-(customize-set-variable 'org-agenda-files (list org-directory))
-(customize-set-variable '+emms-music-dir "~/Music")
+  (setq user-full-name "Kristian Alexander P"
+        user-mail-address "alexforsale@yahoo.com")
+  (customize-set-variable 'org-directory (expand-file-name "Documents/google-drive/org/" (getenv "HOME")))
+  (customize-set-variable '+org-archives-file (expand-file-name "archives.org" org-directory))
+  (customize-set-variable '+org-capture-todo-file (expand-file-name "todo.org" org-directory))
+  (customize-set-variable '+org-capture-links-file (expand-file-name "links.org" org-directory))
+  (customize-set-variable '+org-capture-notes-file (expand-file-name "notes.org" org-directory))
+  (customize-set-variable '+org-capture-habits-file (expand-file-name "habits.org" org-directory))
+  (customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
+  (customize-set-variable 'org-agenda-files (list org-directory))
+  (customize-set-variable '+emms-music-dir "~/Music")
 
-;; UI Additional packages
-(require 'config-all-the-icons)
-(require 'config-doom-modelines)
-(require 'config-doom-themes)
-(require 'config-theme-magic)
-(require 'config-helpful)
-(require 'config-which-key)
-(require 'config-ace-window)
-(require 'config-perspective)
-(require 'config-centaur-tabs)
-(require 'config-rainbow-mode)
-(require 'config-rainbow-delimiters)
-(require 'config-hl-todo)
-(require 'config-diminish)
-(require 'config-dashboard)
-(require 'config-alert)
+  ;; UI Additional packages
+  (require 'config-all-the-icons)
+  (require 'config-doom-modelines)
+  (require 'config-doom-themes)
+  (require 'config-theme-magic)
+  (require 'config-helpful)
+  (require 'config-which-key)
+  (require 'config-ace-window)
+  (require 'config-perspective)
+  (require 'config-centaur-tabs)
+  (require 'config-rainbow-mode)
+  (require 'config-rainbow-delimiters)
+  (require 'config-hl-todo)
+  (require 'config-diminish)
+  (require 'config-dashboard)
+  (require 'config-alert)
 
-;; Editing Additional packages
-(require 'config-multiple-cursors)
-(require 'config-yasnippet)
-(require 'config-geiser)
-(require 'config-yaml-mode)
-(require 'config-toml-mode)
-(require 'config-nix-mode)
-(require 'config-markdown-mode)
-(require 'config-rust-mode)
-(require 'config-visual-regexp)
-(require 'config-undo-fu)
-(require 'config-block-nav)
-(require 'config-ansible)
+  ;; Editing Additional packages
+  (require 'config-multiple-cursors)
+  (require 'config-yasnippet)
+  (require 'config-geiser)
+  (require 'config-yaml-mode)
+  (require 'config-toml-mode)
+  (require 'config-nix-mode)
+  (require 'config-markdown-mode)
+  (require 'config-rust-mode)
+  (require 'config-visual-regexp)
+  (require 'config-undo-fu)
+  (require 'config-block-nav)
+  (require 'config-ansible)
 
-;; Org Additional packages
-(require 'config-org-roam)
-(require 'config-org-elfeed)
-(require 'config-org-gcal)
-(require 'config-org-journal)
+  ;; Org Additional packages
+  (require 'config-org-roam)
+  (require 'config-org-elfeed)
+  (require 'config-org-gcal)
+  (require 'config-org-journal)
 
-;; IDE Additional packages
-(require 'config-flycheck)
-(require 'config-projectile)
-(require 'config-lsp-mode)
+  ;; IDE Additional packages
+  (require 'config-flycheck)
+  (require 'config-projectile)
+  (require 'config-lsp-mode)
 
-;; Email Additional packages
-(require 'config-notmuch)
-(require 'config-gnus-alias)
+  ;; Email Additional packages
+  (require 'config-notmuch)
+  (require 'config-gnus-alias)
 
-;; Shell Additional packages
-(require 'config-vterm)
+  ;; Shell Additional packages
+  (require 'config-vterm)
 
-;; Completion packages
-(require 'config-vertico)
-(require 'config-orderless)
-(require 'config-marginalia)
-(require 'config-consult)
-(require 'config-embark)
-(require 'config-corfu)
-(require 'config-dabbrev)
+  ;; Completion packages
+  (require 'config-vertico)
+  (require 'config-orderless)
+  (require 'config-marginalia)
+  (require 'config-consult)
+  (require 'config-embark)
+  (require 'config-corfu)
+  (require 'config-dabbrev)
 
-;; Misc tools packages
-(require 'config-pass)
-(require 'config-magit)
-(require 'config-slime)
-(require 'config-paredit)
-(require 'config-telega)
-(require 'config-emms)
-(require 'config-w3m)
-(require 'config-pdf-tools)
-(require 'config-gist)
-(require 'config-ripgrep)
+  ;; Misc tools packages
+  (require 'config-pass)
+  (require 'config-magit)
+  ;;(require 'config-slime)
+  (require 'config-sly) ; a better repl than slime
+  (require 'config-paredit)
+  (require 'config-telega)
+  (require 'config-emms)
+  (require 'config-w3m)
+  (require 'config-pdf-tools)
+  (require 'config-gist)
+  (require 'config-ripgrep)
 
-(provide 'config-user)
-;;; config-user.el ends here
+  (provide 'config-user)
+  ;;; config-user.el ends here
 #+end_src
 * config.org
   :PROPERTIES:
@@ -3125,47 +3126,28 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
            "Fontify sections of SLIME Description."
            (slime-description-fontify)))
      #+end_src
-***** Improve usability of slime-apropos: slime-apropos-minor-mode
-      #+begin_src emacs-lisp
-          (when (executable-find "sbcl")
-            (defvar slime-apropos-anchor-regexp "^[^ ]")
-            (defun slime-apropos-next-anchor ()
-              (interactive)
-              (let ((pt (point)))
-                (forward-line 1)
-                (if (re-search-forward slime-apropos-anchor-regexp nil t)
-                    (goto-char (match-beginning 0))
-                  (goto-char pt)
-                  (error "anchor not found"))))
-
-            (defun slime-apropos-prev-anchor ()
-              (interactive)
-              (let ((p (point)))
-                (if (re-search-backward slime-apropos-anchor-regexp nil t)
-                    (goto-char (match-beginning 0))
-                  (goto-char p)
-                  (error "anchor not found"))))
-
-            (defvar slime-apropos-minor-mode-map (make-sparse-keymap))
-            (define-key slime-apropos-minor-mode-map "\C-m" 'slime-describe-symbol)
-            (define-key slime-apropos-minor-mode-map "l" 'slime-describe-symbol)
-            (define-key slime-apropos-minor-mode-map "j" 'slime-apropos-next-anchor)
-            (define-key slime-apropos-minor-mode-map "k" 'slime-apropos-prev-anchor)
-            (define-minor-mode slime-apropos-minor-mode "")
-
-            (defadvice slime-show-apropos (after slime-apropos-minor-mode activate)
-              ""
-              (when (get-buffer "*SLIME Apropos*")
-                (with-current-buffer "*SLIME Apropos*" (slime-apropos-minor-mode 1)))))
-      #+end_src
-***** slime-contrib
-      #+begin_src emacs-lisp
-        (setq slime-contribs '(slime-fancy slime-hyperdoc))
-      #+end_src
+**** sly
+     :PROPERTIES:
+     :header-args: :tangle ~/.config/emacs/modules/config-sly.el
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-sly.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'sly))
+       (require 'sly-autoloads)
+       (setq inferior-lisp-program "sbcl")
+     #+end_src
 ***** Footer
       #+begin_src emacs-lisp
-        (provide 'config-slime)
-        ;;; config-slime.el ends here
+        (provide 'config-sly)
+        ;;; config-sly.el ends here
       #+end_src
 **** paredit
      :PROPERTIES:
