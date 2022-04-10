@@ -253,8 +253,8 @@
          (run-shell-command "udiskie -t")
          (run-shell-command "~/.fehbg")
          (grename "Term") ; rename from Default
-         (gnew "Dev")
-         (gnew "Web")
+         (gnewbg "Dev")
+         (gnewbg "Web")
          (which-key-mode)))
    #+end_src
    This also rename the /Default/ frame to /Term/. And create additional frame named /Dev/, and /Web/. Usually these are all I needed in a session and my muscle memory set them to /1/, /2/, and /3/ respectively.
@@ -684,24 +684,23 @@
     #+begin_src lisp
       (define-remapped-keys
           `((,(lambda (win)
-                (or (string-equal "Firefox" (window-class win))
-                    (string-equal "Chrome" (window-class win)))
-                ("C-n" . "Down")
-                ("C-p" . "Up")
-                ("C-f" . "Right")
-                ("C-b" . "Left")
-                ("C-v" . "Next")
-                ("M-v" . "Prior")
-                ("M-w" . "C-c")
-                ("C-w" . "C-x")
-                ("C-y" . "C-v")
-                ("M-<" . "Home")
-                ("M->" . "End")
-                ("C-M-b" . "M-Left")
-                ("C-M-f" . "M-Right")
-                ("M-f" . "C-Right")
-                ("M-b" . "C-Left")
-                ("C-k" . ("C-S-End" "C-x"))))))
+                (string-equal "Firefox" (window-class win)))
+              ("C-n"   . "Down")
+              ("C-p"   . "Up")
+              ("C-f"   . "Right")
+              ("C-b"   . "Left")
+              ("C-v"   . "Next")
+              ("M-v"   . "Prior")
+              ("M-w"   . "C-c")
+              ("C-w"   . "C-x")
+              ("C-y"   . "C-v")
+              ("M-<"   . "Home")
+              ("M->"   . "End")
+              ("C-M-b" . "M-Left")
+              ("C-M-f" . "M-Right")
+              ("M-f"   . "C-Right")
+              ("M-b"   . "C-Left")
+              ("C-k"   . ("C-S-End" "C-x")))))
     #+end_src
 *** imdb and duckduckgo
     This is from the default configuration, I don't use this often.
