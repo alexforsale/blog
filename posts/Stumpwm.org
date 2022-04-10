@@ -649,7 +649,7 @@
       #+end_src
 ***** rofi
       #+begin_src lisp
-        (define-key *top-map* (kbd "s-d") "exec rofi -show combi")
+        (define-key *top-map* (kbd "s-d") "exec rofi -show drun")
       #+end_src
 ***** =colon=
       I use this often enough it deserve it's own key.
