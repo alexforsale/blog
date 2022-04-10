@@ -602,6 +602,12 @@
          (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec pactl -- set-sink-volume @DEFAULT_SINK@ +5%")
          (define-key *top-map* (kbd "XF86AudioMute") "exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle")
        #+end_src
+****** Audio Player
+       #+begin_src lisp
+         (define-key *top-map* (kbd "XF86AudioPlay") "exec playerctl play-pause")
+         (define-key *top-map* (kbd "XF86AudioNext") "exec playerctl next")
+         (define-key *top-map* (kbd "XF86AudioPrev") "exec playerctl previous")
+       #+end_src
 ****** Backlight
        #+begin_src lisp
          (define-key *top-map* (kbd "XF86MonBrightnessDown") "exec brightnessctl set 5%-")
