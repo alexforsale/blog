@@ -370,6 +370,20 @@
      #+begin_src lisp
        (set-msg-border-width 0)
      #+end_src
+
+** Window Appearance
+   - =*maxsize-border-width*= :: The width in pixels given to the borders of windows with maxsize or ratio hints.
+     #+begin_src lisp
+       (setf *maxsize-border-width* 0)
+     #+end_src
+   - =*transient-border-width*= :: The width in pixels given to the borders of transient or pop-up windows.
+     #+begin_src lisp
+       (setf *transient-border-width* 0)
+     #+end_src
+   - =*window-border-style*= :: This controls the appearance of the border around windows. Valid values are: =:thick=, =:thin=, =:tight=, and =:none=.
+     #+begin_src lisp
+       (setf *window-border-style* :none)
+     #+end_src
 ** Font
    In order to use /TTF/ fonts, we need an additional package =ttf-fonts=, which is available in the =contrib= repository, or from /quicklisp/.
    #+begin_src lisp
