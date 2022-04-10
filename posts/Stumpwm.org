@@ -515,7 +515,8 @@
            (define-key m (kbd "C-w") "exec $TERMINAL -e nmtui")
            (define-key m (kbd "g") "exec gimp")
            (define-key m (kbd "f") "exec thunar")
-           (define-key m (kbd "p") "exec rofi-pass")
+           (define-key m (kbd "C-p") "exec rofi-pass")
+           (define-key m (kbd "p") "exec picard")
            (define-key m (kbd "h") "exec hakuneko-desktop")
            (define-key m (kbd "v") "exec vlc")
            (define-key m (kbd "S") "exec *my-screenshot-keymap*")
@@ -766,6 +767,7 @@
        (5 t t :create "message-dump" :class "TelegramDesktop"))
 
      (define-frame-preference "Multimedia"
+       (6 t t :create "multimedia-dump" :class "Picard")
        (6 t t :create "multimedia-dump" :class "mpv")
        (6 t t :create "multimedia-dump" :class "vlc")
        (6 t t :create "multimedia-dump" :class "hakuneko-desktop")
