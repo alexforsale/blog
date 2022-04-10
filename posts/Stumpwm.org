@@ -516,8 +516,11 @@
            (define-key m (kbd "g") "exec gimp")
            (define-key m (kbd "f") "exec thunar")
            (define-key m (kbd "p") "exec rofi-pass")
+           (define-key m (kbd "h") "exec hakuneko-desktop")
+           (define-key m (kbd "v") "exec vlc")
            (define-key m (kbd "S") "exec *my-screenshot-keymap*")
            (define-key m (kbd "t") "exec emacsclient -c -e \"(telega)\"")
+           (define-key m (kbd "T") "exec telegram-desktop")
            m))
      #+end_src
 *** TODO Undefine default keybindings
@@ -763,6 +766,9 @@
        (5 t t :create "message-dump" :class "TelegramDesktop"))
 
      (define-frame-preference "Multimedia"
+       (6 t t :create "multimedia-dump" :class "mpv")
+       (6 t t :create "multimedia-dump" :class "vlc")
+       (6 t t :create "multimedia-dump" :class "hakuneko-desktop")
        (6 t t :create "multimedia-dump" :class "Gimp"))
    #+end_src
 
