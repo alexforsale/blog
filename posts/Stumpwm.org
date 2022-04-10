@@ -748,8 +748,8 @@
      #+end_src
 **** Brightneess
      #+begin_src lisp
-       (define-key *top-map* (kbd "s-F2") "exec brightnessctl set 5%-")
-       (define-key *top-map* (kbd "s-F3") "exec brightnessctl set +5%")
+       (define-key *top-map* (kbd "C-s-F2") "exec brightnessctl set 5%-")
+       (define-key *top-map* (kbd "C-s-F3") "exec brightnessctl set +5%")
      #+end_src
 *** Remapped Keys
     The =define-remapped-keys= function can be configured to translate certain familiar top level keybindings to alternative key sequences that are understood by specific applications. One example is to force the /Emacs/ keybinding ~C-n~ and ~C-p~ to move up and down for any specified application. To use the original application we can use =send-raw-key=. And for temporarily disable all remapped keys, set the =*remapped-keys-enabled-p*= to nil.
