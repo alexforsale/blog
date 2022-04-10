@@ -3127,6 +3127,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
            "Fontify sections of SLIME Description."
            (slime-description-fontify)))
      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-slime)
+        ;;; config-slime.el ends here
+      #+end_src
 **** sly
      :PROPERTIES:
      :header-args: :tangle ~/.config/emacs/modules/config-sly.el
