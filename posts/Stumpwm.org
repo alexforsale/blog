@@ -613,6 +613,11 @@
          (define-key *top-map* (kbd "XF86MonBrightnessDown") "exec brightnessctl set 5%-")
          (define-key *top-map* (kbd "XF86MonBrightnessUp") "exec brightnessctl set +5%")
        #+end_src
+***** Picom transparency
+      #+begin_src lisp
+        (define-key *top-map* (kbd "s-F2") "exec picom-trans -c -5")
+        (define-key *top-map* (kbd "s-F3") "exec picom-trans -c +5")
+      #+end_src
 ***** =colon=
       I use this often enough it deserve it's own key.
       #+begin_src lisp
