@@ -664,6 +664,10 @@
       #+begin_src lisp
         (define-key *top-map* (kbd "s-x") '*my-app-bindings*)
       #+end_src
+***** escape-key
+      #+begin_src lisp
+        (define-key *top-map* (kbd "s-quoteleft") "send-raw-key")
+      #+end_src
 **** Group Map
 ***** vgroups
       #+begin_src lisp
@@ -675,6 +679,30 @@
       #+begin_src lisp
         (define-key *root-map* (kbd "g") '*groups-map*)
       #+end_src
+*** Remapped Keys
+    The =define-remapped-keys= function can be configured to translate certain familiar top level keybindings to alternative key sequences that are understood by specific applications. One example is to force the /Emacs/ keybinding ~C-n~ and ~C-p~ to move up and down for any specified application. To use the original application we can use =send-raw-key=. And for temporarily disable all remapped keys, set the =*remapped-keys-enabled-p*= to nil.
+    #+begin_src lisp
+      (define-remapped-keys
+          `((,(lambda (win)
+                (or (string-equal "Firefox" (window-class win))
+                    (string-equal "Chrome" (window-class win)))
+                ("C-n" . "Down")
+                ("C-p" . "Up")
+                ("C-f" . "Right")
+                ("C-b" . "Left")
+                ("C-v" . "Next")
+                ("M-v" . "Prior")
+                ("M-w" . "C-c")
+                ("C-w" . "C-x")
+                ("C-y" . "C-v")
+                ("M-<" . "Home")
+                ("M->" . "End")
+                ("C-M-b" . "M-Left")
+                ("C-M-f" . "M-Right")
+                ("M-f" . "C-Right")
+                ("M-b" . "C-Left")
+                ("C-k" . ("C-S-End" "C-x"))))))
+    #+end_src
 *** imdb and duckduckgo
     This is from the default configuration, I don't use this often.
     #+begin_src lisp :tangle no
