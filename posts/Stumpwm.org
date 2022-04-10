@@ -512,6 +512,7 @@
          (let ((m (make-sparse-keymap)))
            (define-key m (kbd "e") "emacs")
            (define-key m (kbd "w") "web")
+           (define-key m (kbd "C-w") "exec $TERMINAL -e nmtui")
            (define-key m (kbd "g") "exec gimp")
            (define-key m (kbd "f") "exec thunar")
            (define-key m (kbd "p") "exec rofi-pass")
