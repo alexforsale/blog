@@ -1,4 +1,4 @@
-#+title: Mail Configuration Using msmtp, offlineimap, goimapnotify and notmuch
+#+title: Mail Configuration Using msmtp, offlineimap, and notmuch
 #+subtitle: Part of Living your live in text mode series
 #+date: <2022-03-23 Wed>
 #+author: Kristian Alexander P
@@ -607,146 +607,86 @@
       #+begin_src conf
         [Filter.21]
         query = date:2021
-        tags = +archive2021;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2021;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2021-archive
       #+end_src
 ***** 2020
       #+begin_src conf
         [Filter.20]
         query = date:2020
-        tags = +archive2020;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2020;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2020-archive
       #+end_src
 ***** 2019
       #+begin_src conf
         [Filter.19]
         query = date:2019
-        tags = +archive2019;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2019;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2019-archive
       #+end_src
 ***** 2018
       #+begin_src conf
         [Filter.18]
         query = date:2018
-        tags = +archive2018;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2018;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2018-archive
       #+end_src
 ***** 2017
       #+begin_src conf
         [Filter.17]
         query = date:2017
-        tags = +archive2017;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2017;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2017-archive
       #+end_src
 ***** 2016
       #+begin_src conf
         [Filter.16]
         query = date:2016
-        tags = +archive2016;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2016;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2016-archive
       #+end_src
 ***** 2015
       #+begin_src conf
         [Filter.15]
         query = date:2015
-        tags = +archive2015;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2015;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2015-archive
       #+end_src
 ***** 2014
       #+begin_src conf
         [Filter.14]
         query = date:2014
-        tags = +archive2014;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2014;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2014-archive
       #+end_src
 ***** 2013
       #+begin_src conf
         [Filter.13]
         query = date:2013
-        tags = +archive2013;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2013;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2013-archive
       #+end_src
 ***** 2012
       #+begin_src conf
         [Filter.12]
         query = date:2012
-        tags = +archive2012;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2012;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2012-archive
       #+end_src
 ***** 2011
       #+begin_src conf
         [Filter.11]
         query = date:2011
-        tags = +archive2011;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2011;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2011-archive
       #+end_src
 ***** 2010
       #+begin_src conf
         [Filter.10]
         query = date:2010
-        tags = +archive2010;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive
+        tags = +archive2010;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
         message = tagged 2010-archive
       #+end_src
-*** Mail Mover
-    Here we create rules and queries for moving mails based on tags. See [[https://afew.readthedocs.io/en/latest/move_mode.html][here]] for the documentation.
-**** The Folders
-     These are the folders that will be checked for mails that are to be moved.
-     #+begin_src conf
-       [MailMover]
-       folders = gmail/inbox gmail/archive hotmail/inbox hotmail/archive yahoo/inbox yahoo/archive ymail/inbox ymail/archive gmail/spam hotmail/spam yahoo/spam ymail/spam
-     #+end_src
-***** Gmail
-****** Queries for =gmail/inbox=
-       #+begin_src conf
-         gmail/inbox = 'tag:archive2021 AND NOT tag:sent':gmail/archive2021 'tag:archive2020 AND NOT tag:sent':gmail/archive2020 'tag:archive2019 AND NOT tag:sent':gmail/archive2019 'tag:archive2018 AND NOT tag:sent':gmail/archive2018 'tag:archive2017 AND NOT tag:sent':gmail/archive2017 'tag:archive2016 AND NOT tag:sent':gmail/archive2016 'tag:archive2015 AND NOT tag:sent':gmail/archive2015 'tag:archive2014 AND NOT tag:sent':gmail/archive2014 'tag:archive2013 AND NOT tag:sent':gmail/archive2013 'tag:archive2012 AND NOT tag:sent':gmail/archive2012 'tag:archive2011 AND NOT tag:sent':gmail/archive2011 'tag:archive2010 AND NOT tag:sent':gmail/archive2010 'tag:trash':gmail/trash 'NOT tag:gmail/inbox':gmail/archive
-       #+end_src
-****** Queries for =gmail/archive=
-       #+begin_src conf
-         gmail/archive = 'tag:archive2021 AND NOT tag:sent':gmail/archive2021 'tag:archive2020 AND NOT tag:sent':gmail/archive2020 'tag:archive2019 AND NOT tag:sent':gmail/archive2019 'tag:archive2018 AND NOT tag:sent':gmail/archive2018 'tag:archive2017 AND NOT tag:sent':gmail/archive2017 'tag:archive2016 AND NOT tag:sent':gmail/archive2016 'tag:archive2015 AND NOT tag:sent':gmail/archive2015 'tag:archive2014 AND NOT tag:sent':gmail/archive2014 'tag:archive2013 AND NOT tag:sent':gmail/archive2013 'tag:archive2012 AND NOT tag:sent':gmail/archive2012 'tag:archive2011 AND NOT tag:sent':gmail/archive2011 'tag:archive2010 AND NOT tag:sent':gmail/archive2010 'tag:trash':gmail/trash
-       #+end_src
-****** Queries for =gmail/spam=
-       #+begin_src conf
-         gmail/spam = 'NOT tag:spam':gmail/inbox
-       #+end_src
-***** Yahoo
-****** Queries for =yahoo/inbox=
-       #+begin_src conf
-         yahoo/inbox = 'tag:archive2021 AND NOT tag:sent':yahoo/archive2021 'tag:archive2020 AND NOT tag:sent':yahoo/archive2020 'tag:archive2019 AND NOT tag:sent':yahoo/archive2019 'tag:archive2018 AND NOT tag:sent':yahoo/archive2018 'tag:archive2017 AND NOT tag:sent':yahoo/archive2017 'tag:archive2016 AND NOT tag:sent':yahoo/archive2016 'tag:archive2015 AND NOT tag:sent':yahoo/archive2015 'tag:archive2014 AND NOT tag:sent':yahoo/archive2014 'tag:archive2013 AND NOT tag:sent':yahoo/archive2013 'tag:archive2012 AND NOT tag:sent':yahoo/archive2012 'tag:archive2011 AND NOT tag:sent':yahoo/archive2011 'tag:archive2010 AND NOT tag:sent':yahoo/archive2010 'tag:trash':yahoo/trash 'NOT tag:yahoo/inbox':yahoo/archive
-       #+end_src
-****** Queries for =yahoo/archive=
-       #+begin_src conf
-         yahoo/archive = 'tag:archive2021 AND NOT tag:sent':yahoo/archive2021 'tag:archive2020 AND NOT tag:sent':yahoo/archive2020 'tag:archive2019 AND NOT tag:sent':yahoo/archive2019 'tag:archive2018 AND NOT tag:sent':yahoo/archive2018 'tag:archive2017 AND NOT tag:sent':yahoo/archive2017 'tag:archive2016 AND NOT tag:sent':yahoo/archive2016 'tag:archive2015 AND NOT tag:sent':yahoo/archive2015 'tag:archive2014 AND NOT tag:sent':yahoo/archive2014 'tag:archive2013 AND NOT tag:sent':yahoo/archive2013 'tag:archive2012 AND NOT tag:sent':yahoo/archive2012 'tag:archive2011 AND NOT tag:sent':yahoo/archive2011 'tag:archive2010 AND NOT tag:sent':yahoo/archive2010 'tag:trash':yahoo/trash
-       #+end_src
-****** Queries for =yahoo/spam=
-       #+begin_src conf
-         yahoo/spam = 'NOT tag:spam':yahoo/inbox
-       #+end_src
-***** Hotmail
-****** Queries for =hotmail/inbox=
-       #+begin_src conf
-         hotmail/inbox = 'tag:archive2021 AND NOT tag:sent':hotmail/archive2021 'tag:archive2020 AND NOT tag:sent':hotmail/archive2020 'tag:archive2019 AND NOT tag:sent':hotmail/archive2019 'tag:archive2018 AND NOT tag:sent':hotmail/archive2018 'tag:archive2017 AND NOT tag:sent':hotmail/archive2017 'tag:archive2016 AND NOT tag:sent':hotmail/archive2016 'tag:archive2015 AND NOT tag:sent':hotmail/archive2015 'tag:archive2014 AND NOT tag:sent':hotmail/archive2014 'tag:archive2013 AND NOT tag:sent':hotmail/archive2013 'tag:archive2012 AND NOT tag:sent':hotmail/archive2012 'tag:archive2011 AND NOT tag:sent':hotmail/archive2011 'tag:archive2010 AND NOT tag:sent':hotmail/archive2010 'tag:trash':hotmail/trash 'NOT tag:hotmail/inbox    ':hotmail/archive
-       #+end_src
-****** Queries for =hotmail/archive=
-       #+begin_src conf
-         hotmail/archive = 'tag:archive2021 AND NOT tag:sent':hotmail/archive2021 'tag:archive2020 AND NOT tag:sent':hotmail/archive2020 'tag:archive2019 AND NOT tag:sent':hotmail/archive2019 'tag:archive2018 AND NOT tag:sent':hotmail/archive2018 'tag:archive2017 AND NOT tag:sent':hotmail/archive2017 'tag:archive2016 AND NOT tag:sent':hotmail/archive2016 'tag:archive2015 AND NOT tag:sent':hotmail/archive2015 'tag:archive2014 AND NOT tag:sent':hotmail/archive2014 'tag:archive2013 AND NOT tag:sent':hotmail/archive2013 'tag:archive2012 AND NOT tag:sent':hotmail/archive2012 'tag:archive2011 AND NOT tag:sent':hotmail/archive2011 'tag:archive2010 AND NOT tag:sent':hotmail/archive2010 'tag:trash':hotmail/trash
-       #+end_src
-****** Queries for =hotmail/spam=
-       #+begin_src conf
-         hotmail/spam = 'NOT tag:spam':hotmail/inbox
-       #+end_src
-***** Ymail
-****** Queries for =ymail/inbox=
-       #+begin_src conf
-         ymail/inbox = 'tag:archive2021 AND NOT tag:sent':ymail/archive2021 'tag:archive2020 AND NOT tag:sent':ymail/archive2020 'tag:archive2019 AND NOT tag:sent':ymail/archive2019 'tag:archive2018 AND NOT tag:sent':ymail/archive2018 'tag:archive2017 AND NOT tag:sent':ymail/archive2017 'tag:archive2016 AND NOT tag:sent':ymail/archive2016 'tag:archive2015 AND NOT tag:sent':ymail/archive2015 'tag:archive2014 AND NOT tag:sent':ymail/archive2014 'tag:archive2013 AND NOT tag:sent':ymail/archive2013 'tag:archive2012 AND NOT tag:sent':ymail/archive2012 'tag:archive2011 AND NOT tag:sent':ymail/archive2011 'tag:archive2010 AND NOT tag:sent':ymail/archive2010 'tag:trash':ymail/trash 'NOT tag:ymail/inbox':ymail/archive
-       #+end_src
-****** Queries for =ymail/archive=
-       #+begin_src conf
-         ymail/archive = 'tag:archive2021 AND NOT tag:sent':ymail/archive2021 'tag:archive2020 AND NOT tag:sent':ymail/archive2020 'tag:archive2019 AND NOT tag:sent':ymail/archive2019 'tag:archive2018 AND NOT tag:sent':ymail/archive2018 'tag:archive2017 AND NOT tag:sent':ymail/archive2017 'tag:archive2016 AND NOT tag:sent':ymail/archive2016 'tag:archive2015 AND NOT tag:sent':ymail/archive2015 'tag:archive2014 AND NOT tag:sent':ymail/archive2014 'tag:archive2013 AND NOT tag:sent':ymail/archive2013 'tag:archive2012 AND NOT tag:sent':ymail/archive2012 'tag:archive2011 AND NOT tag:sent':ymail/archive2011 'tag:archive2010 AND NOT tag:sent':ymail/archive2010 'tag:trash':ymail/trash
-       #+end_src
-****** Queries for =ymail/spam=
-       #+begin_src conf
-         ymail/spam = 'NOT tag:spam':ymail/inbox
-       #+end_src
 ** notmuch
    run ~notmuch setup~ for initializing mail accounts, and ~notmuch new~ *AFTER* all your mailboxes syncronized.
 *** Hooks
@@ -755,17 +695,6 @@
     - post-new :: This hook is invoked by the =notmuch new= command after new messages have been imported into the database and initial tags have been applied. The hook will not be run if there have been any errors during the scan or import.
     - post-insert :: This hook is invoked by the =notmuch insert= command after the message has been delivered, added to the database, and initial tags have been applied. The hook will not be run if there have been any errors during the message delivery; what is regarded as successful delivery depends on the =--keep= option.
     I'll be using the =pre-new= hooks for /afew/ and also /offlineimap/ while the =post-new= hooks will be used by /afew/ to tag new mails. Usually the =hook directory= resides inside the =mail= directory set in =notmuch-config=.
-**** Pre New Hook
-     #+begin_src sh :tangle ~/.mail/.notmuch/hooks/pre-new :shebang #!/bin/sh :mkdirp t
-       _AFEW="$(command -v afew)"
-       _OFFLINEIMAP="$(command -v offlineimap)"
-
-       [ -n "${_AFEW}" ] &&
-           "${_AFEW}" -m --notmuch-args=--no-hooks -vv
-
-       [ -n "${_OFFLINEIMAP}" ] &&
-           "${_OFFLINEIMAP}" -s
-     #+end_src
 **** Post New Hook
      #+begin_src sh :tangle ~/.mail/.notmuch/hooks/post-new :shebang #!/bin/sh :mkdirp t
        _AFEW="$(command -v afew)"
@@ -828,8 +757,9 @@
       remoterepository = gmail-remote
       synclabels = yes
       labelsheader = X-Keywords
-      #autorefresh = 5
-      #quick = 10
+      autorefresh = 5
+      quick = 10
+      postsynchook = notmuch new --verbose
 
       [Repository gmail-local]
       Type = GmailMaildir
@@ -865,8 +795,9 @@
       [Account yahoo]
       localrepository = yahoo-local
       remoterepository = yahoo-remote
-      #autorefresh = 5
-      #quick = 10
+      autorefresh = 7.5
+      quick = 10
+      postsynchook = notmuch new --verbose
 
       [Repository yahoo-local]
       Type = Maildir
@@ -899,8 +830,9 @@
       [Account hotmail]
       localrepository = hotmail-local
       remoterepository = hotmail-remote
-      #autorefresh = 5
-      #quick = 10
+      autorefresh = 15
+      quick = 10
+      postsynchook = notmuch new --verbose
 
       [Repository hotmail-local]
       Type = Maildir
@@ -936,8 +868,9 @@
       [Account ymail]
       localrepository = ymail-local
       remoterepository = ymail-remote
-      #autorefresh = 5
-      #quick = 10
+      autorefresh = 30
+      quick = 10
+      postsynchook = notmuch new --verbose
 
       [Repository ymail-local]
       Type = Maildir
@@ -966,84 +899,6 @@
       ssl_version = tls1_2
       usecompression = no
     #+end_src
-** goimapnotify
-   Needs separate configuration file for each accounts, here I'm using /password-store/.
-   - gmail
-     #+begin_src conf :tangle ~/.config/imapnotify/gmail.conf :mkdirp t
-       {
-       "host": "imap.gmail.com",
-       "port": 993,
-       "tls": true,
-       "tlsOptions": {
-       "rejectUnauthorized": false
-       },
-       "username": "alexarians@gmail.com",
-       "password": "",
-       "passwordCmd": "pass show google.com/app_pass/alexarians@gmail.com | head -n1",
-       "onNewMail": "offlineimap -sa gmail",
-       "onNewMailPost": "notmuch new",
-       "wait": 20,
-       "boxes": [ "Inbox" ]
-       }
-     #+end_src
-   - yahoo
-     #+begin_src conf :tangle ~/.config/imapnotify/yahoo.conf
-       {
-       "host": "imap.mail.yahoo.com",
-       "port": 993,
-       "tls": true,
-       "tlsOptions": {
-       "rejectUnauthorized": false
-       },
-       "username": "alexforsale@yahoo.com",
-       "password": "",
-       "passwordCmd": "pass show login.yahoo.com/app_pass/alexforsale@yahoo.com | head -n1",
-       "onNewMail": "offlineimap -sa yahoo",
-       "onNewMailPost": "notmuch new",
-       "wait": 20,
-       "boxes": [ "Inbox" ]
-       }
-     #+end_src
-   - hotmail
-     #+begin_src conf :tangle ~/.config/imapnotify/hotmail.conf
-       {
-       "host": "imap-mail.outlook.com",
-       "port": 993,
-       "tls": true,
-       "tlsOptions": {
-       "rejectUnauthorized": false
-       },
-       "username": "christian.alexander@windowslive.com",
-       "password": "",
-       "passwordCmd": "pass show outlook.live.com/christian.alexander@windowslive.com | head -n1",
-       "onNewMail": "offlineimap -sa hotmail",
-       "onNewMailPost": "notmuch new",
-       "wait": 20,
-       "boxes": [ "Inbox" ]
-       }
-     #+end_src
-   - ymail
-     #+begin_src conf :tangle ~/.config/imapnotify/ymail.conf
-       {
-       "host": "imap.mail.yahoo.com",
-       "port": 993,
-       "tls": true,
-       "tlsOptions": {
-       "rejectUnauthorized": false
-       },
-       "username": "christian.alexander@ymail.com",
-       "password": "",
-       "passwordCmd": "pass show login.yahoo.com/app_pass/christian.alexander@ymail.com | head -n1",
-       "onNewMail": "offlineimap -sa ymail",
-       "onNewMailPost": "notmuch new",
-       "wait": 20,
-       "boxes": [ "Inbox" ]
-       }
-     #+end_src
-     Notice how each account calls /mbsync/ separately. Enable the systemd user units
-     #+begin_src sh
-       systemctl --user enable --now goimapnotify@{gmail,yahoo,hotmail,ymail}
-     #+end_src
 
 * Footnotes
 
