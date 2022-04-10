@@ -514,6 +514,7 @@
            (define-key m (kbd "w") "web")
            (define-key m (kbd "g") "exec gimp")
            (define-key m (kbd "f") "exec thunar")
+           (define-key m (kbd "p") "exec rofi-pass")
            (define-key m (kbd "S") "exec *my-screenshot-keymap*")
            (define-key m (kbd "t") "exec emacsclient -c -e \"(telega)\"")
            m))
