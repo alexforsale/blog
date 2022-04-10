@@ -301,6 +301,28 @@
       (push (cons "yahoo" (merge-pathnames ".mail/yahoo/inbox/" (user-homedir-pathname)))
             maildir:*maildir-alist*)
     #+end_src
+*** MPD contrib package
+    This package also provides mode-line format.
+    #+begin_src lisp
+      (load-module "mpd")
+      (mpd:mpd-connect)
+    #+end_src
+    The mode-line format is by default =%S [%s;%r;%F]: %a - %A - %t (%n/%p)=:
+    - =%S= :: =Playing= if playing, =Paused= if paused, else =Stopped=
+    - =%s= :: =S= if shuffle is on, =_= otherwise
+    - =%r= :: =R= if repeat is on, =_= otherwise
+    - =%F= :: =F=#= if crossfade is set, =_= otherwise
+    - =%a= :: Artist
+    - =%A= :: Album
+    - =%t= :: Title
+**** Other variables
+     - =*mpd-volume-step*= :: Default to 5
+       #+begin_src lisp
+         (setf mpd:*mpd-volume-step* 1)
+       #+end_src
+     - =*mpd-socket*= :: Default to =#(127 0 0 1)=
+     - =*mpd-port*= :: Default to 6600
+     - =*mpd-password*= :: Set this if the /mpd/ uses password
 ** The mode-line variable
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
    #+begin_src lisp
@@ -309,6 +331,7 @@
            (list
             "[^B^3%n^b] ^4%W"
             "^>"
+            "^6%m"
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
             '(:eval (format nil "^6|Backlight:~D%" (show-brightness-value)))
             '(:eval (format nil "^5|Battery:~D" (show-battery-charge)))
