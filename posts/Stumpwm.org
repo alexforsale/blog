@@ -820,6 +820,7 @@
        (5 t t :create "message-dump" :class "TelegramDesktop"))
 
      (define-frame-preference "Multimedia"
+       (5 t t :create "message-dump" :class "Cheese")
        (6 t t :create "multimedia-dump" :class "Picard")
        (6 t t :create "multimedia-dump" :class "mpv")
        (6 t t :create "multimedia-dump" :class "vlc")
