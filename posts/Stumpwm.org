@@ -730,11 +730,20 @@
        (3 t   t   :instance "qjackctl" :role "qjackctlMainForm"))
 
      (define-frame-preference "Dev"
-       (1 t t :restore "emacs-editing-dump" :title "...xdvi")
-       (0 t t :create "emacs-dump" :class "Emacs"))
+       (2 t t :restore "emacs-editing-dump" :title "...xdvi")
+       (2 t t :create "emacs-dump" :class "Emacs"))
 
      (define-frame-preference "Web"
-       (0 t t :create "firefox-dump" :class "firefox"))
+       (3 t t :create "firefox-dump" :class "firefox"))
+
+     (define-frame-preference "Files"
+       (4 t t :create "files-dump" :class "Thunar"))
+
+     (define-frame-preference "Message"
+       (5 t t :create "message-dump" :class "TelegramDesktop"))
+
+     (define-frame-preference "Multimedia"
+       (6 t t :create "multimedia-dump" :class "Gimp"))
    #+end_src
 
 
