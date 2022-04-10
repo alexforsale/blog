@@ -366,6 +366,10 @@
      #+begin_src lisp
        (setf *message-window-input-gravity* :top-left)
      #+end_src
+   - set-msg-border-width :: Set the border width for the message bar, input bar and frame indicator.
+     #+begin_src lisp
+       (set-msg-border-width 0)
+     #+end_src
 ** Font
    In order to use /TTF/ fonts, we need an additional package =ttf-fonts=, which is available in the =contrib= repository, or from /quicklisp/.
    #+begin_src lisp
