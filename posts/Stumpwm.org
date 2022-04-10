@@ -547,6 +547,36 @@
            (define-key m (kbd "T") "exec telegram-desktop")
            m))
      #+end_src
+**** Function key
+     This keymap is for keyboard with no media keys. On my laptop the media key is mapped to the Function keys:
+     |--------------+-----------------------+-----------------|
+     | Function Key | Media Key             | Note            |
+     | F1           | XF86Sleep             | Already working |
+     | F2           | XF86MonBrightnessDown | bound           |
+     | F3           | XF86MonBrightnessUp   | bound           |
+     | F4           | XF86Display           | unbound         |
+     | F5           | XF86Mail              | bound           |
+     | F6           | XF86MyComputer        | bound           |
+     | F7           | XF86AudioMute         | bound           |
+     | F8           | XF86AudioLowerVolume  | bound           |
+     | F9           | XF86AudioRaiseVolume  | bound           |
+     | F10          | XF86AudioPrev         | bound           |
+     | F11          | XF86AudioPlay         | bound           |
+     | F12          | XF86AudioNext         | bound           |
+***** Media
+      #+begin_src lisp
+        (define-key *top-map* (kbd "s-F7") "exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle")
+        (define-key *top-map* (kbd "s-F8") "exec pactl -- set-sink-volume @DEFAULT_SINK@ -5%")
+        (define-key *top-map* (kbd "s-F9") "exec pactl -- set-sink-volume @DEFAULT_SINK@ +5%")
+        (define-key *top-map* (kbd "s-F10") "exec playerctl previous")
+        (define-key *top-map* (kbd "s-F11") "exec playerctl play-pause")
+        (define-key *top-map* (kbd "s-F12") "exec playerctl next")
+      #+end_src
+***** Brightneess
+      #+begin_src lisp
+        (define-key *top-map* (kbd "s-F2") "exec brightnessctl set 5%-")
+        (define-key *top-map* (kbd "s-F3") "exec brightnessctl set +5%")
+      #+end_src
 *** TODO Undefine default keybindings
     :LOGBOOK:
     - State "TODO"       from              [2022-04-10 Sun 03:22]
