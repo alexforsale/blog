@@ -301,14 +301,9 @@
       (push (cons "yahoo" (merge-pathnames ".mail/yahoo/inbox/" (user-homedir-pathname)))
             maildir:*maildir-alist*)
     #+end_src
-*** CANCELLED MPD contrib package
-    CLOSED: [2022-04-11 Mon 23:56]
-    :LOGBOOK:
-    - State "CANCELLED"  from              [2022-04-11 Mon 23:56] \\
-      use playerctl
-    :END:
-    This package also provides mode-line format. I'm ditching this for /playerctl/.
-    #+begin_src lisp :tangle no
+*** MPD contrib package
+    This package also provides mode-line format.
+    #+begin_src lisp
       (load-module "mpd")
       (mpd:mpd-connect)
     #+end_src
@@ -328,55 +323,6 @@
      - =*mpd-socket*= :: Default to =#(127 0 0 1)=
      - =*mpd-port*= :: Default to 6600
      - =*mpd-password*= :: Set this if the /mpd/ uses password
-*** Playerctl
-    This has the advantage of recognizing all player that supports /MPRIS/.
-**** =playerctl-state=
-     This function returns the state of current player detected by /playerctl/.
-     #+begin_src lisp
-       (defun playerctl-state ()
-         "Return the state of current player."
-         (string-trim
-          '(#\Newline #\Space)
-          (run-shell-command
-           "playerctl status"
-           :collect-output-p)))
-     #+end_src
-**** =playerctl-metadata=
-     This function returns the output of metadata (artist, album, etc), available metadata can be listed using ~playerctl metadata~.
-     #+begin_src lisp
-       (defun playerctl-metadata (state)
-         "Returns the output of metadata when not paused.
-       available metadata can be listed using 'playerctl metadata'."
-         (unless (equalp "paused"
-                         (playerctl-state))
-           (string-trim
-            '(#\Newline #\Space)
-            (run-shell-command
-             (concat
-              "playerctl metadata "
-              state)
-             :collect-output-p))))
-     #+end_src
-**** =playerctl-status=
-     Returns the state of playerctl prefixed with the name of the current player detected.
-     #+begin_src lisp
-       (defun playerctl-status ()
-         "Prefix playerctl state with current player name."
-         (let* ((cmd "playerctl ")
-                (status
-                  (string-trim
-                   '(#\Newline #\Space)
-                   (run-shell-command
-                    (concat cmd "status")
-                    :collect-output-p)))
-                (player
-                  (string-trim
-                   '(#\Newline #\Space)
-                   (run-shell-command
-                    (concat cmd "-l")
-                    :collect-output-p))))
-           (format nil "~a: ~a" (string-capitalize player) status)))
-     #+end_src
 ** The mode-line variable
    The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output =C-t w= produces.
    #+begin_src lisp
@@ -385,10 +331,7 @@
            (list
             "[^B^3%n^b] ^4%W"
             "^>"
-            '(:eval (format nil "^5|~a" (playerctl-status)))
-            '(:eval (unless (equalp "paused" (playerctl-state)) (format nil "^6 ~a" (playerctl-metadata "artist"))))
-            ;;'(:eval (unless (equalp "paused" (playerctl-state)) (format nil "^6 (~a)" (playerctl-metadata "album"))))
-            '(:eval (unless (equalp "paused" (playerctl-state)) (format nil "^6 - ~a" (playerctl-metadata "title"))))
+            "%m"
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
             '(:eval (format nil "^6|Backlight: ~D%" (show-brightness-value)))
             '(:eval (format nil "^5|Battery:~D" (show-battery-charge)))
