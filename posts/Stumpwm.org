@@ -390,10 +390,10 @@
             ;;'(:eval (unless (equalp "paused" (playerctl-state)) (format nil "^6 (~a)" (playerctl-metadata "album"))))
             '(:eval (unless (equalp "paused" (playerctl-state)) (format nil "^6 - ~a" (playerctl-metadata "title"))))
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
-            '(:eval (format nil "^6|Backlight:~D%" (show-brightness-value)))
+            '(:eval (format nil "^6|Backlight: ~D%" (show-brightness-value)))
             '(:eval (format nil "^5|Battery:~D" (show-battery-charge)))
-            '(:eval (format nil "State:~D" (show-battery-state)))
-            "^6| %D" ;maildir
+            '(:eval (format nil "~D" (show-battery-state)))
+            "^6|%D" ;maildir
             "^5|%d"
             ))
      (setf *time-modeline-string* "%a %b %e %k:%M")
