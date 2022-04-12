@@ -464,7 +464,7 @@
            (define-key m (kbd "S") "shutdown-computer")
            (define-key m (kbd "r") "loadrc")
            (define-key m (kbd "R") "restart-hard")
-           (define-key m (kbd "C-r") "restart-computer")
+           (define-key m (kbd "s-r") "restart-computer")
            m))
      #+end_src
      And bind it to ~C-s-q~ (that ~Control~, ~Shift~, and ~q~).
@@ -488,7 +488,7 @@
            (define-key m (kbd "f") "float-this")
            (define-key m (kbd "F") "unfloat-this")
            (define-key m (kbd "u") "unfloat-this")
-           (define-key m (kbd "C-f") "flatten-floats")
+           (define-key m (kbd "s-f") "flatten-floats")
            m))
      #+end_src
 **** frame management
@@ -534,10 +534,10 @@
          (let ((m (make-sparse-keymap)))
            (define-key m (kbd "e") "emacs")
            (define-key m (kbd "w") "web")
-           (define-key m (kbd "C-w") "exec $TERMINAL -e nmtui")
+           (define-key m (kbd "s-w") "exec $TERMINAL -e nmtui")
            (define-key m (kbd "g") "exec gimp")
            (define-key m (kbd "f") "exec thunar")
-           (define-key m (kbd "C-p") "exec rofi-pass")
+           (define-key m (kbd "s-p") "exec rofi-pass")
            (define-key m (kbd "p") "exec picard")
            (define-key m (kbd "h") "exec hakuneko-desktop")
            (define-key m (kbd "v") "exec vlc")
@@ -723,7 +723,7 @@
       #+end_src
 ***** Slynk
       #+begin_src lisp
-        (define-key *root-map* (kbd "C-s") "slynk")
+        (define-key *root-map* (kbd "s-s") "slynk")
       #+end_src
 *** Function key
     This keymap is for keyboard with no media keys. On my laptop the media key is mapped to the Function keys:
