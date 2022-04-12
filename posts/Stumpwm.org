@@ -452,10 +452,6 @@
            (define-key m (kbd "S") "exec flameshot gui")
            m))
      #+end_src
-     Most keyboard have the ~Print~ key, so I'll bind it there
-     #+begin_src lisp
-       (define-key *top-map* (kbd "Print") '*my-screenshot-keymap*)
-     #+end_src
 **** End-session
      This uses the =end-session= /contrib/ module.
      #+begin_src lisp
@@ -708,6 +704,11 @@
 ***** escape-key
       #+begin_src lisp
         (define-key *top-map* (kbd "s-quoteleft") "send-raw-key")
+      #+end_src
+***** Screenshot
+      Most keyboard have the ~Print~ key, so I'll bind it there
+      #+begin_src lisp
+        (define-key *top-map* (kbd "Print") '*my-screenshot-keymap*)
       #+end_src
 **** Group Map
 ***** vgroups
