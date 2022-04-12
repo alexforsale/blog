@@ -526,6 +526,7 @@
            (define-key m (kbd "s") "sibling")
            (define-key m (kbd "u") "next-urgent")
            (define-key m (kbd "U") "unmaximize")
+           (define-key m (kbd "k") "delete-window")
            m))
      #+end_src
 **** apps
