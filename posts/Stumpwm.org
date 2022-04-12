@@ -711,6 +711,13 @@
       #+begin_src lisp
         (define-key *top-map* (kbd "Print") '*my-screenshot-keymap*)
       #+end_src
+***** Frame movement
+      #+begin_src lisp
+        (define-key *top-map* (kbd "s-p") "move-focus up")
+        (define-key *top-map* (kbd "s-n") "move-focus down")
+        (define-key *top-map* (kbd "s-f") "move-focus right")
+        (define-key *top-map* (kbd "s-b") "move-focus left")
+      #+end_src
 **** Group Map
 ***** vgroups
       #+begin_src lisp
