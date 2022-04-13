@@ -13,104 +13,128 @@ With that in mind, I'm breaking down this configuration into separate /pluggable
 
 By default this will creates an =emacs= directory insinde =~/.config= or wherever the =${XDG_CONFIG_HOME}= is set. If you're using [[https://github.com/plexus/chemacs2][chemacs]], or if you want to use the standard =~/.emacs.d= directory, modify the =:tangle= directive inside each heading's =:PROPERTIES:=.
 
-To easily toggle the additional packages, create a =config-user.el= file inside =user-emacs-directory=, unfortunately hardcoded here to =~/.config/emacs=. This file also generate =~/.config/emacs/config-user.el.example=:
+To easily toggle the additional packages, create a =config-user.el= file inside =user-emacs-directory=, usually =~/.config/emacs=. This file also generate =~/.config/emacs/config-user.el.example=:
 * Example =config-user.el=
-#+begin_src emacs-lisp :tangle ~/.config/emacs/config-user.el.example
-  ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
-  ;;; Commentary:
-  ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-  ;; for details.
-  ;;; Code:
-
-  (setq user-full-name "Kristian Alexander P"
-        user-mail-address "alexforsale@yahoo.com")
-  (customize-set-variable 'org-directory (expand-file-name "Documents/google-drive/org/" (getenv "HOME")))
-  (customize-set-variable '+org-archives-file (expand-file-name "archives.org" org-directory))
-  (customize-set-variable '+org-capture-todo-file (expand-file-name "todo.org" org-directory))
-  (customize-set-variable '+org-capture-links-file (expand-file-name "links.org" org-directory))
-  (customize-set-variable '+org-capture-notes-file (expand-file-name "notes.org" org-directory))
-  (customize-set-variable '+org-capture-habits-file (expand-file-name "habits.org" org-directory))
-  (customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
-  (customize-set-variable 'org-agenda-files (list org-directory))
-  (customize-set-variable '+emms-music-dir "~/Music")
-
-  ;; UI Additional packages
-  (require 'config-all-the-icons)
-  (require 'config-doom-modelines)
-  (require 'config-doom-themes)
-  (require 'config-theme-magic)
-  (require 'config-helpful)
-  (require 'config-which-key)
-  (require 'config-ace-window)
-  (require 'config-perspective)
-  (require 'config-centaur-tabs)
-  (require 'config-rainbow-mode)
-  (require 'config-rainbow-delimiters)
-  (require 'config-hl-todo)
-  (require 'config-diminish)
-  (require 'config-dashboard)
-  (require 'config-alert)
-
-  ;; Editing Additional packages
-  (require 'config-multiple-cursors)
-  (require 'config-yasnippet)
-  (require 'config-geiser)
-  (require 'config-yaml-mode)
-  (require 'config-toml-mode)
-  (require 'config-nix-mode)
-  (require 'config-markdown-mode)
-  (require 'config-rust-mode)
-  (require 'config-visual-regexp)
-  (require 'config-undo-fu)
-  (require 'config-block-nav)
-  (require 'config-ansible)
-
-  ;; Org Additional packages
-  (require 'config-org-roam)
-  (require 'config-org-elfeed)
-  (require 'config-org-gcal)
-  (require 'config-org-journal)
-
-  ;; IDE Additional packages
-  (require 'config-flycheck)
-  (require 'config-projectile)
-  (require 'config-lsp-mode)
-
-  ;; Email Additional packages
-  (require 'config-notmuch)
-  (require 'config-gnus-alias)
-
-  ;; Shell Additional packages
-  (require 'config-vterm)
-
-  ;; Completion packages
-  (require 'config-vertico)
-  (require 'config-orderless)
-  (require 'config-marginalia)
-  (require 'config-consult)
-  (require 'config-embark)
-  (require 'config-corfu)
-  (require 'config-dabbrev)
-
-  ;; Misc tools packages
-  (require 'config-pass)
-  (require 'config-magit)
-  ;;(require 'config-slime)
-  (require 'config-sly) ; a better repl than slime
-  (require 'config-paredit)
-  (require 'config-telega)
-  (require 'config-emms)
-  (require 'config-w3m)
-  (require 'config-pdf-tools)
-  (require 'config-gist)
-  (require 'config-ripgrep)
-
-  (provide 'config-user)
-  ;;; config-user.el ends here
-#+end_src
+  :PROPERTIES:
+  :header-args: :tangle (expand-file-name "config-user.el.example" user-emacs-directory)
+  :END:
+** Commented header
+   #+begin_src emacs-lisp
+     ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
+     ;;; Commentary:
+     ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+     ;; for details.
+     ;;; Code:
+   #+end_src
+** And set variables for various packages.
+   #+begin_src emacs-lisp
+     (setq user-full-name "Kristian Alexander P"
+           user-mail-address "alexforsale@yahoo.com")
+     (customize-set-variable 'org-directory (expand-file-name "Documents/google-drive/org/" (getenv "HOME")))
+     (customize-set-variable '+org-archives-file (expand-file-name "archives.org" org-directory))
+     (customize-set-variable '+org-capture-todo-file (expand-file-name "todo.org" org-directory))
+     (customize-set-variable '+org-capture-links-file (expand-file-name "links.org" org-directory))
+     (customize-set-variable '+org-capture-notes-file (expand-file-name "notes.org" org-directory))
+     (customize-set-variable '+org-capture-habits-file (expand-file-name "habits.org" org-directory))
+     (customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
+     (customize-set-variable 'org-agenda-files (list org-directory))
+     (customize-set-variable '+emms-music-dir "~/Music")
+   #+end_src
+** UI Packages
+   #+begin_src emacs-lisp
+     ;; UI Additional packages
+     (require 'config-all-the-icons)
+     (require 'config-doom-modelines)
+     (require 'config-doom-themes)
+     (require 'config-theme-magic)
+     (require 'config-helpful)
+     (require 'config-which-key)
+     (require 'config-ace-window)
+     (require 'config-perspective)
+     (require 'config-centaur-tabs)
+     (require 'config-rainbow-mode)
+     (require 'config-rainbow-delimiters)
+     (require 'config-hl-todo)
+     (require 'config-diminish)
+     (require 'config-dashboard)
+     (require 'config-alert)
+  #+end_src
+** Editing packages
+   #+begin_src emacs-lisp
+     ;; Editing Additional packages
+     (require 'config-multiple-cursors)
+     (require 'config-yasnippet)
+     (require 'config-geiser)
+     (require 'config-yaml-mode)
+     (require 'config-toml-mode)
+     (require 'config-nix-mode)
+     (require 'config-markdown-mode)
+     (require 'config-rust-mode)
+     (require 'config-visual-regexp)
+     (require 'config-undo-fu)
+     (require 'config-block-nav)
+     (require 'config-ansible)
+   #+end_src
+** Org packages
+   #+begin_src emacs-lisp
+     ;; Org Additional packages
+     (require 'config-org-roam)
+     (require 'config-org-elfeed)
+     (require 'config-org-gcal)
+     (require 'config-org-journal)
+   #+end_src
+** IDE packages
+   #+begin_src emacs-lisp
+     ;; IDE Additional packages
+     (require 'config-flycheck)
+     (require 'config-projectile)
+     (require 'config-lsp-mode)
+   #+end_src
+** Email packages
+   #+begin_src emacs-lisp
+     ;; Email Additional packages
+     (require 'config-notmuch)
+     (require 'config-gnus-alias)
+   #+end_src
+** Various additional packages
+   #+begin_src emacs-lisp
+     ;; Shell Additional packages
+     (require 'config-vterm)
+   #+end_src
+** Completion packages
+   #+begin_src emacs-lisp
+     ;; Completion packages
+     (require 'config-vertico)
+     (require 'config-orderless)
+     (require 'config-marginalia)
+     (require 'config-consult)
+     (require 'config-embark)
+     (require 'config-corfu)
+     (require 'config-dabbrev)
+  #+end_src
+** Tools packages
+   #+begin_src emacs-lisp
+     ;; Misc tools packages
+     (require 'config-pass)
+     (require 'config-magit)
+     ;;(require 'config-slime)
+     (require 'config-sly) ; a better repl than slime
+     (require 'config-paredit)
+     (require 'config-telega)
+     (require 'config-emms)
+     (require 'config-w3m)
+     (require 'config-pdf-tools)
+     (require 'config-gist)
+     (require 'config-ripgrep)
+   #+end_src
+** Footer
+   #+begin_src emacs-lisp
+     (provide 'config-user)
+     ;;; config-user.el ends here
+   #+end_src
 * config.org
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/config.el :mkdirp t
+  :header-args: :tangle (expand-file-name "config.el" user-emacs-directory) :mkdirp t
   :END:
   Set [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Lexical-Binding.html][lexical-binding]] for this file.
   #+begin_src emacs-lisp
@@ -122,7 +146,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
   #+end_src
 * early-init.el
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/early-init.el
+  :header-args: :tangle (expand-file-name "early-init.el" user-emacs-directory)
   :END:
   #+begin_src emacs-lisp
     ;;; early-init.el --- Customization before normal init -*- lexical-binding: t -*-
@@ -197,7 +221,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    #+end_src
 * init.el
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/init.el
+  :header-args: :tangle (expand-file-name "init.el" user-emacs-directory)
   :END:
   #+begin_src emacs-lisp
     ;;; init.el --- Main Emacs configuration file -*- lexical-binding: t -*-
@@ -309,7 +333,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    #+end_src
 * Variables
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/modules/config-defaults-variables.el :mkdirp t
+  :header-args: :tangle (expand-file-name "modules/config-defaults-variables.el" user-emacs-directory) :mkdirp t
   :END:
   #+begin_src emacs-lisp
     ;;; config-defaults-variables.el --- Summary -*- lexical-binding: t -*-
@@ -396,7 +420,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
   With this modular design, I can include per files configuration only.
 ** defaults
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults.el
+   :header-args: :tangle (expand-file-name "modules/config-defaults.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults.el --- Summary -*- lexical-binding: t -*-
@@ -425,7 +449,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default UI
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ui.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-ui.el" user-emacs-directory) :mkdirp t
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-ui.el --- Summary -*- lexical-binding: t -*-
@@ -564,7 +588,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** all-the-icons
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-all-the-icons.el
+     :header-args: :tangle (expand-file-name "modules/config-all-the-icons.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-all-the-icons.el --- Summary -*- lexical-binding: t -*-
@@ -586,7 +610,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** doom-modeline
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-doom-modelines.el
+     :header-args: :tangle (expand-file-name "modules/config-doom-modelines.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-doom-modelines.el --- Summary -*- lexical-binding: t -*-
@@ -612,7 +636,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** doom-themes
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-doom-themes.el
+     :header-args: :tangle (expand-file-name "modules/config-doom-themes.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-doom-themes.el --- Summary -*- lexical-binding: t -*-
@@ -644,7 +668,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** theme-magic
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-theme-magic.el
+     :header-args: :tangle (expand-file-name "modules/config-theme-magic.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-theme-magic.el --- Summary -*- lexical-binding: t -*-
@@ -667,7 +691,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** helpful
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-helpful.el
+     :header-args: :tangle (expand-file-name "modules/config-helpful.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-helpful.el --- Summary -*- lexical-binding: t -*-
@@ -702,7 +726,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** which-key
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-which-key.el
+     :header-args: :tangle (expand-file-name "modules/config-which-key.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-which-key.el --- Summary -*- lexical-binding: t -*-
@@ -726,7 +750,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** ace-window
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-ace-window.el
+     :header-args: :tangle (expand-file-name "modules/config-ace-window.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-ace-window.el --- Summary -*- lexical-binding: t -*-
@@ -781,7 +805,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** perpective
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-perspective.el
+     :header-args: :tangle (expand-file-name "modules/config-perspective.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-perspective.el --- Summary -*- lexical-binding: t -*-
@@ -808,7 +832,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** centaur-tabs
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-centaur-tabs.el
+     :header-args: :tangle (expand-file-name "modules/config-centaur-tabs.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-centaur-tabs.el --- Summary -*- lexical-binding: t -*-
@@ -888,7 +912,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** rainbow-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-rainbow-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-rainbow-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-rainbow-mode.el --- Summary -*- lexical-binding: t -*-
@@ -930,7 +954,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** rainbow-delimiters
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-rainbow-delimiters.el
+     :header-args: :tangle (expand-file-name "modules/config-rainbow-delimiters.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-rainbow-delimiters.el --- Summary -*- lexical-binding: t -*-
@@ -954,7 +978,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** hl-todo
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-hl-todo.el
+     :header-args: :tangle (expand-file-name "modules/config-hl-todo.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-hl-todo.el --- Summary -*- lexical-binding: t -*-
@@ -976,7 +1000,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** diminish
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-diminish.el
+     :header-args: :tangle (expand-file-name "modules/config-diminish.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-diminish.el --- Summary -*- lexical-binding: t -*-
@@ -990,18 +1014,19 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (unless +config/is-guix-system
          (straight-use-package 'diminish))
        (require 'diminish)
-       (diminish 'rainbow-mode)
-       (diminish 'eldoc-mode)
-       (diminish 'subword-mode)
-       (diminish 'flycheck-mode)
-       (diminish 'projectile-mode)
-       (diminish 'yas-global-mode)
-       (diminish 'yas/global-mode)
-       (diminish 'yas-extra-mode)
-       (diminish 'yas-minor-mode)
-       (diminish 'yas/minor-mode)
-       (diminish 'which-key-mode)
-       (diminish 'theme-magic-export-theme-mode)
+       (progn
+         (diminish 'rainbow-mode)
+         (diminish 'eldoc-mode)
+         (diminish 'subword-mode)
+         (diminish 'flycheck-mode)
+         (diminish 'projectile-mode)
+         (diminish 'yas-global-mode)
+         (diminish 'yas/global-mode)
+         (diminish 'yas-extra-mode)
+         (diminish 'yas-minor-mode)
+         (diminish 'yas/minor-mode)
+         (diminish 'which-key-mode)
+         (diminish 'theme-magic-export-theme-mode))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -1010,7 +1035,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** dashboard
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-dashboard.el
+     :header-args: :tangle (expand-file-name "modules/config-dashboard.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-dashboard.el --- Summary -*- lexical-binding: t -*-
@@ -1045,7 +1070,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** alert
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-alert.el
+     :header-args: :tangle (expand-file-name "modules/config-alert.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-alert.el --- Summary -*- lexical-binding: t -*-
@@ -1073,7 +1098,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Editings
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-editings.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-editings.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
@@ -1180,7 +1205,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** multiple-cursors
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-multiple-cursors.el
+     :header-args: :tangle (expand-file-name "modules/config-multiple-cursors.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-multiple-cursors.el --- Summary -*- lexical-binding: t -*-
@@ -1205,7 +1230,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** yasnippet
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-yasnippet.el
+     :header-args: :tangle (expand-file-name "modules/config-yasnippet.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-yasnippet.el --- Summary -*- lexical-binding: t -*-
@@ -1232,7 +1257,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** geiser
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-geiser.el
+     :header-args: :tangle (expand-file-name "modules/config-geiser.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-geiser.el --- Summary -*- lexical-binding: t -*-
@@ -1259,7 +1284,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** yaml-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-yaml-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-yaml-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-yaml-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1285,7 +1310,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** toml-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-toml-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-toml-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-toml-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1306,7 +1331,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** nix-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-nix-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-nix-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-nix-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1327,7 +1352,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** nginx-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-toml-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-toml-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-toml-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1348,7 +1373,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** nix-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-nginx-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-nginx-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-nginx-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1370,7 +1395,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** markdown-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-markdown-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-markdown-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-markdown-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1398,7 +1423,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** visual-regexp
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-visual-regexp.el
+     :header-args: :tangle (expand-file-name "modules/config-visual-regexp.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-visual-regexp.el --- Summary -*- lexical-binding: t -*-
@@ -1424,7 +1449,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** undo-fu
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-undo-fu.el
+     :header-args: :tangle (expand-file-name "modules/config-undo-fu.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-undo-fu.el --- Summary -*- lexical-binding: t -*-
@@ -1452,7 +1477,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** block-nav
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-block-nav.el
+     :header-args: :tangle (expand-file-name "modules/config-block-nav.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-block-nav.el --- Summary -*- lexical-binding: t -*-
@@ -1510,7 +1535,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** rust-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-rust-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-rust-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-rust-mode.el --- Summary -*- lexical-binding: t -*-
@@ -1536,7 +1561,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** ansible
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-ansible.el
+     :header-args: :tangle (expand-file-name "modules/config-ansible.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-ansible.el --- Summary -*- lexical-binding: t -*-
@@ -1566,7 +1591,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Org Configurations
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-org.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-org.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-org.el --- Summary -*- lexical-binding: t -*-
@@ -2011,7 +2036,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     This will be stored in each individual files.
 **** org-roam
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-org-roam.el
+     :header-args: :tangle (expand-file-name "modules/config-org-roam.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-org-roam.el --- Summary -*- lexical-binding: t -*-
@@ -2103,7 +2128,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** org-elfeed
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-org-elfeed.el
+     :header-args: :tangle (expand-file-name "modules/config-org-elfeed.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-org-elfeed.el --- Summary -*- lexical-binding: t -*-
@@ -2191,7 +2216,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** org-gcal
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-org-gcal.el
+     :header-args: :tangle (expand-file-name "modules/config-org-gcal.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-org-gcal.el --- Summary -*- lexical-binding: t -*-
@@ -2222,7 +2247,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** org-journal
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-org-journal.el
+     :header-args: :tangle (expand-file-name "modules/config-org-journal.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-org-journal.el --- Summary -*- lexical-binding: t -*-
@@ -2282,7 +2307,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default IDE
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-ide.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-ide.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-ide.el --- Summary -*- lexical-binding: t -*-
@@ -2295,7 +2320,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Package
 **** flycheck
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-flycheck.el
+     :header-args: :tangle (expand-file-name "modules/config-flycheck.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-flycheck.el --- Summary -*- lexical-binding: t -*-
@@ -2318,7 +2343,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** projectile
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-projectile.el
+     :header-args: :tangle (expand-file-name "modules/config-projectile.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-projectile.el --- Summary -*- lexical-binding: t -*-
@@ -2341,7 +2366,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** lsp-mode
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-lsp-mode.el
+     :header-args: :tangle (expand-file-name "modules/config-lsp-mode.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-lsp-mode.el --- Summary -*- lexical-binding: t -*-
@@ -2420,7 +2445,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Email
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-email.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-email.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-email.el --- Summary -*- lexical-binding: t -*-
@@ -2456,7 +2481,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** notmuch
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-notmuch.el
+     :header-args: :tangle (expand-file-name "modules/config-notmuch.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-notmuch.el --- Summary -*- lexical-binding: t -*-
@@ -2516,7 +2541,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** gnus-alias
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-gnus-alias.el
+     :header-args: :tangle (expand-file-name "modules/config-gnus-alias.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-gnus-alias.el --- Summary -*- lexical-binding: t -*-
@@ -2550,7 +2575,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Shell
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-shell.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-shell.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-shell.el --- Summary -*- lexical-binding: t -*-
@@ -2603,7 +2628,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** vterm
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-vterm.el
+     :header-args: :tangle (expand-file-name "modules/config-vterm.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-vterm.el --- Summary -*- lexical-binding: t -*-
@@ -2631,7 +2656,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Completion
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-completion.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-completion.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-completion.el --- Summary -*- lexical-binding: t -*-
@@ -2644,7 +2669,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** vertico
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-vertico.el
+     :header-args: :tangle (expand-file-name "modules/config-vertico.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-vertico.el --- Summary -*- lexical-binding: t -*-
@@ -2719,7 +2744,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** orderless
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-orderless.el
+     :header-args: :tangle (expand-file-name "modules/config-orderless.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-orderless.el --- Summary -*- lexical-binding: t -*-
@@ -2744,7 +2769,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** marginalia
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-marginalia.el
+     :header-args: :tangle (expand-file-name "modules/config-marginalia.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-marginalia.el --- Summary -*- lexical-binding: t -*-
@@ -2768,7 +2793,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** consult
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-consult.el
+     :header-args: :tangle (expand-file-name "modules/config-consult.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-consult.el --- Summary -*- lexical-binding: t -*-
@@ -2862,7 +2887,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** embark
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-embark.el
+     :header-args: :tangle (expand-file-name "modules/config-embark.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-embark.el --- Summary -*- lexical-binding: t -*-
@@ -2896,7 +2921,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** corfu
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-corfu.el
+     :header-args: :tangle (expand-file-name "modules/config-corfu.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-corfu.el --- Summary -*- lexical-binding: t -*-
@@ -2957,7 +2982,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** dabbrev
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-dabbrev.el
+     :header-args: :tangle (expand-file-name "modules/config-dabbrev.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-dabbrev.el --- Summary -*- lexical-binding: t -*-
@@ -2985,7 +3010,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Default Tools
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-tools.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-tools.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
@@ -3034,7 +3059,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Additional Packages
 **** password-store
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-pass.el
+     :header-args: :tangle (expand-file-name "modules/config-pass.el" user-emacs-directory)
      :END:
     #+begin_src emacs-lisp
       ;;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
@@ -3057,7 +3082,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** magit
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-magit.el
+     :header-args: :tangle (expand-file-name "modules/config-magit.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-magit.el --- Summary -*- lexical-binding: t -*-
@@ -3092,7 +3117,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** slime
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-slime.el
+     :header-args: :tangle (expand-file-name "modules/config-slime.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-slime.el --- Summary -*- lexical-binding: t -*-
@@ -3137,7 +3162,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** sly
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-sly.el
+     :header-args: :tangle (expand-file-name "modules/config-sly.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-sly.el --- Summary -*- lexical-binding: t -*-
@@ -3160,7 +3185,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** paredit
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-paredit.el
+     :header-args: :tangle (expand-file-name "modules/config-paredit.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-paredit.el --- Summary -*- lexical-binding: t -*-
@@ -3198,7 +3223,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** telega
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-telega.el
+     :header-args: :tangle (expand-file-name "modules/config-telega.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-telega.el --- Summary -*- lexical-binding: t -*-
@@ -3257,7 +3282,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** emms
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-emms.el
+     :header-args: :tangle (expand-file-name "modules/config-emms.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-emms.el --- Summary -*- lexical-binding: t -*-
@@ -3345,7 +3370,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** w3m
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-w3m.el
+     :header-args: :tangle (expand-file-name "modules/config-w3m.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-w3m.el --- Summary -*- lexical-binding: t -*-
@@ -3404,7 +3429,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** pdf-tools
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-pdf-tools.el
+     :header-args: :tangle (expand-file-name "modules/config-pdf-tools.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-pdf-tools.el --- Summary -*- lexical-binding: t -*-
@@ -3426,7 +3451,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** gist
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-gist.el
+     :header-args: :tangle (expand-file-name "modules/config-gist.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-gist.el --- Summary -*- lexical-binding: t -*-
@@ -3446,7 +3471,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 **** ripgrep
      :PROPERTIES:
-     :header-args: :tangle ~/.config/emacs/modules/config-ripgrep.el
+     :header-args: :tangle (expand-file-name "modules/config-ripgrep.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
        ;;; config-ripgrep.el --- Summary -*- lexical-binding: t -*-
@@ -3471,7 +3496,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Various other defaults
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-various.el :mkdirp t
+   :header-args: :tangle (expand-file-name "modules/config-defaults-various.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-editings.el --- Summary -*- lexical-binding: t -*-
@@ -3600,7 +3625,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 ** Defaults keybindings
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/modules/config-defaults-keybindings.el
+   :header-args: :tangle (expand-file-name "modules/config-defaults-keybindings.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
      ;;; config-defaults-keybindings.el --- Summary -*- lexical-binding: t -*-
@@ -3622,7 +3647,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 * site-lisp
 ** website
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/site-lisp/websites.el :mkdirp t
+   :header-args: :tangle (expand-file-name "site-lisp/websites.el" user-emacs-directory) :mkdirp t
    :END:
    Configuration for org-generated website, this is basically from my [[https://git.java281.dynv6.net/alexforsale/java281.dynv6.net][website]] =publish.el=.
 *** commented header
@@ -3852,7 +3877,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ** blog
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/site-lisp/blog.el :mkdirp t
+   :header-args: :tangle (expand-file-name "site-lisp/blog.el" user-emacs-directory)
    :END:
    Configuration for org-generated blog.
 *** commented header
@@ -4096,7 +4121,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ** Roam Publish
    :PROPERTIES:
-   :header-args: :tangle ~/.config/emacs/site-lisp/roam-publish.el :mkdirp t
+   :header-args: :tangle (expand-file-name "site-lisp/roam-publish.el" user-emacs-directory)
    :END:
 *** commented header
     #+begin_src emacs-lisp
@@ -4180,7 +4205,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 * set footer for =config.el=
   :PROPERTIES:
-  :header-args: :tangle ~/.config/emacs/config.el
+  :header-args: :tangle (expand-file-name "config.el" user-emacs-directory)
   :END:
   #+begin_src emacs-lisp
     (require 'config-defaults)
