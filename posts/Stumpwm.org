@@ -846,23 +846,23 @@
        (2 t t :create "emacs-dump" :class "Emacs"))
 
      (define-frame-preference "Web"
-       (3 t t :create "web-dump" :class "Nyxt")
-       (3 t t :create "web-dump" :class "firefox"))
+       (3 t t :create "nyxt-dump" :class "Nyxt")
+       (3 t t :create "firefox-dump" :class "firefox"))
 
      (define-frame-preference "Files"
-       (4 t t :create "files-dump" :class "Thunar"))
+       (4 t t :create "thunar-dump" :class "Thunar"))
 
      (define-frame-preference "Message"
-       (5 t t :create "message-dump" :class "TelegramDesktop"))
+       (5 t t :create "telegramdesktop-dump" :class "TelegramDesktop"))
 
      (define-frame-preference "Multimedia"
-       (6 t t :create "multimedia-dump" :class "Cheese")
-       (6 t t :create "multimedia-dump" :class "Spotify")
-       (6 t t :create "multimedia-dump" :class "Picard")
-       (6 t t :create "multimedia-dump" :class "mpv")
-       (6 t t :create "multimedia-dump" :class "vlc")
-       (6 t t :create "multimedia-dump" :class "hakuneko-desktop")
-       (6 t t :create "multimedia-dump" :class "Gimp"))
+       (6 t t :create "cheese-dump" :class "Cheese")
+       (6 t t :create "spotify-dump" :class "Spotify")
+       (6 t t :create "picard-dump" :class "Picard")
+       (6 t t :create "mpv-dump" :class "mpv")
+       (6 t t :create "vlc-dump" :class "vlc")
+       (6 t t :create "hakuneko-dump" :class "hakuneko-desktop")
+       (6 t t :create "gimp-dump" :class "Gimp"))
    #+end_src
 
 
