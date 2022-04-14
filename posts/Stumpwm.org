@@ -128,6 +128,18 @@
      [ ! -L stumpish ] && ln -sv ../../.config/stumpwm/modules/util/stumpish/stumpish stumpish
      popd
    #+end_src
+*** additional module directory
+    This is for personal module
+**** Set the variable
+     Use this variable to set the directory
+     #+begin_src lisp
+       (defvar *additional-module-dir* "~/Projects/lisp/playerctl-mode-line")
+     #+end_src
+**** add when not empty
+     #+begin_src lisp
+       (when (not (empty-directory-p *additional-module-dir*))
+         (set-module-dir *additional-module-dir*))
+     #+end_src
 ** Colors
    Set the default color to =base16-materia=, palette from =wal= as a fallback if there's no =wal= cache file yet.
    #+begin_src lisp
