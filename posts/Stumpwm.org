@@ -340,7 +340,6 @@
             "^>"
             "%m"
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
-            '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
             '(:eval (unless (empty-directory-p "/sys/class/backlight") (format nil "^6|Backlight: ~D%" (show-brightness-value))))
             '(:eval (unless (empty-directory-p "/sys/class/power_supply") (format nil "^5|Battery:~D" (show-battery-charge))))
             '(:eval (unless (empty-directory-p "/sys/class/power_supply") (format nil "~D" (show-battery-state))))
