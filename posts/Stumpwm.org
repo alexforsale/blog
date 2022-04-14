@@ -131,7 +131,7 @@
 *** additional module directory
     This is for personal module
 **** Set the variable
-     Use this variable to set the directory
+     Use this variable to set the directory, if there's more than one directory, consider keep them inside one single directory and add the parent directory instead, since the =set-module-dir= function is recursive.
      #+begin_src lisp
        (defvar *additional-module-dir* "~/Projects/lisp/playerctl-mode-line")
      #+end_src
@@ -434,6 +434,7 @@
    #+begin_src lisp
      (ql:quickload :ttf-fonts)
    #+end_src
+   This package also depends on [[https://www.google.com.hk/search?client=firefox-b-d&q=github+clx-truetype&pli=1][clx-truetype]] which sadly is not in /quicklisp/ repository, add it manually to the =local-projects= directory inside your /quicklisp/ installation directory (when not set usually in =~/quicklisp=)
 *** =*font-dir*=
     This is empty by default, so populate it first
     #+begin_src lisp
