@@ -872,6 +872,3 @@
 [fn:1] http://www.lispworks.com/documentation/lw51/CLHS/Body/f_probe_.htm
 
 #+include: ../utterances.inc
-
-
-#+include: ../utterances.inc
