@@ -863,6 +863,10 @@
        (6 t t :create "vlc-dump" :class "vlc")
        (6 t t :create "hakuneko-dump" :class "hakuneko-desktop")
        (6 t t :create "gimp-dump" :class "Gimp"))
+
+     (define-frame-preference "Remote"
+       (7 t t :create "virtmanager-dump" :class "Virt-manager")
+       (7 t t :create "vncviewer-dump" :class "Vncviewer"))
    #+end_src
 
 
