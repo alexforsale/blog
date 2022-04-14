@@ -97,6 +97,12 @@
        (setf *run-or-raise-all-screens* t)
      #+end_src
    - =*fload-window-modifier*= :: The keyboard modifier to use for resize and move floating windows without clicking on the top border. Valid values are =:META= =:ALT= =:HYPER= =:SUPER=, =:ALTGR= and =:NUMLOCK=.
+** Functions
+   #+begin_src lisp
+     (defun empty-directory-p (path)
+       (and (null (directory (concatenate 'string path "/*")))
+            (null (directory (concatenate 'string path "/*/")))))
+   #+end_src
 ** Load contrib modules
    Check several directories for modules, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
    #+begin_src lisp
@@ -334,9 +340,10 @@
             "^>"
             "%m"
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
-            '(:eval (format nil "^6|Backlight: ~D%" (show-brightness-value)))
-            '(:eval (format nil "^5|Battery:~D" (show-battery-charge)))
-            '(:eval (format nil "~D" (show-battery-state)))
+            '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
+            '(:eval (unless (empty-directory-p "/sys/class/backlight") (format nil "^6|Backlight: ~D%" (show-brightness-value))))
+            '(:eval (unless (empty-directory-p "/sys/class/power_supply") (format nil "^5|Battery:~D" (show-battery-charge))))
+            '(:eval (unless (empty-directory-p "/sys/class/power_supply") (format nil "~D" (show-battery-state))))
             "^6|%D" ;maildir
             "^5|%d"
             ))
