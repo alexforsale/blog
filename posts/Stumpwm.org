@@ -369,7 +369,8 @@
      - =^B= :: Turn on bright colors.
      - =^b= :: Turn off bright colors.
      - ^<digit> :: Set the color to =<digit>= in the =*colors= variable.
-   - %D :: This is from the =maildir= contrib package.
+     - %D :: This is from the =maildir= contrib package.
+     - =%m= :: From the =mpd= contrib package.
    - =*time-modeline-string*= :: The default time value to pass to the modeline. This is using the /GNU coreutils/ format, see ~info "(coreutils)Date conversion specifiers"~ for details.
    - =*mode-line-timeouts*= :: The modeline updates after each command, when a new window appears or an existing one disappears, and on a timer.  This variable controls how many seconds elapse between each update.  If this variable is changed while the modeline is visible, you must toggle the modeline to update timer.
    - =*mode-line-background-color*= :: The background color for the modeline.
