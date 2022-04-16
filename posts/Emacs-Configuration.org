@@ -159,17 +159,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ** Set /+emacs-data-dir/ variables.
    #+begin_src emacs-lisp
      (defvar +emacs-data-dir
-       (cond
-        ((featurep 'chemacs)
-         (if (getenv "XDG_DATA_HOME")
-             (concat (getenv "XDG_DATA_HOME") "/emacs/" chemacs-profile-name)
-           (concat (getenv "HOME") ".local/share/emacs" chemacs-profile-name)))
-        ((if (getenv "XDG_DATA_HOME")
-             (expand-file-name "emacs" (getenv "XDG_DATA_HOME"))
-           (expand-file-name ".local/share/emacs" (getenv "HOME")))))
+       (if (getenv "XDG_DATA_HOME")
+           (expand-file-name "emacs" (getenv "XDG_DATA_HOME"))
+         (expand-file-name ".local/share/emacs" (getenv "HOME")))
        "Location for Emacs data files.")
    #+end_src
-   This will set the variable /+emacs-data-dir/ to =~/.local/share/emacs=, or to =~/.local/share/emacs/<chemacs-profile-name>= if using /chemacs/.
+   This will set the variable /+emacs-data-dir/ to =~/.local/share/emacs=.
 ** Increase the GC threshold for faster startup
    The default is 800 kilobytes, measured in bytes.
    #+begin_src emacs-lisp
@@ -266,14 +261,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; variables defined in early-init.el doesn't carry-over here.
      (unless (boundp '+emacs-data-dir)
        (defvar +emacs-data-dir
-         (cond
-          ((featurep 'chemacs)
-           (if (getenv "XDG_DATA_HOME")
-               (concat (getenv "XDG_DATA_HOME") "/emacs/" chemacs-profile-name)
-             (concat (getenv "HOME") ".local/share/emacs" chemacs-profile-name)))
-          ((if (getenv "XDG_DATA_HOME")
-               (expand-file-name "emacs" (getenv "XDG_DATA_HOME"))
-             (expand-file-name ".local/share/emacs" (getenv "HOME")))))
+         (if (getenv "XDG_DATA_HOME")
+             (expand-file-name "emacs" (getenv "XDG_DATA_HOME"))
+           (expand-file-name ".local/share/emacs" (getenv "HOME")))
          "Location for Emacs data files."))
      (unless (file-directory-p +emacs-data-dir)
        (make-directory +emacs-data-dir :parents))
@@ -380,12 +370,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    The first thing to do is set the directories for backups and autosave, most people turn off these settings, but I sometimes need them, not inside the =user-emacs-directory= though, because I'd like to have few lines in my =.gitignore=.
    #+begin_src emacs-lisp
      (defvar +emacs-backup-directory
-       (cond
-        ((featurep 'chemacs)
-         (expand-file-name "backups" +emacs-data-dir))
-        ((if (getenv "XDG_DATA_HOME")
-             (expand-file-name "emacs/backups" (getenv "XDG_DATA_HOME"))
-           (expand-file-name ".local/share/emacs/backups" (getenv "HOME")))))
+       (if (getenv "XDG_DATA_HOME")
+           (expand-file-name "emacs/backups" (getenv "XDG_DATA_HOME"))
+         (expand-file-name ".local/share/emacs/backups" (getenv "HOME")))
        "Location of Emacs backup files.")
      (unless backup-directory-alist
        (setq backup-directory-alist `(("." . ,+emacs-backup-directory))))
