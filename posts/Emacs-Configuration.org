@@ -806,11 +806,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (unless +config/is-guix-system
          (straight-use-package 'perspective))
        (setq persp-initial-frame-name "Main")
-       (setq persp-state-default-fle (expand-file-name "statesave" +emacs-data-dir))
+       (setq persp-state-default-file (expand-file-name "statesave" +emacs-data-dir))
        (unless (equal persp-mode t)
          (persp-mode))
        (global-set-key (kbd "C-x b") 'persp-switch-to-buffer*)
        (global-set-key (kbd "C-x k") 'persp-kill-buffer*)
+       (add-hook 'emacs-startup-hook (lambda () (persp-state-load persp-state-default-file)))
+       (add-hook 'kill-emacs-hook #'persp-state-save)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
