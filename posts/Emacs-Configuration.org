@@ -888,6 +888,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                                org-agenda-log-mode
                                diary-mode))
             "OrgMode")
+           ((memq major-mode '(vterm-mode
+                               eshell-mode
+                               term-mode))
+            "Term")
+           ((memq exwm-class-name '(firefox))
+            "Web")
            (t
             (centaur-tabs-get-group-name (current-buffer))))))
        (setq centaur-tabs--buffer-show-groups t)
