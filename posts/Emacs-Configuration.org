@@ -848,7 +848,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (global-set-key (kbd "C-c t C-n") 'centaur-tabs-forward)
        (global-set-key (kbd "C-c t M-p") 'centaur-tabs-backward-group)
        (global-set-key (kbd "C-c t M-n") 'centaur-tabs-forward-group)
-       (global-set-key (kbd "C-c t g") 'centaur-tabs-switch-group)
+       (global-set-key (kbd "C-c t g") 'centaur-tabs-consult-switch-group)
 
        ;; buffer groups
        (defun centaur-tabs-buffer-groups ()
@@ -860,6 +860,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           Other buffer group by `centaur-tabs-get-group-name' with project name."
          (list
           (cond
+           ;; set `Web' first to avoid mixing some buffer with
+           ;; `Emacs' group
+           ((or (string-equal exwm-class-name "firefox")
+                (string-equal exwm-class-name "Nyxt")
+                (string-equal (buffer-name) "*eww*"))
+            "Web")
+           ((or (memq major-mode '(vterm-mode
+                                   eshell-mode
+                                   term-mode))
+                (string-equal exwm-class-name "XTerm")
+                (string-equal exwm-class-name "Termite"))
+            "Term")
            ((or (string-equal "*" (substring (buffer-name) 0 1))
                 (memq major-mode '(magit-process-mode
                                    magit-status-mode
@@ -888,16 +900,22 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                                org-agenda-log-mode
                                diary-mode))
             "OrgMode")
-           ((memq major-mode '(vterm-mode
-                               eshell-mode
-                               term-mode))
-            "Term")
-           ((memq exwm-class-name '(firefox))
-            "Web")
            (t
             (centaur-tabs-get-group-name (current-buffer))))))
        (setq centaur-tabs--buffer-show-groups t)
      #+end_src
+***** consult integration
+      #+begin_src emacs-lisp
+        (defun centaur-tabs-consult-switch-group ()
+          "Display a list of current buffer groups using Consult."
+          (interactive)
+          (when (featurep 'consult)
+            (require 'consult)
+            (centaur-tabs-switch-group
+             (consult--read
+              (centaur-tabs-get-groups)
+              :prompt "Centaur Tabs Groups:"))))
+      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-centaur-tabs)
