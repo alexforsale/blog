@@ -1008,11 +1008,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (diminish 'flycheck-mode)
          (diminish 'projectile-mode)
          (diminish 'yas-global-mode)
-         (diminish 'yas/global-mode)
          (diminish 'yas-extra-mode)
          (diminish 'yas-minor-mode)
-         (diminish 'yas/minor-mode)
          (diminish 'which-key-mode)
+         (diminish 'desktop-environment-mode)
+         (diminish 'desktop-environment-mode)
+         (diminish 'projectile-mode)
+         (diminish 'paredit-mode)
          (diminish 'theme-magic-export-theme-mode))
      #+end_src
 ***** Footer
