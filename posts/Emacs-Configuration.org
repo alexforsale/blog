@@ -862,18 +862,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           Other buffer group by `centaur-tabs-get-group-name' with project name."
          (list
           (cond
-           ;; set `Web' first to avoid mixing some buffer with
-           ;; `Emacs' group
-           ((or (string-equal exwm-class-name "firefox")
-                (string-equal exwm-class-name "Nyxt")
-                (string-equal (buffer-name) "*eww*"))
-            "Web")
-           ((or (memq major-mode '(vterm-mode
-                                   eshell-mode
-                                   term-mode))
-                (string-equal exwm-class-name "XTerm")
-                (string-equal exwm-class-name "Termite"))
-            "Term")
            ((or (string-equal "*" (substring (buffer-name) 0 1))
                 (memq major-mode '(magit-process-mode
                                    magit-status-mode
