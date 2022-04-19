@@ -3329,6 +3329,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              emms-player-mpv-environment '("PULSnE_PROP_media.role=music")
              emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
      #+end_src
+***** emms-player-mpd
+      #+begin_src emacs-lisp
+        (require 'emms-player-mpd)
+        (setq emms-player-mpd-server-name "localhost")
+        (setq emms-player-mpd-server-port "6600")
+        (add-to-list 'emms-info-functions 'emms-info-mpd)
+        (add-to-list 'emms-player-list 'emms-player-mpd)
+      #+end_src
 ***** notification
       #+begin_src emacs-lisp
         (defvar notify-method 'nil
