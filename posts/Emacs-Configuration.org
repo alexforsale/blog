@@ -853,46 +853,45 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (global-set-key (kbd "C-c t g") 'centaur-tabs-consult-switch-group)
 
        ;; buffer groups
-       (unless (featurep 'exwm)
-         (defun centaur-tabs-buffer-groups ()
-           "`centaur-tabs-buffer-groups' control buffers' group rules.
+       (defun centaur-tabs-buffer-groups ()
+         "`centaur-tabs-buffer-groups' control buffers' group rules.
 
           Group centaur-tabs with mode if buffer is derived from
          `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
           All buffer name start with * will group to \"Emacs\".
           Other buffer group by `centaur-tabs-get-group-name' with project name."
-           (list
-            (cond
-             ((or (string-equal "*" (substring (buffer-name) 0 1))
-                  (memq major-mode '(magit-process-mode
-                                     magit-status-mode
-                                     magit-diff-mode
-                                     magit-log-mode
-                                     magit-file-mode
-                                     magit-blob-mode
-                                     magit-blame-mode
-                                     )))
-              "Emacs")
-             ((derived-mode-p 'prog-mode)
-              "Editing")
-             ((derived-mode-p 'dired-mode)
-              "Dired")
-             ((memq major-mode '(helpful-mode
-                                 help-mode))
-              "Help")
-             ((memq major-mode '(org-mode
-                                 org-agenda-clockreport-mode
-                                 org-src-mode
-                                 org-agenda-mode
-                                 org-beamer-mode
-                                 org-indent-mode
-                                 org-bullets-mode
-                                 org-cdlatex-mode
-                                 org-agenda-log-mode
-                                 diary-mode))
-              "OrgMode")
-             (t
-              (centaur-tabs-get-group-name (current-buffer)))))))
+         (list
+          (cond
+           ((or (string-equal "*" (substring (buffer-name) 0 1))
+                (memq major-mode '(magit-process-mode
+                                   magit-status-mode
+                                   magit-diff-mode
+                                   magit-log-mode
+                                   magit-file-mode
+                                   magit-blob-mode
+                                   magit-blame-mode
+                                   )))
+            "Emacs")
+           ((derived-mode-p 'prog-mode)
+            "Editing")
+           ((derived-mode-p 'dired-mode)
+            "Dired")
+           ((memq major-mode '(helpful-mode
+                               help-mode))
+            "Help")
+           ((memq major-mode '(org-mode
+                               org-agenda-clockreport-mode
+                               org-src-mode
+                               org-agenda-mode
+                               org-beamer-mode
+                               org-indent-mode
+                               org-bullets-mode
+                               org-cdlatex-mode
+                               org-agenda-log-mode
+                               diary-mode))
+            "OrgMode")
+           (t
+            (centaur-tabs-get-group-name (current-buffer))))))
        (setq centaur-tabs--buffer-show-groups t)
      #+end_src
 ***** consult integration
@@ -3336,6 +3335,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (setq emms-player-mpd-server-port "6600")
         (add-to-list 'emms-info-functions 'emms-info-mpd)
         (add-to-list 'emms-player-list 'emms-player-mpd)
+        (require 'emms-volume)
+        (setq emms-volume-change-function 'emms-volume-mpd-change)
       #+end_src
 ***** notification
       #+begin_src emacs-lisp
