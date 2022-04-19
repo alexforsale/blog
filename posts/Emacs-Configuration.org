@@ -309,6 +309,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ** per-user configuration file, not maintained by git, so I can have different setup for my desktop and laptop.
    #+begin_src emacs-lisp
      (when (file-exists-p (expand-file-name "config-user.el" user-emacs-directory))
+       (customize-set-variable 'vc-follow-symlinks t)
        (load (expand-file-name "config-user.el" user-emacs-directory)))
    #+end_src
    If there's any /modules/ or other files needed, this is where to place it.
