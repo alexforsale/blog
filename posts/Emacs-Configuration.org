@@ -347,8 +347,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ** DE/WM
 *** exwm
     #+begin_src emacs-lisp
-      (setq +config/exwm-enabled (and (eq window-system 'x)
-                                      (featurep 'exwm)))
+      (setq +config/exwm-enabled
+            (or (string= (getenv "DESKTOP_SESSION") "exwm")
+                (featurep 'exwm)))
     #+end_src
 ** XDG Directories
    #+begin_src emacs-lisp
