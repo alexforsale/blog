@@ -812,8 +812,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (persp-mode))
        (global-set-key (kbd "C-x b") 'persp-switch-to-buffer*)
        (global-set-key (kbd "C-x k") 'persp-kill-buffer*)
-       (add-hook 'emacs-startup-hook (lambda () (persp-state-load persp-state-default-file)))
-       (add-hook 'kill-emacs-hook #'persp-state-save)
+       (unless +config/exwm-enabled
+         (add-hook 'emacs-startup-hook (lambda () (persp-state-load persp-state-default-file)))
+         (add-hook 'kill-emacs-hook #'persp-state-save))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
