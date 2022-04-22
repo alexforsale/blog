@@ -882,10 +882,41 @@
        (7 t t :create "virtmanager-dump" :class "Virt-manager")
        (7 t t :create "vncviewer-dump" :class "Vncviewer"))
    #+end_src
-
-
+* Running Stumpwm
+  There are various methods of starting a /stumpwm/ X session. The easiest way is to install the /stumpwm/ package using your /distro/ package manager, then you can run the executable =stumpwm= using /xinit/, /startx/, or via /display managers/, since the package will likely to also provide a =.desktop= file.
+  The other (recommended) way is to clone the official repository[fn:2], install the required dependencies, build and install /stumpwm/ (usually into =/usr/local/= so other user can also use it). Then start it by either /startx/ or /xinit/, or create additional =.desktop= file so the /display manager/ can also use it.
+  Other method (the one I use), is to install /stumpwm/ via /sbcl/
+  #+begin_src lisp :tangle no
+    (ql:quickload "stumpwm")
+  #+end_src
+  And create a =startstumpwm= file in =/usr/local/bin=:
+  #+begin_src lisp :tangle "/sudo::/usr/local/bin/startstumpwm"
+    ;;;; -*-lisp-*-
+    (require :stumpwm)
+    (stumpwm:stumpwm)
+  #+end_src
+  This file then called from =~/.xinitrc=:
+  #+begin_src sh :tangle no
+    exec sbcl --load /usr/local/bin/startstumpwm
+  #+end_src
+  or if using /display manager/ create a =.desktop= file:
+  #+begin_src conf :tangle "/sudo::/usr/local/share/xsession/stumpwm.desktop" :mkdirp t
+    [Desktop Entry]
+    Name=StumpWM
+    Type=XSession
+    Exec=/usr/local/bin/sbcl --load /usr/local/bin/startstumpwm
+    Name=StumpWM
+    Comment=Stump window manager
+  #+end_src
+  The /display manager/ itself must be configured to also pick up the =/usr/local/share/xsession= directory, I prefer to put my own compiled packages in =/usr/local= to avoid conflict with the ones installed by the /distro/ package manager. Example in /lightdm/ is to add:
+  #+begin_src conf :tangle no
+    sessions-directory=/usr/share/lightdm/sessions:/usr/share/xsessions:/usr/share/wayland-sessions:/usr/local/share/xsessions
+  #+end_src
+  in the =[LightDM]= section.
+  This method, and the method using /git/ repository, has the benefit of having all the dependencies in their latest version. This is useful when using /sly/ or /slime/ in /emacs/.
 * Footnotes
 
 [fn:1] http://www.lispworks.com/documentation/lw51/CLHS/Body/f_probe_.htm
+[fn:2] https://github.com/stumpwm/stumpwm
 
 #+include: ../utterances.inc
