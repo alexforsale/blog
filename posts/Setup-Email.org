@@ -757,7 +757,7 @@
       remoterepository = gmail-remote
       synclabels = yes
       labelsheader = X-Keywords
-      autorefresh = 5
+      autorefresh = 15
       quick = 10
       postsynchook = notmuch new --verbose
 
@@ -795,7 +795,7 @@
       [Account yahoo]
       localrepository = yahoo-local
       remoterepository = yahoo-remote
-      autorefresh = 7.5
+      autorefresh = 20
       quick = 10
       postsynchook = notmuch new --verbose
 
@@ -830,7 +830,7 @@
       [Account hotmail]
       localrepository = hotmail-local
       remoterepository = hotmail-remote
-      autorefresh = 15
+      autorefresh = 30
       quick = 10
       postsynchook = notmuch new --verbose
 
@@ -868,7 +868,7 @@
       [Account ymail]
       localrepository = ymail-local
       remoterepository = ymail-remote
-      autorefresh = 30
+      autorefresh = 60
       quick = 10
       postsynchook = notmuch new --verbose
 
