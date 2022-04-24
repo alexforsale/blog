@@ -83,6 +83,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-org-roam)
      (require 'config-org-elfeed)
      (require 'config-org-gcal)
+     ;; (+config/org-gcal-setup-sync)
      (require 'config-org-journal)
    #+end_src
 ** IDE packages
@@ -2237,12 +2238,20 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (straight-use-package 'org-gcal)
 
-       (require 'config-pass)
-       (with-eval-after-load 'pass
+       (defun +config/org-gcal-setup-sync (&optional dir id secret)
+         "Setup gcal with optional args DIR, ID and SECRET."
+         ;; require
+         (require 'config-pass)
          (require 'org-gcal)
-         (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir))
-         (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id"))
-         (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret")))
+         (if dir
+             (setq org-gcal-dir dir)
+           (setq org-gcal-dir (expand-file-name "org/gcal/" +emacs-data-dir)))
+         (if id
+             (setq org-gcal-client-id id)
+           (setq org-gcal-client-id (password-store-get "console.cloud.google.com/gcal/id")))
+         (if secret
+             (setq org-gcal-client-secret secret)
+           (setq org-gcal-client-secret (password-store-get "console.cloud.google.com/gcal/secret"))))
      #+end_src
 ***** Keybinding
       #+begin_src emacs-lisp
