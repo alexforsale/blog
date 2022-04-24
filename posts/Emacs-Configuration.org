@@ -51,7 +51,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-which-key)
      (require 'config-ace-window)
      (require 'config-perspective)
-     (require 'config-centaur-tabs)
+     (unless (or (featurep 'exwm)
+                 (string= "exwm" (getenv "DESKTOP_SESSION")))
+       (require 'config-centaur-tabs)) ; doesn't look good in workspaces
      (require 'config-rainbow-mode)
      (require 'config-rainbow-delimiters)
      (require 'config-hl-todo)
@@ -118,10 +120,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-pass)
      (require 'config-magit)
      ;;(require 'config-slime)
-     (require 'config-sly) ; a better repl than slime
+     ;;(require 'config-sly) ; a better repl than slime
      (require 'config-paredit)
      (require 'config-telega)
      (require 'config-emms)
+     ;;(+config/emms-set-mpd) ; when using mpd
      (require 'config-w3m)
      (require 'config-pdf-tools)
      (require 'config-gist)
@@ -3333,13 +3336,22 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ***** emms-player-mpd
       #+begin_src emacs-lisp
-        (require 'emms-player-mpd)
-        (setq emms-player-mpd-server-name "localhost")
-        (setq emms-player-mpd-server-port "6600")
-        (add-to-list 'emms-info-functions 'emms-info-mpd)
-        (add-to-list 'emms-player-list 'emms-player-mpd)
-        (require 'emms-volume)
-        (setq emms-volume-change-function 'emms-volume-mpd-change)
+        (defun +config/emms-set-mpd (&optional name port passwd)
+          "Set `emms' to use mpd, use arguments NAME, PORT and PASSWD."
+          (interactive)
+          (require 'emms-player-mpd)
+          (if name
+              (setq emms-player-mpd-server-name name)
+            (setq emms-player-mpd-server-name "localhost"))
+          (if port
+              (setq emms-player-mpd-server-port port)
+            (setq emms-player-mpd-server-port "6600"))
+          (if passwd
+              (setq emms-player-mpd-server-password passwd))
+          (add-to-list 'emms-info-functions 'emms-info-mpd)
+          (add-to-list 'emms-player-list 'emms-player-mpd)
+          (require 'emms-volume)
+          (setq emms-volume-change-function 'emms-volume-mpd-change))
       #+end_src
 ***** notification
       #+begin_src emacs-lisp
