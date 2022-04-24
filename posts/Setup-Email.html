@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mail Configuration Using msmtp, offlineimap, and notmuch</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Mail Configuration Using msmtp, offlineimap, and notmuch</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 23, 2022 by Kristian Alexander P.</p>
+</header>
+<figure id="orge2b4443">
+<img src="../images/posts/notmuch1.png" alt="notmuch1.png" class="center no-border" width="75%" height="75%">
+
+</figure>
+
+<figure id="org09593bf">
+<img src="../images/posts/notmuch2.png" alt="notmuch2.png" class="center no-border" width="75%" height="75%">
+
+</figure>
+<section id="outline-container-org5890e0e" class="outline-2">
+<h2 id="org5890e0e">Mail</h2>
+<div class="outline-text-2" id="text-org5890e0e">
+<p>
+As per other posts in this blog, this is my actual configuration used in various machines. One benefit I can think of is with this setup is that I can use different clients<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>, of course here I&rsquo;m using <i>notmuch-emacs</i>.
+I have four accounts configured in this setup:
+</p>
+<ol class="org-ol">
+<li>Gmail
+My primary account.</li>
+<li>Yahoo
+My &ldquo;bulk&rdquo; mail, usually for subscribing to news, mailing lists and such.</li>
+<li>Hotmail
+A.K.A <i>windowslive</i>. Not used often but still needed for connecting to <i>ms</i> stuffs.</li>
+<li>ymail
+Few mailing lists and stuffs.</li>
+</ol>
+</div>
+<div id="outline-container-orgb4ccafc" class="outline-3">
+<h3 id="orgb4ccafc">msmtp</h3>
+<div class="outline-text-3" id="text-orgb4ccafc">
+<p>
+Configuration can be stored in <code>~/.msmtprc</code> or <code>~/.config/msmtp/config</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Set default values for all following accounts.</span>
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        ~/.local/share/mail/msmtp.log
+aliases        /etc/aliases
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Gmail</span>
+account        gmail
+host           smtp.gmail.com
+port           587
+from           alexarians@gmail.com
+user           alexarians
+passwordeval   <span class="org-string">"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-gmail.gpg"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Yahoo service</span>
+account        yahoo
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+host           smtp.mail.yahoo.com
+port           587
+from           alexforsale@yahoo.com
+user           alexforsale
+passwordeval   <span class="org-string">"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-yahoo.gpg"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Hotmail</span>
+account        hotmail
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+<span class="org-comment-delimiter">#</span><span class="org-comment">tls_certcheck  off</span>
+host           smtp-mail.outlook.com
+port           587
+from           christian.alexander@windowslive.com
+user           christian.alexander@windowslive.com
+passwordeval   <span class="org-string">"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-hotmail.gpg"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Ymail service</span>
+account        ymail
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+host           smtp.mail.yahoo.com
+port           587
+from           christian.alexander@ymail.com
+user           christian.alexander@ymail.com
+passwordeval   <span class="org-string">"gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.local/etc/mail/mailpass-ymail.gpg"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Set a default account</span>
+account default : yahoo
+
+</pre>
+</div>
+<p>
+To easily encript the files in <code>~/.local/etc/mail/</code>, open the file in <i>Emacs</i> and save it with <code>.gpg</code> extension, if you&rsquo;ve setup gpg(see arch wiki for <a href="https://wiki.archlinux.org/title/GnuPG">that</a>) it&rsquo;ll prompt you for the key to encrypt. Another option is to use <i>password-store</i> to store the password, details also in <a href="https://wiki.archlinux.org/title/Msmtp">arch wiki</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-org3954f94" class="outline-3">
+<h3 id="org3954f94">CANCELLED isync</h3>
+<div class="outline-text-3" id="text-org3954f94">
+<ul class="org-ul">
+<li>State &ldquo;CANCELLED&rdquo;  from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-29 Tue 21:12]</span></span></li>
+</ul>
+<p>
+For a while, <i>isync</i> works greate for me, but synchronizing around 86000 emails took a while, which meant using imapnotify is kinda pointless (I need to manually kill and restart <i>mbsync</i> to pull new mails). I&rsquo;m keeping this configuration here just in case I need to revert back.
+This is what I configured in <code>~/.mbsyncrc</code>:
+</p>
+</div>
+<div id="outline-container-org2c9ad10" class="outline-4">
+<h4 id="org2c9ad10">IMAP Account</h4>
+<div class="outline-text-4" id="text-org2c9ad10">
+<p>
+This set up the necessary information on connecting to the IMAP server.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">IMAPAccount gmail
+<span class="org-comment-delimiter"># </span><span class="org-comment">Address to connect to</span>
+Host imap.gmail.com
+User alexarians@gmail.com
+<span class="org-comment-delimiter"># </span><span class="org-comment">Pass ***************</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">To store the password in an encrypted file use PassCmd instead of Pass</span>
+PassCmd <span class="org-string">"gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-gmail.gpg"</span>
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Use SSL</span>
+SSLType IMAPS
+<span class="org-comment-delimiter"># </span><span class="org-comment">The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.</span>
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+<span class="org-comment-delimiter">#</span><span class="org-comment">CertificateFile ~/.cert/imap.gmail.com.pem</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">CertificateFile ~/.cert/Equifax_Secure_CA.pem</span>
+
+IMAPAccount yahoo
+Host imap.mail.yahoo.com
+User alexforsale@yahoo.com
+PassCmd <span class="org-string">"gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-yahoo.gpg"</span>
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 10
+
+IMAPAccount ymail
+Host imap.mail.yahoo.com
+User christian.alexander@ymail.com
+PassCmd <span class="org-string">"gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-ymail.gpg"</span>
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 10
+
+IMAPAccount hotmail
+Host imap-mail.outlook.com
+User christian.alexander@windowslive.com
+PassCmd <span class="org-string">"gpg -q --for-your-eyes-only --no-tty -d ~/.local/etc/mail/mailpass-hotmail.gpg"</span>
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6854cdd" class="outline-4">
+<h4 id="org6854cdd">Gmail</h4>
+<div class="outline-text-4" id="text-org6854cdd">
+<div class="org-src-container">
+<pre class="src src-conf">IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+SubFolders Verbatim
+<span class="org-comment-delimiter"># </span><span class="org-comment">The trailing "/" is important</span>
+Path /home/alexforsale/.mail/gmail/
+Inbox /home/alexforsale/.mail/gmail/Inbox
+
+Channel gmail-trash
+Far :gmail-remote:<span class="org-string">"[Gmail]/Trash"</span>
+Near :gmail-local:trash
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Far :gmail-remote:<span class="org-string">"[Gmail]/Sent Mail"</span>
+Near :gmail-local:sent
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-drafts
+Far :gmail-remote:<span class="org-string">"[Gmail]/Drafts"</span>
+Near :gmail-local:draft
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-allmail
+Far :gmail-remote:<span class="org-string">"[Gmail]/All Mail"</span>
+Near :gmail-local:archive
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-spam
+Far :gmail-remote:<span class="org-string">"[Gmail]/Spam"</span>
+Near :gmail-local:spam
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-other
+Far :gmail-remote:
+Near :gmail-local:
+Patterns * <span class="org-string">"![Gmail]/*"</span> <span class="org-string">"!trash*"</span> <span class="org-string">"!sent*"</span> <span class="org-string">"!draft*"</span> <span class="org-string">"!archive*"</span> <span class="org-string">"!spam*"</span> <span class="org-string">"!INBOX"</span> <span class="org-string">"!Inbox"</span>
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel gmail-inbox
+Far :gmail-remote:INBOX
+Near :gmail-local:Inbox
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-drafts
+Channel gmail-trash
+Channel gmail-allmail
+Channel gmail-other
+Channel gmail-spam
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga1fff82" class="outline-4">
+<h4 id="orga1fff82">Yahoo</h4>
+<div class="outline-text-4" id="text-orga1fff82">
+<div class="org-src-container">
+<pre class="src src-conf">IMAPStore yahoo-remote
+Account yahoo
+
+MaildirStore yahoo-local
+SubFolders Verbatim
+Path /home/alexforsale/.mail/yahoo/
+Inbox /home/alexforsale/.mail/yahoo/Inbox
+
+Channel yahoo-draft
+Far :yahoo-remote:Draft
+Near :yahoo-local:draft
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-trash
+Far :yahoo-remote:Trash
+Near :yahoo-local:trash
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-sent
+Far :yahoo-remote:Sent
+Near :yahoo-local:sent
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-spam
+Far :yahoo-remote:<span class="org-string">"Bulk Mail"</span>
+Near :yahoo-local:spam
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-archive
+Far :yahoo-remote:Archive
+Near :yahoo-local:archive
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-other
+Far :yahoo-remote:
+Near :yahoo-local:
+Create Both
+Patterns *<span class="org-string">"!Draft*"</span> <span class="org-string">"!draft*"</span> <span class="org-string">"!Trash*"</span> <span class="org-string">"!trash*"</span> <span class="org-string">"!Sent*"</span> <span class="org-string">"!sent*"</span> <span class="org-string">"!Bulk Mail*"</span> <span class="org-string">"!spam*"</span> <span class="org-string">"!Archive*"</span> <span class="org-string">"!archive"</span> <span class="org-string">"!INBOX*"</span> <span class="org-string">"!Inbox*"</span>
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel yahoo-inbox
+Far :yahoo-remote:INBOX
+Near :yahoo-local:Inbox
+Create Near
+SyncState *
+CopyArrivalDate yes
+
+Group yahoo
+Channel yahoo-spam
+Channel yahoo-inbox
+Channel yahoo-draft
+Channel yahoo-sent
+Channel yahoo-archive
+Channel yahoo-trash
+Channel yahoo-other
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaf9bf6b" class="outline-4">
+<h4 id="orgaf9bf6b">Hotmail</h4>
+<div class="outline-text-4" id="text-orgaf9bf6b">
+<div class="org-src-container">
+<pre class="src src-conf">IMAPStore hotmail-remote
+Account hotmail
+
+MaildirStore hotmail-local
+SubFolders Verbatim
+Path /home/alexforsale/.mail/hotmail/
+Inbox /home/alexforsale/.mail/hotmail/Inbox
+
+Channel hotmail-sent
+Far :hotmail-remote:Sent
+Near :hotmail-local:sent
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-inbox
+Far :hotmail-remote:INBOX
+Near :hotmail-local:Inbox
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-archive
+Far :hotmail-remote:Archive
+Near :hotmail-local:archive
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-trash
+Far :hotmail-remote:Deleted
+Near :hotmail-local:trash
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-draft
+Far :hotmail-remote:Drafts
+Near :hotmail-local:draft
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-spam
+Far :hotmail-remote:Junk
+Near :hotmail-local:spam
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-notes
+Far :hotmail-remote:Notes
+Near :hotmail-local:notes
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-outbox
+Far :hotmail-remote:Outbox
+Near :hotmail-local:outbox
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel hotmail-other
+Far :hotmail-remote:
+Near :hotmail-local:
+Patterns * <span class="org-string">"!Sent*"</span> <span class="org-string">"!sent*"</span> <span class="org-string">"!INBOX*"</span> <span class="org-string">"!Inbox*"</span> <span class="org-string">"!Archive*"</span> <span class="org-string">"!archive*"</span> <span class="org-string">"!Deleted*"</span> <span class="org-string">"!trash*"</span> <span class="org-string">"!Drafts*"</span> <span class="org-string">"!draft*"</span> <span class="org-string">"!Junk*"</span> <span class="org-string">"!spam*"</span> <span class="org-string">"!Notes*"</span> <span class="org-string">"!notes*"</span> <span class="org-string">"!Outbox*"</span> <span class="org-string">"!outbox*"</span>
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Group hotmail
+Channel hotmail-inbox
+Channel hotmail-sent
+Channel hotmail-archive
+Channel hotmail-trash
+Channel hotmail-draft
+Channel hotmail-spam
+Channel hotmail-notes
+Channel hotmail-other
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org60b6dfb" class="outline-4">
+<h4 id="org60b6dfb">Ymail</h4>
+<div class="outline-text-4" id="text-org60b6dfb">
+<div class="org-src-container">
+<pre class="src src-conf">IMAPStore ymail-remote
+Account ymail
+
+MaildirStore ymail-local
+SubFolders Verbatim
+Path /home/alexforsale/.mail/ymail/
+Inbox /home/alexforsale/.mail/ymail/Inbox
+
+Channel ymail-spam
+Far :ymail-remote:<span class="org-string">"Bulk Mail"</span>
+Near :ymail-local:spam
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-draft
+Far :ymail-remote:Draft
+Near :ymail-local:draft
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-inbox
+Far :ymail-remote:INBOX
+Near :ymail-local:Inbox
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-sent
+Far :ymail-remote:Sent
+Near :ymail-local:sent
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-trash
+Far :ymail-remote:Trash
+Near :ymail-local:trash
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-archive
+Far :ymail-remote:Archive
+Near :ymail-local:archive
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Channel ymail-other
+Far :ymail-remote:
+Near :ymail-local:
+Patterns * <span class="org-string">"!INBOX*"</span> <span class="org-string">"!Archive*"</span> <span class="org-string">"!Sent*"</span> <span class="org-string">"!Bulk Mail*"</span> <span class="org-string">"!Draft*"</span> <span class="org-string">"!Trash*"</span> <span class="org-string">"!Inbox*"</span> <span class="org-string">"!archive*"</span> <span class="org-string">"!sent*"</span> <span class="org-string">"!spam*"</span> <span class="org-string">"!draft*"</span> <span class="org-string">"!trash*"</span>
+Create Both
+CopyArrivalDate yes
+Sync All
+Remove Both
+Expunge Both
+SyncState *
+
+Group ymail
+Channel ymail-inbox
+Channel ymail-spam
+Channel ymail-draft
+Channel ymail-sent
+Channel ymail-trash
+Channel ymail-archive
+Channel ymail-other
+</pre>
+</div>
+<p>
+Run <code>mbsync -Va</code> for verbose logging to stdout. After that you could create a <a href="https://wiki.archlinux.org/title/Isync#Calling_mbsync_automatically">systemd user unit</a>, or use <i>goimapnotify</i> to get push notification(almost?).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6ed4d32" class="outline-3">
+<h3 id="org6ed4d32">afew</h3>
+<div class="outline-text-3" id="text-org6ed4d32">
+<pre class="example">
+header-args: :tangle ~/.config/afew/config :mkdirp t
+</pre>
+<p>
+It&rsquo;s an initial tagging script for notmuch.
+</p>
+</div>
+<div id="outline-container-org4f5eb73" class="outline-4">
+<h4 id="org4f5eb73">SpamFilter</h4>
+<div class="outline-text-4" id="text-org4f5eb73">
+<p>
+<code>spam_tag = &lt;tag&gt;</code>
+</p>
+<ul class="org-ul">
+<li>Add <i>&lt;tag&gt;</i> to all mails recognized as spam.</li>
+<li>The default is <code>spam</code>.</li>
+<li>You may use it to tag your spam as <code>junk</code>, <code>scum</code> or whatever suits your mood.
+Note that only a single tag is supported here.</li>
+</ul>
+<p>
+I&rsquo;m just using the defaults here.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">SpamFilter</span>]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7dfbf8d" class="outline-4">
+<h4 id="org7dfbf8d">KillThreadsFilter</h4>
+<div class="outline-text-4" id="text-org7dfbf8d">
+<p>
+If the new message has been added to a thread that has already been tagged <i>killed</i> then add the killed tag to this message. This allows for ignoring all replies to a particular thread.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">KillThreadsFilter</span>]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org228e843" class="outline-4">
+<h4 id="org228e843">ArchiveSentMailsFilter</h4>
+<div class="outline-text-4" id="text-org228e843">
+<p>
+Emails filtered by this filter have the new tag removed, so will not have the inbox tag added by the InboxFilter.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">ArchiveSentMailsFilter</span>]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e5084e" class="outline-4">
+<h4 id="org2e5084e">SentMailsFilter</h4>
+<div class="outline-text-4" id="text-org2e5084e">
+<p>
+<code>sent_tag = &lt;tag&gt;</code>
+</p>
+<ul class="org-ul">
+<li>Add <i>&lt;tag&gt;</i> to all mails sent from one of your configured mail addresses.</li>
+<li>he default is to add no tag, so you need to specify something.</li>
+<li>You may e.g. use it to tag all mails sent by you as <code>sent</code>.
+This may make special sense in conjunction with a mail client that is able
+to not only search for threads but individual mails as well.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">SentMailsFilter</span>]
+<span class="org-variable-name">sent_tag</span> = sent
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfdbd0d9" class="outline-4">
+<h4 id="orgfdbd0d9">FolderNameFilter</h4>
+<div class="outline-text-4" id="text-orgfdbd0d9">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">FolderNameFilter</span>]
+<span class="org-variable-name">folder_lowercases</span> = true
+<span class="org-variable-name">maildir_separator</span> = /
+</pre>
+</div>
+<p>
+For each email, it looks at all folders it is in, and uses the path and filename as a tag, for the email.  So if you have a <i>procmail</i> or <i>sieve</i> set up that puts emails in folders for you, this might be useful.
+</p>
+<ul class="org-ul">
+<li><code>folder_explicit_list = &lt;folder list&gt;</code>
+<ul class="org-ul">
+<li>Tag mails with tag in <i>&lt;folder list&gt;</i> only. <i>&lt;folder list&gt;</i> is a space separated list, not enclosed in quotes or any other way.</li>
+<li>Empty list means all folders (of course <i>blacklist</i> still applies).</li>
+<li>The default is empty list.</li>
+<li>You may use it e.g. to set tags only for specific folders like <code>Sent</code>.</li>
+</ul></li>
+<li><code>folder_blacklist = &lt;folder list&gt;</code>
+<ul class="org-ul">
+<li>Never tag mails with tag in <i>&lt;folder list&gt;</i>. <i>&lt;folder list&gt;</i> is a space separated list, not enclosed in quotes or any other way.</li>
+<li>The default is to blacklist no folders.</li>
+<li>You may use it e.g. to avoid mails being tagged as <code>INBOX</code> when there is the more standard <code>inbox</code> tag.</li>
+</ul></li>
+<li><code>folder_transforms = &lt;transformation rules&gt;</code>
+<ul class="org-ul">
+<li>Transform folder names according to the specified rules before tagging mails. <i>&lt;transformation rules&gt;</i> is a space separated list consisting of <code>folder:tag</code> style pairs. The colon separates the name of the folder to be transformed from the tag it is to be transformed into.</li>
+<li>The default is to transform to folder names.</li>
+<li><p>
+You may use the rules e.g. to transform the name of your ‘Junk’ folder into your ‘spam’ tag or fix capitalization of your draft and sent folder:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-variable-name">folder_transforms</span> = Junk:spam Drafts:draft Sent:sent
+</pre>
+</div></li>
+</ul></li>
+<li><code>folder_lowercases = true</code>
+<ul class="org-ul">
+<li>Use lowercase tags for all folder names</li>
+</ul></li>
+<li><code>maildir_separator = &lt;sep&gt;</code>
+<ul class="org-ul">
+<li>Use <i>&lt;sep&gt;</i> to split your maildir hierarchy into individual tags.</li>
+<li>The default is to split on <code>.</code></li>
+<li><p>
+If your maildir hierarchy is represented in the filesystem as collapsed dirs, <i>&lt;sep&gt;</i> is used to split it again before applying tags. If your maildir looks like this:
+</p>
+<pre class="example" id="org53afa46">
+[...]
+/path/to/maildir/devel.afew/[cur|new|tmp]/...
+/path/to/maildir/devel.alot/[cur|new|tmp]/...
+/path/to/maildir/devel.notmuch/[cur|new|tmp]/...
+[...]
+</pre></li>
+</ul></li>
+</ul>
+<p>
+the mails in your afew folder will be tagged with ‘devel’ and ‘afew’. If instead your hierarchy is split by a more conventional <code>/</code> or any other divider
+</p>
+<pre class="example" id="org0d4f0fa">
+[...]
+/path/to/maildir/devel/afew/[cur|new|tmp]/...
+/path/to/maildir/devel/alot/[cur|new|tmp]/...
+/path/to/maildir/devel/notmuch/[cur|new|tmp]/...
+[...]
+</pre>
+<p>
+you need to configure that divider to have your mails properly tagged:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-variable-name">maildir_separator</span> = /
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org59bc792" class="outline-4">
+<h4 id="org59bc792">InboxFilter</h4>
+<div class="outline-text-4" id="text-org59bc792">
+<p>
+This removes the new tag, and adds the inbox tag, to any message that isn’t killed or spam. (The new tags are set in your notmuch config, and default to just <code>new</code>.)
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">InboxFilter</span>]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc32096a" class="outline-4">
+<h4 id="orgc32096a">Custom Filter</h4>
+<div class="outline-text-4" id="text-orgc32096a">
+<p>
+See the <a href="https://afew.readthedocs.io/en/latest/configuration.html">afew documentation</a> on how to create custom filters.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgf854f9a"></a>Yearly Archives<br>
+<div class="outline-text-5" id="text-orgf854f9a">
+<p>
+For efficiency, this should be done from the server side, but some IMAP providers webmail <i>UI</i> isn&rsquo;t always capable of doing simple mail searching. Also if these tags are meant to be transformed into <i>IMAP folders</i>, locally the folders should already exists before doing <code>afew --move-mails</code> command.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgf1a1641"></a>2021<br>
+<div class="outline-text-6" id="text-orgf1a1641">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.21</span>]
+<span class="org-variable-name">query</span> = date:2021
+<span class="org-variable-name">tags</span> = +archive2021;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2021-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgb70bdc7"></a>2020<br>
+<div class="outline-text-6" id="text-orgb70bdc7">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.20</span>]
+<span class="org-variable-name">query</span> = date:2020
+<span class="org-variable-name">tags</span> = +archive2020;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2020-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org57c176a"></a>2019<br>
+<div class="outline-text-6" id="text-org57c176a">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.19</span>]
+<span class="org-variable-name">query</span> = date:2019
+<span class="org-variable-name">tags</span> = +archive2019;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2019-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org486fdb4"></a>2018<br>
+<div class="outline-text-6" id="text-org486fdb4">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.18</span>]
+<span class="org-variable-name">query</span> = date:2018
+<span class="org-variable-name">tags</span> = +archive2018;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2018-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgd4d1cd1"></a>2017<br>
+<div class="outline-text-6" id="text-orgd4d1cd1">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.17</span>]
+<span class="org-variable-name">query</span> = date:2017
+<span class="org-variable-name">tags</span> = +archive2017;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2017-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org6fa9447"></a>2016<br>
+<div class="outline-text-6" id="text-org6fa9447">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.16</span>]
+<span class="org-variable-name">query</span> = date:2016
+<span class="org-variable-name">tags</span> = +archive2016;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2016-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org08f4062"></a>2015<br>
+<div class="outline-text-6" id="text-org08f4062">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.15</span>]
+<span class="org-variable-name">query</span> = date:2015
+<span class="org-variable-name">tags</span> = +archive2015;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2015-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org25f3f78"></a>2014<br>
+<div class="outline-text-6" id="text-org25f3f78">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.14</span>]
+<span class="org-variable-name">query</span> = date:2014
+<span class="org-variable-name">tags</span> = +archive2014;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2014-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgd548f0f"></a>2013<br>
+<div class="outline-text-6" id="text-orgd548f0f">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.13</span>]
+<span class="org-variable-name">query</span> = date:2013
+<span class="org-variable-name">tags</span> = +archive2013;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2013-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org0b828f0"></a>2012<br>
+<div class="outline-text-6" id="text-org0b828f0">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.12</span>]
+<span class="org-variable-name">query</span> = date:2012
+<span class="org-variable-name">tags</span> = +archive2012;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2012-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org76a0a0e"></a>2011<br>
+<div class="outline-text-6" id="text-org76a0a0e">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.11</span>]
+<span class="org-variable-name">query</span> = date:2011
+<span class="org-variable-name">tags</span> = +archive2011;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2011-archive
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org64ab823"></a>2010<br>
+<div class="outline-text-6" id="text-org64ab823">
+<div class="org-src-container">
+<pre class="src src-conf">[<span class="org-type">Filter.10</span>]
+<span class="org-variable-name">query</span> = date:2010
+<span class="org-variable-name">tags</span> = +archive2010;-yahoo/archive;-gmail/archive;-hotmail/archive;-ymail/archive;-archive-inbox;-yahoo/inbox;-gmail/inbox;-hotmail/inbox;-ymail/inbox
+<span class="org-variable-name">message</span> = tagged 2010-archive
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgeae3d06" class="outline-3">
+<h3 id="orgeae3d06">notmuch</h3>
+<div class="outline-text-3" id="text-orgeae3d06">
+<p>
+run <code>notmuch setup</code> for initializing mail accounts, and <code>notmuch new</code> <b>AFTER</b> all your mailboxes syncronized.
+</p>
+</div>
+<div id="outline-container-org3689b1c" class="outline-4">
+<h4 id="org3689b1c">Hooks</h4>
+<div class="outline-text-4" id="text-org3689b1c">
+<p>
+Notmuch provides 3 hooks:
+</p>
+<dl class="org-dl">
+<dt>pre-new</dt><dd>Invoked by <code>notmuch new</code> command before scanning or importing new messages into the database. If this hook exits with a non-zero status, notmuch will abort further processing of the <code>notmuch new</code> command.</dd>
+<dt>post-new</dt><dd>This hook is invoked by the <code>notmuch new</code> command after new messages have been imported into the database and initial tags have been applied. The hook will not be run if there have been any errors during the scan or import.</dd>
+<dt>post-insert</dt><dd>This hook is invoked by the <code>notmuch insert</code> command after the message has been delivered, added to the database, and initial tags have been applied. The hook will not be run if there have been any errors during the message delivery; what is regarded as successful delivery depends on the <code>--keep</code> option.</dd>
+</dl>
+<p>
+I&rsquo;ll be using the <code>pre-new</code> hooks for <i>afew</i> and also <i>offlineimap</i> while the <code>post-new</code> hooks will be used by <i>afew</i> to tag new mails. Usually the <code>hook directory</code> resides inside the <code>mail</code> directory set in <code>notmuch-config</code>.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org22b1e54"></a>Post New Hook<br>
+<div class="outline-text-5" id="text-org22b1e54">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-variable-name">_AFEW</span>=<span class="org-string">"$(command -v afew)"</span>
+
+[ -n <span class="org-string">"${_AFEW}"</span> ] &amp;&amp;
+    <span class="org-string">"${_AFEW}"</span> --tag --new -vv
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8c082c2" class="outline-3">
+<h3 id="org8c082c2">offlineimap</h3>
+<div class="outline-text-3" id="text-org8c082c2">
+<pre class="example">
+header-args: :tangle ~/.config/offlineimap/config :mkdirp t
+</pre>
+<p>
+The configuration file can be stored at <code>~/.offlineimaprc</code> or <code>~/.config/offlineimap/config</code>, I chose the latter. I&rsquo;m using the <i>python3</i> version of <i>offlineimap</i>.
+</p>
+</div>
+<div id="outline-container-orgd22158c" class="outline-4">
+<h4 id="orgd22158c">General options</h4>
+<div class="outline-text-4" id="text-orgd22158c">
+<p>
+List the accounts that will be managed by offlineimap
+</p>
+<div class="org-src-container">
+<pre class="src src-python">[general]
+<span class="org-variable-name">accounts</span> = gmail, hotmail, ymail, yahoo
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2c60d54" class="outline-4">
+<h4 id="org2c60d54">Controls how many accounts may be synced simultaneously</h4>
+<div class="outline-text-4" id="text-org2c60d54">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">maxsyncaccounts</span> = 1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org54a47a2" class="outline-4">
+<h4 id="org54a47a2">Set <code>pythonfile</code></h4>
+<div class="outline-text-4" id="text-org54a47a2">
+<p>
+This is an helper script used by <i>offlineimap</i>. If this file is not located within <code>$PATH</code>, provide full path.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">pythonfile</span> = ~/.local/share/offlineimap/offlineimap.py
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="orgd215755"></a>The <code>offlineimap.py</code> content<br>
+<div class="outline-text-5" id="text-orgd215755">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-doc">"""Offlineimap helper script."""</span>
+
+<span class="org-keyword">from</span> subprocess <span class="org-keyword">import</span> check_output
+
+
+<span class="org-keyword">def</span> <span class="org-function-name">get_pass</span>(account):
+    <span class="org-doc">"""Return password for ACCOUNT."""</span>
+    match account:
+        case <span class="org-string">"yahoo"</span>:
+            <span class="org-keyword">return</span> check_output(
+                <span class="org-string">"pass login.yahoo.com/app_pass/alexforsale@yahoo.com"</span>,
+                shell=<span class="org-constant">True</span>).decode(<span class="org-string">'utf-8'</span>).strip(<span class="org-string">'\n'</span>)
+        case <span class="org-string">"ymail"</span>:
+            <span class="org-keyword">return</span> check_output(
+                <span class="org-string">"pass login.yahoo.com/app_pass/christian.alexander@ymail.com"</span>,
+                shell=<span class="org-constant">True</span>).decode(<span class="org-string">'utf-8'</span>).strip(<span class="org-string">'\n'</span>)
+        case <span class="org-string">"gmail"</span>:
+            <span class="org-keyword">return</span> check_output(
+                <span class="org-string">"pass google.com/app_pass/alexarians@gmail.com"</span>,
+                shell=<span class="org-constant">True</span>).decode(<span class="org-string">'utf-8'</span>).strip(<span class="org-string">'\n'</span>)
+        case <span class="org-string">"hotmail"</span>:
+            <span class="org-keyword">return</span> check_output(
+                <span class="org-string">"pass outlook.live.com/christian.alexander@windowslive.com"</span>,
+                shell=<span class="org-constant">True</span>).decode(<span class="org-string">'utf-8'</span>).strip(<span class="org-string">'\n'</span>)
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org6d81dc6" class="outline-4">
+<h4 id="org6d81dc6">Credentials for gmail account</h4>
+<div class="outline-text-4" id="text-org6d81dc6">
+<p>
+The configuration itself will vary depending to how you will use <i>offlineimap</i>, if you&rsquo;re using it as a <i>daemon</i> (continously running in the background) you should uncomment the <code>autorefresh</code> and <code>quick</code> option. I&rsquo;m not using it as a daemon since I want the <i>offlineimap</i> process only run when called by <i>notmuch</i> via hooks. Also check the full configuration directives at their <a href="https://github.com/OfflineIMAP/offlineimap3/blob/master/offlineimap.conf">github repo</a>.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">[Account gmail]
+<span class="org-variable-name">localrepository</span> = gmail-local
+<span class="org-variable-name">remoterepository</span> = gmail-remote
+<span class="org-variable-name">synclabels</span> = yes
+<span class="org-variable-name">labelsheader</span> = X-Keywords
+<span class="org-variable-name">autorefresh</span> = 15
+<span class="org-variable-name">quick</span> = 10
+<span class="org-variable-name">postsynchook</span> = notmuch new --verbose
+
+[Repository gmail-local]
+<span class="org-variable-name">Type</span> = GmailMaildir
+<span class="org-variable-name">localfolders</span> = ~/.mail/gmail
+<span class="org-variable-name">sync_deletes</span> = yes
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'spam'</span>, <span class="org-string">'[Gmail]/Spam'</span>,
+                     re.sub(<span class="org-string">'draft'</span>, <span class="org-string">'[Gmail]/Drafts'</span>,
+                     re.sub(<span class="org-string">'inbox'</span>, <span class="org-string">'INBOX'</span>,
+                     re.sub(<span class="org-string">'sent'</span>, <span class="org-string">'[Gmail]/Sent Mail'</span>,
+                     re.sub(<span class="org-string">'trash'</span>, <span class="org-string">'[Gmail]/Trash'</span>,
+                     re.sub(<span class="org-string">'archive*'</span>, <span class="org-string">'Archive'</span>,
+                     re.sub(<span class="org-string">'archive$'</span>, <span class="org-string">'[Gmail]/All Mail'</span>, f)))))))
+
+[Repository gmail-remote]
+<span class="org-variable-name">Type</span> = Gmail
+<span class="org-variable-name">remoteuser</span> = alexarians@gmail.com
+<span class="org-variable-name">remotepasseval</span> = get_pass(<span class="org-string">"gmail"</span>)
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'.*All Mail$'</span>, <span class="org-string">'archive'</span>,
+                      re.sub(<span class="org-string">'^Archive'</span>, <span class="org-string">'archive'</span>,
+                      re.sub(<span class="org-string">'.*Drafts$'</span>, <span class="org-string">'draft'</span>,
+                      re.sub(<span class="org-string">'.*Spam$'</span>, <span class="org-string">'spam'</span>,
+                      re.sub(<span class="org-string">'.*Sent Mail$'</span>, <span class="org-string">'sent'</span>,
+                      re.sub(<span class="org-string">'.*Trash$'</span>, <span class="org-string">'trash'</span>,
+                      re.sub(<span class="org-string">'INBOX'</span>, <span class="org-string">'inbox'</span>, f)))))))
+<span class="org-variable-name">folderfilter</span> = <span class="org-keyword">lambda</span> foldername: foldername <span class="org-keyword">not</span> <span class="org-keyword">in</span> [<span class="org-string">'[Gmail]/Important'</span>, <span class="org-string">'[Gmail]/Starred'</span>]
+<span class="org-variable-name">sslcacertfile</span> = /etc/ssl/certs/ca-certificates.crt
+<span class="org-variable-name">ssl_version</span> = tls1_2
+<span class="org-variable-name">usecompression</span> = yes
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org31035d3" class="outline-4">
+<h4 id="org31035d3">Yahoo</h4>
+<div class="outline-text-4" id="text-org31035d3">
+<p>
+I have to use <code>maxconnections = 1</code> for <i>yahoo</i> and <i>ymail</i> since they bound to generate error regarding <i>UID</i> when using the default.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">[Account yahoo]
+<span class="org-variable-name">localrepository</span> = yahoo-local
+<span class="org-variable-name">remoterepository</span> = yahoo-remote
+<span class="org-variable-name">autorefresh</span> = 20
+<span class="org-variable-name">quick</span> = 10
+<span class="org-variable-name">postsynchook</span> = notmuch new --verbose
+
+[Repository yahoo-local]
+<span class="org-variable-name">Type</span> = Maildir
+<span class="org-variable-name">localfolders</span> = ~/.mail/yahoo
+<span class="org-variable-name">sync_deletes</span> = yes
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'spam'</span>, <span class="org-string">'Bulk Mail'</span>,
+                     re.sub(<span class="org-string">'draft'</span>, <span class="org-string">'Draft'</span>,
+                     re.sub(<span class="org-string">'inbox'</span>, <span class="org-string">'Inbox'</span>,
+                     re.sub(<span class="org-string">'sent'</span>, <span class="org-string">'Sent'</span>,
+                     re.sub(<span class="org-string">'trash'</span>, <span class="org-string">'Trash'</span>,
+                     re.sub(<span class="org-string">'archive'</span>, <span class="org-string">'Archive'</span>, f))))))
+[Repository yahoo-remote]
+<span class="org-variable-name">Type</span> = IMAP
+<span class="org-variable-name">remotehost</span> = imap.mail.yahoo.com
+<span class="org-variable-name">remoteuser</span> = alexforsale@yahoo.com
+<span class="org-variable-name">remotepasseval</span> = get_pass(<span class="org-string">"yahoo"</span>)
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'.*Archive'</span>, <span class="org-string">'archive'</span>,
+                      re.sub(<span class="org-string">'.*Draft$'</span>, <span class="org-string">'draft'</span>,
+                      re.sub(<span class="org-string">'.*Bulk Mail$'</span>, <span class="org-string">'spam'</span>,
+                      re.sub(<span class="org-string">'.*Sent$'</span>, <span class="org-string">'sent'</span>,
+                      re.sub(<span class="org-string">'.*Trash$'</span>, <span class="org-string">'trash'</span>,
+                      re.sub(<span class="org-string">'Inbox'</span>, <span class="org-string">'inbox'</span>, f))))))
+<span class="org-variable-name">maxconnections</span> = 1
+<span class="org-variable-name">sslcacertfile</span> = /etc/ssl/certs/ca-certificates.crt
+<span class="org-variable-name">ssl_version</span> = tls1_2
+<span class="org-variable-name">usecompression</span> = no
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e34542" class="outline-4">
+<h4 id="org2e34542">Hotmail</h4>
+<div class="outline-text-4" id="text-org2e34542">
+<div class="org-src-container">
+<pre class="src src-python">[Account hotmail]
+<span class="org-variable-name">localrepository</span> = hotmail-local
+<span class="org-variable-name">remoterepository</span> = hotmail-remote
+<span class="org-variable-name">autorefresh</span> = 30
+<span class="org-variable-name">quick</span> = 10
+<span class="org-variable-name">postsynchook</span> = notmuch new --verbose
+
+[Repository hotmail-local]
+<span class="org-variable-name">Type</span> = Maildir
+<span class="org-variable-name">localfolders</span> = ~/.mail/hotmail
+<span class="org-variable-name">sync_deletes</span> = yes
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'spam'</span>, <span class="org-string">'Junk'</span>,
+                     re.sub(<span class="org-string">'draft'</span>, <span class="org-string">'Drafts'</span>,
+                     re.sub(<span class="org-string">'inbox'</span>, <span class="org-string">'Inbox'</span>,
+                     re.sub(<span class="org-string">'sent'</span>, <span class="org-string">'Sent'</span>,
+                     re.sub(<span class="org-string">'trash'</span>, <span class="org-string">'Deleted'</span>,
+                     re.sub(<span class="org-string">'notes'</span>, <span class="org-string">'Notes'</span>,
+                     re.sub(<span class="org-string">'outbox'</span>, <span class="org-string">'Outbox'</span>,
+                     re.sub(<span class="org-string">'archive'</span>, <span class="org-string">'Archive'</span>, f))))))))
+[Repository hotmail-remote]
+<span class="org-variable-name">Type</span> = IMAP
+<span class="org-variable-name">remotehost</span> = imap-mail.outlook.com
+<span class="org-variable-name">remoteuser</span> = christian.alexander@windowslive.com
+<span class="org-variable-name">remotepasseval</span> = get_pass(<span class="org-string">"hotmail"</span>)
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'.*Archive'</span>, <span class="org-string">'archive'</span>,
+                      re.sub(<span class="org-string">'.*Drafts$'</span>, <span class="org-string">'draft'</span>,
+                      re.sub(<span class="org-string">'.*Junk$'</span>, <span class="org-string">'spam'</span>,
+                      re.sub(<span class="org-string">'.*Sent$'</span>, <span class="org-string">'sent'</span>,
+                      re.sub(<span class="org-string">'.*Deleted$'</span>, <span class="org-string">'trash'</span>,
+                      re.sub(<span class="org-string">'.*Outbox$'</span>, <span class="org-string">'outbox'</span>,
+                      re.sub(<span class="org-string">'.*Notes$'</span>, <span class="org-string">'notes'</span>,
+                      re.sub(<span class="org-string">'Inbox'</span>, <span class="org-string">'inbox'</span>, f))))))))
+<span class="org-variable-name">sslcacertfile</span> = /etc/ssl/certs/ca-certificates.crt
+<span class="org-variable-name">ssl_version</span> = tls1_2
+<span class="org-variable-name">usecompression</span> = no
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org85fcc41" class="outline-4">
+<h4 id="org85fcc41">Ymail</h4>
+<div class="outline-text-4" id="text-org85fcc41">
+<div class="org-src-container">
+<pre class="src src-python">[Account ymail]
+<span class="org-variable-name">localrepository</span> = ymail-local
+<span class="org-variable-name">remoterepository</span> = ymail-remote
+<span class="org-variable-name">autorefresh</span> = 60
+<span class="org-variable-name">quick</span> = 10
+<span class="org-variable-name">postsynchook</span> = notmuch new --verbose
+
+[Repository ymail-local]
+<span class="org-variable-name">Type</span> = Maildir
+<span class="org-variable-name">localfolders</span> = ~/.mail/ymail
+<span class="org-variable-name">sync_deletes</span> = yes
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'spam'</span>, <span class="org-string">'Bulk Mail'</span>,
+                     re.sub(<span class="org-string">'draft'</span>, <span class="org-string">'Draft'</span>,
+                     re.sub(<span class="org-string">'inbox'</span>, <span class="org-string">'Inbox'</span>,
+                     re.sub(<span class="org-string">'sent'</span>, <span class="org-string">'Sent'</span>,
+                     re.sub(<span class="org-string">'trash'</span>, <span class="org-string">'Trash'</span>,
+                     re.sub(<span class="org-string">'archive'</span>, <span class="org-string">'Archive'</span>, f))))))
+
+[Repository ymail-remote]
+<span class="org-variable-name">Type</span> = IMAP
+<span class="org-variable-name">remotehost</span> = imap.mail.yahoo.com
+<span class="org-variable-name">remoteuser</span> = christian.alexander@ymail.com
+<span class="org-variable-name">remotepasseval</span> = get_pass(<span class="org-string">"ymail"</span>)
+<span class="org-variable-name">nametrans</span> = <span class="org-keyword">lambda</span> f: re.sub(<span class="org-string">'.*Archive'</span>, <span class="org-string">'archive'</span>,
+                      re.sub(<span class="org-string">'.*Draft$'</span>, <span class="org-string">'draft'</span>,
+                      re.sub(<span class="org-string">'.*Bulk Mail$'</span>, <span class="org-string">'spam'</span>,
+                      re.sub(<span class="org-string">'.*Sent$'</span>, <span class="org-string">'sent'</span>,
+                      re.sub(<span class="org-string">'.*Trash$'</span>, <span class="org-string">'trash'</span>,
+                      re.sub(<span class="org-string">'Inbox'</span>, <span class="org-string">'inbox'</span>, f))))))
+<span class="org-variable-name">maxconnections</span> = 1
+<span class="org-variable-name">sslcacertfile</span> = /etc/ssl/certs/ca-certificates.crt
+<span class="org-variable-name">ssl_version</span> = tls1_2
+<span class="org-variable-name">usecompression</span> = no
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+see <a href="https://notmuchmail.org/frontends/">here</a> for the list of available frontends.
+</p>
+
+<script src="https://utteranc.es/client.js"repo="alexforsale/alexforsale.github.io" issue-term="pathname" label="utterances" theme="gruvbox-dark" crossorigin="anonymous" async></script></div></div>
+
+
+</div>
+</div></main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>

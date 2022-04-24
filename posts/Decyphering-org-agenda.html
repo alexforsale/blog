@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decyphering org-agenda-view</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Decyphering org-agenda-view</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 25, 2022 by Kristian Alexander P.</p>
+</header><section id="outline-container-org9d37129" class="outline-2">
+<h2 id="org9d37129">PROG What is Org-agenda?</h2>
+<div class="outline-text-2" id="text-org9d37129">
+<ul class="org-ul">
+<li>State &ldquo;PROG&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-25 Fri 18:22] </span></span> <br>
+Do more with this stuff</li>
+</ul>
+<p>
+For short, it&rsquo;s a display of six criteria<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
+</p>
+<dl class="org-dl">
+<dt><code>agenda</code></dt><dd>it&rsquo;s basically a calendar view.</dd>
+<dt><code>TODO list</code></dt><dd>covers all unfinished action items.</dd>
+<dt><code>match view</code></dt><dd>showing headlines based on <i>tags</i>, <i>properties</i>, and <i>TODO</i> state associated with them.</dd>
+<dt><code>text search</code></dt><dd>showing all entries that contains specific <i>keywords</i>.</dd>
+<dt><code>stuck projects</code></dt><dd>showing <i>projects</i> that currently do not move along.</dd>
+<dt><code>custom views</code></dt><dd>special searches and combinations of different views</dd>
+</dl>
+
+<p>
+The extracted information is displayed in a special agenda buffer. This buffer is read-only, but provides commands to visit the corresponding locations in the original Org files, and even to edit these files remotely.
+</p>
+
+<p>
+When I first got to know <i>Emacs</i> I didn&rsquo;t really use the <i>agenda</i> functionality, I thought there&rsquo;s no way this is more customizeable than say <i>google calendar</i> and such. Back then I was more &ldquo;what can it do for me?&rdquo; rather than &ldquo;what can I do with it?&rdquo;. Well, you get the idea&#x2026;
+</p>
+
+<p>
+First, to get to the <i>agenda view</i>, run <code>M-x org-agenda</code>, if you&rsquo;re used to it, try binding it to a key. You&rsquo;ll be greeted by this:
+</p>
+
+<figure id="orgf9f25cc">
+<img src="../images/org-agenda/org-agenda-1.png" alt="org-agenda-1.png" class="center no-border" width="75%" height="75%">
+
+<figcaption><span class="figure-number">Figure 1: </span>This is vanilla Emacs btw</figcaption>
+</figure>
+
+<p>
+Back then, this was the reason I backed out from exploring <i>org-agenda</i>, what to do with this window? Many stuffs apparently:
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>!</code></td>
+<td class="org-left">org-agenda-toggle-deadlines</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>#</code></td>
+<td class="org-left">org-agenda-dim-blocked-tasks</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$</code></td>
+<td class="org-left">org-agenda-archive</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%</code></td>
+<td class="org-left">org-agenda-bulk-mark-regexp</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>*</code></td>
+<td class="org-left">org-agenda-bulk-mark-all</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left">org-agenda-priority-up</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>,</code></td>
+<td class="org-left">org-agenda-priority</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">org-agenda-priority-down</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>.</code></td>
+<td class="org-left">org-agenda-goto-today</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>/</code></td>
+<td class="org-left">org-agenda-filter</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>0</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>1</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>2</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>3</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>4</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>5</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>6</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>7</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>8</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>9</code></td>
+<td class="org-left">digit-argument</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>:</code></td>
+<td class="org-left">org-agenda-set-tags</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>;</code></td>
+<td class="org-left">org-timer-set-timer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;</code></td>
+<td class="org-left">org-agenda-filter-by-category</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-S-left</code></td>
+<td class="org-left">org-agenda-todo-previousset</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-S-right</code></td>
+<td class="org-left">org-agenda-todo-nextset</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-down</code></td>
+<td class="org-left">org-agenda-drag-line-forward</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-up</code></td>
+<td class="org-left">org-agenda-drag-line-backward</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-down</code></td>
+<td class="org-left">org-agenda-priority-down</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-left</code></td>
+<td class="org-left">org-agenda-do-date-earlier</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-right</code></td>
+<td class="org-left">org-agenda-do-date-later</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S-up</code></td>
+<td class="org-left">org-agenda-priority-up</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>backspace</code></td>
+<td class="org-left">org-agenda-show-scroll-down</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>down</code></td>
+<td class="org-left">org-agenda-next-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>mouse-2</code></td>
+<td class="org-left">org-agenda-goto-mouse</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>mouse-3</code></td>
+<td class="org-left">org-agenda-show-mouse</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tab</code></td>
+<td class="org-left">org-agenda-goto</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>undo</code></td>
+<td class="org-left">org-agenda-undo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>up</code></td>
+<td class="org-left">org-agenda-previous-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>=</code></td>
+<td class="org-left">org-agenda-filter-by-regexp</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&gt;</code></td>
+<td class="org-left">org-agenda-date-prompt</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>?</code></td>
+<td class="org-left">org-agenda-show-the-flagging-note</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>A</code></td>
+<td class="org-left">org-agenda-append-agenda</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>B</code></td>
+<td class="org-left">org-agenda-bulk-action</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C</code></td>
+<td class="org-left">org-agenda-convert-date</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-/</code></td>
+<td class="org-left">org-agenda-undo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-_</code></td>
+<td class="org-left">org-agenda-undo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c $</code></td>
+<td class="org-left">org-agenda-archive</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c ,</code></td>
+<td class="org-left">org-agenda-priority</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-a</code></td>
+<td class="org-left">org-attach</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-c</code></td>
+<td class="org-left">org-agenda-ctrl-c-ctrl-c</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-d</code></td>
+<td class="org-left">org-agenda-deadline</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-n</code></td>
+<td class="org-left">org-agenda-next-date-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-o</code></td>
+<td class="org-left">org-agenda-open-link</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-p</code></td>
+<td class="org-left">org-agenda-previous-date-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-q</code></td>
+<td class="org-left">org-agenda-set-tags</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-s</code></td>
+<td class="org-left">org-agenda-schedule</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-t</code></td>
+<td class="org-left">org-agenda-todo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-w</code></td>
+<td class="org-left">org-agenda-refile</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x !</code></td>
+<td class="org-left">org-reload</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x &lt;</code></td>
+<td class="org-left">org-agenda-set-restriction-lock-from-agenda</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x down</code></td>
+<td class="org-left">org-agenda-priority-down</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x left</code></td>
+<td class="org-left">org-agenda-do-date-earlier</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x right</code></td>
+<td class="org-left">org-agenda-do-date-later</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x up</code></td>
+<td class="org-left">org-agenda-priority-up</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x &gt;</code></td>
+<td class="org-left">org-agenda-remove-restriction-lock</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x A</code></td>
+<td class="org-left">org-agenda-archive-to-archive-sibling</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-a</code></td>
+<td class="org-left">org-agenda-archive-default</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-c</code></td>
+<td class="org-left">org-agenda-columns</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-e</code></td>
+<td class="org-left">org-clock-modify-effort-estimate</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-j</code></td>
+<td class="org-left">org-clock-goto</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-o</code></td>
+<td class="org-left">org-agenda-clock-out</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-s</code></td>
+<td class="org-left">org-agenda-archive</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x C-x</code></td>
+<td class="org-left">org-agenda-clock-cancel</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x I</code></td>
+<td class="org-left">org-info-find-node</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x RET g</code></td>
+<td class="org-left">org-mobile-pull</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x RET p</code></td>
+<td class="org-left">org-mobile-push</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x TAB</code></td>
+<td class="org-left">org-agenda-clock-in</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x _</code></td>
+<td class="org-left">org-timer-stop</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x a</code></td>
+<td class="org-left">org-agenda-toggle-archive-tag</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x b</code></td>
+<td class="org-left">org-agenda-tree-to-indirect-buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x e</code></td>
+<td class="org-left">org-agenda-set-effort</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-x p</code></td>
+<td class="org-left">org-agenda-set-property</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-c C-z</code></td>
+<td class="org-left">org-agenda-add-note</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-e</code></td>
+<td class="org-left">org-agenda-end-of-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-k</code></td>
+<td class="org-left">org-agenda-kill</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-n</code></td>
+<td class="org-left">org-agenda-next-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-p</code></td>
+<td class="org-left">org-agenda-previous-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x C-s</code></td>
+<td class="org-left">org-save-all-org-buffers</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x C-w</code></td>
+<td class="org-left">org-agenda-write</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-x u</code></td>
+<td class="org-left">org-agenda-undo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>D</code></td>
+<td class="org-left">org-agenda-toggle-diary</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>DEL</code></td>
+<td class="org-left">org-agenda-show-scroll-down</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>E</code></td>
+<td class="org-left">org-agenda-entry-text-mode</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F</code></td>
+<td class="org-left">org-agenda-follow-mode</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>G</code></td>
+<td class="org-left">org-agenda-toggle-time-grid</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>H</code></td>
+<td class="org-left">org-agenda-holidays</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>I</code></td>
+<td class="org-left">org-agenda-clock-in</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>J</code></td>
+<td class="org-left">org-agenda-clock-goto</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>L</code></td>
+<td class="org-left">org-agenda-recenter</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M</code></td>
+<td class="org-left">org-agenda-phases-of-moon</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-*</code></td>
+<td class="org-left">org-agenda-bulk-toggle-all</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-m</code></td>
+<td class="org-left">org-agenda-bulk-toggle</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-{</code></td>
+<td class="org-left">org-agenda-backward-block</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>M-}</code></td>
+<td class="org-left">org-agenda-forward-block</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>N</code></td>
+<td class="org-left">org-agenda-next-item</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>O</code></td>
+<td class="org-left">org-agenda-clock-out</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>P</code></td>
+<td class="org-left">org-agenda-previous-item</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Q</code></td>
+<td class="org-left">org-agenda-Quit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>R</code></td>
+<td class="org-left">org-agenda-clockreport-mode</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>RET</code></td>
+<td class="org-left">org-agenda-switch-to</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S</code></td>
+<td class="org-left">org-agenda-sunrise-sunset</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>SPC</code></td>
+<td class="org-left">org-agenda-show-and-scroll-up</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>T</code></td>
+<td class="org-left">org-agenda-show-tags</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>TAB</code></td>
+<td class="org-left">org-agenda-goto</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>U</code></td>
+<td class="org-left">org-agenda-bulk-unmark-all</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>X</code></td>
+<td class="org-left">org-agenda-clock-cancel</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[</code></td>
+<td class="org-left">org-agenda-manipulate-query-add</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\</code></td>
+<td class="org-left">org-agenda-filter-by-tag</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>]</code></td>
+<td class="org-left">org-agenda-manipulate-query-subtract</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>^</code></td>
+<td class="org-left">org-agenda-filter-by-top-headline</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>_</code></td>
+<td class="org-left">org-agenda-filter-by-effort</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>a</code></td>
+<td class="org-left">org-agenda-archive-default-with-confirmation</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left">org-agenda-earlier</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code></td>
+<td class="org-left">org-agenda-goto-calendar</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left">org-agenda-day-view</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>e</code></td>
+<td class="org-left">org-agenda-set-effort</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>f</code></td>
+<td class="org-left">org-agenda-later</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>g</code></td>
+<td class="org-left">org-agenda-redo-all</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>h</code></td>
+<td class="org-left">org-agenda-holidays</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>i</code></td>
+<td class="org-left">org-agenda-diary-entry</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>j</code></td>
+<td class="org-left">org-agenda-goto-date</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>k</code></td>
+<td class="org-left">org-agenda-capture</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>l</code></td>
+<td class="org-left">org-agenda-log-mode</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>m</code></td>
+<td class="org-left">org-agenda-bulk-mark</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>n</code></td>
+<td class="org-left">org-agenda-next-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>o</code></td>
+<td class="org-left">delete-other-windows</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>p</code></td>
+<td class="org-left">org-agenda-previous-line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>q</code></td>
+<td class="org-left">org-agenda-quit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">org-agenda-redo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s</code></td>
+<td class="org-left">org-save-all-org-buffers</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>t</code></td>
+<td class="org-left">org-agenda-todo</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>u</code></td>
+<td class="org-left">org-agenda-bulk-unmark</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>v</code></td>
+<td class="org-left">org-agenda-view-mode-dispatch</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>w</code></td>
+<td class="org-left">org-agenda-week-view</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">org-agenda-exit</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>y</code></td>
+<td class="org-left">org-agenda-year-view</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>z</code></td>
+<td class="org-left">org-agenda-add-note</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>{</code></td>
+<td class="org-left">org-agenda-manipulate-query-add-re</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>}</code></td>
+<td class="org-left">org-agenda-manipulate-query-subtract-re</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~</code></td>
+<td class="org-left">org-agenda-limit-interactively</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+And one key that I couldn&rsquo;t figure out how to put in to table: <code>|</code> for <code>org-agenda-filter-remove-all</code>. By the way, the list of those commands can be found with <code>M-x describe-variable RET org-agenda-mode-map</code>, or with the default keybinding: <code>C-h v org-agenda-mode-map</code>. Right now it&rsquo;s kinda pointless describing each and every functions in the above before we setup the <code>org-agenda-files</code>.
+</p>
+</div>
+</section>
+<section id="outline-container-org45dba0a" class="outline-2">
+<h2 id="org45dba0a">The <code>org-agenda-files</code></h2>
+<div class="outline-text-2" id="text-org45dba0a">
+<p>
+From the documentation (get used to it, you&rsquo;ll find more information here than anywhere else):
+</p>
+<blockquote>
+<p>
+The files to be used for agenda display.
+</p>
+
+<p>
+If an entry is a directory, all files in that directory that are matched
+by org-agenda-file-regexp will be part of the file list.
+</p>
+
+<p>
+If the value of the variable is not a list but a single file name, then
+the list of agenda files is actually stored and maintained in that file,
+one agenda file per line.  In this file paths can be given relative to
+org-directory.  Tilde expansion and environment variable substitution
+are also made.
+</p>
+
+<p>
+  Entries may be added to this list with M-x org-agenda-file-to-front
+and removed with M-x org-remove-file.
+</p>
+</blockquote>
+</div>
+</section>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://orgmode.org/manual/Agenda-Views.html">https://orgmode.org/manual/Agenda-Views.html</a>
+</p></div></div>
+
+
+</div>
+</div></main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>

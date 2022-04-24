@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Common Lisp</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Common Lisp</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 20, 2022 by Kristian Alexander P.</p>
+</header><section id="outline-container-orgdb4ae69" class="outline-2">
+<h2 id="orgdb4ae69"><span class="done DONE">DONE</span> Day One&#xa0;&#xa0;&#xa0;<span class="tag"><span class="clisp">clisp</span></span></h2>
+<div class="outline-text-2" id="text-orgdb4ae69">
+<pre class="example">
+header-args: :results verbatim :exports both
+</pre>
+<ul class="org-ul">
+<li>State &ldquo;DONE&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 00:40]</span></span></li>
+</ul>
+</div>
+<div id="outline-container-org93dbc33" class="outline-3">
+<h3 id="org93dbc33">Getting Started&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sbcl">sbcl</span></span></h3>
+<div class="outline-text-3" id="text-org93dbc33">
+<ul class="org-ul">
+<li>Done</li>
+</ul>
+<p>
+<a href="https://en.wikipedia.org/wiki/Steel_Bank_Common_Lisp">Steel Bank Common Lisp</a> is supposedly one of many various <i>lisp</i> implementation, which features high-perfomance native compiler, unicode support and threading. On many <i>linux</i> distributions <i>sbcl</i> should be available from their main repositories.
+</p>
+</div>
+</div>
+<div id="outline-container-org2d8fc75" class="outline-3">
+<h3 id="org2d8fc75">SBCL REPL</h3>
+<div class="outline-text-3" id="text-org2d8fc75">
+<p>
+Stands for <b>READ</b>, <b>EVAL</b>, <b>PRINT</b>, <b>LOOP</b>, the interactive interpreter for <i>SBCL</i>, out of the box doesn&rsquo;t support arrow keys, also it lacks history. One option is to use <code>rlwrap</code> package. Or simply just use <code>Emacs</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb1357c5" class="outline-3">
+<h3 id="orgb1357c5">Libraries</h3>
+<div class="outline-text-3" id="text-orgb1357c5">
+<p>
+Many of the libraries are documented here:
+</p>
+</div>
+<div id="outline-container-org6fed195" class="outline-4">
+<h4 id="org6fed195"><a href="https://quickdocs.org/">quickdocs</a></h4>
+</div>
+<div id="outline-container-org94327f8" class="outline-4">
+<h4 id="org94327f8"><a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a></h4>
+</div>
+<div id="outline-container-org933fae6" class="outline-4">
+<h4 id="org933fae6"><a href="https://www.cliki.net/">cliki</a></h4>
+</div>
+</div>
+<div id="outline-container-org6eb89f9" class="outline-3">
+<h3 id="org6eb89f9"><a href="https://www.quicklisp.org/beta/">Quicklisp</a></h3>
+<div class="outline-text-3" id="text-org6eb89f9">
+<p>
+The package manager, installation is straight-forward once you have <i>sbcl</i> installed.
+</p>
+</div>
+<div id="outline-container-org88ad7d0" class="outline-4">
+<h4 id="org88ad7d0">Installing packages via quicklisp</h4>
+<div class="outline-text-4" id="text-org88ad7d0">
+<p>
+For example if we want to install <code>cl-ppcre</code> (regular expression package):
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(ql:quickload <span class="org-string">"cl-ppcre"</span>)
+</pre>
+</div>
+
+<pre class="example">
+("cl-ppcre")
+</pre>
+
+<p>
+We can then use this library whenever we needed it.
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(<span class="org-keyword">require</span> <span class="org-string">"cl-ppcre"</span>)
+(cl-ppcre:regex-replace <span class="org-string">"fo+"</span> <span class="org-string">"foo bar"</span> <span class="org-string">"frob"</span>)
+</pre>
+</div>
+
+<pre class="example">
+"frob bar"
+T
+</pre>
+</div>
+</div>
+<div id="outline-container-orga2b8adf" class="outline-4">
+<h4 id="orga2b8adf">Configuration management</h4>
+<div class="outline-text-4" id="text-orga2b8adf">
+<p>
+These are the locations which the interpreter will look for libraries:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(asdf/source-registry:default-user-source-registry)
+</pre>
+</div>
+
+<pre class="example">
+(:SOURCE-REGISTRY (:TREE (:HOME "common-lisp/"))
+ (:DIRECTORY (:HOME ".sbcl/systems/"))
+ (:DIRECTORY #P"/home/alexforsale/.local/share/common-lisp/systems/")
+ (:TREE #P"/home/alexforsale/.local/share/common-lisp/source/")
+ :INHERIT-CONFIGURATION)
+</pre>
+
+
+<p>
+Also, libraries installed here will be available for every projects:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(print asdf:*central-registry*)
+</pre>
+</div>
+
+<pre class="example">
+(#P"/home/alexforsale/.local/share/quicklisp/quicklisp/")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9e43566" class="outline-3">
+<h3 id="org9e43566">The basics</h3>
+<div class="outline-text-3" id="text-org9e43566">
+</div>
+<div id="outline-container-orgba0426f" class="outline-4">
+<h4 id="orgba0426f">Expressions</h4>
+<div class="outline-text-4" id="text-orgba0426f">
+<p>
+One of the simple <i>lisp</i> expression that can be read, evaluated, and printed is a number. In <i>lisp</i>, anything within a parentheses is a list, for example:
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp">(+ 2 3)
+</pre>
+</div>
+
+<pre class="example">
+5
+</pre>
+
+<p>
+is a list of three elements, the symbol <code>+</code>, and the number <code>2</code> and <code>3</code>. In general, <i>lisp</i> evaluates lists by treating the first element as the name of the function and the rest of the elements as expressions to be evaluated to yield the arguments to the function.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="outline-container-org5b34c48" class="outline-2">
+<h2 id="org5b34c48"><span class="done DONE">DONE</span> Day Two</h2>
+<div class="outline-text-2" id="text-org5b34c48">
+<ul class="org-ul">
+<li>State &ldquo;DONE&rdquo;       from &ldquo;PROG&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 15:16]</span></span></li>
+</ul>
+<ul class="org-ul">
+<li>State &ldquo;PROG&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 14:50]</span></span></li>
+</ul>
+</div>
+<div id="outline-container-orga827d62" class="outline-3">
+<h3 id="orga827d62">Data Types</h3>
+<div class="outline-text-3" id="text-orga827d62">
+<p>
+In <i>lisp</i> it&rsquo;s data object that are typed, not variables. Any variable can have any Lisp object as its value.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+Here are brief descriptions of various Common Lisp data types.
+</p>
+<dl class="org-dl">
+<dt>Numbers</dt><dd>are provided in various forms and representations. Common Lisp provides a true integer data type: any integer, positive or negative, has in principle a representation as a Common Lisp data object, subject only to total memory limitations (rather than machine word width). A true rational data type is provided: the quotient of two integers, if not an integer, is a ratio. Floating-point numbers of various ranges and precisions are also provided, as well as Cartesian complex numbers.</dd>
+<dt>Characters</dt><dd>represent printed glyphs such as letters or text formatting operations. Strings are one-dimensional arrays of characters. Common Lisp provides for a rich character set, including ways to represent characters of various type styles.</dd>
+<dt>Symbols</dt><dd>(sometimes called atomic symbols for emphasis or clarity) are named data objects. Lisp provides machinery for locating a symbol object, given its name (in the form of a string). Symbols have property lists, which in effect allow symbols to be treated as record structures with an extensible set of named components, each of which may be any Lisp object. Symbols also serve to name functions and variables within programs.</dd>
+<dt>Lists</dt><dd>are sequences represented in the form of linked cells called conses. There is a special object (the symbol nil) that is the empty list. All other lists are built recursively by adding a new element to the front of an existing list. This is done by creating a new cons, which is an object having two components called the car and the cdr. The car may hold anything, and the cdr is made to point to the previously existing list. (Conses may actually be used completely generally as two-element record structures, but their most important use is to represent lists.).</dd>
+<dt>Arrays</dt><dd>Arrays are dimensioned collections of objects. An array can have any non-negative number of dimensions and is indexed by a sequence of integers. A general array can have any Lisp object as a component; other types of arrays are specialized for efficiency and can hold only certain types of Lisp objects. It is possible for two arrays, possibly with differing dimension information, to share the same set of elements (such that modifying one array modifies the other also) by causing one to be displaced to the other. One-dimensional arrays of any kind are called vectors. One-dimensional arrays of characters are called strings. One-dimensional arrays of bits (that is, of integers whose values are 0 or 1) are called bit-vectors.</dd>
+<dt>Hash tables</dt><dd>provide an efficient way of mapping any Lisp object (a key) to an associated object.</dd>
+<dt>Readtables</dt><dd>are used to control the built-in expression parser read.</dd>
+<dt>Packages</dt><dd>collections of symbols that serve as name spaces. The parser recognizes symbols by looking up character sequences in the current package.</dd>
+<dt>Pathnames</dt><dd>represent names of files in a fairly implementation-independent manner. They are used to interface to the external file system.</dd>
+<dt>Streams</dt><dd>represent sources or sinks of data, typically characters or bytes. They are used to perform I/O, as well as for internal purposes such as parsing strings.</dd>
+<dt>Random-states</dt><dd>data structures used to encapsulate the state of the built-in random-number generator.</dd>
+<dt>Structures</dt><dd>user-defined record structures, objects that have named components. The defstruct facility is used to define new structure types. Some Common Lisp implementations may choose to implement certain system-supplied data types, such as bignums, readtables, streams, hash tables, and pathnames, as structures, but this fact will be invisible to the user.</dd>
+<dt>Functions</dt><dd>objects that can be invoked as procedures; these may take arguments and return values. (All Lisp procedures can be construed to return values and therefore every procedure is a function.) Such objects include compiled-functions (compiled code objects). Some functions are represented as a list whose car is a particular symbol such as lambda. Symbols may also be used as functions.</dd>
+</dl>
+</div>
+</div>
+</section>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node15.html">https://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node15.html</a>
+</p></div></div>
+
+
+</div>
+</div></main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>

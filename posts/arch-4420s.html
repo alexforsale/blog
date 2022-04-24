@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Archlinux on HP Probook 4420s</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Archlinux on HP Probook 4420s</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 13, 2022 by Kristian Alexander P.</p>
+</header><p>
+This is how I setup my <i>archlinux</i> on <a href="https://support.hp.com/id-en/document/c02052909">HP Probook 4420s</a>:
+</p>
+
+<figure id="org4555f13">
+<a href="file:///home/runner/Documents/google-drive/org/blog/images/posts/probook-4420s.jpg" class="center no-border"><img src="../images/posts/probook-4420s.jpg" alt="probook-4420s.jpg" class="center no-border"></a>
+
+</figure>
+
+<section id="outline-container-orgff4183d" class="outline-2">
+<h2 id="orgff4183d">Partitions</h2>
+<div class="outline-text-2" id="text-orgff4183d">
+<pre class="example">
+header-args: :exports both
+</pre>
+<div class="org-src-container">
+<pre class="src src-sh">lsblk /dev/sda
+</pre>
+</div>
+
+<pre class="example">
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0 232.9G  0 disk
+|-sda1   8:1    0     1M  0 part
+|-sda2   8:2    0   500M  0 part /boot
+|                                /efi
+|-sda3   8:3    0     4G  0 part [SWAP]
+`-sda4   8:4    0 228.4G  0 part /home
+                                 /
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-sh">blkid /dev/sda*
+</pre>
+</div>
+
+<pre class="example">
+/dev/sda: PTUUID="8cb2d283-12d9-1b4a-a243-b67401089ded" PTTYPE="gpt"
+/dev/sda1: PARTUUID="55e8ee87-ca6e-6845-a950-6b0fe7c9b83f"
+/dev/sda2: LABEL_FATBOOT="EFI" LABEL="EFI" UUID="B62E-3C95" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="6dd9fef5-d5f3-7748-8ccc-38f188314920"
+/dev/sda3: LABEL="swap" UUID="beec6b47-9a1c-41d9-aee7-babfbe0be198" TYPE="swap" PARTUUID="d67a8634-fc47-0a44-810e-41efaac903eb"
+/dev/sda4: LABEL="root" UUID="654e6dbd-97f7-4aa6-8243-3afa51153038" UUID_SUB="a80dcbd5-16e0-46fe-a165-aeffb916c54a" BLOCK_SIZE="4096" TYPE="btrfs" PARTUUID="4cdbfe1d-aefb-3a49-a0bd-a6eea749d2f1"
+</pre>
+</div>
+
+<div id="outline-container-org54e1af3" class="outline-3">
+<h3 id="org54e1af3">btrfs subvolumes</h3>
+<div class="outline-text-3" id="text-org54e1af3">
+<div class="org-src-container">
+<pre class="src src-sh">sudo btrfs subvolume list /
+</pre>
+</div>
+
+<pre class="example">
+ID 256 gen 89902 top level 5 path @
+ID 259 gen 80884 top level 256 path @/home
+ID 260 gen 96591 top level 259 path @/home/arch
+ID 263 gen 89901 top level 256 path @/snapshots
+ID 267 gen 88978 top level 256 path @/guix
+ID 268 gen 89901 top level 256 path @/data
+ID 269 gen 85827 top level 268 path @/data/music
+ID 270 gen 89903 top level 256 path @/arch
+ID 271 gen 96591 top level 270 path @/arch/root
+ID 272 gen 89918 top level 271 path var/lib/portables
+ID 273 gen 89919 top level 271 path var/lib/machines
+</pre>
+</div>
+</div>
+<div id="outline-container-org6299dd0" class="outline-3">
+<h3 id="org6299dd0">Bootloader</h3>
+<div class="outline-text-3" id="text-org6299dd0">
+<p>
+I&rsquo;m using <a href="https://wiki.archlinux.org/title/REFInd">refind</a>, with no modification on the main configuration(<code>refind.conf</code>), but since I&rsquo;m mounting the <i>EFI</i> partition on <code>/efi</code> and the <code>/boot</code> partition is actualy a <i>bind mount</i> to <code>/efi/EFI/arch/</code>, the only modification needed is in the <code>refind_linux.conf</code>, which basically points to where my <i>root</i> partition is.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">cat /boot/refind_linux.conf
+</pre>
+</div>
+
+<pre class="example">
+"Normal Boot" "root=PARTUUID=4cdbfe1d-aefb-3a49-a0bd-a6eea749d2f1 rw rootflags=subvol=@/arch/root initrd=EFI\arch\intel-ucode.img initrd=EFI\arch\initramfs-%v.img"
+</pre>
+
+
+<p>
+The main reason why I choose <i>refind</i> is convenience, I often install other linux distro on this laptop, usually for testing. And with <i>refind</i> I don&rsquo;t need to setup bootloader for other distro, I just need to setup the boot partition under the <code>/efi/EFI</code>, configure the <code>refind_linux</code> file(this is because <i>refind</i> needs to knows where the <i>initrd</i> files and the root partition for the specific kernel), and <i>refind</i> will automatically adds it to the boot menu. The same reason why I chose the <i>btrfs</i> filesystem.
+</p>
+</div>
+</div>
+</section>
+<section id="outline-container-org1677831" class="outline-2">
+<h2 id="org1677831">Archlinux packages</h2>
+<div class="outline-text-2" id="text-org1677831">
+<pre class="example">
+header-args: :tangle no :exports both
+</pre>
+<p>
+These are the packages I&rsquo;ve installed apart from the obvious(such as filesystem packages, networking packages etc) of course.
+</p>
+</div>
+<div id="outline-container-org72eed4c" class="outline-3">
+<h3 id="org72eed4c">essential packages</h3>
+<div class="outline-text-3" id="text-org72eed4c">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed wget screen emacs git htop bash-completion
+</pre>
+</div>
+<dl class="org-dl">
+<dt>wget</dt><dd>Network utilities for retrieving files from the web.</dd>
+<dt>screen</dt><dd>Terminal multiplexer, nothing special, I&rsquo;m just never used <i>tmux</i>, plus <i>screen</i> is usually available on many linux installer by default.</dd>
+<dt>emacs</dt><dd>For writing this of course.</dd>
+<dt>htop</dt><dd>Monitoring stuffs.</dd>
+<dt>bash-completion</dt><dd><code>TAB</code>-ing is like a bad habit for me.</dd>
+</dl>
+</div>
+<div id="outline-container-org5280784" class="outline-4">
+<h4 id="org5280784">emacs packages</h4>
+<div class="outline-text-4" id="text-org5280784">
+<p>
+<i>Emacs</i> packages usually handled by it&rsquo;s own package manager, but some of the packages also needed other functionalities provided by the OS:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed w3m fd libvterm
+</pre>
+</div>
+<dl class="org-dl">
+<dt>w3m</dt><dd>I personally like it more than the defaultl <i>eww</i> (emacs web wowser).</dd>
+<dt>fd</dt><dd>It&rsquo;s an alternative to the <i>GNU Findutils</i>.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbac3d61" class="outline-3">
+<h3 id="orgbac3d61">xorg</h3>
+<div class="outline-text-3" id="text-orgbac3d61">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed xorg
+</pre>
+</div>
+<p>
+In <i>arch</i>, <code>xorg</code> is a package group, although I can choose to install individual packages manually, eventually I&rsquo;ll installed them all.
+</p>
+</div>
+<div id="outline-container-org6e64587" class="outline-4">
+<h4 id="org6e64587">video driver</h4>
+<div class="outline-text-4" id="text-org6e64587">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed xf86-video-intel
+</pre>
+</div>
+<p>
+Usually using <i>kernel modesettings</i> method is better. But using this package I don&rsquo;t have to setup additional backlight configuration(apart from the <code>xorg.conf</code>).
+</p>
+</div>
+</div>
+<div id="outline-container-orgd6b0b95" class="outline-4">
+<h4 id="orgd6b0b95">input driver</h4>
+<div class="outline-text-4" id="text-orgd6b0b95">
+<div class="org-src-container">
+<pre class="src src-sh">cat /etc/X11/xorg.conf.d/30-touchpad.conf
+</pre>
+</div>
+<p>
+The driver itself already installed(<code>xf86-input-libinput</code>) by default.
+</p>
+</div>
+</div>
+<div id="outline-container-org5ffd34a" class="outline-4">
+<h4 id="org5ffd34a">xinit</h4>
+<div class="outline-text-4" id="text-org5ffd34a">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed xorg-xinit
+</pre>
+</div>
+<p>
+It&rsquo;s not needed when using <i>display manager</i> (lightdm etc).
+</p>
+</div>
+</div>
+<div id="outline-container-org01485fd" class="outline-4">
+<h4 id="org01485fd">additional packages</h4>
+<div class="outline-text-4" id="text-org01485fd">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed bash-completion  pass pass-otp sbcl
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="org0fe6414"></a>Networking<br>
+<div class="outline-text-5" id="text-org0fe6414">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed blueman network-manager-applet
+</pre>
+</div>
+<dl class="org-dl">
+<dt>blueman</dt><dd>for bluetooth</dd>
+<dt>network-manager-applet</dt><dd>obviously because I&rsquo;m using <i>Network Manager</i>.</dd>
+</dl>
+</div>
+</li>
+<li><a id="orga00df7f"></a>mail packages<br>
+<div class="outline-text-5" id="text-orga00df7f">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed notmuch isync goimapnotify msmtp msmtp-mta
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orge969b6e"></a>multimedia<br>
+<div class="outline-text-5" id="text-orge969b6e">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed beets mpv pulseaudio pulseaudio-{alsa,bluetooth,equalizer}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgf195b3a"></a>fonts<br>
+<div class="outline-text-5" id="text-orgf195b3a">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed ttf-fantasque-sans-mono gnu-free-fonts bdf-unifont ttf-fontawesome noto-fonts-emoji ttf-bitstream-vera adobe-source-{code-pro,sans,serif}-fonts
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgcfe47b5"></a>desktop packages<br>
+<div class="outline-text-5" id="text-orgcfe47b5">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed xterm python-pywal feh picom dunst xsettingsd udiskie unclutter xclip capitaine-cursors papirus-icon-theme arc-gtk-theme firefox
+</pre>
+</div>
+<dl class="org-dl">
+<dt>xterm</dt><dd>Terminal emulator inside <i>xorg</i>.</dd>
+<dt>feh</dt><dd>Minimal image viewer that can also acts as wallpaper setter.</dd>
+<dt>python-pywal</dt><dd><i>xorg</i> colorscheme setter on the fly.</dd>
+<dt>picom</dt><dd><i>X</i> compositor.</dd>
+<dt>dunst</dt><dd>Lightweight notification daemon</dd>
+<dt>xsettingsd</dt><dd>Provides settings for <i>X11</i> applications.</dd>
+<dt>udiskie</dt><dd>Removable disk automounter using <i>udisks</i>.</dd>
+<dt>unclutter</dt><dd>For auto hide the mouse cursor.</dd>
+<dt>xclip</dt><dd>CLI interface for <i>X11</i> clipboard.</dd>
+</dl>
+</div>
+</li>
+<li><a id="org2849f62"></a>setup <a href="#org3cc483a">makepkg</a>.<br></li>
+<li><a id="org405b5f7"></a>aur helper<br>
+<div class="outline-text-5" id="text-org405b5f7">
+<div class="org-src-container">
+<pre class="src src-sh">pushd /tmp
+git clone https://aur.archlinux.org/yay
+<span class="org-builtin">cd</span> yay
+makepkg -si
+popd
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgefe0ef6"></a>additional packages for <i>polybar</i>.<br>
+<div class="outline-text-5" id="text-orgefe0ef6">
+<p>
+Install these first since it&rsquo;s not explicitly required in <i>polybar</i> <i>PKGBUILD</i>.
+<i>i3-gaps</i> installed to avoid installing the standard <i>i3-wm</i>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S i3-gaps libmpdclient
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgff021ad"></a>additional aur packages<br>
+<div class="outline-text-5" id="text-orgff021ad">
+<div class="org-src-container">
+<pre class="src src-sh">yay -S --noconfirm --needed polybar
+yay -S --noconfirm --needed tgs2png <span class="org-comment-delimiter"># </span><span class="org-comment">for emacs-telega</span>
+yay -S --noconfirm --needed grive <span class="org-comment-delimiter"># </span><span class="org-comment">google-drive sync</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org36e699e"></a>additional packages for grive<br>
+<div class="outline-text-5" id="text-org36e699e">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed inotify-tools cppunit
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org4d9003d"></a>beets optional dependencies<br>
+<div class="outline-text-5" id="text-org4d9003d">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed chromaprint ffmpeg gst-plugins-{bad,ugly,good} gst-{libav,python} imagemagick python-{beautifulsoup4,flask,mpd2,pyacoustid,pylast,xdg,pymad}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orga1e76b5"></a>emacs desktop-environment packages<br>
+<div class="outline-text-5" id="text-orga1e76b5">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm alsa-utils pamixer brightnessctl scrot slock upower tlp playerctl
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org67c7208"></a>emacs projectile packages<br>
+<div class="outline-text-5" id="text-org67c7208">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed ripgrep
+</pre>
+</div>
+<p>
+<i>Ripgrep</i> is a <i>GNU Grep</i> alternatives.
+</p>
+</div>
+</li>
+<li><a id="org60e76f6"></a>Window-manager<br>
+<div class="outline-text-5" id="text-org60e76f6">
+<p>
+<i>exwm</i> and <i>stumpwm</i> can be started as user using <i>xinit</i> and <i>sbcl</i> respectively, other <i>window manager</i> that interest me:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --needed --noconfirm qtile <span class="org-comment-delimiter"># </span><span class="org-comment">python</span>
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="orgcf8761d"></a>qtile deps<br>
+<div class="outline-text-6" id="text-orgcf8761d">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --needed --noconfirm canto-daemon cmus jupyter_console khal moc python-{dbus-next,iwlib,keyring,mpd2,psutil,setproctitle}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgd65e65f"></a>python-pip<br>
+<div class="outline-text-6" id="text-orgd65e65f">
+<p>
+Needed to install user python packages
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed python-pip
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="outline-container-org9b29bb2" class="outline-2">
+<h2 id="org9b29bb2">Archlinux configuration files</h2>
+<div class="outline-text-2" id="text-org9b29bb2">
+<pre class="example">
+header-args: :exports both :results verbatim
+</pre>
+</div>
+<div id="outline-container-orgda6c12d" class="outline-3">
+<h3 id="orgda6c12d">System-wide configuration</h3>
+<div class="outline-text-3" id="text-orgda6c12d">
+</div>
+<div id="outline-container-orga4ccd62" class="outline-4">
+<h4 id="orga4ccd62">fstab</h4>
+<div class="outline-text-4" id="text-orga4ccd62">
+<p>
+To automatically mount nfs shares, first install nfs-utils
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed nfs-utils
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="orgffccd0c"></a><span class="todo TODO">TODO</span> /etc/fstab<br>
+<div class="outline-text-5" id="text-orgffccd0c">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-13 Sun 15:20]</span></span></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh">cat /etc/fstab
+</pre>
+</div>
+
+<pre class="example" id="orgc42d90f">
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# &lt;file system&gt; &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;pass&gt;
+# /dev/sda4 LABEL=root
+UUID=654e6dbd-97f7-4aa6-8243-3afa51153038	/         	btrfs     	rw,relatime,space_cache=v2,subvolid=271,subvol=/@/arch/root	0 0
+
+# /dev/sda2 LABEL=EFI
+UUID=B62E-3C95      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/sda4 LABEL=root
+UUID=654e6dbd-97f7-4aa6-8243-3afa51153038	/home     	btrfs     	rw,relatime,space_cache=v2,subvolid=260,subvol=/@/home/arch	0 0
+
+# /mnt/boot/EFI/arch
+/efi/EFI/arch  	/boot     	none      	rw,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro,bind	0 0
+
+# /dev/sda3 LABEL=swap
+UUID=beec6b47-9a1c-41d9-aee7-babfbe0be198	none      	swap      	defaults  	0 0
+
+</pre>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-orgeded8fa" class="outline-4">
+<h4 id="orgeded8fa"><code>acpi_backlight</code></h4>
+<div class="outline-text-4" id="text-orgeded8fa">
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chgrp video /sys/class/backlight/acpi_video0/brightness"</span>
+<span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chmod g+w /sys/class/backlight/acpi_video0/brightness"</span>
+</pre>
+</div>
+<p>
+skip this if using <i>intel</i> driver (xf86-video-intel).
+</p>
+</div>
+</div>
+<div id="outline-container-org2c5cc74" class="outline-4">
+<h4 id="org2c5cc74"><code>intel_backlight</code></h4>
+<div class="outline-text-4" id="text-org2c5cc74">
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"</span>
+<span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf322ee8" class="outline-4">
+<h4 id="orgf322ee8"><code>libinput</code></h4>
+<div class="outline-text-4" id="text-orgf322ee8">
+<p>
+I&rsquo;ve switched to using <i>libinput</i> since the <i>synaptic</i> driver often acting weird.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">Section <span class="org-string">"InputClass"</span>
+        Identifier <span class="org-string">"touchpad"</span>
+        Driver <span class="org-string">"libinput"</span>
+        MatchIsTouchpad <span class="org-string">"on"</span>
+        Option <span class="org-string">"Tapping"</span> <span class="org-string">"on"</span>
+        Option <span class="org-string">"NaturalScrolling"</span> <span class="org-string">"true"</span>
+EndSection
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgec47668" class="outline-4">
+<h4 id="orgec47668">lis3lv02d</h4>
+<div class="outline-text-4" id="text-orgec47668">
+<p>
+ST LIS3LV02Dx three-axis digital accelerometer driver, to autoload this using <i>systemd</i>:
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">lis3lv02d
+</pre>
+</div>
+<p>
+Details for this module <a href="https://www.kernel.org/doc/html/latest/misc-devices/lis3lv02d.html">here</a>.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org5607d06"></a><span class="todo TODO">TODO</span> packages<br>
+<div class="outline-text-5" id="text-org5607d06">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-18 Fri 16:22]</span></span></li>
+</ul>
+<p>
+perhaps handled by <i>evdev</i>?
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed xf86-input-evdev
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org949b049" class="outline-4">
+<h4 id="org949b049">battery</h4>
+<div class="outline-text-4" id="text-org949b049">
+</div>
+<ul class="org-ul">
+<li><a id="org3a20e83"></a>packages<br>
+<div class="outline-text-5" id="text-org3a20e83">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --needed --noconfirm acpi acpid
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="org91bc253"></a>enable acpid<br>
+<div class="outline-text-6" id="text-org91bc253">
+<div class="org-src-container">
+<pre class="src src-sh">sudo systemctl enable --now acpid
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgd5919e0" class="outline-4">
+<h4 id="orgd5919e0">pacman</h4>
+<div class="outline-text-4" id="text-orgd5919e0">
+<p>
+Enable <i>multilib</i> repository at <code>/etc/pacman.conf</code>. While we&rsquo;re at it, also enable other functionalities as well:
+</p>
+<ol class="org-ol">
+<li><code>UseSyslog</code> ::
+Enable logging to systemd-journald.</li>
+<li><code>Color</code> ::
+Use colored output.</li>
+<li><code>CheckSpace</code> ::
+Enable space checking before running <i>pacman</i>.</li>
+<li><code>VerbosePkgLists</code> ::
+Detailed package information</li>
+<li><code>ParallelDownloads</code> ::
+Enable parallel downloads, useful since it&rsquo;s <i>arch</i> afterall, expect kernel updates faster than other distro.</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">/etc/pacman.conf</span>
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">See the pacman.conf(5) manpage for option and repository directives</span>
+
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">GENERAL OPTIONS</span>
+<span class="org-comment-delimiter">#</span>
+[<span class="org-type">options</span>]
+<span class="org-comment-delimiter"># </span><span class="org-comment">The following paths are commented out with their default values listed.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">If you wish to use different paths, uncomment and update the paths.</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">RootDir     = /</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">DBPath      = /var/lib/pacman/</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">CacheDir    = /var/cache/pacman/pkg/</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">LogFile     = /var/log/pacman.log</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">GPGDir      = /etc/pacman.d/gnupg/</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">HookDir     = /etc/pacman.d/hooks/</span>
+<span class="org-variable-name">HoldPkg</span>     = pacman glibc
+<span class="org-comment-delimiter">#</span><span class="org-comment">XferCommand = /usr/bin/curl -L -C - -f -o %o %u</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">CleanMethod = KeepInstalled</span>
+<span class="org-variable-name">Architecture</span> = auto
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">IgnorePkg   =</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">IgnoreGroup =</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">NoUpgrade   =</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">NoExtract   =</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Misc options</span>
+UseSyslog
+Color
+<span class="org-comment-delimiter">#</span><span class="org-comment">NoProgressBar</span>
+CheckSpace
+VerbosePkgLists
+<span class="org-variable-name">ParallelDownloads</span> = 5
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">By default, pacman accepts packages signed by keys that its local keyring</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">trusts (see pacman-key and its man page), as well as unsigned packages.</span>
+<span class="org-variable-name">SigLevel</span>    = Required DatabaseOptional
+<span class="org-variable-name">LocalFileSigLevel</span> = Optional
+<span class="org-comment-delimiter">#</span><span class="org-comment">RemoteFileSigLevel = Required</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">NOTE: You must run `pacman-key --init` before first using pacman; the local</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">keyring can then be populated with the keys of all official Arch Linux</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">packagers with `pacman-key --populate archlinux`.</span>
+
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">REPOSITORIES</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- can be defined here or included from another file</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- pacman will search repositories in the order defined here</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- local/custom mirrors can be added here or in separate files</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- repositories listed first will take precedence when packages</span>
+<span class="org-comment-delimiter">#     </span><span class="org-comment">have identical names, regardless of version number</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- URLs will have $repo replaced by the name of the current repo</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">- URLs will have $arch replaced by the name of the architecture</span>
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Repository entries are of the format:</span>
+<span class="org-comment-delimiter">#       </span><span class="org-comment">[repo-name]</span>
+<span class="org-comment-delimiter">#       </span><span class="org-comment">Server = ServerName</span>
+<span class="org-comment-delimiter">#       </span><span class="org-comment">Include = IncludePath</span>
+<span class="org-comment-delimiter">#</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">The header [repo-name] is crucial - it must be present and</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">uncommented to enable the repo.</span>
+<span class="org-comment-delimiter">#</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">The testing repositories are disabled by default. To enable, uncomment the</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">repo name header and Include lines. You can add preferred servers immediately</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">after the header, and they will be used before the default mirrors.</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">[testing]</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">Include = /etc/pacman.d/mirrorlist</span>
+
+[<span class="org-type">core</span>]
+<span class="org-variable-name">Include</span> = /etc/pacman.d/mirrorlist
+
+[<span class="org-type">extra</span>]
+<span class="org-variable-name">Include</span> = /etc/pacman.d/mirrorlist
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">[community-testing]</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">Include = /etc/pacman.d/mirrorlist</span>
+
+[<span class="org-type">community</span>]
+<span class="org-variable-name">Include</span> = /etc/pacman.d/mirrorlist
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">If you want to run 32 bit applications on your x86_64 system,</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">enable the multilib repositories as required here.</span>
+
+<span class="org-comment-delimiter">#</span><span class="org-comment">[multilib-testing]</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">Include = /etc/pacman.d/mirrorlist</span>
+
+[<span class="org-type">multilib</span>]
+<span class="org-variable-name">Include</span> = /etc/pacman.d/mirrorlist
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">An example of a custom package repository.  See the pacman manpage for</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">tips on creating your own repositories.</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">[custom]</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">SigLevel = Optional TrustAll</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">Server = file:///home/custompkgs</span>
+</pre>
+</div>
+<p>
+After the first sync (<code>pacman -Syu</code>), also install <code>multilib-devel</code> if you&rsquo;re planning to install lib32 aur packages.
+</p>
+</div>
+</div>
+<div id="outline-container-org49d7772" class="outline-4">
+<h4 id="org49d7772">other packages</h4>
+<div class="outline-text-4" id="text-org49d7772">
+</div>
+<ul class="org-ul">
+<li><a id="org4c2a23f"></a>fwupd<br>
+<div class="outline-text-5" id="text-org4c2a23f">
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman -S --noconfirm --needed fwupd
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="orgfdf6ea5"></a>fwupd get-devices<br>
+<div class="outline-text-6" id="text-orgfdf6ea5">
+<div class="org-src-container">
+<pre class="src src-sh">sudo fwupdmgr get-devices
+</pre>
+</div>
+
+<pre class="example" id="orged839ae">
+
+?
+??HP Integrated Module:
+?     Device ID:          c0170efdf195b8590000fa21474253c0d97e7335
+?     Current version:    3.6
+?     Vendor:             Broadcom Corp (USB:0x03F0)
+?     GUIDs:              08412d80-639e-522b-abd2-7d46b9445334 ? USB\VID_03F0&amp;PID_231D&amp;REV_0306
+?                         79814083-7581-5801-b6f3-8792cc340f0c ? USB\VID_03F0&amp;PID_231D
+?     Device Flags:       ? Updatable
+?
+??WDC WD2500BEVT-22ZCT0:
+      Device ID:          602b0a6cc821d155208724f0e22f8d111542b74c
+      Summary:            ATA drive
+      Current version:    11.01A11
+      Vendor:             Western Digital (ATA:0x101C, OUI:0014ee)
+      Serial Number:      WD-WXE1E10S5682
+      GUIDs:              b03be26b-ec23-5084-b50a-3a381315f822 ? IDE\WDC_WD2500BEVT-22ZCT0___________________11.01A11
+                          b958b198-9fdf-5b92-b0fc-8f6e116d9693 ? IDE\0WDC_WD2500BEVT-22ZCT0___________________
+                          68dbccef-a445-5349-b9c1-3d748058bd36 ? WDC WD2500BEVT-22ZCT0
+      Device Flags:       ? Internal device
+                          ? Updatable
+                          ? System requires external power source
+                          ? Needs a reboot after installation
+                          ? Device is usable for the duration of the update
+
+</pre>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge9fd2f0" class="outline-3">
+<h3 id="orge9fd2f0">User configuration</h3>
+<div class="outline-text-3" id="text-orge9fd2f0">
+</div>
+<div id="outline-container-org3cc483a" class="outline-4">
+<h4 id="org3cc483a">makepkg.conf</h4>
+<div class="outline-text-4" id="text-org3cc483a">
+<p>
+The system-wide configuration is <code>/etc/makepkg.conf</code>, but it&rsquo;s better to create user configuration at <code>~/.config/pacman/makepkg.conf</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf"><span class="org-variable-name">MAKEFLAGS</span>=<span class="org-string">"-j2"</span>
+<span class="org-variable-name">BUILDENV</span>=(!distcc color !ccache !check sign)
+<span class="org-variable-name">PKGDEST</span>=/data/pacman/packages
+<span class="org-variable-name">SRCDEST</span>=/data/pacman/sources
+<span class="org-variable-name">SRCPKGDEST</span>=/data/pacman/srcpackages
+<span class="org-variable-name">LOGDEST</span>=/data/pacman/makepkglogs
+
+<span class="org-variable-name">PACKAGER</span>=<span class="org-string">"$(git config --global user.name) &lt;$(git config --global user.email)&gt;"</span>
+<span class="org-variable-name">GPG_KEY</span>=<span class="org-string">"$(git config --global user.signingkey)"</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+if using own gpg-key, first add it to pacman-key:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo pacman-key --recv-keys <span class="org-string">"&lt;your_key_here&gt;"</span>
+sudo pacman-key --lsign-keys <span class="org-string">"&lt;your_key_here&gt;"</span>
+</pre>
+</div></li>
+<li><p>
+create the necessary directories
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sudo mkdir -pv /data/pacman/{packages,sources,srcpackages,makepkglogs}
+sudo chown -v :admin /data/pacman/{packages,sources,srcpackages,makepkglogs}
+sudo chmod -v 1775 /data/pacman/{packages,sources,srcpackages,makepkglogs}
+</pre>
+</div>
+<p>
+<code>admin</code> is a user-defined group, if no other user is using <i>makepkg</i>, it&rsquo;s safe to use your own user group and set the directories inside your user &ldquo;${HOME}&rdquo;.
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbd351ee" class="outline-4">
+<h4 id="orgbd351ee"><a href="https://github.com/vitalif/grive2">grive</a></h4>
+<div class="outline-text-4" id="text-orgbd351ee">
+<p>
+A fork from the original <i>grive</i>, with the support for the new Drive REST API and partial sync. Create a directory for syncing (in my case it&rsquo;s <code>~/Documents/google-drive</code>). Run <code>grive -a</code> inside the directory for initializing the connection. Once it&rsquo;s established, we can continue with the systemd user unit (<code>grive-changes@$(systemd-escape Documents/google-drive).service</code>).
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">systemctl --user enable --now grive-changes@$(systemd-escape Documents/google-drive).service
+</pre>
+</div>
+<p>
+To verify:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">systemctl --user status grive-changes@$(systemd-escape Documents/google-drive).service
+</pre>
+</div>
+
+<pre class="example" id="orge3da4ac">
+* grive-changes@Documents-google\x2ddrive.service - Google drive sync (changed files)
+     Loaded: loaded (/usr/lib/systemd/user/grive-changes@.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sun 2022-03-13 17:23:22 WIB; 41s ago
+   Main PID: 61459 (grive-sync.sh)
+      Tasks: 2 (limit: 4423)
+     Memory: 1004.0K
+        CPU: 40ms
+     CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/app-grive\x2dchanges.slice/grive-changes@Documents-google\x2ddrive.service
+             |-61459 /bin/bash /usr/lib/grive/grive-sync.sh listen "Documents-google\\x2ddrive"
+             `-61463 inotifywait -q -r -e modify,attrib,close_write,move,create,delete --exclude ".grive_state|.grive" Documents/google-drive
+
+Mar 13 17:23:22 arch-4420s systemd[382]: Started Google drive sync (changed files).
+Mar 13 17:23:22 arch-4420s grive-sync.sh[61459]: Listening for changes in ~/Documents/google-drive
+</pre>
+<p>
+It depends on <i>inotify-tools</i> so make sure it&rsquo;s <a href="#org36e699e">installed</a>.
+</p>
+
+<script src="https://utteranc.es/client.js"repo="alexforsale/alexforsale.github.io" issue-term="pathname" label="utterances" theme="gruvbox-dark" crossorigin="anonymous" async></script>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>

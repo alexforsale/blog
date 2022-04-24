@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>prometheus-snmp-exporter</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">prometheus-snmp-exporter</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 25, 2022 by Kristian Alexander P.</p>
+</header><p>
+I need to write this down before I forgot.
+</p>
+
+<p>
+Setting up <i>prometheus</i>&rsquo;s <i>snmp-exporter</i> isn&rsquo;t as straight-forward as many blogs and tutorial on the internet. Mostly those articles only covers the installation part, without diving much to the <i>snmp</i> side of things. So here&rsquo;s what I think is the important part.
+</p>
+<section id="outline-container-org507d95d" class="outline-2">
+<h2 id="org507d95d">Make sure you have a running <i>snmpd</i> daemon&#xa0;&#xa0;&#xa0;<span class="tag"><span class="snmp">snmp</span></span></h2>
+<div class="outline-text-2" id="text-org507d95d">
+<p>
+And verify it, even better, run <code>snmpwalk</code> from another remote machine to also making sure there&rsquo;s no firewall issues. If <i>snmp</i> and <i>snmp exporter</i> is in the same machine, I suppose it&rsquo;s safe to use <i>snmp</i> version <i>1</i> or <i>2c</i>. There&rsquo;s already too much documentations on <i>snmp</i> (on <i>arch</i>, there&rsquo;s a <code>net-snmp</code> package in the repository). As far as <i>snmp</i> side, this is basically it.
+</p>
+</div>
+</section>
+<section id="outline-container-orgb6892ff" class="outline-2">
+<h2 id="orgb6892ff">snmp-exporter</h2>
+<div class="outline-text-2" id="text-orgb6892ff">
+<p>
+This is where I got lost initially. From their official github repo readme, the example config looks like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orgd19a5ff">scrape_configs:
+- job_name: 'snmp'
+  static_configs:
+    - targets:
+      - 192.168.1.2  # SNMP device.
+      - switch.local # SNMP device.
+  metrics_path: /snmp
+  params:
+    module: [if_mib]
+  relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: 127.0.0.1:9116  # The SNMP exporter's real hostname:port.
+</pre>
+</div>
+<p>
+This is assuming <code>if-mib</code> is sufficient. Unfortunately, I needed more <i>MIB&rsquo;s</i>. Since <code>prometheus-snmp-exporter</code> is an <i>AUR</i> package, it&rsquo;s  not in the wiki. There&rsquo;s a <i>readme</i> file though, especially for the <i>generator</i> because this is what I&rsquo;m looking for. In <i>archlinux</i> the <i>generator</i> binary is in <code>/usr/bin/prometheus-snmp-generator</code>. What&rsquo;s left is the <code>generator.yml</code> file, there&rsquo;s a sample config file in the <i>generator readme</i>. But for someone not familiar with <i>snmp</i> like me this is too vague. Luckily there&rsquo;s another <a href="https://github.com/prometheus/snmp_exporter/blob/main/generator/generator.yml">sample configuration file in their github repo</a>. I removed all that I don&rsquo;t use and eventually left with this:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml" id="orged87970">modules:
+  # Default IF-MIB interfaces table with ifIndex.
+  if_mib:
+    walk: [sysUpTime, interfaces, ifXTable]
+    lookups:
+      - source_indexes: [ifIndex]
+	lookup: ifAlias
+      - source_indexes: [ifIndex]
+	# Uis OID to avoid conflict with PaloAlto PAN-COMMON-MIB.
+	lookup: 1.3.6.1.2.1.2.2.1.2 # ifDescr
+      - source_indexes: [ifIndex]
+	# Use OID to avoid conflict with Netscaler NS-ROOT-MIB.
+	lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+    overrides:
+      ifAlias:
+	ignore: true # Lookup metric
+      ifDescr:
+	ignore: true # Lookup metric
+      ifName:
+	ignore: true # Lookup metric
+      ifType:
+	type: EnumAsInfo
+</pre>
+</div>
+<p>
+Save this as <code>generator.yml</code> and run <code>prometheus-snmp-generator generate</code> in the same directory, and you&rsquo;ll get the <code>snmp.yml</code>. This is still not enough for me since what I&rsquo;m looking for is actually in the <code>IP-MIB</code> <code>OID</code>. I could manually list all the <i>OID&rsquo;s</i>, but that&rsquo;ll take a while, a quick <i>google</i> search and I got <a href="https://oidref.com/1.3.6.1.2.1.4">this</a>. And I modify the <code>generator.yml</code> file:
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">modules:
+  if_mib:
+    walk:
+      - interfaces
+      - sysUpTime
+      - ifXTable
+      - 1.3.6.1.2.1.4
+      - 1.3.6.1.2.1.55
+    lookups:
+      - source_indexes: [ifIndex]
+	lookup: ifAlias
+      - source_indexes: [ifIndex]
+	lookup: 1.3.6.1.2.1.2.2.1.2 # ifDescr
+      - source_indexes: [ifIndex]
+	lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+    overrides:
+      ifAlias:
+	ignore: true # Lookup metric
+      ifDescr:
+	ignore: true # Lookup metric
+      ifName:
+	ignore: true # Lookup metric
+      ifType:
+	type: EnumAsInfo
+    auth:
+      community: ro_java281
+</pre>
+</div>
+<p>
+The additional <code>walk</code> is for <code>IP-MIB</code> and <code>IPV6-MIB</code>, on <i>arch</i> it&rsquo;s available at <code>/usr/share/snmp/mibs</code> (provided you&rsquo;ve installed <code>net-snmp</code>).
+</p>
+
+<script src="https://utteranc.es/client.js"repo="alexforsale/alexforsale.github.io" issue-term="pathname" label="utterances" theme="gruvbox-dark" crossorigin="anonymous" async></script>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Apr 24, 2022 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qtile Configuration</title>
+<meta name="author" content="Kristian Alexander P" />
+<meta name="generator" content="Org Mode" />
+<link rel='icon' type='image/x-icon' href='/images/favicon.jpg'/><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'><link rel='stylesheet' href='/css/site.css' type='text/css'/><link rel='stylesheet' href='/css/custom.css' type='text/css'/><link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/~runner/"> HOME </a>
+</div><header id="top" class="status">
+<!--TODO: update this -->
+<div class='intro'>
+  <img src='/~alexforsale/images/about/profile.png' alt='Kristian Alexander P' class='no-border'/>
+  <h1>
+    <span>Kristian Alexander</span>
+  </h1>
+  <p>Free Software Enthusiast | GNU Emacs User</p>
+</div>
+
+<div class='nav'>
+  <ul>
+    <li><a href='/'>Website</a>.</li>
+    <li><a href='/~alexforsale/'>Blog</a>.</li>
+    <li><a href='/~alexforsale/onehouraday/'>OneHourAday</a>.</li>
+    <li><a href='http://gitlab.com/alexforsale'>GitLab</a>.</li>
+    <li><a href='http://github.com/alexforsale'>GitHub</a>.</li>
+    <li><a href='https://www.reddit.com/user/alexforsale'>Reddit</a>.</li>
+    <li><a href='/~alexforsale/roam/'>notes</a>.</li>
+    <li><a href='/~alexforsale/index.xml'>RSS</a>.</li>
+    <li><a href='/~alexforsale/about.html'>About</a></li>
+  </ul>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Qtile Configuration</h1>
+<p class="subtitle" role="doc-subtitle">Published on Mar 14, 2022 by Kristian Alexander P.</p>
+</header><section id="outline-container-orge5fc301" class="outline-2">
+<h2 id="orge5fc301">About</h2>
+<div class="outline-text-2" id="text-orge5fc301">
+
+<figure id="org6e6083d">
+<img src="../images/posts/screenshot_2022_03_19-00_38-38.png" alt="screenshot_2022_03_19-00_38-38.png" class="center no-border" width="75%" height="75%">
+
+<figcaption><span class="figure-number">Figure 1: </span>the mandatory screenshot</figcaption>
+</figure>
+
+<p>
+This file will be the base of my configuration. With <code>org-mode</code> I can <i>tangle</i> every source code snippet in this file and put them in one or more files.
+</p>
+</div>
+<div id="outline-container-orge937a85" class="outline-3">
+<h3 id="orge937a85">These are the keybindings:</h3>
+<div class="outline-text-3" id="text-orge937a85">
+<ul class="org-ul">
+<li><p>
+Navigation
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 1:</span> Navigation Key</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">h</td>
+<td class="org-right">Switch to left window</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">j</td>
+<td class="org-right">Switch to lower window</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">k</td>
+<td class="org-right">Switch to upper window</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">l</td>
+<td class="org-right">Switch to right window</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Window Movement
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 2:</span> Window Movement</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">h</td>
+<td class="org-right">Move window to the left</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">j</td>
+<td class="org-right">Move window to bottom</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">k</td>
+<td class="org-right">Move window to top</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">l</td>
+<td class="org-right">Move window to the right</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Resizing
+Only works in <i>floating mode.</i>
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 3:</span> Window Resizing</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">h</td>
+<td class="org-right">grow window to the left</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">j</td>
+<td class="org-right">grow window to bottom</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">k</td>
+<td class="org-right">grow window to top</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">l</td>
+<td class="org-right">grow window to the right</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Basic Commands
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 4:</span> Basic Command</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">TAB</td>
+<td class="org-right">Toggle between previous group</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + Mod1 (ALT)</td>
+<td class="org-center">TAB</td>
+<td class="org-right">Toggle between layouts</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">F4</td>
+<td class="org-right">Kill focused window</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">r</td>
+<td class="org-right">Reload Qtile configuration file(s)</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Control</b></td>
+<td class="org-center">q</td>
+<td class="org-right">Logout</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">d</td>
+<td class="org-right">Spawn Command</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">Space</td>
+<td class="org-right">Switch to next window</td>
+</tr>
+</tbody>
+</table></li>
+<li>Other Commands
+<ul class="org-ul">
+<li><p>
+picom
+These commands need <i>picom</i> available and running.
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 5:</span> Other Command</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">F2</td>
+<td class="org-right">Decrease transparency value for current window</td>
+<td class="org-left">picom</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">F3</td>
+<td class="org-right">Increase transparency value for current window</td>
+<td class="org-left">picom</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Hardware keys
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 6:</span> Hardware Keys</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86MonBrightnessUp</td>
+<td class="org-right">Increase brightness</td>
+<td class="org-left">brightnessctl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86MonBrightnessDown</td>
+<td class="org-right">Decrease brightness</td>
+<td class="org-left">brightnessctl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioLowerVolume</td>
+<td class="org-right">Decrease volume</td>
+<td class="org-left">pactl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioRaiseVolume</td>
+<td class="org-right">Increase volume</td>
+<td class="org-left">pactl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioMute</td>
+<td class="org-right">Toggle volume muting</td>
+<td class="org-left">pactl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioPlay</td>
+<td class="org-right">Toggle media play/pause</td>
+<td class="org-left">playerctl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioNext</td>
+<td class="org-right">Toggle media play next</td>
+<td class="org-left">playerctl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86AudioPrev</td>
+<td class="org-right">Toggle media play previous</td>
+<td class="org-left">playerctl</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86Mail</td>
+<td class="org-right">Opens Notmuch in Emacs</td>
+<td class="org-left">emacs</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">XF86MyComupter</td>
+<td class="org-right">Open Thunar</td>
+<td class="org-left">thunar</td>
+</tr>
+
+<tr>
+<td class="org-left">-</td>
+<td class="org-center">Print</td>
+<td class="org-right">Fullscreen screenshot</td>
+<td class="org-left">maim</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">Print</td>
+<td class="org-right">Selection screenshot</td>
+<td class="org-left">maim</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>
+Various apps
+</p>
+<table frame="border" border="2" rules="all">
+<caption class="t-above"><span class="table-number">Table 7:</span> Various Apps</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-right">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Modifier Key</th>
+<th scope="col" class="org-center">Key</th>
+<th scope="col" class="org-right">Function</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">Return (Enter Key)</td>
+<td class="org-right">Opens Terminal</td>
+<td class="org-left">Configurable via Variable</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">Return (Enter Key)</td>
+<td class="org-right">Open Emacs vterm</td>
+<td class="org-left">Emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">b</td>
+<td class="org-right">Opens Firefox</td>
+<td class="org-left">firefox</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">m</td>
+<td class="org-right">Opens Notmuch in Emacs</td>
+<td class="org-left">emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">n</td>
+<td class="org-right">Opens emacsclient window</td>
+<td class="org-left">emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key) + <b>Shift</b></td>
+<td class="org-center">m</td>
+<td class="org-right">Opens Emms in Emacs</td>
+<td class="org-left">emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">f</td>
+<td class="org-right">Opens Elfeed in Emacs</td>
+<td class="org-left">emacs</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Mod4</b> (Super Key)</td>
+<td class="org-center">t</td>
+<td class="org-right">Opens Telega in Emacs</td>
+<td class="org-left">emacs</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="outline-container-orgae34720" class="outline-2">
+<h2 id="orgae34720">Main configuration</h2>
+<div class="outline-text-2" id="text-orgae34720">
+<pre class="example">
+header-args: :tangle ~/.config/qtile/config.py :mkdirp t
+</pre>
+<p>
+If you open this file in <code>Emacs</code>, this section has a property drawer that tangles every source code blocks in this section to <code>config.py</code>.
+</p>
+</div>
+<div id="outline-container-org9fa2f2d" class="outline-3">
+<h3 id="org9fa2f2d">Header</h3>
+<div class="outline-text-3" id="text-org9fa2f2d">
+<p>
+Qtile will look for user configuration at <code>~/.config/qtile/config.py</code>, so we&rsquo;ll start there.
+</p>
+<div class="org-src-container">
+<pre class="src src-python" id="org33e4101"><span class="org-doc">"""Qtile configuration file.</span>
+
+<span class="org-doc">Copyright (c) 2010 Aldo Cortesi</span>
+<span class="org-doc">Copyright (c) 2010, 2014 dequis</span>
+<span class="org-doc">Copyright (c) 2012 Randall Ma</span>
+<span class="org-doc">Copyright (c) 2012-2014 Tycho Andersen</span>
+<span class="org-doc">Copyright (c) 2012 Craig Barnes</span>
+<span class="org-doc">Copyright (c) 2013 horsik</span>
+<span class="org-doc">Copyright (c) 2013 Tao Sauvage</span>
+<span class="org-doc">Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="org-doc">of this software and associated documentation files (the "Software"), to deal</span>
+<span class="org-doc">in the Software without restriction, including without limitation the rights</span>
+<span class="org-doc">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="org-doc">copies of the Software, and to permit persons to whom the Software is</span>
+<span class="org-doc">furnished to do so, subject to the following conditions:</span>
+<span class="org-doc">The above copyright notice and this permission notice shall be included in</span>
+<span class="org-doc">all copies or substantial portions of the Software.</span>
+<span class="org-doc">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="org-doc">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="org-doc">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="org-doc">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="org-doc">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="org-doc">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="org-doc"># SOFTWARE.</span>
+<span class="org-doc">"""</span>
+</pre>
+</div>
+<p>
+Since I&rsquo;m basing from the default config, use their license header for now, also note in <code>org-mode</code>, if a source code block is using <code>:shebang</code> arguments, it&rsquo;ll set the file as executable, it&rsquo;s not required for <i>qtile</i> actually, but a good habit nonetheless.
+</p>
+</div>
+</div>
+<div id="outline-container-org80b4810" class="outline-3">
+<h3 id="org80b4810">Imports</h3>
+<div class="outline-text-3" id="text-org80b4810">
+<p>
+This is what the default configuration listed:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">from</span> typing <span class="org-keyword">import</span> List  <span class="org-comment-delimiter"># </span><span class="org-comment">noqa: F401</span>
+
+<span class="org-keyword">from</span> libqtile <span class="org-keyword">import</span> bar, layout, widget, hook
+<span class="org-keyword">from</span> libqtile.config <span class="org-keyword">import</span> Click, Drag, Group, Key, Match, Screen
+<span class="org-keyword">from</span> libqtile.lazy <span class="org-keyword">import</span> lazy
+
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+Imports for custom function.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> psutil
+<span class="org-keyword">import</span> subprocess
+<span class="org-keyword">import</span> os
+<span class="org-keyword">import</span> json
+<span class="org-keyword">from</span> datetime <span class="org-keyword">import</span> datetime
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org92662fe" class="outline-3">
+<h3 id="org92662fe">Variables</h3>
+<div class="outline-text-3" id="text-org92662fe">
+<p>
+Subtitutes the actual keys.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">mod</span> = <span class="org-string">"mod4"</span>
+<span class="org-variable-name">alt</span> = <span class="org-string">"mod1"</span>
+<span class="org-variable-name">altgr</span> = <span class="org-string">"mod5"</span>
+<span class="org-variable-name">shift</span> = <span class="org-string">"shift"</span>
+<span class="org-variable-name">control</span> = <span class="org-string">"control"</span>
+
+<span class="org-variable-name">left</span> = <span class="org-string">"h"</span>
+<span class="org-variable-name">right</span> = <span class="org-string">"l"</span>
+<span class="org-variable-name">down</span> = <span class="org-string">"j"</span>
+<span class="org-variable-name">up</span> = <span class="org-string">"k"</span>
+</pre>
+</div>
+
+<p>
+Other variables
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">if</span> os.getenv(<span class="org-string">"TERMINAL"</span>):
+    <span class="org-variable-name">terminal</span> = os.getenv(<span class="org-string">"TERMINAL"</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-variable-name">terminal</span> = <span class="org-string">"xterm"</span>
+<span class="org-variable-name">groups</span> = [Group(i) <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-string">"123456789"</span>]
+<span class="org-variable-name">dgroups_key_binder</span> = <span class="org-constant">None</span>
+<span class="org-variable-name">dgroups_app_rules</span> = []  <span class="org-comment-delimiter"># </span><span class="org-comment">type: List</span>
+<span class="org-variable-name">follow_mouse_focus</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">bring_front_click</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">cursor_warp</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">auto_fullscreen</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">focus_on_window_activation</span> = <span class="org-string">"smart"</span>
+<span class="org-variable-name">reconfigure_screens</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">auto_minimize</span> = <span class="org-constant">True</span>
+<span class="org-variable-name">wmname</span> = <span class="org-string">"LG3D"</span>
+<span class="org-variable-name">home</span> = os.getenv(<span class="org-string">"HOME"</span>)
+
+<span class="org-variable-name">wlan_interface</span> = <span class="org-string">"wlo1"</span>
+
+<span class="org-keyword">if</span> os.getenv(<span class="org-string">"XDG_CONFIG_HOME"</span>):
+    <span class="org-variable-name">xdg_config_home</span> = os.getenv(<span class="org-string">"XDG_CONFIG_HOME"</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-variable-name">xdg_config_home</span> = os.path.join(home, <span class="org-string">".config"</span>)
+
+<span class="org-keyword">if</span> os.getenv(<span class="org-string">"XDG_CACHE_HOME"</span>):
+    <span class="org-variable-name">xdg_cache_home</span> = os.getenv(<span class="org-string">"XDG_CACHE_HOME"</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-variable-name">xdg_cache_home</span> = os.path.join(home, <span class="org-string">".cache"</span>)
+
+<span class="org-keyword">if</span> os.getenv(<span class="org-string">"XDG_DATA_HOME"</span>):
+    <span class="org-variable-name">xdg_data_home</span> = os.getenv(<span class="org-string">"XDG_DATA_HOME"</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-variable-name">xdg_data_home</span> = os.path.join(home, <span class="org-string">".local/share"</span>)
+
+<span class="org-keyword">if</span> os.getenv(<span class="org-string">"XDG_PICTURES_DIR"</span>):
+    <span class="org-variable-name">xdg_pictures_dir</span> = os.getenv(<span class="org-string">"XDG_PICTURES_DIR"</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-variable-name">xdg_pictures_dir</span> = os.path.join(home, <span class="org-string">"Pictures"</span>)
+
+<span class="org-keyword">if</span> os.path.exists(<span class="org-string">"/usr/share/backgrounds/archlinux"</span>):
+    <span class="org-variable-name">wallpaper_dir</span> = <span class="org-string">"/usr/share/backgrounds/archlinux"</span>
+<span class="org-keyword">elif</span> os.path.exists(os.path.join(home, xdg_pictures_dir + <span class="org-string">"Wallpapers"</span>)):
+    <span class="org-variable-name">wallpaper_dir</span> = os.path.join(home, xdg_pictures_dir + <span class="org-string">"Wallpapers"</span>)
+<span class="org-keyword">elif</span> os.path.exists(os.path.join(xdg_data_home, <span class="org-string">"backgrounds"</span>)):
+    <span class="org-variable-name">wallpaper_dir</span> = os.path.join(home, xdg_data_home + <span class="org-string">"backgrounds"</span>)
+
+<span class="org-variable-name">color_file</span> = <span class="org-string">"wal/colors.json"</span>
+<span class="org-variable-name">colors_absolute</span> = os.path.join(xdg_cache_home, color_file)
+
+</pre>
+</div>
+<p>
+Variables and import list will obviously changed depending on the settings I use.
+</p>
+</div>
+</div>
+<div id="outline-container-org18d6b17" class="outline-3">
+<h3 id="org18d6b17">Functions</h3>
+<div class="outline-text-3" id="text-org18d6b17">
+<ul class="org-ul">
+<li><p>
+Check running process.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">
+<span class="org-keyword">def</span> <span class="org-function-name">checkIfProcessRunning</span>(processName):
+      <span class="org-doc">"""Check if process running.</span>
+
+<span class="org-doc">      Check if there is any running process that contains</span>
+<span class="org-doc">      the given name processName.</span>
+<span class="org-doc">      """</span>
+      <span class="org-comment-delimiter"># </span><span class="org-comment">Iterate over the all the running process</span>
+      <span class="org-keyword">for</span> proc <span class="org-keyword">in</span> psutil.process_iter():
+          <span class="org-keyword">try</span>:
+                <span class="org-comment-delimiter"># </span><span class="org-comment">Check if process name contains the given name string.</span>
+              <span class="org-keyword">if</span> processName.lower() <span class="org-keyword">in</span> proc.name().lower():
+                  <span class="org-keyword">return</span> <span class="org-constant">True</span>
+          <span class="org-keyword">except</span> (psutil.NoSuchProcess,
+                  psutil.AccessDenied,
+                  psutil.ZombieProcess):
+              <span class="org-keyword">pass</span>
+      <span class="org-keyword">return</span> <span class="org-constant">False</span>
+
+</pre>
+</div></li>
+<li>maim
+<ul class="org-ul">
+<li><p>
+fullscreen
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">maimFullScreen</span>():
+    <span class="org-variable-name">now</span> = datetime.now()
+    <span class="org-variable-name">screenshotfile</span> = os.path.join(screenshots_dir,
+                                  now.strftime(<span class="org-string">"%Y_%m_%d-%H_%M_%S"</span>)
+                                  + <span class="org-string">".png"</span>)
+    <span class="org-keyword">return</span> subprocess.Popen([<span class="org-string">"maim"</span>, screenshotfile])
+
+</pre>
+</div></li>
+</ul></li>
+<li><p>
+Parse Xresources
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">if</span> os.path.isfile(colors_absolute):
+    <span class="org-keyword">with</span> <span class="org-builtin">open</span>(colors_absolute, encoding=<span class="org-string">"utf-8"</span>) <span class="org-keyword">as</span> colorfile:
+        <span class="org-variable-name">color_list</span> = json.load(colorfile)
+        <span class="org-variable-name">xcursor</span> = color_list[<span class="org-string">'special'</span>][<span class="org-string">'cursor'</span>]
+        <span class="org-variable-name">xbackground</span> = color_list[<span class="org-string">'special'</span>][<span class="org-string">'background'</span>]
+        <span class="org-variable-name">xforeground</span> = color_list[<span class="org-string">'special'</span>][<span class="org-string">'foreground'</span>]
+        <span class="org-variable-name">xcolor0</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color0'</span>]
+        <span class="org-variable-name">xcolor1</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color1'</span>]
+        <span class="org-variable-name">xcolor2</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color2'</span>]
+        <span class="org-variable-name">xcolor3</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color3'</span>]
+        <span class="org-variable-name">xcolor4</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color4'</span>]
+        <span class="org-variable-name">xcolor5</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color5'</span>]
+        <span class="org-variable-name">xcolor6</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color6'</span>]
+        <span class="org-variable-name">xcolor7</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color7'</span>]
+        <span class="org-variable-name">xcolor8</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color8'</span>]
+        <span class="org-variable-name">xcolor9</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color9'</span>]
+        <span class="org-variable-name">xcolor10</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color10'</span>]
+        <span class="org-variable-name">xcolor11</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color11'</span>]
+        <span class="org-variable-name">xcolor12</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color12'</span>]
+        <span class="org-variable-name">xcolor13</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color13'</span>]
+        <span class="org-variable-name">xcolor14</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color14'</span>]
+        <span class="org-variable-name">xcolor15</span> = color_list[<span class="org-string">'colors'</span>][<span class="org-string">'color15'</span>]
+
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga51bc0c" class="outline-3">
+<h3 id="orga51bc0c"><span class="todo TODO">TODO</span> Keys</h3>
+<div class="outline-text-3" id="text-orga51bc0c">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 04:54]</span></span></li>
+</ul>
+<p>
+Definitely will be tweaking these. I also break the keybindings into several sections.
+</p>
+<ul class="org-ul">
+<li><p>
+navigations
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">keys</span> = []
+<span class="org-comment-delimiter"># </span><span class="org-comment">Navigation</span>
+
+keys.extend([
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Window Navigation</span>
+    Key([mod], left,
+        lazy.layout.left()),
+    Key([mod], down,
+        lazy.layout.down()),
+    Key([mod], up,
+        lazy.layout.up()),
+    Key([mod], right,
+        lazy.layout.right()),
+    ]
+)
+</pre>
+</div></li>
+<li><p>
+Window movement
+</p>
+<div class="org-src-container">
+<pre class="src src-python">keys.extend([
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Window movement</span>
+    Key([mod, shift], left,
+        lazy.layout.shuffle_left()),
+    Key([mod, shift], down,
+        lazy.layout.shuffle_down()),
+    Key([mod, shift], up,
+        lazy.layout.shuffle_up()),
+    Key([mod, shift], right,
+        lazy.layout.shuffle_right()),
+    ]
+)
+</pre>
+</div></li>
+<li><p>
+resize
+</p>
+<div class="org-src-container">
+<pre class="src src-python">keys.extend([
+    <span class="org-comment-delimiter"># </span><span class="org-comment">window resize</span>
+    Key([mod, control], left,
+        lazy.layout.grow_left()),
+    Key([mod, control], down,
+        lazy.layout.grow_down()),
+    Key([mod, control], up,
+        lazy.layout.grow_up()),
+    Key([mod, control], right,
+        lazy.layout.grow_right()),
+    ]
+)
+</pre>
+</div></li>
+<li><p>
+commands
+</p>
+<div class="org-src-container">
+<pre class="src src-python">keys.extend([
+    Key([mod], <span class="org-string">"Tab"</span>,
+        lazy.screen.toggle_group()),
+    Key([mod, alt], <span class="org-string">"Tab"</span>,
+        lazy.next_layout()),
+    Key([mod], <span class="org-string">"F4"</span>,
+        lazy.window.kill()),
+    Key([mod, <span class="org-string">"control"</span>], <span class="org-string">"r"</span>,
+        lazy.reload_config()),
+    Key([mod, <span class="org-string">"control"</span>], <span class="org-string">"q"</span>,
+        lazy.shutdown()),
+    Key([mod], <span class="org-string">"d"</span>,
+        lazy.spawncmd()),
+    Key([mod], <span class="org-string">"space"</span>,
+        lazy.layout.<span class="org-builtin">next</span>()),
+    ]
+)
+</pre>
+</div></li>
+<li><p>
+apps
+</p>
+<div class="org-src-container">
+<pre class="src src-python">keys.extend([
+    Key([mod], <span class="org-string">"F2"</span>,
+        lazy.spawn(<span class="org-string">"picom-trans -c -5"</span>),
+        desc=<span class="org-string">"Decrease transparency by 5%"</span>),
+    Key([mod], <span class="org-string">"F3"</span>,
+        lazy.spawn(<span class="org-string">"picom-trans -c +5"</span>),
+        desc=<span class="org-string">"Increase transparency by 5%"</span>),
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Hardware keys</span>
+    Key([], <span class="org-string">"XF86MonBrightnessUp"</span>,
+        lazy.spawn(<span class="org-string">"brightnessctl set +1%"</span>),
+        desc=<span class="org-string">"Increase brightness by 1%"</span>),
+    Key([], <span class="org-string">"XF86MonBrightnessDown"</span>,
+        lazy.spawn(<span class="org-string">"brightnessctl set 1%-"</span>),
+        desc=<span class="org-string">"Decrease brightness by 1%"</span>),
+    Key([], <span class="org-string">"XF86AudioLowerVolume"</span>,
+        lazy.spawn(<span class="org-string">"pactl set-sink-volume @DEFAULT_SINK@ -1%"</span>),
+        desc=<span class="org-string">"Decrease volume by 1%"</span>),
+    Key([], <span class="org-string">"XF86AudioRaiseVolume"</span>,
+        lazy.spawn(<span class="org-string">"pactl set-sink-volume @DEFAULT_SINK@ +1%"</span>),
+        desc=<span class="org-string">"Increase volume by 1%"</span>),
+    Key([], <span class="org-string">"XF86AudioMute"</span>,
+        lazy.spawn(<span class="org-string">"pactl set-sink-mute @DEFAULT_SINK@ toggle"</span>),
+        desc=<span class="org-string">"Toggle volume on/off"</span>),
+    Key([], <span class="org-string">"XF86AudioPlay"</span>,
+        lazy.spawn(<span class="org-string">"playerctl play-pause"</span>),
+        desc=<span class="org-string">"Toggle play/pause"</span>),
+    Key([], <span class="org-string">"XF86AudioNext"</span>,
+        lazy.spawn(<span class="org-string">"playerctl next"</span>),
+        desc=<span class="org-string">"Play next"</span>),
+   Key([], <span class="org-string">"XF86AudioPrev"</span>,
+        lazy.spawn(<span class="org-string">"playerctl previous"</span>),
+        desc=<span class="org-string">"Play previous"</span>),
+    Key([mod], <span class="org-string">"Return"</span>,
+        lazy.spawn(terminal)),
+    Key([mod, shift], <span class="org-string">"Return"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -ce '(vterm)'"</span>)),
+    Key([mod], <span class="org-string">"e"</span>,
+        lazy.spawn(<span class="org-string">"thunar"</span>)),
+    Key([], <span class="org-string">"XF86MyComputer"</span>,
+        lazy.spawn(<span class="org-string">"thunar"</span>)),
+    Key([mod], <span class="org-string">"b"</span>,
+        lazy.spawn(<span class="org-string">"firefox"</span>)),
+    Key([mod], <span class="org-string">"n"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -a \"\""</span>)),
+    Key([mod], <span class="org-string">"m"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -e '(notmuch)'"</span>)),
+    Key([], <span class="org-string">"XF86Mail"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -e '(notmuch)'"</span>)),
+    Key([mod, shift], <span class="org-string">"m"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -e '(emms-browse-by-artist)'"</span>)),
+    Key([mod], <span class="org-string">"f"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -e '(elfeed)'"</span>)),
+    Key([mod], <span class="org-string">"t"</span>,
+        lazy.spawn(<span class="org-string">"emacsclient -c -e '(telega)'"</span>)),
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Print</span>
+    Key([], <span class="org-string">"Print"</span>,
+        lazy.spawn(<span class="org-string">"sh -c \"maim \</span>
+<span class="org-string">        ~/Pictures/Screenshots/screenshot_$(date +%Y_%m_%d-%H_%M-%S).png\""</span>)),
+    Key([mod], <span class="org-string">"Print"</span>,
+        lazy.spawn(<span class="org-string">"sh -c \"maim -o -s -u \</span>
+<span class="org-string">        ~/Pictures/Screenshots/screenshot_selection_$(date +%Y_%m_%d-%H_%M-%S).png\""</span>)),
+    ]
+)
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6dc66c8" class="outline-3">
+<h3 id="org6dc66c8">Groups</h3>
+<div class="outline-text-3" id="text-org6dc66c8">
+<p>
+The default already set a <i>for loop</i> for group keybindings, it&rsquo;s also what I set in other <i>window manager</i> so I&rsquo;m using it.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">for</span> i <span class="org-keyword">in</span> groups:
+    keys.extend(
+        [
+            <span class="org-comment-delimiter"># </span><span class="org-comment">mod1 + letter of group = switch to group</span>
+            Key(
+                [mod],
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc=<span class="org-string">"Switch to group {}"</span>.<span class="org-builtin">format</span>(i.name),
+            ),
+            <span class="org-comment-delimiter"># </span><span class="org-comment">mod1 + shift + letter of group = switch to &amp;</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">move focused window to group</span>
+            Key(
+                [mod, <span class="org-string">"shift"</span>],
+                i.name,
+                lazy.window.togroup(i.name, switch_group=<span class="org-constant">True</span>),
+                desc=<span class="org-string">"Switch and move window &gt; group {}"</span>.<span class="org-builtin">format</span>(i.name),
+            ),
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Or, use below if you prefer not to switch to that group.</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment"># mod1 + shift + letter of group = move focused window to group</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Key([mod, "shift"], i.name, lazy.window.togroup(i.name),</span>
+            <span class="org-comment-delimiter">#     </span><span class="org-comment">desc="move focused window to group {}".format(i.name)),</span>
+        ]
+    )
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd8afc78" class="outline-3">
+<h3 id="orgd8afc78"><span class="todo TODO">TODO</span> Layout</h3>
+<div class="outline-text-3" id="text-orgd8afc78">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 04:59]</span></span></li>
+</ul>
+<p>
+I&rsquo;ll try all of them one by one when I have the time, but the <i>Max</i> and <i>Column</i> will be the ones I&rsquo;ll use often.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">layout_defaults</span> = {
+    <span class="org-string">"border_width"</span>: 3,
+    <span class="org-string">"margin"</span>: 9,
+    <span class="org-string">"border_focus"</span>: xcolor14,
+    <span class="org-string">"border_normal"</span>: xcolor15,
+}
+
+<span class="org-variable-name">layouts</span> = [
+    layout.Columns(
+        border_focus_stack=[xcolor3, xcolor8],
+        grow_amount=5,
+        **layout_defaults
+    ),
+    layout.Max(**layout_defaults),
+    layout.MonadTall(
+        **layout_defaults
+    ),
+]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org551f5dc" class="outline-3">
+<h3 id="org551f5dc"><span class="todo TODO">TODO</span> Widgets, extensions and screens</h3>
+<div class="outline-text-3" id="text-org551f5dc">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 05:00]</span></span></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">widget_defaults</span> = <span class="org-builtin">dict</span>(
+    font=<span class="org-string">"Source Code Pro"</span>,
+    background=xbackground,
+    fontsize=10,
+    padding=4,
+)
+
+<span class="org-variable-name">extension_defaults</span> = widget_defaults.copy()
+
+<span class="org-variable-name">screens</span> = [
+    Screen(
+        bottom=bar.Bar(
+            [
+                widget.CurrentLayout(
+                    background=xbackground,
+                    foreground=xcolor3),
+                widget.GroupBox(
+                    active=xforeground,
+                    foreground=xcolor2,
+                    highlight_color=[xbackground, xforeground],
+                    inactive=xcolor1,
+                    other_current_screen_border=xcolor14,
+                    other_screen_border=xcolor14,
+                    this_current_screen_border=xcolor4,
+                    this_screen_border=xcolor4,
+                    urgent_border=xcolor9,
+                    urgent_text=xforeground),
+                widget.Prompt(),
+                widget.WindowName(
+                    <span class="org-builtin">format</span>=<span class="org-string">"{state}{name}"</span>,
+                    foreground=xcolor4),
+                widget.Backlight(
+                    foreground=xcolor10,
+                    backlight_name=<span class="org-string">"intel_backlight"</span>,
+                    change_command=<span class="org-string">"xbacklight -set {0}"</span>,
+                    <span class="org-builtin">format</span>=<span class="org-string">"&#59581; {percent:2.0%}"</span>,
+                    step=5
+                ),
+                widget.Wlan(
+                    foreground=xcolor12,
+                    interface=wlan_interface,
+                    <span class="org-builtin">format</span>=<span class="org-string">"&#58942; {essid} {percent:2.0%}"</span>),
+                widget.Battery(
+                    foreground=xcolor11,
+                    charge_char=<span class="org-string">"&#57763;"</span>,
+                    discharge_char=<span class="org-string">"&#57765;"</span>,
+                    empty_char=<span class="org-string">"&#57766;"</span>,
+                    <span class="org-builtin">format</span>=<span class="org-string">"{char} {percent:2.0%} {hour:d}:{min:02d}"</span>
+                ),
+                widget.PulseVolume(
+                    foreground=xcolor14,
+                    fmt=<span class="org-string">"&#57424; {}"</span>),
+                widget.Maildir(
+                    foreground=xcolor6,
+                    maildir_path=<span class="org-string">"~/.mail"</span>,
+                    sub_folders=[
+                        {<span class="org-string">'label'</span>: <span class="org-string">'&#61856;'</span>, <span class="org-string">'path'</span>: <span class="org-string">'gmail/Inbox'</span>},
+                        {<span class="org-string">'label'</span>: <span class="org-string">'&#61818;'</span>, <span class="org-string">'path'</span>: <span class="org-string">'hotmail/Inbox'</span>},
+                        {<span class="org-string">'label'</span>: <span class="org-string">'&#61854;'</span>, <span class="org-string">'path'</span>: <span class="org-string">'yahoo/Inbox'</span>},
+                        {<span class="org-string">'label'</span>: <span class="org-string">'&#57688;'</span>, <span class="org-string">'path'</span>: <span class="org-string">'ymail/Inbox'</span>},
+                    ],
+                    subfolder_fmt=<span class="org-string">"{label} {value}"</span>,
+                    update_interval=300
+                ),
+                widget.Clock(
+                    foreground=xcolor11,
+                    <span class="org-builtin">format</span>=<span class="org-string">"%Y-%m-%d %a %I:%M %p"</span>),
+                widget.Systray(),
+            ],
+            20,
+            opacity=1.0,
+            background=xbackground
+        ),
+    ),
+]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcf3d2bc" class="outline-3">
+<h3 id="orgcf3d2bc">Mouse</h3>
+<div class="outline-text-3" id="text-orgcf3d2bc">
+<p>
+I don&rsquo;t think I&rsquo;ll be modifying these.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">Drag floating layouts.</span>
+<span class="org-variable-name">mouse</span> = [
+    Drag([mod], <span class="org-string">"Button1"</span>,
+         lazy.window.set_position_floating(),
+         start=lazy.window.get_position()),
+    Drag([mod], <span class="org-string">"Button3"</span>,
+         lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
+    Click([mod], <span class="org-string">"Button2"</span>,
+          lazy.window.bring_to_front()),
+]
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3db14f8" class="outline-3">
+<h3 id="org3db14f8"><span class="todo TODO">TODO</span> Floating layout rules</h3>
+<div class="outline-text-3" id="text-org3db14f8">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 05:03]</span></span></li>
+</ul>
+<p>
+Eventually it&rsquo;ll reflects various apps I use.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">floating_layout</span> = layout.Floating(
+    float_rules=[
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Run the utility of `xprop`</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">to see the wm class and name of an X client.</span>
+        *layout.Floating.default_float_rules,
+        Match(wm_class=<span class="org-string">"confirmreset"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">gitk</span>
+        Match(wm_class=<span class="org-string">"makebranch"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">gitk</span>
+        Match(wm_class=<span class="org-string">"maketag"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">gitk</span>
+        Match(wm_class=<span class="org-string">"ssh-askpass"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">ssh-askpass</span>
+        Match(title=<span class="org-string">"branchdialog"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">gitk</span>
+        Match(title=<span class="org-string">"pinentry"</span>),  <span class="org-comment-delimiter"># </span><span class="org-comment">GPG key password entry</span>
+    ]
+)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb59fc7" class="outline-3">
+<h3 id="orgfb59fc7">Hooks</h3>
+<div class="outline-text-3" id="text-orgfb59fc7">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-type">@hook.subscribe.startup_once</span>
+<span class="org-keyword">def</span> <span class="org-function-name">startup</span>():
+    <span class="org-doc">"""Run after qtile initialization."""</span>
+    <span class="org-variable-name">processes</span> = [
+        [<span class="org-string">"xrdb"</span>, <span class="org-string">"-merge"</span>, <span class="org-string">"~/.Xresources"</span>],
+        [<span class="org-string">"picom"</span>],
+        [<span class="org-string">"unclutter"</span>],
+        [<span class="org-string">"xsettingsd"</span>],
+        [<span class="org-string">"udiskie"</span>, <span class="org-string">"-t"</span>],
+        [<span class="org-string">"nm-applet"</span>],
+        [<span class="org-string">"blueman-applet"</span>],
+        [<span class="org-string">"wal"</span>, <span class="org-string">"-i"</span>, wallpaper_dir],
+        [<span class="org-string">"emacs"</span>, <span class="org-string">"--debug-init"</span>, <span class="org-string">"--daemon"</span>],
+        [<span class="org-string">"dunst"</span>],
+        [<span class="org-string">"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"</span>]
+    ]
+    <span class="org-keyword">for</span> p <span class="org-keyword">in</span> processes:
+        <span class="org-keyword">if</span> <span class="org-keyword">not</span> checkIfProcessRunning(p[0]):
+            subprocess.Popen(p)
+</pre>
+</div>
+
+<script src="https://utteranc.es/client.js"repo="alexforsale/alexforsale.github.io" issue-term="pathname" label="utterances" theme="gruvbox-dark" crossorigin="anonymous" async></script>
+</div>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> | <a href='https://gitlab.com/psachin/psachin.gitlab.io/-/tree/blog_template'>Publish your own blogs</a> <br>
+  GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
+  Inspired by <a href='https://nicolas.petton.fr'>https://nicolas.petton.fr</a> <br>
+  Last updated on Apr 24, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
+  <img src="//ipv6.he.net/certification/create_badge.php?pass_name=alexforsale&amp;badge=3" style="border: 0; width: 229px; height: 137px" alt="IPv6 Certification Badge for alexforsale"></img>
+<a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
+</div>
+</footer>
+</body>
+</html>
