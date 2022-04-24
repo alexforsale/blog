@@ -48,24 +48,16 @@
       org-html-htmlize-output-type 'css
       org-src-fontify-natively t)
 
-(defvar +publish-as-user nil
-  "Set publish as user.")
-
-(defvar +html-head-root "/"
-  "Location of html-root.")
-
-(if +publish-as-user
-    (setq +html-head-root (concat "/~" user-login-name "/"))
-  (setq +html-head-root "/"))
+(setq +publish-root "/blog")
 
 (defvar me/website-html-head
   (concat
-   "<link rel='icon' type='image/x-icon' href='" +html-head-root "images/favicon.jpg'/>"
+   "<link rel='icon' type='image/x-icon' href='" +publish-root "/images/favicon.jpg'/>"
    "<meta name='viewport' content='width=device-width, initial-scale=1'>"
    "<link rel='stylesheet' href='https://code.cdn.mozilla.net/fonts/fira.css'>"
-   "<link rel='stylesheet' href='" +html-head-root "css/site.css' type='text/css'/>"
-   "<link rel='stylesheet' href='" +html-head-root "css/custom.css' type='text/css'/>"
-   "<link rel='stylesheet' href='" +html-head-root "css/syntax-coloring.css' type='text/css'/>"))
+   "<link rel='stylesheet' href='" +publish-root "/css/site.css' type='text/css'/>"
+   "<link rel='stylesheet' href='" +publish-root "/css/custom.css' type='text/css'/>"
+   "<link rel='stylesheet' href='" +publish-root "/css/syntax-coloring.css' type='text/css'/>"))
 
 (defun onelevel/website-html-preamble (plist)
   "PLIST: An entry."
@@ -75,22 +67,14 @@
                                (org-export-get-date plist this-date-format)
                                (car (plist-get plist :author)))))
   ;; Preamble
-  (if '+publish-as-user
-      (with-temp-buffer
-        (insert-file-contents "../html-templates/local-preamble.html") (buffer-string))
-    (with-temp-buffer
-      (insert-file-contents "../html-templates/preamble.html") (buffer-string))
-    )
-  )
+  (with-temp-buffer
+    (insert-file-contents "../html-templates/preamble.html") (buffer-string)))
 
 (defun onelevel/website-html-postamble (plist)
   "PLIST."
   (concat (format
-           (if (boundp '+publish-as-user)
-               (with-temp-buffer
-                 (insert-file-contents "../html-templates/local-postamble.html") (buffer-string))
-             (with-temp-buffer
-               (insert-file-contents "../html-templates/postamble.html") (buffer-string)))
+           (with-temp-buffer
+             (insert-file-contents "../html-templates/postamble.html") (buffer-string))
            (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
 (defun root/website-html-preamble (plist)
@@ -101,22 +85,14 @@
                                (org-export-get-date plist this-date-format)
                                (car (plist-get plist :author)))))
   ;; Preamble
-  (if (boundp '+publish-as-user)
-      (with-temp-buffer
-        (insert-file-contents "html-templates/local-preamble.html") (buffer-string))
-    (with-temp-buffer
-      (insert-file-contents "html-templates/preamble.html") (buffer-string))
-    )
-  )
+  (with-temp-buffer
+    (insert-file-contents "html-templates/preamble.html") (buffer-string)))
 
 (defun root/website-html-postamble (plist)
   "PLIST."
   (concat (format
-           (if (boundp '+publish-as-user)
-               (with-temp-buffer
-                 (insert-file-contents "html-templates/local-postamble.html") (buffer-string))
-             (with-temp-buffer
-               (insert-file-contents "html-templates/postamble.html") (buffer-string)))
+           (with-temp-buffer
+             (insert-file-contents "html-templates/postamble.html") (buffer-string))
            (format-time-string this-date-format (plist-get plist :time)) (plist-get plist :creator))))
 
 (defvar site-attachments
@@ -141,11 +117,6 @@ PROJECT: `posts in this case."
                                      (org-publish-find-date entry project))))
         ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
         (t entry)))
-
-
-(setq +publish-root (if (boundp '+publish-as-user)
-                          (concat "/~" user-login-name "/")
-                        "/"))
 
 (defun me/org-reveal-publish-to-html (plist filename pub-dir)
   "Publish an org file to reveal.js HTML Presentation.
@@ -241,8 +212,8 @@ publishing directory. Returns output file name."
         ("rss"
          :base-directory "posts"
          :base-extension "org"
-         :html-link-home "https://alexforsale.github.io/"
-         :rss-link-home "https://alexforsale.github.io/"
+         :html-link-home ,+publish-root
+         :rss-link-home ,+publish-root
          :html-link-use-abs-url t
          :rss-extension "xml"
          :publishing-directory "./public"
