@@ -58,9 +58,9 @@
 <header>
 <h1 class="title">Common Lisp</h1>
 <p class="subtitle" role="doc-subtitle">Published on Mar 20, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-org0849133" class="outline-2">
-<h2 id="org0849133"><span class="done DONE">DONE</span> Day One&#xa0;&#xa0;&#xa0;<span class="tag"><span class="clisp">clisp</span></span></h2>
-<div class="outline-text-2" id="text-org0849133">
+</header><section id="outline-container-org66816cb" class="outline-2">
+<h2 id="org66816cb"><span class="done DONE">DONE</span> Day One&#xa0;&#xa0;&#xa0;<span class="tag"><span class="clisp">clisp</span></span></h2>
+<div class="outline-text-2" id="text-org66816cb">
 <pre class="example">
 header-args: :results verbatim :exports both
 </pre>
@@ -68,9 +68,9 @@ header-args: :results verbatim :exports both
 <li>State &ldquo;DONE&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 00:40]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-org93e5b6a" class="outline-3">
-<h3 id="org93e5b6a">Getting Started&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sbcl">sbcl</span></span></h3>
-<div class="outline-text-3" id="text-org93e5b6a">
+<div id="outline-container-org3e06755" class="outline-3">
+<h3 id="org3e06755">Getting Started&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sbcl">sbcl</span></span></h3>
+<div class="outline-text-3" id="text-org3e06755">
 <ul class="org-ul">
 <li>Done</li>
 </ul>
@@ -79,41 +79,41 @@ header-args: :results verbatim :exports both
 </p>
 </div>
 </div>
-<div id="outline-container-orgf1838dc" class="outline-3">
-<h3 id="orgf1838dc">SBCL REPL</h3>
-<div class="outline-text-3" id="text-orgf1838dc">
+<div id="outline-container-org709c9f5" class="outline-3">
+<h3 id="org709c9f5">SBCL REPL</h3>
+<div class="outline-text-3" id="text-org709c9f5">
 <p>
 Stands for <b>READ</b>, <b>EVAL</b>, <b>PRINT</b>, <b>LOOP</b>, the interactive interpreter for <i>SBCL</i>, out of the box doesn&rsquo;t support arrow keys, also it lacks history. One option is to use <code>rlwrap</code> package. Or simply just use <code>Emacs</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-orgde67f1c" class="outline-3">
-<h3 id="orgde67f1c">Libraries</h3>
-<div class="outline-text-3" id="text-orgde67f1c">
+<div id="outline-container-orge5df13b" class="outline-3">
+<h3 id="orge5df13b">Libraries</h3>
+<div class="outline-text-3" id="text-orge5df13b">
 <p>
 Many of the libraries are documented here:
 </p>
 </div>
-<div id="outline-container-org9d13d6b" class="outline-4">
-<h4 id="org9d13d6b"><a href="https://quickdocs.org/">quickdocs</a></h4>
+<div id="outline-container-org8b50564" class="outline-4">
+<h4 id="org8b50564"><a href="https://quickdocs.org/">quickdocs</a></h4>
 </div>
-<div id="outline-container-org937c279" class="outline-4">
-<h4 id="org937c279"><a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a></h4>
+<div id="outline-container-org4b991c5" class="outline-4">
+<h4 id="org4b991c5"><a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a></h4>
 </div>
-<div id="outline-container-org9e1a551" class="outline-4">
-<h4 id="org9e1a551"><a href="https://www.cliki.net/">cliki</a></h4>
+<div id="outline-container-org08d7d68" class="outline-4">
+<h4 id="org08d7d68"><a href="https://www.cliki.net/">cliki</a></h4>
 </div>
 </div>
-<div id="outline-container-orgf5a791d" class="outline-3">
-<h3 id="orgf5a791d"><a href="https://www.quicklisp.org/beta/">Quicklisp</a></h3>
-<div class="outline-text-3" id="text-orgf5a791d">
+<div id="outline-container-orgd9e91ca" class="outline-3">
+<h3 id="orgd9e91ca"><a href="https://www.quicklisp.org/beta/">Quicklisp</a></h3>
+<div class="outline-text-3" id="text-orgd9e91ca">
 <p>
 The package manager, installation is straight-forward once you have <i>sbcl</i> installed.
 </p>
 </div>
-<div id="outline-container-orgf218bc9" class="outline-4">
-<h4 id="orgf218bc9">Installing packages via quicklisp</h4>
-<div class="outline-text-4" id="text-orgf218bc9">
+<div id="outline-container-orgde69097" class="outline-4">
+<h4 id="orgde69097">Installing packages via quicklisp</h4>
+<div class="outline-text-4" id="text-orgde69097">
 <p>
 For example if we want to install <code>cl-ppcre</code> (regular expression package):
 </p>
@@ -141,9 +141,9 @@ T
 </pre>
 </div>
 </div>
-<div id="outline-container-org5110297" class="outline-4">
-<h4 id="org5110297">Configuration management</h4>
-<div class="outline-text-4" id="text-org5110297">
+<div id="outline-container-org551c78a" class="outline-4">
+<h4 id="org551c78a">Configuration management</h4>
+<div class="outline-text-4" id="text-org551c78a">
 <p>
 These are the locations which the interpreter will look for libraries:
 </p>
@@ -175,13 +175,13 @@ Also, libraries installed here will be available for every projects:
 </div>
 </div>
 </div>
-<div id="outline-container-orgac30bc2" class="outline-3">
-<h3 id="orgac30bc2">The basics</h3>
-<div class="outline-text-3" id="text-orgac30bc2">
+<div id="outline-container-org4ab5e13" class="outline-3">
+<h3 id="org4ab5e13">The basics</h3>
+<div class="outline-text-3" id="text-org4ab5e13">
 </div>
-<div id="outline-container-orge24d4c2" class="outline-4">
-<h4 id="orge24d4c2">Expressions</h4>
-<div class="outline-text-4" id="text-orge24d4c2">
+<div id="outline-container-orgb7d9e86" class="outline-4">
+<h4 id="orgb7d9e86">Expressions</h4>
+<div class="outline-text-4" id="text-orgb7d9e86">
 <p>
 One of the simple <i>lisp</i> expression that can be read, evaluated, and printed is a number. In <i>lisp</i>, anything within a parentheses is a list, for example:
 </p>
@@ -201,9 +201,9 @@ is a list of three elements, the symbol <code>+</code>, and the number <code>2</
 </div>
 </div>
 </section>
-<section id="outline-container-org315a164" class="outline-2">
-<h2 id="org315a164"><span class="done DONE">DONE</span> Day Two</h2>
-<div class="outline-text-2" id="text-org315a164">
+<section id="outline-container-org0d59706" class="outline-2">
+<h2 id="org0d59706"><span class="done DONE">DONE</span> Day Two</h2>
+<div class="outline-text-2" id="text-org0d59706">
 <ul class="org-ul">
 <li>State &ldquo;DONE&rdquo;       from &ldquo;PROG&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 15:16]</span></span></li>
 </ul>
@@ -211,9 +211,9 @@ is a list of three elements, the symbol <code>+</code>, and the number <code>2</
 <li>State &ldquo;PROG&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 14:50]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-org2ed3e8a" class="outline-3">
-<h3 id="org2ed3e8a">Data Types</h3>
-<div class="outline-text-3" id="text-org2ed3e8a">
+<div id="outline-container-org7797028" class="outline-3">
+<h3 id="org7797028">Data Types</h3>
+<div class="outline-text-3" id="text-org7797028">
 <p>
 In <i>lisp</i> it&rsquo;s data object that are typed, not variables. Any variable can have any Lisp object as its value.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
 Here are brief descriptions of various Common Lisp data types.
@@ -249,7 +249,7 @@ Here are brief descriptions of various Common Lisp data types.
 </div></main>
 <footer id="postamble" class="status">
 <div class='footer'>
-  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/alexforsale.github.io'>Source</a> <br>
+  Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/blog'>Source</a> <br>
   GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
   Last updated on May 01, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
   <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
