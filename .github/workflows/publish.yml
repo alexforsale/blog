@@ -15,7 +15,7 @@ jobs:
         run: sudo apt install emacs-nox --yes
 
       - name: Build the site
-        run: ROOT_URL="https://alexforsale.github.io" make
+        run: make "https://alexforsale.github.io"
 
       - name: Publish generated content to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3

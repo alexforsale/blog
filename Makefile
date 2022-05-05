@@ -29,7 +29,7 @@ all: publish
 
 publish: publish.el
 	@echo "Publishing..."
-	ROOT_URL=${ROOT_URL:-"https://java281.dynv6.net"} ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
+	ROOT_URL=${1:-"https://java281.dynv6.net"} ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
 
 publish_local: publish.el
 	@echo "Publishing to server"
