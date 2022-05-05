@@ -2735,6 +2735,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                       args)))
        (require 'vertico-directory)
        (add-hook 'rfn-shadow-update-overlay-hook #'vertico-directory-tidy)
+       (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
        ;; tmm-menubar
        (global-set-key [f10] #'tmm-menubar)
@@ -2754,6 +2755,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                           (propertize "» " 'face 'vertico-current)
                         "  ")
                       cand)))
+       ;; don't let vertico resize the minibuffer
+       (setq vertico-resize nil)
+       ;; increase the number of candidates to show
+       (setq vertico-count 15)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
