@@ -621,6 +621,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (customize-set-variable 'doom-modeline-minor-modes t)
        (customize-set-variable 'doom-modeline-buffer-file-name-style 'truncate-except-project)
        (add-hook 'after-init-hook 'doom-modeline-init)
+       (add-hook 'doom-modeline-mode-hook 'size-indication-mode-hook)
+       (add-hook 'doom-modeline-mode-hook 'column-number-mode-hook)
+       (when (daemonp)
+         (setq doom-modeline-icon t))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
