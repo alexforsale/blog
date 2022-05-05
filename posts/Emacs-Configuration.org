@@ -3193,16 +3193,16 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'sly))
-       ;;(require 'sly-autoloads)
+       (require 'sly-autoloads)
        (setq inferior-lisp-program "sbcl")
-       (add-hook 'emacs-lisp-mode-hook #'sly-mode)
-       (add-hook 'eval-expression-minibuffer-setup-hook #'sly--mode)
-       (add-hook 'ielm-mode-hook #'sly-mode)
-       (add-hook 'lisp-mode-hook #'sly-mode)
-       (add-hook 'sly-editing-mode #'sly-mode)
-       (add-hook 'sly-mode #'sly-mode)
-       (add-hook 'lisp-interaction-mode-hook #'sly-mode)
-       (add-hook 'scheme-mode-hook #'sly-mode)
+       ;; (add-hook 'emacs-lisp-mode-hook #'sly-mode)
+       ;; (add-hook 'eval-expression-minibuffer-setup-hook #'sly--mode)
+       ;; (add-hook 'ielm-mode-hook #'sly-mode)
+       ;; (add-hook 'lisp-mode-hook #'sly-mode)
+       ;; (add-hook 'sly-editing-mode #'sly-mode)
+       ;; (add-hook 'sly-mode #'sly-mode)
+       ;; (add-hook 'lisp-interaction-mode-hook #'sly-mode)
+       ;; (add-hook 'scheme-mode-hook #'sly-mode)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
