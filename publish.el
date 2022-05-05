@@ -205,7 +205,10 @@ PROJECT: `posts in this case."
         ("rss"
          :base-directory "posts"
          :base-extension "org"
-         :html-link-home ,+publish-root
+         :html-link-home ,(if (getenv "ROOT_URL")
+                             (concat (getenv "ROOT_URL")
+                                     +publish-root)
+                           (concat "https://java281.dynv6.net" +publish-root))
          :rss-link-home ,(if (getenv "ROOT_URL")
                              (concat (getenv "ROOT_URL")
                                      +publish-root)
