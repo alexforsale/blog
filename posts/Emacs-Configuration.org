@@ -2984,6 +2984,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (when (featurep 'consult)
          (require 'embark-consult)
          (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+       (when (featurep 'which-key)
+         (setq which-key-use-C-h-commands nil
+               prefix-help-command #'embark-prefix-help-command))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
