@@ -8,7 +8,7 @@
 # Local testing:
 # `python -m http.server --directory=public/`          <-- (The '--directory' flag is available from Python 3.7)
 
-.PHONY: all publish publish_local
+.PHONY: all publish publish-github publish_local
 
 EMACS =
 
@@ -29,7 +29,11 @@ all: publish
 
 publish: publish.el
 	@echo "Publishing..."
-	ROOT_URL=${1:-"https://java281.dynv6.net"} ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
+	 ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
+
+publish-github: publish.el
+	@echo "Publishing..."
+	ROOT_URL=${"https://alexforsale.github.io"} ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
 
 publish_local: publish.el
 	@echo "Publishing to server"
