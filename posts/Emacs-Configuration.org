@@ -1259,6 +1259,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (yas-global-mode 1)
        (global-set-key (kbd "C-c y i") 'yas-insert-snippet)
        (global-set-key (kbd "C-c y d") 'yas-describe-tables)
+       (when (featurep 'consult)
+         (straight-use-package 'consult-yasnippet))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -2058,7 +2060,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'org-roam)
-         (straight-use-package 'org-roam-ui))
+         (straight-use-package 'org-roam-ui)
+         (when (featurep 'consult)
+           (straight-use-package '(consult-org-roam :type git
+                                                    :host github
+                                                    :repo "jgru/consult-org-roam"))))
        (customize-set-variable 'org-roam-db-location (expand-file-name "org-roam.db" +emacs-data-dir))
        (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
        (setq org-roam-directory
@@ -2121,6 +2127,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                                "%(format-time-string \"%Y-%m-%d--journal.org\" (current-time) t)"
                                "#+title: Journal %<%Y-%m-%d>\n#+date: %<%Y-%m-%d>\n#+journal: private journal\n\n\n")
                       :unnarrowed t))))
+       (when (featurep 'consult)
+         (require 'consult-org-roam)
+         (consult-org-roam-mode 1))
      #+end_src
 ***** Keybindings
       #+begin_src emacs-lisp
@@ -2130,6 +2139,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (global-set-key (kbd "C-c r b") 'org-roam-buffer-toggle)
         (global-set-key (kbd "C-c r B") 'org-roam-buffer-display-dedicated)
         (global-set-key (kbd "C-c r s") 'org-roam-db-sync)
+        (when (featurep 'consult-org-roam)
+          (global-set-key (kbd "C-c r e") 'consult-org-roam-file-find)
+          (global-set-key (kbd "C-c r x") 'consult-org-roam-backlinks)
+          (global-set-key (kbd "C-c r S") 'consult-org-roam-search))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -2349,10 +2362,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'flycheck))
-       (when (featurep 'consult)
-           (straight-use-package 'consult-flycheck))
+         (straight-use-package 'flycheck)
+         (when (featurep 'consult)
+           (straight-use-package 'consult-flycheck)))
        (global-flycheck-mode)
+       (when (featurep 'consult)
+         (require 'consult-flycheck))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -2376,6 +2391,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (customize-set-variable 'projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" +emacs-data-dir))
        (projectile-mode +1)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+       (when (featurep 'consult)
+         (straight-use-package '(consult-projectile :type git
+                                                    :host gitlab
+                                                    :repo "OlMon/consult-projectile"
+                                                    :branch "master")))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -2420,6 +2440,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (add-hook 'markdown-mode-hook #'lsp-deferred)
        (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
        (add-hook 'lsp-completion-mode-hook #'+config/lsp-mode-setup-completion)
+
+       (when (featurep 'consult)
+         (straight-use-package 'consult-lsp)
+         (define-key lsp-mode-map [remap xref-find-apropos] #'consult-lsp-symbols))
      #+end_src
 ***** python deps
       lsp server.
@@ -2514,6 +2538,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
        (customize-set-variable 'notmuch-search-oldest-first nil)
        (global-set-key (kbd "C-c M") 'notmuch)
+       (when (featurep 'consult)
+         (straight-use-package 'consult-notmuch)
+         (require 'consult-notmuch))
      #+end_src
      This is the default saved-searches, for reference.
      #+begin_src emacs-lisp :tangle no
@@ -2828,7 +2855,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'consult))
+         (straight-use-package 'consult)
+         (straight-use-package 'consult-dir))
+
        (require 'consult)
        (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
        (advice-add #'register-preview :override #'consult-register-window)
@@ -2846,31 +2875,37 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         consult--source-project-recent-file
         :preview-key (kbd "M-."))
        (setq consult-narrow-key "<") ;; (kbd "C-+")
+       ;; remap
+       (global-set-key [remap apropos-command] #'consult-apropos)
+       (global-set-key [remap bookmark-jump] #'consult-bookmark)
+       (global-set-key [remap goto-line] #'consult-goto-line)
+       (global-set-key [remap imenu] #'consult-imenu)
+       (global-set-key [remap locate] #'consult-locate)
+       (global-set-key [remap load-theme] #'consult-theme)
+       (global-set-key [remap man] #'consult-man)
+       (global-set-key [remap recentf-open-files] #'consult-recent-file)
+       (global-set-key [remap repeat-complex-command] #'consult-complex-command)
+       (global-set-key [remap project-switch-to-buffer] #'consult-project-buffer)
+       (global-set-key [remap switch-to-buffer] #'consult-buffer)
+       (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
+       (global-set-key [remap switch-to-buffer-other-frame] #'consult-buffer-other-frame)
+       (global-set-key [remap yank-pop] #'consult-yank-pop)
+
+       (define-key isearch-mode-map [remap isearch-edit-string] #'consult-isearch-history)
+
        (global-set-key (kbd "C-c h") 'consult-history)
        (global-set-key (kbd "C-c m") 'consult-mode-command)
        (global-set-key (kbd "C-c k") 'consult-kmacro)
-       ;; C-x bindings (ctl-x-map)
-       (global-set-key (kbd "C-x M-:") 'consult-complex-command) ;; orig. repeat-complex-command
-       ;;(global-set-key (kbd "C-x b") 'consult-buffer) ;; orig. switch-to-buffer
-       (global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-       (global-set-key (kbd "C-x 5 b") 'consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-       (global-set-key (kbd "C-x r b") 'consult-bookmark)            ;; orig. bookmark-jump
-       (global-set-key (kbd "C-x p b") 'consult-project-buffer)      ;; orig. project-switch-to-buffer
        ;; Custom M-# bindings for fast register access
        (global-set-key (kbd "M-#") 'consult-register-load)
        (global-set-key (kbd "M-'") 'consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
        (global-set-key (kbd "C-M-#") 'consult-register)
-       ;; Other custom bindings
-       (global-set-key (kbd "M-y") 'consult-yank-pop)                ;; orig. yank-pop
-       (global-set-key (kbd "<help> a") 'consult-apropos)            ;; orig. apropos-command
        ;; M-g bindings (goto-map)
        (global-set-key (kbd "M-g e") 'consult-compile-error)
        (when (featurep 'flymake)
          (global-set-key (kbd "M-g f") 'consult-flymake))               ;; Alternative: consult-flycheck
        (when (featurep 'flycheck)
          (global-set-key (kbd "M-g f") 'consult-flycheck))
-       (global-set-key (kbd "M-g g") 'consult-goto-line)             ;; orig. goto-line
-       (global-set-key (kbd "M-g M-g") 'consult-goto-line)           ;; orig. goto-line
        (global-set-key (kbd "M-g o") 'consult-outline)               ;; Alternative: consult-org-heading
        ;;(global-set-key (kbd "M-g m") 'consult-mark) ;;conflict with telega
        (global-set-key (kbd "M-g k") 'consult-global-mark)
@@ -2889,11 +2924,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (global-set-key (kbd "M-s u") 'consult-focus-lines)
        ;; Isearch integration
        (global-set-key (kbd "M-s e") 'consult-isearch-history)
-       (define-key isearch-mode-map (kbd "M-e") #'consult-isearch-history)         ;; orig. isearch-edit-string
-       (define-key isearch-mode-map (kbd "M-s e") #'consult-isearch-history)       ;; orig. isearch-edit-string
-       (define-key isearch-mode-map (kbd "M-s l") #'consult-line)                  ;; needed by consult-line to detect isearch
-       (define-key isearch-mode-map (kbd "M-s L") #'consult-line-multi)           ;; needed by consult-line to detect isearch
+       (define-key isearch-mode-map (kbd "M-s l") #'consult-line) ;; needed by consult-line to detect isearch
+       (define-key isearch-mode-map (kbd "M-s L") #'consult-line-multi) ;; needed by consult-line to detect isearch
 
+       (global-set-key [remap list-directory] #'consult-dir)
+       (cond ((featurep 'vertico)
+              (define-key vertico-map (kbd "C-x C-d") 'consult-dir)
+              (define-key vertico-map (kbd "C-x C-j") 'consult-dir-jump-file))
+             ((featurep 'selectrum)
+              (define-key selectrum-minibuffer--map (kbd "C-x C-d") 'consult-dir)
+              (define-key selectrum-minibuffer-map (kbd "C-x C-j") 'consult-dir-jump-file)))
+       (define-key minibuffer-local-completion-map (kbd "C-x C-d") 'consult-dir)
+       (define-key minibuffer-local-completion-map (kbd "C-x C-j") 'consult-dir-jump-file)
        (cond
         ((featurep 'projectile)
          (autoload 'projectile-project-root "projectile")
@@ -2902,6 +2944,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (setq consult-project-root-function #'consult--project-root-default-function))
         ((featurep 'vc)
          (setq consult-project-root-function #'vc-root-dir)))
+
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
