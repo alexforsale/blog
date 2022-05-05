@@ -126,6 +126,12 @@ publishing directory. Returns output file name."
   (let ((org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
     (org-publish-org-to 'reveal filename ".html" plist pub-dir)))
 
+(setq +root-url
+      (if (getenv "ROOT_URL")
+          (getenv "ROOT_URL")
+        "https://java281.dynv6.net"))
+(setq +root-rss-url (concat +root-url +publish-root))
+
 (setq org-publish-project-alist
       `(("posts"
          :base-directory "posts/"
@@ -212,8 +218,8 @@ publishing directory. Returns output file name."
         ("rss"
          :base-directory "posts"
          :base-extension "org"
-         :html-link-home ,+publish-root
-         :rss-link-home ,+publish-root
+         :html-link-home ,+root-rss-url
+         :rss-link-home ,+root-rss-url
          :html-link-use-abs-url t
          :rss-extension "xml"
          :publishing-directory "./public"
