@@ -2781,7 +2781,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (unless +config/is-guix-system
          (straight-use-package 'orderless))
        (require 'orderless)
-       (setq completion-styles '(orderless)
+       (setq completion-styles '(basic partial-completion orderless)
              completion-category-defaults nil
              completion-category-overrides '((file (styles basic partial-completion))))
      #+end_src
