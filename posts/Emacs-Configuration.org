@@ -1004,6 +1004,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (straight-use-package 'hl-todo)
        (require 'hl-todo)
        (global-hl-todo-mode)
+       (add-hook 'prog-mode-hook hl-todo-mode-hook)
+       (add-hook 'yaml-mode-hook hl-todo-mode-hook)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
