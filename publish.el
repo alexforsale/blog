@@ -118,19 +118,6 @@ PROJECT: `posts in this case."
         ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
         (t entry)))
 
-(defun me/org-reveal-publish-to-html (plist filename pub-dir)
-  "Publish an org file to reveal.js HTML Presentation.
-FILENAME is the filename of the Org file to be published.  PLIST
-is the property list for the given project.  PUB-DIR is the
-publishing directory. Returns output file name."
-  (let ((org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
-    (org-publish-org-to 'reveal filename ".html" plist pub-dir)))
-
-(setq +root-url
-      (if (getenv "ROOT_URL")
-          (getenv "ROOT_URL")
-        "https://java281.dynv6.net"))
-(setq +root-rss-url (concat +root-url +publish-root))
 
 (setq org-publish-project-alist
       `(("posts"
@@ -219,7 +206,10 @@ publishing directory. Returns output file name."
          :base-directory "posts"
          :base-extension "org"
          :html-link-home ,+publish-root
-         :rss-link-home ,+root-rss-url
+         :rss-link-home ,(if (getenv "ROOT_URL")
+                             (concat (getenv "ROOT_URL")
+                                     +publish-root)
+                           (concat "https://java281.dynv6.net" +publish-root))
          :html-link-use-abs-url t
          :rss-extension "xml"
          :publishing-directory "./public"

@@ -33,7 +33,7 @@ publish: publish.el
 
 publish-github: publish.el
 	@echo "Publishing..."
-	ROOT_URL=${"https://alexforsale.github.io"} ${EMACS} --batch --no-init --load publish.el --eval "(org-publish-all :force)"
+	${EMACS} --batch --no-init --eval "(setenv ROOT_URL \"https://alexforsale.github.io\")" --load publish.el --eval "(org-publish-all :force)"
 
 publish_local: publish.el
 	@echo "Publishing to server"
