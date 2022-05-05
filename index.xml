@@ -10,18 +10,18 @@
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
   <title>Blog Index</title>
-  <atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
-  <link>/blog</link>
+  <atom:link href="https://alexforsale.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+  <link>https://alexforsale.github.io/blog</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 01 May 2022 20:50:42 +0000</pubDate>
-  <lastBuildDate>Sun, 01 May 2022 20:50:42 +0000</lastBuildDate>
+  <pubDate>Thu, 05 May 2022 17:12:42 +0000</pubDate>
+  <lastBuildDate>Thu, 05 May 2022 17:12:42 +0000</lastBuildDate>
   <generator>Emacs 26.3 Org-mode 9.5.3</generator>
   <webMaster>alexforsale@yahoo.com (Kristian Alexander P)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
     <title>Blog Index</title>
-    <link>/blog</link>
+    <link>https://alexforsale.github.io/blog</link>
   </image>
 
   <ul class="org-ul">
