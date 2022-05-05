@@ -1137,6 +1137,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Use "y" and "n" to confirm/negate prompt instead of "yes" and "no".
     #+begin_src emacs-lisp
       (fset 'yes-or-no-p 'y-or-n-p)
+      (setq y-or-n-p-use-read-key t)
     #+end_src
 *** Don't save duplicates in =kill-ring=
     #+begin_src emacs-lisp
