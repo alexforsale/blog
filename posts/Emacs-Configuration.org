@@ -2831,10 +2831,15 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'marginalia))
+         (straight-use-package 'marginalia)
+         (when (featurep 'config-all-the-icons)
+           (straight-use-package 'all-the-icons-completion)))
        (require 'marginalia)
        (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
        (marginalia-mode 1)
+       (when (featurep 'config-all-the-icons)
+         (all-the-icons-completion-mode)
+         (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
