@@ -3008,7 +3008,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
-         (straight-use-package 'corfu))
+         (straight-use-package '(corfu :files (:defaults "extensions/*")
+                                       :includes (corfu-history
+                                                  corfu-indexed
+                                                  corfu-info
+                                                  corfu-quick))))
        (require 'corfu)
        ;;(customize-set-variable 'corfu-cycle t)
        (customize-set-variable 'corfu-auto t)
@@ -3048,7 +3052,23 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (define-key corfu-map [remap move-beginning-of-line] #'+corfu-beginning-of-prompt)
        (define-key corfu-map [remap move-end-of-line] #'+corfu-end-of-prompt)
 
-       (corfu-global-mode)
+       (global-corfu-mode)
+       (when (featurep' config-all-the-icons)
+         (straight-use-package 'kind-icon)
+         (require 'kind-icon)
+         (customize-set-variable 'kind-icon-default-face 'corfu-default)
+         (add-hook 'my-completion-ui-mode-hook
+                   (lambda ()
+                     (setq completion-in-region-function
+                           (kind-icon-enhance-completion
+                            completion-in-region-function)))))
+       (straight-use-package '(corfu-doc
+                               :type git
+                               :host github
+                               :repo "galeo/corfu-doc"))
+       (add-hook 'corfu-mode-hook #'corfu-doc-mode)
+       (require 'corfu-history)
+       (add-to-list 'savehist-additional-variables 'corfu-history)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3072,6 +3092,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'dabbrev)
        (global-set-key (kbd "M-/") 'dabbrev-completion)
        (global-set-key (kbd "C-M-/") 'dabbrev-expand)
+       (customize-set-variable 'dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
