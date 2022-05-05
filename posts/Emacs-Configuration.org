@@ -1043,7 +1043,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (diminish 'desktop-environment-mode)
          (diminish 'projectile-mode)
          (diminish 'paredit-mode)
-         (diminish 'theme-magic-export-theme-mode))
+         (diminish 'theme-magic-export-theme-mode)
+         (diminish 'git-gutter-mode))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
