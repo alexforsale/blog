@@ -147,7 +147,7 @@ publishing directory. Returns output file name."
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
          :html-link-home ,+publish-root
-         :html-link-up "/"
+         :html-link-up ,+publish-root
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
@@ -170,7 +170,7 @@ publishing directory. Returns output file name."
          :sitemap-style list
          :sitemap-sort-files anti-chronologically
          :html-link-home ,+publish-root
-         :html-link-up "/"
+         :html-link-up ,+publish-root
          :html-head-include-scripts t
          :html-head-include-default-style nil
          :html-head ,me/website-html-head
@@ -187,7 +187,7 @@ publishing directory. Returns output file name."
          :publishing-function org-html-publish-to-html
          :publishing-directory "public/"
          :html-link-home ,+publish-root
-         :html-link-up "/"
+         :html-link-up ,+publish-root
          :auto-sitemap nil
          :html-head-include-scripts t
          :html-head-include-default-style nil
@@ -218,7 +218,7 @@ publishing directory. Returns output file name."
         ("rss"
          :base-directory "posts"
          :base-extension "org"
-         :html-link-home ,+root-rss-url
+         :html-link-home ,+publish-root
          :rss-link-home ,+root-rss-url
          :html-link-use-abs-url t
          :rss-extension "xml"
