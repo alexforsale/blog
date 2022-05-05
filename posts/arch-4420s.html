@@ -62,14 +62,14 @@
 This is how I setup my <i>archlinux</i> on <a href="https://support.hp.com/id-en/document/c02052909">HP Probook 4420s</a>:
 </p>
 
-<figure id="org433a19f">
+<figure id="org73a060d">
 <a href="file:///home/runner/Documents/google-drive/org/blog/images/posts/probook-4420s.jpg" class="center no-border"><img src="../images/posts/probook-4420s.jpg" alt="probook-4420s.jpg" class="center no-border"></a>
 
 </figure>
 
-<section id="outline-container-org3692a06" class="outline-2">
-<h2 id="org3692a06">Partitions</h2>
-<div class="outline-text-2" id="text-org3692a06">
+<section id="outline-container-org252fc03" class="outline-2">
+<h2 id="org252fc03">Partitions</h2>
+<div class="outline-text-2" id="text-org252fc03">
 <pre class="example">
 header-args: :exports both
 </pre>
@@ -104,9 +104,9 @@ sda      8:0    0 232.9G  0 disk
 </pre>
 </div>
 
-<div id="outline-container-org2e7c2ea" class="outline-3">
-<h3 id="org2e7c2ea">btrfs subvolumes</h3>
-<div class="outline-text-3" id="text-org2e7c2ea">
+<div id="outline-container-orgf3e5dc4" class="outline-3">
+<h3 id="orgf3e5dc4">btrfs subvolumes</h3>
+<div class="outline-text-3" id="text-orgf3e5dc4">
 <div class="org-src-container">
 <pre class="src src-sh">sudo btrfs subvolume list /
 </pre>
@@ -127,9 +127,9 @@ ID 273 gen 89919 top level 271 path var/lib/machines
 </pre>
 </div>
 </div>
-<div id="outline-container-org2c4e3b2" class="outline-3">
-<h3 id="org2c4e3b2">Bootloader</h3>
-<div class="outline-text-3" id="text-org2c4e3b2">
+<div id="outline-container-orgb1de19a" class="outline-3">
+<h3 id="orgb1de19a">Bootloader</h3>
+<div class="outline-text-3" id="text-orgb1de19a">
 <p>
 I&rsquo;m using <a href="https://wiki.archlinux.org/title/REFInd">refind</a>, with no modification on the main configuration(<code>refind.conf</code>), but since I&rsquo;m mounting the <i>EFI</i> partition on <code>/efi</code> and the <code>/boot</code> partition is actualy a <i>bind mount</i> to <code>/efi/EFI/arch/</code>, the only modification needed is in the <code>refind_linux.conf</code>, which basically points to where my <i>root</i> partition is.
 </p>
@@ -149,9 +149,9 @@ The main reason why I choose <i>refind</i> is convenience, I often install other
 </div>
 </div>
 </section>
-<section id="outline-container-orgd842428" class="outline-2">
-<h2 id="orgd842428">Archlinux packages</h2>
-<div class="outline-text-2" id="text-orgd842428">
+<section id="outline-container-org237b42f" class="outline-2">
+<h2 id="org237b42f">Archlinux packages</h2>
+<div class="outline-text-2" id="text-org237b42f">
 <pre class="example">
 header-args: :tangle no :exports both
 </pre>
@@ -159,9 +159,9 @@ header-args: :tangle no :exports both
 These are the packages I&rsquo;ve installed apart from the obvious(such as filesystem packages, networking packages etc) of course.
 </p>
 </div>
-<div id="outline-container-org71103a0" class="outline-3">
-<h3 id="org71103a0">essential packages</h3>
-<div class="outline-text-3" id="text-org71103a0">
+<div id="outline-container-org9816c16" class="outline-3">
+<h3 id="org9816c16">essential packages</h3>
+<div class="outline-text-3" id="text-org9816c16">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed wget screen emacs git htop bash-completion
 </pre>
@@ -174,9 +174,9 @@ These are the packages I&rsquo;ve installed apart from the obvious(such as files
 <dt>bash-completion</dt><dd><code>TAB</code>-ing is like a bad habit for me.</dd>
 </dl>
 </div>
-<div id="outline-container-orgbc78541" class="outline-4">
-<h4 id="orgbc78541">emacs packages</h4>
-<div class="outline-text-4" id="text-orgbc78541">
+<div id="outline-container-org02bf7d4" class="outline-4">
+<h4 id="org02bf7d4">emacs packages</h4>
+<div class="outline-text-4" id="text-org02bf7d4">
 <p>
 <i>Emacs</i> packages usually handled by it&rsquo;s own package manager, but some of the packages also needed other functionalities provided by the OS:
 </p>
@@ -191,9 +191,9 @@ These are the packages I&rsquo;ve installed apart from the obvious(such as files
 </div>
 </div>
 </div>
-<div id="outline-container-orgfde2d44" class="outline-3">
-<h3 id="orgfde2d44">xorg</h3>
-<div class="outline-text-3" id="text-orgfde2d44">
+<div id="outline-container-org6fd682b" class="outline-3">
+<h3 id="org6fd682b">xorg</h3>
+<div class="outline-text-3" id="text-org6fd682b">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed xorg
 </pre>
@@ -202,9 +202,9 @@ These are the packages I&rsquo;ve installed apart from the obvious(such as files
 In <i>arch</i>, <code>xorg</code> is a package group, although I can choose to install individual packages manually, eventually I&rsquo;ll installed them all.
 </p>
 </div>
-<div id="outline-container-org29a080d" class="outline-4">
-<h4 id="org29a080d">video driver</h4>
-<div class="outline-text-4" id="text-org29a080d">
+<div id="outline-container-orgd3d8cbb" class="outline-4">
+<h4 id="orgd3d8cbb">video driver</h4>
+<div class="outline-text-4" id="text-orgd3d8cbb">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed xf86-video-intel
 </pre>
@@ -214,9 +214,9 @@ Usually using <i>kernel modesettings</i> method is better. But using this packag
 </p>
 </div>
 </div>
-<div id="outline-container-org3d72ff3" class="outline-4">
-<h4 id="org3d72ff3">input driver</h4>
-<div class="outline-text-4" id="text-org3d72ff3">
+<div id="outline-container-org7d3f78b" class="outline-4">
+<h4 id="org7d3f78b">input driver</h4>
+<div class="outline-text-4" id="text-org7d3f78b">
 <div class="org-src-container">
 <pre class="src src-sh">cat /etc/X11/xorg.conf.d/30-touchpad.conf
 </pre>
@@ -226,9 +226,9 @@ The driver itself already installed(<code>xf86-input-libinput</code>) by default
 </p>
 </div>
 </div>
-<div id="outline-container-org3961548" class="outline-4">
-<h4 id="org3961548">xinit</h4>
-<div class="outline-text-4" id="text-org3961548">
+<div id="outline-container-orgffd1e44" class="outline-4">
+<h4 id="orgffd1e44">xinit</h4>
+<div class="outline-text-4" id="text-orgffd1e44">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed xorg-xinit
 </pre>
@@ -238,17 +238,17 @@ It&rsquo;s not needed when using <i>display manager</i> (lightdm etc).
 </p>
 </div>
 </div>
-<div id="outline-container-org1505b96" class="outline-4">
-<h4 id="org1505b96">additional packages</h4>
-<div class="outline-text-4" id="text-org1505b96">
+<div id="outline-container-org38b028f" class="outline-4">
+<h4 id="org38b028f">additional packages</h4>
+<div class="outline-text-4" id="text-org38b028f">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed bash-completion  pass pass-otp sbcl
 </pre>
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="orgfd2fdd0"></a>Networking<br>
-<div class="outline-text-5" id="text-orgfd2fdd0">
+<li><a id="orge3204ae"></a>Networking<br>
+<div class="outline-text-5" id="text-orge3204ae">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed blueman network-manager-applet
 </pre>
@@ -259,32 +259,32 @@ It&rsquo;s not needed when using <i>display manager</i> (lightdm etc).
 </dl>
 </div>
 </li>
-<li><a id="org2909a4f"></a>mail packages<br>
-<div class="outline-text-5" id="text-org2909a4f">
+<li><a id="org9f074d8"></a>mail packages<br>
+<div class="outline-text-5" id="text-org9f074d8">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed notmuch isync goimapnotify msmtp msmtp-mta
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgde860ee"></a>multimedia<br>
-<div class="outline-text-5" id="text-orgde860ee">
+<li><a id="orge67f2e2"></a>multimedia<br>
+<div class="outline-text-5" id="text-orge67f2e2">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed beets mpv pulseaudio pulseaudio-{alsa,bluetooth,equalizer}
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org845175f"></a>fonts<br>
-<div class="outline-text-5" id="text-org845175f">
+<li><a id="orgf9a134f"></a>fonts<br>
+<div class="outline-text-5" id="text-orgf9a134f">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed ttf-fantasque-sans-mono gnu-free-fonts bdf-unifont ttf-fontawesome noto-fonts-emoji ttf-bitstream-vera adobe-source-{code-pro,sans,serif}-fonts
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgf598d9d"></a>desktop packages<br>
-<div class="outline-text-5" id="text-orgf598d9d">
+<li><a id="org67af4e0"></a>desktop packages<br>
+<div class="outline-text-5" id="text-org67af4e0">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed xterm python-pywal feh picom dunst xsettingsd udiskie unclutter xclip capitaine-cursors papirus-icon-theme arc-gtk-theme firefox
 </pre>
@@ -302,9 +302,9 @@ It&rsquo;s not needed when using <i>display manager</i> (lightdm etc).
 </dl>
 </div>
 </li>
-<li><a id="org0a819e4"></a>setup <a href="#org1b99e4a">makepkg</a>.<br></li>
-<li><a id="org9608e70"></a>aur helper<br>
-<div class="outline-text-5" id="text-org9608e70">
+<li><a id="org776cf80"></a>setup <a href="#orgb3e77ba">makepkg</a>.<br></li>
+<li><a id="orge031b42"></a>aur helper<br>
+<div class="outline-text-5" id="text-orge031b42">
 <div class="org-src-container">
 <pre class="src src-sh">pushd /tmp
 git clone https://aur.archlinux.org/yay
@@ -315,8 +315,8 @@ popd
 </div>
 </div>
 </li>
-<li><a id="org6182f08"></a>additional packages for <i>polybar</i>.<br>
-<div class="outline-text-5" id="text-org6182f08">
+<li><a id="org8fc6385"></a>additional packages for <i>polybar</i>.<br>
+<div class="outline-text-5" id="text-org8fc6385">
 <p>
 Install these first since it&rsquo;s not explicitly required in <i>polybar</i> <i>PKGBUILD</i>.
 <i>i3-gaps</i> installed to avoid installing the standard <i>i3-wm</i>.
@@ -327,8 +327,8 @@ Install these first since it&rsquo;s not explicitly required in <i>polybar</i> <
 </div>
 </div>
 </li>
-<li><a id="org4373a46"></a>additional aur packages<br>
-<div class="outline-text-5" id="text-org4373a46">
+<li><a id="orgf3f8c0e"></a>additional aur packages<br>
+<div class="outline-text-5" id="text-orgf3f8c0e">
 <div class="org-src-container">
 <pre class="src src-sh">yay -S --noconfirm --needed polybar
 yay -S --noconfirm --needed tgs2png <span class="org-comment-delimiter"># </span><span class="org-comment">for emacs-telega</span>
@@ -337,32 +337,32 @@ yay -S --noconfirm --needed grive <span class="org-comment-delimiter"># </span><
 </div>
 </div>
 </li>
-<li><a id="org5ea87c2"></a>additional packages for grive<br>
-<div class="outline-text-5" id="text-org5ea87c2">
+<li><a id="org76e2d3d"></a>additional packages for grive<br>
+<div class="outline-text-5" id="text-org76e2d3d">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed inotify-tools cppunit
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org1bb60ad"></a>beets optional dependencies<br>
-<div class="outline-text-5" id="text-org1bb60ad">
+<li><a id="org86dcc71"></a>beets optional dependencies<br>
+<div class="outline-text-5" id="text-org86dcc71">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed chromaprint ffmpeg gst-plugins-{bad,ugly,good} gst-{libav,python} imagemagick python-{beautifulsoup4,flask,mpd2,pyacoustid,pylast,xdg,pymad}
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgef71b1a"></a>emacs desktop-environment packages<br>
-<div class="outline-text-5" id="text-orgef71b1a">
+<li><a id="org4c554ac"></a>emacs desktop-environment packages<br>
+<div class="outline-text-5" id="text-org4c554ac">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm alsa-utils pamixer brightnessctl scrot slock upower tlp playerctl
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgff93ce0"></a>emacs projectile packages<br>
-<div class="outline-text-5" id="text-orgff93ce0">
+<li><a id="org44332a3"></a>emacs projectile packages<br>
+<div class="outline-text-5" id="text-org44332a3">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed ripgrep
 </pre>
@@ -372,8 +372,8 @@ yay -S --noconfirm --needed grive <span class="org-comment-delimiter"># </span><
 </p>
 </div>
 </li>
-<li><a id="org603d78a"></a>Window-manager<br>
-<div class="outline-text-5" id="text-org603d78a">
+<li><a id="org0d3a13b"></a>Window-manager<br>
+<div class="outline-text-5" id="text-org0d3a13b">
 <p>
 <i>exwm</i> and <i>stumpwm</i> can be started as user using <i>xinit</i> and <i>sbcl</i> respectively, other <i>window manager</i> that interest me:
 </p>
@@ -383,16 +383,16 @@ yay -S --noconfirm --needed grive <span class="org-comment-delimiter"># </span><
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="orgaee36ec"></a>qtile deps<br>
-<div class="outline-text-6" id="text-orgaee36ec">
+<li><a id="org8a84811"></a>qtile deps<br>
+<div class="outline-text-6" id="text-org8a84811">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --needed --noconfirm canto-daemon cmus jupyter_console khal moc python-{dbus-next,iwlib,keyring,mpd2,psutil,setproctitle}
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org76025c6"></a>python-pip<br>
-<div class="outline-text-6" id="text-org76025c6">
+<li><a id="orgb09709c"></a>python-pip<br>
+<div class="outline-text-6" id="text-orgb09709c">
 <p>
 Needed to install user python packages
 </p>
@@ -408,20 +408,20 @@ Needed to install user python packages
 </div>
 </div>
 </section>
-<section id="outline-container-org3608d0a" class="outline-2">
-<h2 id="org3608d0a">Archlinux configuration files</h2>
-<div class="outline-text-2" id="text-org3608d0a">
+<section id="outline-container-org9f8340d" class="outline-2">
+<h2 id="org9f8340d">Archlinux configuration files</h2>
+<div class="outline-text-2" id="text-org9f8340d">
 <pre class="example">
 header-args: :exports both :results verbatim
 </pre>
 </div>
-<div id="outline-container-orga9bef1b" class="outline-3">
-<h3 id="orga9bef1b">System-wide configuration</h3>
-<div class="outline-text-3" id="text-orga9bef1b">
+<div id="outline-container-org8a9a733" class="outline-3">
+<h3 id="org8a9a733">System-wide configuration</h3>
+<div class="outline-text-3" id="text-org8a9a733">
 </div>
-<div id="outline-container-org25aef79" class="outline-4">
-<h4 id="org25aef79">fstab</h4>
-<div class="outline-text-4" id="text-org25aef79">
+<div id="outline-container-orgbf88750" class="outline-4">
+<h4 id="orgbf88750">fstab</h4>
+<div class="outline-text-4" id="text-orgbf88750">
 <p>
 To automatically mount nfs shares, first install nfs-utils
 </p>
@@ -431,8 +431,8 @@ To automatically mount nfs shares, first install nfs-utils
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="orgc42c58e"></a><span class="todo TODO">TODO</span> /etc/fstab<br>
-<div class="outline-text-5" id="text-orgc42c58e">
+<li><a id="org67e7e9a"></a><span class="todo TODO">TODO</span> /etc/fstab<br>
+<div class="outline-text-5" id="text-org67e7e9a">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-13 Sun 15:20]</span></span></li>
 </ul>
@@ -441,7 +441,7 @@ To automatically mount nfs shares, first install nfs-utils
 </pre>
 </div>
 
-<pre class="example" id="org8a14211">
+<pre class="example" id="org0c0fe5c">
 # Static information about the filesystems.
 # See fstab(5) for details.
 
@@ -467,9 +467,9 @@ UUID=beec6b47-9a1c-41d9-aee7-babfbe0be198	none      	swap      	defaults  	0 0
 </ul>
 </div>
 
-<div id="outline-container-org7f43ca9" class="outline-4">
-<h4 id="org7f43ca9"><code>acpi_backlight</code></h4>
-<div class="outline-text-4" id="text-org7f43ca9">
+<div id="outline-container-org1c4f34c" class="outline-4">
+<h4 id="org1c4f34c"><code>acpi_backlight</code></h4>
+<div class="outline-text-4" id="text-org1c4f34c">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chgrp video /sys/class/backlight/acpi_video0/brightness"</span>
 <span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chmod g+w /sys/class/backlight/acpi_video0/brightness"</span>
@@ -480,9 +480,9 @@ skip this if using <i>intel</i> driver (xf86-video-intel).
 </p>
 </div>
 </div>
-<div id="outline-container-orga09c470" class="outline-4">
-<h4 id="orga09c470"><code>intel_backlight</code></h4>
-<div class="outline-text-4" id="text-orga09c470">
+<div id="outline-container-org8e1d44e" class="outline-4">
+<h4 id="org8e1d44e"><code>intel_backlight</code></h4>
+<div class="outline-text-4" id="text-org8e1d44e">
 <div class="org-src-container">
 <pre class="src src-conf"><span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"</span>
 <span class="org-variable-name">RUN+</span>=<span class="org-string">"/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"</span>
@@ -490,9 +490,9 @@ skip this if using <i>intel</i> driver (xf86-video-intel).
 </div>
 </div>
 </div>
-<div id="outline-container-orgbbf4f53" class="outline-4">
-<h4 id="orgbbf4f53"><code>libinput</code></h4>
-<div class="outline-text-4" id="text-orgbbf4f53">
+<div id="outline-container-orga440783" class="outline-4">
+<h4 id="orga440783"><code>libinput</code></h4>
+<div class="outline-text-4" id="text-orga440783">
 <p>
 I&rsquo;ve switched to using <i>libinput</i> since the <i>synaptic</i> driver often acting weird.
 </p>
@@ -508,9 +508,9 @@ EndSection
 </div>
 </div>
 </div>
-<div id="outline-container-org24a09ff" class="outline-4">
-<h4 id="org24a09ff">lis3lv02d</h4>
-<div class="outline-text-4" id="text-org24a09ff">
+<div id="outline-container-org443086e" class="outline-4">
+<h4 id="org443086e">lis3lv02d</h4>
+<div class="outline-text-4" id="text-org443086e">
 <p>
 ST LIS3LV02Dx three-axis digital accelerometer driver, to autoload this using <i>systemd</i>:
 </p>
@@ -523,8 +523,8 @@ Details for this module <a href="https://www.kernel.org/doc/html/latest/misc-dev
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgb3b71a6"></a><span class="todo TODO">TODO</span> packages<br>
-<div class="outline-text-5" id="text-orgb3b71a6">
+<li><a id="org822e304"></a><span class="todo TODO">TODO</span> packages<br>
+<div class="outline-text-5" id="text-org822e304">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-18 Fri 16:22]</span></span></li>
 </ul>
@@ -539,21 +539,21 @@ perhaps handled by <i>evdev</i>?
 </li>
 </ul>
 </div>
-<div id="outline-container-org2cd1eda" class="outline-4">
-<h4 id="org2cd1eda">battery</h4>
-<div class="outline-text-4" id="text-org2cd1eda">
+<div id="outline-container-orgf42c6b4" class="outline-4">
+<h4 id="orgf42c6b4">battery</h4>
+<div class="outline-text-4" id="text-orgf42c6b4">
 </div>
 <ul class="org-ul">
-<li><a id="orgb8f469d"></a>packages<br>
-<div class="outline-text-5" id="text-orgb8f469d">
+<li><a id="orgd30c770"></a>packages<br>
+<div class="outline-text-5" id="text-orgd30c770">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --needed --noconfirm acpi acpid
 </pre>
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="org8332a27"></a>enable acpid<br>
-<div class="outline-text-6" id="text-org8332a27">
+<li><a id="org90842a2"></a>enable acpid<br>
+<div class="outline-text-6" id="text-org90842a2">
 <div class="org-src-container">
 <pre class="src src-sh">sudo systemctl enable --now acpid
 </pre>
@@ -564,9 +564,9 @@ perhaps handled by <i>evdev</i>?
 </li>
 </ul>
 </div>
-<div id="outline-container-org5f72348" class="outline-4">
-<h4 id="org5f72348">pacman</h4>
-<div class="outline-text-4" id="text-org5f72348">
+<div id="outline-container-org3fd1caf" class="outline-4">
+<h4 id="org3fd1caf">pacman</h4>
+<div class="outline-text-4" id="text-org3fd1caf">
 <p>
 Enable <i>multilib</i> repository at <code>/etc/pacman.conf</code>. While we&rsquo;re at it, also enable other functionalities as well:
 </p>
@@ -690,27 +690,27 @@ After the first sync (<code>pacman -Syu</code>), also install <code>multilib-dev
 </p>
 </div>
 </div>
-<div id="outline-container-orge9b0b41" class="outline-4">
-<h4 id="orge9b0b41">other packages</h4>
-<div class="outline-text-4" id="text-orge9b0b41">
+<div id="outline-container-orga7115ba" class="outline-4">
+<h4 id="orga7115ba">other packages</h4>
+<div class="outline-text-4" id="text-orga7115ba">
 </div>
 <ul class="org-ul">
-<li><a id="orge75f41c"></a>fwupd<br>
-<div class="outline-text-5" id="text-orge75f41c">
+<li><a id="org2016a65"></a>fwupd<br>
+<div class="outline-text-5" id="text-org2016a65">
 <div class="org-src-container">
 <pre class="src src-sh">sudo pacman -S --noconfirm --needed fwupd
 </pre>
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="org28a06fd"></a>fwupd get-devices<br>
-<div class="outline-text-6" id="text-org28a06fd">
+<li><a id="orgb5b3b2c"></a>fwupd get-devices<br>
+<div class="outline-text-6" id="text-orgb5b3b2c">
 <div class="org-src-container">
 <pre class="src src-sh">sudo fwupdmgr get-devices
 </pre>
 </div>
 
-<pre class="example" id="org4184dd6">
+<pre class="example" id="org4b104cc">
 
 ?
 ??HP Integrated Module:
@@ -744,13 +744,13 @@ After the first sync (<code>pacman -Syu</code>), also install <code>multilib-dev
 </ul>
 </div>
 </div>
-<div id="outline-container-org380f2be" class="outline-3">
-<h3 id="org380f2be">User configuration</h3>
-<div class="outline-text-3" id="text-org380f2be">
+<div id="outline-container-org08964c5" class="outline-3">
+<h3 id="org08964c5">User configuration</h3>
+<div class="outline-text-3" id="text-org08964c5">
 </div>
-<div id="outline-container-org1b99e4a" class="outline-4">
-<h4 id="org1b99e4a">makepkg.conf</h4>
-<div class="outline-text-4" id="text-org1b99e4a">
+<div id="outline-container-orgb3e77ba" class="outline-4">
+<h4 id="orgb3e77ba">makepkg.conf</h4>
+<div class="outline-text-4" id="text-orgb3e77ba">
 <p>
 The system-wide configuration is <code>/etc/makepkg.conf</code>, but it&rsquo;s better to create user configuration at <code>~/.config/pacman/makepkg.conf</code>.
 </p>
@@ -790,9 +790,9 @@ sudo chmod -v 1775 /data/pacman/{packages,sources,srcpackages,makepkglogs}
 </ul>
 </div>
 </div>
-<div id="outline-container-orgda010f9" class="outline-4">
-<h4 id="orgda010f9"><a href="https://github.com/vitalif/grive2">grive</a></h4>
-<div class="outline-text-4" id="text-orgda010f9">
+<div id="outline-container-org2a2ceb8" class="outline-4">
+<h4 id="org2a2ceb8"><a href="https://github.com/vitalif/grive2">grive</a></h4>
+<div class="outline-text-4" id="text-org2a2ceb8">
 <p>
 A fork from the original <i>grive</i>, with the support for the new Drive REST API and partial sync. Create a directory for syncing (in my case it&rsquo;s <code>~/Documents/google-drive</code>). Run <code>grive -a</code> inside the directory for initializing the connection. Once it&rsquo;s established, we can continue with the systemd user unit (<code>grive-changes@$(systemd-escape Documents/google-drive).service</code>).
 </p>
@@ -808,7 +808,7 @@ To verify:
 </pre>
 </div>
 
-<pre class="example" id="org4e369c6">
+<pre class="example" id="orgac4d5b7">
 * grive-changes@Documents-google\x2ddrive.service - Google drive sync (changed files)
      Loaded: loaded (/usr/lib/systemd/user/grive-changes@.service; enabled; vendor preset: enabled)
      Active: active (running) since Sun 2022-03-13 17:23:22 WIB; 41s ago
@@ -824,7 +824,7 @@ Mar 13 17:23:22 arch-4420s systemd[382]: Started Google drive sync (changed file
 Mar 13 17:23:22 arch-4420s grive-sync.sh[61459]: Listening for changes in ~/Documents/google-drive
 </pre>
 <p>
-It depends on <i>inotify-tools</i> so make sure it&rsquo;s <a href="#org5ea87c2">installed</a>.
+It depends on <i>inotify-tools</i> so make sure it&rsquo;s <a href="#org76e2d3d">installed</a>.
 </p>
 
 <script src="https://utteranc.es/client.js"repo="alexforsale/alexforsale.github.io" issue-term="pathname" label="utterances" theme="gruvbox-dark" crossorigin="anonymous" async></script>
