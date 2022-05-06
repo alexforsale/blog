@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- May 05, 2022 -->
+<!-- May 06, 2022 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Qtile Configuration</title>
@@ -58,11 +58,11 @@
 <header>
 <h1 class="title">Qtile Configuration</h1>
 <p class="subtitle" role="doc-subtitle">Published on Mar 14, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-orgb89fc43" class="outline-2">
-<h2 id="orgb89fc43">About</h2>
-<div class="outline-text-2" id="text-orgb89fc43">
+</header><section id="outline-container-orgac071bd" class="outline-2">
+<h2 id="orgac071bd">About</h2>
+<div class="outline-text-2" id="text-orgac071bd">
 
-<figure id="org5ef27b6">
+<figure id="orgd8ff421">
 <img src="../images/posts/screenshot_2022_03_19-00_38-38.png" alt="screenshot_2022_03_19-00_38-38.png" class="center no-border" width="75%" height="75%">
 
 <figcaption><span class="figure-number">Figure 1: </span>the mandatory screenshot</figcaption>
@@ -72,9 +72,9 @@
 This file will be the base of my configuration. With <code>org-mode</code> I can <i>tangle</i> every source code snippet in this file and put them in one or more files.
 </p>
 </div>
-<div id="outline-container-orgb1da932" class="outline-3">
-<h3 id="orgb1da932">These are the keybindings:</h3>
-<div class="outline-text-3" id="text-orgb1da932">
+<div id="outline-container-org9107c40" class="outline-3">
+<h3 id="org9107c40">These are the keybindings:</h3>
+<div class="outline-text-3" id="text-org9107c40">
 <ul class="org-ul">
 <li><p>
 Navigation
@@ -516,9 +516,9 @@ Various apps
 </div>
 </div>
 </section>
-<section id="outline-container-org2b9d32b" class="outline-2">
-<h2 id="org2b9d32b">Main configuration</h2>
-<div class="outline-text-2" id="text-org2b9d32b">
+<section id="outline-container-orgc8346e1" class="outline-2">
+<h2 id="orgc8346e1">Main configuration</h2>
+<div class="outline-text-2" id="text-orgc8346e1">
 <pre class="example">
 header-args: :tangle ~/.config/qtile/config.py :mkdirp t
 </pre>
@@ -526,14 +526,14 @@ header-args: :tangle ~/.config/qtile/config.py :mkdirp t
 If you open this file in <code>Emacs</code>, this section has a property drawer that tangles every source code blocks in this section to <code>config.py</code>.
 </p>
 </div>
-<div id="outline-container-org70a5413" class="outline-3">
-<h3 id="org70a5413">Header</h3>
-<div class="outline-text-3" id="text-org70a5413">
+<div id="outline-container-org2e8f2ed" class="outline-3">
+<h3 id="org2e8f2ed">Header</h3>
+<div class="outline-text-3" id="text-org2e8f2ed">
 <p>
 Qtile will look for user configuration at <code>~/.config/qtile/config.py</code>, so we&rsquo;ll start there.
 </p>
 <div class="org-src-container">
-<pre class="src src-python" id="org831db59"><span class="org-doc">"""Qtile configuration file.</span>
+<pre class="src src-python" id="orgd695eaa"><span class="org-doc">"""Qtile configuration file.</span>
 
 <span class="org-doc">Copyright (c) 2010 Aldo Cortesi</span>
 <span class="org-doc">Copyright (c) 2010, 2014 dequis</span>
@@ -565,9 +565,9 @@ Since I&rsquo;m basing from the default config, use their license header for now
 </p>
 </div>
 </div>
-<div id="outline-container-orgc19c452" class="outline-3">
-<h3 id="orgc19c452">Imports</h3>
-<div class="outline-text-3" id="text-orgc19c452">
+<div id="outline-container-org12c20e7" class="outline-3">
+<h3 id="org12c20e7">Imports</h3>
+<div class="outline-text-3" id="text-org12c20e7">
 <p>
 This is what the default configuration listed:
 </p>
@@ -595,9 +595,9 @@ Imports for custom function.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdf37f5e" class="outline-3">
-<h3 id="orgdf37f5e">Variables</h3>
-<div class="outline-text-3" id="text-orgdf37f5e">
+<div id="outline-container-orgf828148" class="outline-3">
+<h3 id="orgf828148">Variables</h3>
+<div class="outline-text-3" id="text-orgf828148">
 <p>
 Subtitutes the actual keys.
 </p>
@@ -675,9 +675,9 @@ Variables and import list will obviously changed depending on the settings I use
 </p>
 </div>
 </div>
-<div id="outline-container-org3de7fd9" class="outline-3">
-<h3 id="org3de7fd9">Functions</h3>
-<div class="outline-text-3" id="text-org3de7fd9">
+<div id="outline-container-org1d15b32" class="outline-3">
+<h3 id="org1d15b32">Functions</h3>
+<div class="outline-text-3" id="text-org1d15b32">
 <ul class="org-ul">
 <li><p>
 Check running process.
@@ -752,9 +752,9 @@ Parse Xresources
 </ul>
 </div>
 </div>
-<div id="outline-container-org5c41d73" class="outline-3">
-<h3 id="org5c41d73"><span class="todo TODO">TODO</span> Keys</h3>
-<div class="outline-text-3" id="text-org5c41d73">
+<div id="outline-container-org31a7270" class="outline-3">
+<h3 id="org31a7270"><span class="todo TODO">TODO</span> Keys</h3>
+<div class="outline-text-3" id="text-org31a7270">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 04:54]</span></span></li>
 </ul>
@@ -915,9 +915,9 @@ apps
 </ul>
 </div>
 </div>
-<div id="outline-container-org8173674" class="outline-3">
-<h3 id="org8173674">Groups</h3>
-<div class="outline-text-3" id="text-org8173674">
+<div id="outline-container-org26a4027" class="outline-3">
+<h3 id="org26a4027">Groups</h3>
+<div class="outline-text-3" id="text-org26a4027">
 <p>
 The default already set a <i>for loop</i> for group keybindings, it&rsquo;s also what I set in other <i>window manager</i> so I&rsquo;m using it.
 </p>
@@ -951,9 +951,9 @@ The default already set a <i>for loop</i> for group keybindings, it&rsquo;s also
 </div>
 </div>
 </div>
-<div id="outline-container-org678ae3a" class="outline-3">
-<h3 id="org678ae3a"><span class="todo TODO">TODO</span> Layout</h3>
-<div class="outline-text-3" id="text-org678ae3a">
+<div id="outline-container-orgca8f816" class="outline-3">
+<h3 id="orgca8f816"><span class="todo TODO">TODO</span> Layout</h3>
+<div class="outline-text-3" id="text-orgca8f816">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 04:59]</span></span></li>
 </ul>
@@ -983,9 +983,9 @@ I&rsquo;ll try all of them one by one when I have the time, but the <i>Max</i> a
 </div>
 </div>
 </div>
-<div id="outline-container-org58a1c73" class="outline-3">
-<h3 id="org58a1c73"><span class="todo TODO">TODO</span> Widgets, extensions and screens</h3>
-<div class="outline-text-3" id="text-org58a1c73">
+<div id="outline-container-org10e0ff8" class="outline-3">
+<h3 id="org10e0ff8"><span class="todo TODO">TODO</span> Widgets, extensions and screens</h3>
+<div class="outline-text-3" id="text-org10e0ff8">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 05:00]</span></span></li>
 </ul>
@@ -1069,9 +1069,9 @@ I&rsquo;ll try all of them one by one when I have the time, but the <i>Max</i> a
 </div>
 </div>
 </div>
-<div id="outline-container-orgf85dd3e" class="outline-3">
-<h3 id="orgf85dd3e">Mouse</h3>
-<div class="outline-text-3" id="text-orgf85dd3e">
+<div id="outline-container-org3bdaa25" class="outline-3">
+<h3 id="org3bdaa25">Mouse</h3>
+<div class="outline-text-3" id="text-org3bdaa25">
 <p>
 I don&rsquo;t think I&rsquo;ll be modifying these.
 </p>
@@ -1092,9 +1092,9 @@ I don&rsquo;t think I&rsquo;ll be modifying these.
 </div>
 </div>
 </div>
-<div id="outline-container-orgb45fec3" class="outline-3">
-<h3 id="orgb45fec3"><span class="todo TODO">TODO</span> Floating layout rules</h3>
-<div class="outline-text-3" id="text-orgb45fec3">
+<div id="outline-container-org046ce86" class="outline-3">
+<h3 id="org046ce86"><span class="todo TODO">TODO</span> Floating layout rules</h3>
+<div class="outline-text-3" id="text-org046ce86">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-15 Tue 05:03]</span></span></li>
 </ul>
@@ -1119,9 +1119,9 @@ Eventually it&rsquo;ll reflects various apps I use.
 </div>
 </div>
 </div>
-<div id="outline-container-org413e5cf" class="outline-3">
-<h3 id="org413e5cf">Hooks</h3>
-<div class="outline-text-3" id="text-org413e5cf">
+<div id="outline-container-org8fc98c9" class="outline-3">
+<h3 id="org8fc98c9">Hooks</h3>
+<div class="outline-text-3" id="text-org8fc98c9">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-type">@hook.subscribe.startup_once</span>
 <span class="org-keyword">def</span> <span class="org-function-name">startup</span>():
@@ -1154,7 +1154,7 @@ Eventually it&rsquo;ll reflects various apps I use.
 <div class='footer'>
   Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/blog'>Source</a> <br>
   GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
-  Last updated on May 05, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  Last updated on May 06, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
   <a rel="me" href="https://mastodon.social/@alexforsale">Mastodon</a> <a rel="me" href="https://fosstodon.org/@alexforsale">Fosstodon</a>
   <a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
 </div>
