@@ -467,8 +467,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 *** Load theme
     #+begin_src emacs-lisp
-      (unless custom-enabled-themes
-        (load-theme 'manoj-dark t))
+      ;;(unless custom-enabled-themes
+      ;;  (load-theme 'manoj-dark t))
     #+end_src
 *** Revert Dired and other buffers
     #+begin_src emacs-lisp
