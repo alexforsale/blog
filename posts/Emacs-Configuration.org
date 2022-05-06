@@ -1113,6 +1113,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (setq dashboard-set-navigator t)
        (setq dashboard-set-init-info t)
        (setq dashboard-week-agenda t)
+       (setq dashboard-items-default-length 40)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3503,10 +3504,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (telega-transient-mode 1)
        (require 'telega-dashboard)
        (add-to-list 'dashboard-items '(telega-chats . 5))
-       (require 'telega-stories)
-       (telega-stories-mode 1)
+       ;;(require 'telega-stories)
+       ;;(telega-stories-mode 1)
        ;;(define-key telega-root-mode-map (kbd "v e") 'telega-view-emacs-stories)
-       (add-to-list 'dashboard-items '(telega-stories . 5))
+       ;;(add-to-list 'dashboard-items '(telega-stories . 5))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
