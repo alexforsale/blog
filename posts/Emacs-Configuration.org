@@ -76,6 +76,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-undo-fu)
      (require 'config-block-nav)
      (require 'config-ansible)
+     (require 'config-jinja2-mode)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
@@ -1633,9 +1634,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (straight-use-package 'ansible)
+       (straight-use-package 'ansible-doc)
        (require 'ansible)
        (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
        (add-hook 'ansible-hook 'ansible-auto-decrypt-encrypt)
+       (setq ansible-section-face 'font-lock-variable-name-face
+             ansible-task-label-face 'font-lock-doc-face)
        ;; set keybinding in yaml-mode since I usually set secrets in variable file
        (define-key yaml-mode-map (kbd "C-c a d") 'ansible-decrypt-buffer)
        (define-key yaml-mode-map (kbd "C-c a e") 'ansible-encrypt-buffer)
@@ -1645,6 +1649,28 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-ansible)
         ;;; config-ansible.el ends here
       #+end_src
+**** jinja2-mode
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-jinja2-mode.el" user-emacs-directory)
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-jinja2-mode.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'jinja2-mode)
+       (setq jinja2-enable-indent-on-save nil)
+       (add-to-list 'auto-mode-alist '("'\\.j2$\\'" . jinja2-mode))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-jinja2-mode)
+        ;;; config-jinja2-mode.el ends here
+      #+end_src
+
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-editings)
