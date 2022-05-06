@@ -3321,7 +3321,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
     #+begin_src emacs-lisp
       (unless +config/is-guix-system
-        (straight-use-package 'pass))
+        (straight-use-package 'pass)
+        (straight-use-package 'password-store)
+        (straight-use-package 'password-store-otp))
       (setq password-store-password-length 12)
       (auth-source-pass-enable)
     #+end_src
