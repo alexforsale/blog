@@ -467,6 +467,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 *** Revert Dired and other buffers
     #+begin_src emacs-lisp
+      (setq auto-revert-verbose t
+            auto-revert-use-notify nil
+            auto-revert-stop-on-user-input nil
+            revert-without-query (list "."))
       (customize-set-variable 'global-auto-revert-non-file-buffers t)
     #+end_src
 *** Revert buffers when the underlying file has changed
@@ -497,6 +501,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** don't truncate lines
     #+begin_src emacs-lisp
       (setq truncate-lines 'nil)
+      (setq truncate-partial-width-windows nil)
     #+end_src
 *** Lines should be 80 characters wide
     #+begin_src emacs-lisp
@@ -513,6 +518,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** Enable recursive minibuffers
     #+begin_src emacs-lisp
       (setq enable-recursive-minibuffers t)
+    #+end_src
+*** Always require final newline
+    #+begin_src emacs-lisp
+      (setq require-final-newline t)
     #+end_src
 *** uniquify
     #+begin_src emacs-lisp
@@ -531,17 +540,19 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 *** line numbering for some modes
     #+begin_src emacs-lisp
-      (column-number-mode)
+            (column-number-mode)
 
-      ;; Enable line numbers for some modes
-      (dolist (mode '(text-mode-hook
-                      prog-mode-hook
-                      conf-mode-hook))
-        (add-hook mode (lambda () (display-line-numbers-mode 1))))
+            ;; Enable line numbers for some modes
+            (dolist (mode '(text-mode-hook
+                            prog-mode-hook
+                            conf-mode-hook))
+              (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
-      ;; Override some modes which derive from the above
-      (dolist (mode '(org-mode-hook))
-        (add-hook mode (lambda () (display-line-numbers-mode 0))))
+            ;; Override some modes which derive from the above
+            (dolist (mode '(org-mode-hook))
+              (add-hook mode (lambda () (display-line-numbers-mode 0))))
+      (setq-default display-line-numbers-width 3)
+      (setq-default display-line-numbers-widen t)
     #+end_src
 *** add visual pulse when changing focus, like beacon but built-in, from [[https://karthinks.com/software/batteries-included-with-emacs/][karthinks.com]].
     #+begin_src emacs-lisp
@@ -552,6 +563,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (dolist (command '(scroll-up-command scroll-down-command
                                            recenter-top-bottom other-window))
         (advice-add command :after #'+pulse-line))
+    #+end_src
+*** loop animated image
+    #+begin_src emacs-lisp
+      (setq image-animate-loop t)
     #+end_src
 *** eldoc
     #+begin_src emacs-lisp
@@ -1166,18 +1181,49 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (show-paren-mode)
     #+end_src
+*** Don't blink on matching parenthesis
+    #+begin_src emacs-lisp
+      (setq blink-matching-paren nil)
+    #+end_src
+*** Don't stretch the cursor
+    #+begin_src emacs-lisp
+      (setq x-stretch-cursor nil)
+    #+end_src
+*** Free up fringes
+    #+begin_src emacs-lisp
+      (setq indicate-buffer-boundaries nil
+            indicate-empty-lines nil)
+    #+end_src
+*** Don't use gui dialog boxes
+    #+begin_src emacs-lisp
+      (setq use-dialog-box nil)
+    #+end_src
+*** Disable tooltip
+    #+begin_src emacs-lisp
+      (when (bound-and-true-p tooltip-mode)
+        (tooltip-mode -1))
+      (setq x-gtk-use-system-tooltips nil)
+    #+end_src
 *** Enable =electric-pair-mode=
     #+begin_src emacs-lisp
       (electric-pair-mode 1)
     #+end_src
 *** Use spaces instead of tabs
     #+begin_src emacs-lisp
-      (setq-default indent-tabs-mode nil)
+      (setq-default indent-tabs-mode nil
+                    tab-width 4
+                    tab-always-indent nil)
+      (setq tabify-regexp "^\t* [ \t]+")
     #+end_src
 *** Use "y" and "n" to confirm/negate prompt instead of "yes" and "no".
     #+begin_src emacs-lisp
-      (fset 'yes-or-no-p 'y-or-n-p)
+      (advice-add #'yes-or-no-p :override #'y-or-n-p)
       (setq y-or-n-p-use-read-key t)
+    #+end_src
+*** Keep the cursor out of the read-only portions of the minibuffer
+    #+begin_src emacs-lisp
+      (setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
     #+end_src
 *** Don't save duplicates in =kill-ring=
     #+begin_src emacs-lisp
@@ -1205,6 +1251,21 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (add-hook 'before-save-hook 'delete-trailing-whitespace)
     #+end_src
+*** Enable whitespace-mode
+    #+begin_src emacs-lisp
+      (unless (or (eq major-mode 'fundamental-mode)
+                  (bound-and-true-p global-whitespace-mode)
+                  (null buffer-file-name))
+        (require 'whitespace)
+        (setq whitespace-line-column nil
+              whitespace-style
+              '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+                     trailing lines-tail)
+              whitespace-display-mappings
+              '((tab-mark ?\t [?› ?\t])
+                (newline-mark ?\n [?¬ ?\n])
+                (space-mark ?\  [?·] [?.])))
+    #+end_src
 *** Easily navigate sillycased words.
     #+begin_src emacs-lisp
       (global-subword-mode 1)
@@ -1228,7 +1289,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (setq savehist-additional-variables
             '(kill-ring
               search-ring
+              register-alist
+              mark-ring
+              global-mark-ring
               regexp-search-ring))
+      (setq savehist-save-minibuffer-history t
+            savehist-autosave-interval nil)
     #+end_src
 *** Enable =save-place-mode=
     #+begin_src emacs-lisp
@@ -1238,6 +1304,52 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** =abbrev-mode=
     #+begin_src emacs-lisp
       (setq abbrev-file-name (expand-file-name "abbrev_defs" +emacs-data-dir))
+    #+end_src
+*** comint
+    #+begin_src emacs-lisp
+      (eval-after-load 'comint
+        (setq comint-prompt-read-only t
+              comint-buffer-maximum-size 2048))
+    #+end_src
+*** compile
+    #+begin_src emacs-lisp
+      (eval-after-load 'compile
+        (setq compilation-always-kill t
+              compilation-ask-about-save nil
+              compilation-scroll-output 'first-error))
+    #+end_src
+*** ediff
+    #+begin_src emacs-lisp
+      (eval-after-load 'ediff
+        (setq ediff-diff-options "-w"
+              ediff-split-window-function #'split-window-horizontally
+              ediff-window-setup-function #'ediff-setup-windows-plain))
+    #+end_src
+*** hl-line
+    From doom.
+    #+begin_src emacs-lisp
+      (defvar global-hl-line-modes
+        '(prog-mode text-mode conf-mode special-mode
+                    org-agenda-mode dired-mode)
+        "What modes to enable `hl-line-mode' in.")
+
+      (define-globalized-minor-mode global-hl-line-mode hl-line-mode
+        (lambda ()
+          (and (cond (hl-line-mode nil)
+                     ((null global-hl-line-modes) nil)
+                     ((eq global-hl-line-modes t))
+                     ((eq (car global-hl-line-modes) 'not)
+                      (not (derived-mode-p global-hl-line-modes)))
+                     ((apply #'derived-mode-p global-hl-line-modes)))
+               (hl-line-mode +1))))
+    #+end_src
+*** paren
+    #+begin_src emacs-lisp
+      (eval-after-load 'paren
+        (setq show-paren-delay 0.1
+              show-paren-highlight-openparen t
+              show-paren-when-point-inside-paren t
+              show-paren-when-point-in-periphery t))
     #+end_src
 *** =auto-insert= mode
 **** auto-insert-directory
@@ -3883,6 +3995,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (setq tramp-auto-save-directory (expand-file-name "tramp/auto-save/" +emacs-data-dir))
       (setq tramp-persistency-file-name (expand-file-name "tramp/persistency.el" +emacs-data-dir))
+      (setq remote-file-name-inhibit-cache 60
+            tramp-completion-reread-directory-timeout 60
+            tramp-verbose 1
+            vc-ignore-dir-regexp (format "%s\\|%s\\|%s"
+                                         vc-ignore-dir-regexp
+                                         tramp-file-name-regexp
+                                         "[/\\\\]node_modules"))
     #+end_src
 *** =shadowfile=
     #+begin_src emacs-lisp
