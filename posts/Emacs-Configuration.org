@@ -874,6 +874,39 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           Other buffer group by `centaur-tabs-get-group-name' with project name."
          (list
           (cond
+           ((memq major-mode '(telega-root-mode
+                               telega-chat-mode
+                               telega-image-mode
+                               telega-webpage-mode
+                               telega-edit-file-mode))
+            "Telega")
+           ((memq major-mode '(notmuch-show-mode
+                               notmuch-tree-mode
+                               notmuch-hello-mode
+                               notmuch-search-mode
+                               notmuch-message-mode))
+            "Notmuch")
+           ((memq major-mode '(erc-mode
+                               erc-list-menu-mode
+                               erc-track-minor-mode))
+            "ERC")
+           ((memq major-mode '(emms-mark-mode
+                               emms-lyrics-mode
+                               emms-browser-mode
+                               emms-playlist-mode
+                               emms-show-all-mode
+                               emms-tag-editor-mode
+                               emms-metaplaylist-mode
+                               emms-volume-minor-mode
+                               emms-browser-search-mode))
+            "Emms")
+           ((memq major-mode '(elfeed-show-mode
+                               elfeed-search-mode))
+            "Elfeed")
+           ((memq major-mode '(vterm-mode
+                               shell-mode
+                               term-mode))
+            "Term")
            ((or (string-equal "*" (substring (buffer-name) 0 1))
                 (memq major-mode '(magit-process-mode
                                    magit-status-mode
