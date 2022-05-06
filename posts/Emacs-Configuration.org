@@ -3244,10 +3244,21 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (require 'erc)
        (require 'erc-join)
+
+       (setq erc-autojoin-timing 'ident)
        (erc-autojoin-mode 1)
        (setq erc-autojoin-channels-alist
-             '(("irc.libera.chat" "#emacs" "#emacs-beginners" "gnus" "#archlinux"
+             '(("Libera.Chat" "#emacs" "#emacs-beginners" "gnus" "#archlinux"
                 "archlinux-offtopic" "guix" "gentoo" )))
+       (erc-tls :server "irc.libera.chat" :port 7070 :nick user-login-name)
+       (setq erc-rename-buffers t)
+       (setq erc-interpret-mirc-color t)
+       (setq erc-kill-buffer-on-part t)
+       (setq erc-kill-queries-on-quit t)
+       (setq erc-kill-server-buffer-on-quit t)
+       (require 'erc-services)
+       (setq erc-nickserv-identify-mode 'both)
+       (erc-services-mode 1)
      #+end_src
 **** only notify when nick or keywords mentioned.
      #+begin_src emacs-lisp
