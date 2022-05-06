@@ -1484,11 +1484,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (straight-use-package 'undo-fu)
          (straight-use-package 'undo-fu-session))
        (require 'undo-fu)
+       (setq undo-limit 400000
+             undo-strong-limit 3000000
+             undo-outer-limit 48000000)
        (setq undo-fu-session-directory (expand-file-name "undo-fu-session/" +emacs-data-dir))
        (global-unset-key (kbd "C-z")) ; previously `suspend-frame'
        (global-set-key (kbd "C-z") 'undo-fu-only-undo)
        (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
-       (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+       (setq undo-fu-session-incompatible-files '("\\.gpg$" "/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
        (global-undo-fu-session-mode)
      #+end_src
 ***** Footer
