@@ -3234,7 +3234,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'config-pass)
        (defun +erc/libera ()
          (erc-tls :server "irc.libera.chat"
-                  :port "6697"))
+                  :port "7070"))
 
        (add-hook 'erc-after-connect
                  `(lambda (SERVER NICK)
@@ -3252,7 +3252,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (setq erc-autojoin-channels-alist
              '(("Libera.Chat" "#emacs" "#emacs-beginners" "gnus" "#archlinux"
                 "archlinux-offtopic" "guix" "gentoo" )))
-       (erc-tls :server "irc.libera.chat" :port 7070 :nick user-login-name :password (password-store-get "irc.libera.chat/alexforsale"))
+       ;;(erc-tls :server "irc.libera.chat" :port 7070 :nick user-login-name :password (password-store-get "irc.libera.chat/alexforsale"))
        (setq erc-rename-buffers t)
        (setq erc-interpret-mirc-color t)
        (setq erc-kill-buffer-on-part t)
