@@ -313,10 +313,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (load (expand-file-name "config-user.el" user-emacs-directory)))
    #+end_src
    If there's any /modules/ or other files needed, this is where to place it.
-** Load custom variables
-   #+begin_src emacs-lisp
-     (require 'config-defaults-variables)
-   #+end_src
 ** Adds footer since this is the end of the file [[file:init.el][init.el]]
    #+begin_src emacs-lisp
      (provide 'init)
@@ -1264,7 +1260,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               whitespace-display-mappings
               '((tab-mark ?\t [?› ?\t])
                 (newline-mark ?\n [?¬ ?\n])
-                (space-mark ?\  [?·] [?.])))
+                (space-mark ?\  [?·] [?.]))))
     #+end_src
 *** Easily navigate sillycased words.
     #+begin_src emacs-lisp
@@ -1310,13 +1306,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (eval-after-load 'comint
         (setq comint-prompt-read-only t
               comint-buffer-maximum-size 2048))
-    #+end_src
-*** compile
-    #+begin_src emacs-lisp
-      (eval-after-load 'compile
-        (setq compilation-always-kill t
-              compilation-ask-about-save nil
-              compilation-scroll-output 'first-error))
     #+end_src
 *** ediff
     #+begin_src emacs-lisp
