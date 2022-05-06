@@ -251,12 +251,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    #+begin_src emacs-lisp
      (set-default-coding-systems 'utf-8)
    #+end_src
-** always start server when it's not running
-   #+begin_src emacs-lisp
-     (if (and (fboundp 'server-running-p)
-              (not (server-running-p)))
-         (server-start))
-   #+end_src
 ** Increase large file warning size to around 100MB.
    #+begin_src emacs-lisp
      (customize-set-variable 'large-file-warning-threshold 100000000)
@@ -1259,6 +1253,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (setq delete-by-moving-to-trash t)
     #+end_src
+*** unbind =<menu>= key and =<execute>= key
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "<menu>") 'nil)
+      (global-set-key (kbd "<execute>") 'nil)
+    #+end_src
 *** Additional Packages
 **** multiple-cursors
      :PROPERTIES:
@@ -2176,9 +2175,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                org-roam-ui-follow t
                org-roam-ui-update-on-save t
                org-roam-ui-open-on-start t))
-       (if (and (fboundp 'server-running-p)
-                (not (server-running-p)))
-           (server-start))
+       (unless (daemonp)
+         (server-start))
        (require 'org-protocol)
        (require 'org-roam-protocol)
        (setq org-roam-capture-templates
