@@ -1,1 +1,1 @@
-#+include: posts/index.org
+#+include: posts/index.org :lines "3-"
