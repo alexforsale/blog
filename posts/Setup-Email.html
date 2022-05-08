@@ -59,18 +59,18 @@
 <h1 class="title">Mail Configuration Using msmtp, offlineimap, and notmuch</h1>
 <p class="subtitle" role="doc-subtitle">Published on Mar 23, 2022 by Kristian Alexander P.</p>
 </header>
-<figure id="org01c25fe">
+<figure id="orgf9e0b38">
 <img src="../images/posts/notmuch1.png" alt="notmuch1.png" class="center no-border" width="75%" height="75%">
 
 </figure>
 
-<figure id="orgc9d6c5e">
+<figure id="org900a56a">
 <img src="../images/posts/notmuch2.png" alt="notmuch2.png" class="center no-border" width="75%" height="75%">
 
 </figure>
-<section id="outline-container-orgea74898" class="outline-2">
-<h2 id="orgea74898">Mail</h2>
-<div class="outline-text-2" id="text-orgea74898">
+<section id="outline-container-org7670813" class="outline-2">
+<h2 id="org7670813">Mail</h2>
+<div class="outline-text-2" id="text-org7670813">
 <p>
 As per other posts in this blog, this is my actual configuration used in various machines. One benefit I can think of is with this setup is that I can use different clients<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>, of course here I&rsquo;m using <i>notmuch-emacs</i>.
 I have four accounts configured in this setup:
@@ -86,9 +86,9 @@ A.K.A <i>windowslive</i>. Not used often but still needed for connecting to <i>m
 Few mailing lists and stuffs.</li>
 </ol>
 </div>
-<div id="outline-container-orgbb991d5" class="outline-3">
-<h3 id="orgbb991d5">msmtp</h3>
-<div class="outline-text-3" id="text-orgbb991d5">
+<div id="outline-container-org448b1fa" class="outline-3">
+<h3 id="org448b1fa">msmtp</h3>
+<div class="outline-text-3" id="text-org448b1fa">
 <p>
 Configuration can be stored in <code>~/.msmtprc</code> or <code>~/.config/msmtp/config</code>.
 </p>
@@ -153,9 +153,9 @@ To easily encript the files in <code>~/.local/etc/mail/</code>, open the file in
 </p>
 </div>
 </div>
-<div id="outline-container-org64bd092" class="outline-3">
-<h3 id="org64bd092">CANCELLED isync</h3>
-<div class="outline-text-3" id="text-org64bd092">
+<div id="outline-container-orgf123118" class="outline-3">
+<h3 id="orgf123118">CANCELLED isync</h3>
+<div class="outline-text-3" id="text-orgf123118">
 <ul class="org-ul">
 <li>State &ldquo;CANCELLED&rdquo;  from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-29 Tue 21:12]</span></span></li>
 </ul>
@@ -164,9 +164,9 @@ For a while, <i>isync</i> works greate for me, but synchronizing around 86000 em
 This is what I configured in <code>~/.mbsyncrc</code>:
 </p>
 </div>
-<div id="outline-container-org602c392" class="outline-4">
-<h4 id="org602c392">IMAP Account</h4>
-<div class="outline-text-4" id="text-org602c392">
+<div id="outline-container-org5bfd6e2" class="outline-4">
+<h4 id="org5bfd6e2">IMAP Account</h4>
+<div class="outline-text-4" id="text-org5bfd6e2">
 <p>
 This set up the necessary information on connecting to the IMAP server.
 </p>
@@ -212,9 +212,9 @@ CertificateFile /etc/ssl/certs/ca-certificates.crt
 </div>
 </div>
 </div>
-<div id="outline-container-orge970372" class="outline-4">
-<h4 id="orge970372">Gmail</h4>
-<div class="outline-text-4" id="text-orge970372">
+<div id="outline-container-org395ad52" class="outline-4">
+<h4 id="org395ad52">Gmail</h4>
+<div class="outline-text-4" id="text-org395ad52">
 <div class="org-src-container">
 <pre class="src src-conf">IMAPStore gmail-remote
 Account gmail
@@ -308,9 +308,9 @@ Channel gmail-spam
 </div>
 </div>
 </div>
-<div id="outline-container-orgf1c97ff" class="outline-4">
-<h4 id="orgf1c97ff">Yahoo</h4>
-<div class="outline-text-4" id="text-orgf1c97ff">
+<div id="outline-container-org7a62a54" class="outline-4">
+<h4 id="org7a62a54">Yahoo</h4>
+<div class="outline-text-4" id="text-org7a62a54">
 <div class="org-src-container">
 <pre class="src src-conf">IMAPStore yahoo-remote
 Account yahoo
@@ -401,9 +401,9 @@ Channel yahoo-other
 </div>
 </div>
 </div>
-<div id="outline-container-orgf8feb80" class="outline-4">
-<h4 id="orgf8feb80">Hotmail</h4>
-<div class="outline-text-4" id="text-orgf8feb80">
+<div id="outline-container-org68f7dd9" class="outline-4">
+<h4 id="org68f7dd9">Hotmail</h4>
+<div class="outline-text-4" id="text-org68f7dd9">
 <div class="org-src-container">
 <pre class="src src-conf">IMAPStore hotmail-remote
 Account hotmail
@@ -517,9 +517,9 @@ Channel hotmail-other
 </div>
 </div>
 </div>
-<div id="outline-container-orge5e7997" class="outline-4">
-<h4 id="orge5e7997">Ymail</h4>
-<div class="outline-text-4" id="text-orge5e7997">
+<div id="outline-container-orgc1df2d8" class="outline-4">
+<h4 id="orgc1df2d8">Ymail</h4>
+<div class="outline-text-4" id="text-orgc1df2d8">
 <div class="org-src-container">
 <pre class="src src-conf">IMAPStore ymail-remote
 Account ymail
@@ -616,9 +616,9 @@ Run <code>mbsync -Va</code> for verbose logging to stdout. After that you could 
 </div>
 </div>
 </div>
-<div id="outline-container-orgf28e9cc" class="outline-3">
-<h3 id="orgf28e9cc">afew</h3>
-<div class="outline-text-3" id="text-orgf28e9cc">
+<div id="outline-container-orge6d721b" class="outline-3">
+<h3 id="orge6d721b">afew</h3>
+<div class="outline-text-3" id="text-orge6d721b">
 <pre class="example">
 header-args: :tangle ~/.config/afew/config :mkdirp t
 </pre>
@@ -626,9 +626,9 @@ header-args: :tangle ~/.config/afew/config :mkdirp t
 It&rsquo;s an initial tagging script for notmuch.
 </p>
 </div>
-<div id="outline-container-orgf27d354" class="outline-4">
-<h4 id="orgf27d354">SpamFilter</h4>
-<div class="outline-text-4" id="text-orgf27d354">
+<div id="outline-container-org9de1b56" class="outline-4">
+<h4 id="org9de1b56">SpamFilter</h4>
+<div class="outline-text-4" id="text-org9de1b56">
 <p>
 <code>spam_tag = &lt;tag&gt;</code>
 </p>
@@ -647,9 +647,9 @@ I&rsquo;m just using the defaults here.
 </div>
 </div>
 </div>
-<div id="outline-container-org542def7" class="outline-4">
-<h4 id="org542def7">KillThreadsFilter</h4>
-<div class="outline-text-4" id="text-org542def7">
+<div id="outline-container-orge886695" class="outline-4">
+<h4 id="orge886695">KillThreadsFilter</h4>
+<div class="outline-text-4" id="text-orge886695">
 <p>
 If the new message has been added to a thread that has already been tagged <i>killed</i> then add the killed tag to this message. This allows for ignoring all replies to a particular thread.
 </p>
@@ -659,9 +659,9 @@ If the new message has been added to a thread that has already been tagged <i>ki
 </div>
 </div>
 </div>
-<div id="outline-container-org83550b6" class="outline-4">
-<h4 id="org83550b6">ArchiveSentMailsFilter</h4>
-<div class="outline-text-4" id="text-org83550b6">
+<div id="outline-container-org3035d64" class="outline-4">
+<h4 id="org3035d64">ArchiveSentMailsFilter</h4>
+<div class="outline-text-4" id="text-org3035d64">
 <p>
 Emails filtered by this filter have the new tag removed, so will not have the inbox tag added by the InboxFilter.
 </p>
@@ -671,9 +671,9 @@ Emails filtered by this filter have the new tag removed, so will not have the in
 </div>
 </div>
 </div>
-<div id="outline-container-org538a030" class="outline-4">
-<h4 id="org538a030">SentMailsFilter</h4>
-<div class="outline-text-4" id="text-org538a030">
+<div id="outline-container-org5c1ca39" class="outline-4">
+<h4 id="org5c1ca39">SentMailsFilter</h4>
+<div class="outline-text-4" id="text-org5c1ca39">
 <p>
 <code>sent_tag = &lt;tag&gt;</code>
 </p>
@@ -691,9 +691,9 @@ to not only search for threads but individual mails as well.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orga9c4325" class="outline-4">
-<h4 id="orga9c4325">FolderNameFilter</h4>
-<div class="outline-text-4" id="text-orga9c4325">
+<div id="outline-container-org4d9deb1" class="outline-4">
+<h4 id="org4d9deb1">FolderNameFilter</h4>
+<div class="outline-text-4" id="text-org4d9deb1">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">FolderNameFilter</span>]
 <span class="org-variable-name">folder_lowercases</span> = true
@@ -740,7 +740,7 @@ You may use the rules e.g. to transform the name of your ‘Junk’ folder into 
 <li><p>
 If your maildir hierarchy is represented in the filesystem as collapsed dirs, <i>&lt;sep&gt;</i> is used to split it again before applying tags. If your maildir looks like this:
 </p>
-<pre class="example" id="org0f7a103">
+<pre class="example" id="org53b8ff0">
 [...]
 /path/to/maildir/devel.afew/[cur|new|tmp]/...
 /path/to/maildir/devel.alot/[cur|new|tmp]/...
@@ -752,7 +752,7 @@ If your maildir hierarchy is represented in the filesystem as collapsed dirs, <i
 <p>
 the mails in your afew folder will be tagged with ‘devel’ and ‘afew’. If instead your hierarchy is split by a more conventional <code>/</code> or any other divider
 </p>
-<pre class="example" id="orgb58eb6c">
+<pre class="example" id="org724fbf8">
 [...]
 /path/to/maildir/devel/afew/[cur|new|tmp]/...
 /path/to/maildir/devel/alot/[cur|new|tmp]/...
@@ -768,9 +768,9 @@ you need to configure that divider to have your mails properly tagged:
 </div>
 </div>
 </div>
-<div id="outline-container-org2ef4011" class="outline-4">
-<h4 id="org2ef4011">InboxFilter</h4>
-<div class="outline-text-4" id="text-org2ef4011">
+<div id="outline-container-orgdb5496e" class="outline-4">
+<h4 id="orgdb5496e">InboxFilter</h4>
+<div class="outline-text-4" id="text-orgdb5496e">
 <p>
 This removes the new tag, and adds the inbox tag, to any message that isn’t killed or spam. (The new tags are set in your notmuch config, and default to just <code>new</code>.)
 </p>
@@ -780,23 +780,23 @@ This removes the new tag, and adds the inbox tag, to any message that isn’t ki
 </div>
 </div>
 </div>
-<div id="outline-container-orgd3424e7" class="outline-4">
-<h4 id="orgd3424e7">Custom Filter</h4>
-<div class="outline-text-4" id="text-orgd3424e7">
+<div id="outline-container-org5c7feef" class="outline-4">
+<h4 id="org5c7feef">Custom Filter</h4>
+<div class="outline-text-4" id="text-org5c7feef">
 <p>
 See the <a href="https://afew.readthedocs.io/en/latest/configuration.html">afew documentation</a> on how to create custom filters.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org41bba60"></a>Yearly Archives<br>
-<div class="outline-text-5" id="text-org41bba60">
+<li><a id="org1bc35eb"></a>Yearly Archives<br>
+<div class="outline-text-5" id="text-org1bc35eb">
 <p>
 For efficiency, this should be done from the server side, but some IMAP providers webmail <i>UI</i> isn&rsquo;t always capable of doing simple mail searching. Also if these tags are meant to be transformed into <i>IMAP folders</i>, locally the folders should already exists before doing <code>afew --move-mails</code> command.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org4bef844"></a>2021<br>
-<div class="outline-text-6" id="text-org4bef844">
+<li><a id="orgcbdba5c"></a>2021<br>
+<div class="outline-text-6" id="text-orgcbdba5c">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.21</span>]
 <span class="org-variable-name">query</span> = date:2021
@@ -806,8 +806,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="orgf7ca068"></a>2020<br>
-<div class="outline-text-6" id="text-orgf7ca068">
+<li><a id="orgeaef20f"></a>2020<br>
+<div class="outline-text-6" id="text-orgeaef20f">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.20</span>]
 <span class="org-variable-name">query</span> = date:2020
@@ -817,8 +817,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org5ae92ad"></a>2019<br>
-<div class="outline-text-6" id="text-org5ae92ad">
+<li><a id="org1baf4a0"></a>2019<br>
+<div class="outline-text-6" id="text-org1baf4a0">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.19</span>]
 <span class="org-variable-name">query</span> = date:2019
@@ -828,8 +828,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org15c8cbf"></a>2018<br>
-<div class="outline-text-6" id="text-org15c8cbf">
+<li><a id="orga62be6e"></a>2018<br>
+<div class="outline-text-6" id="text-orga62be6e">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.18</span>]
 <span class="org-variable-name">query</span> = date:2018
@@ -839,8 +839,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org3776af7"></a>2017<br>
-<div class="outline-text-6" id="text-org3776af7">
+<li><a id="org758e48c"></a>2017<br>
+<div class="outline-text-6" id="text-org758e48c">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.17</span>]
 <span class="org-variable-name">query</span> = date:2017
@@ -850,8 +850,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org8ddcef8"></a>2016<br>
-<div class="outline-text-6" id="text-org8ddcef8">
+<li><a id="org1e6746b"></a>2016<br>
+<div class="outline-text-6" id="text-org1e6746b">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.16</span>]
 <span class="org-variable-name">query</span> = date:2016
@@ -861,8 +861,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="orgb0ea465"></a>2015<br>
-<div class="outline-text-6" id="text-orgb0ea465">
+<li><a id="orgb8b1362"></a>2015<br>
+<div class="outline-text-6" id="text-orgb8b1362">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.15</span>]
 <span class="org-variable-name">query</span> = date:2015
@@ -872,8 +872,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org6d2c288"></a>2014<br>
-<div class="outline-text-6" id="text-org6d2c288">
+<li><a id="orgbe03f35"></a>2014<br>
+<div class="outline-text-6" id="text-orgbe03f35">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.14</span>]
 <span class="org-variable-name">query</span> = date:2014
@@ -883,8 +883,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="orga65ebea"></a>2013<br>
-<div class="outline-text-6" id="text-orga65ebea">
+<li><a id="org40f8cd2"></a>2013<br>
+<div class="outline-text-6" id="text-org40f8cd2">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.13</span>]
 <span class="org-variable-name">query</span> = date:2013
@@ -894,8 +894,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org4c211f2"></a>2012<br>
-<div class="outline-text-6" id="text-org4c211f2">
+<li><a id="org301a1d5"></a>2012<br>
+<div class="outline-text-6" id="text-org301a1d5">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.12</span>]
 <span class="org-variable-name">query</span> = date:2012
@@ -905,8 +905,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org409bcba"></a>2011<br>
-<div class="outline-text-6" id="text-org409bcba">
+<li><a id="orgcfd62f9"></a>2011<br>
+<div class="outline-text-6" id="text-orgcfd62f9">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.11</span>]
 <span class="org-variable-name">query</span> = date:2011
@@ -916,8 +916,8 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </div>
 </div>
 </li>
-<li><a id="org8d2c5bd"></a>2010<br>
-<div class="outline-text-6" id="text-org8d2c5bd">
+<li><a id="orgf67135b"></a>2010<br>
+<div class="outline-text-6" id="text-orgf67135b">
 <div class="org-src-container">
 <pre class="src src-conf">[<span class="org-type">Filter.10</span>]
 <span class="org-variable-name">query</span> = date:2010
@@ -932,16 +932,16 @@ For efficiency, this should be done from the server side, but some IMAP provider
 </ul>
 </div>
 </div>
-<div id="outline-container-org90cf362" class="outline-3">
-<h3 id="org90cf362">notmuch</h3>
-<div class="outline-text-3" id="text-org90cf362">
+<div id="outline-container-org234a9da" class="outline-3">
+<h3 id="org234a9da">notmuch</h3>
+<div class="outline-text-3" id="text-org234a9da">
 <p>
 run <code>notmuch setup</code> for initializing mail accounts, and <code>notmuch new</code> <b>AFTER</b> all your mailboxes syncronized.
 </p>
 </div>
-<div id="outline-container-orga8bcb27" class="outline-4">
-<h4 id="orga8bcb27">Hooks</h4>
-<div class="outline-text-4" id="text-orga8bcb27">
+<div id="outline-container-org06ea86e" class="outline-4">
+<h4 id="org06ea86e">Hooks</h4>
+<div class="outline-text-4" id="text-org06ea86e">
 <p>
 Notmuch provides 3 hooks:
 </p>
@@ -955,8 +955,8 @@ I&rsquo;ll be using the <code>pre-new</code> hooks for <i>afew</i> and also <i>o
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orge45724c"></a>Post New Hook<br>
-<div class="outline-text-5" id="text-orge45724c">
+<li><a id="orgb10d01d"></a>Post New Hook<br>
+<div class="outline-text-5" id="text-orgb10d01d">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-variable-name">_AFEW</span>=<span class="org-string">"$(command -v afew)"</span>
 
@@ -969,9 +969,9 @@ I&rsquo;ll be using the <code>pre-new</code> hooks for <i>afew</i> and also <i>o
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb7ba66a" class="outline-3">
-<h3 id="orgb7ba66a">offlineimap</h3>
-<div class="outline-text-3" id="text-orgb7ba66a">
+<div id="outline-container-org9c480c7" class="outline-3">
+<h3 id="org9c480c7">offlineimap</h3>
+<div class="outline-text-3" id="text-org9c480c7">
 <pre class="example">
 header-args: :tangle ~/.config/offlineimap/config :mkdirp t
 </pre>
@@ -979,9 +979,9 @@ header-args: :tangle ~/.config/offlineimap/config :mkdirp t
 The configuration file can be stored at <code>~/.offlineimaprc</code> or <code>~/.config/offlineimap/config</code>, I chose the latter. I&rsquo;m using the <i>python3</i> version of <i>offlineimap</i>.
 </p>
 </div>
-<div id="outline-container-org1f0fc34" class="outline-4">
-<h4 id="org1f0fc34">General options</h4>
-<div class="outline-text-4" id="text-org1f0fc34">
+<div id="outline-container-org28526a4" class="outline-4">
+<h4 id="org28526a4">General options</h4>
+<div class="outline-text-4" id="text-org28526a4">
 <p>
 List the accounts that will be managed by offlineimap
 </p>
@@ -992,18 +992,18 @@ List the accounts that will be managed by offlineimap
 </div>
 </div>
 </div>
-<div id="outline-container-org83a7b86" class="outline-4">
-<h4 id="org83a7b86">Controls how many accounts may be synced simultaneously</h4>
-<div class="outline-text-4" id="text-org83a7b86">
+<div id="outline-container-org5e0c6b8" class="outline-4">
+<h4 id="org5e0c6b8">Controls how many accounts may be synced simultaneously</h4>
+<div class="outline-text-4" id="text-org5e0c6b8">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-variable-name">maxsyncaccounts</span> = 1
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org9e5038f" class="outline-4">
-<h4 id="org9e5038f">Set <code>pythonfile</code></h4>
-<div class="outline-text-4" id="text-org9e5038f">
+<div id="outline-container-orgcb6702c" class="outline-4">
+<h4 id="orgcb6702c">Set <code>pythonfile</code></h4>
+<div class="outline-text-4" id="text-orgcb6702c">
 <p>
 This is an helper script used by <i>offlineimap</i>. If this file is not located within <code>$PATH</code>, provide full path.
 </p>
@@ -1013,8 +1013,8 @@ This is an helper script used by <i>offlineimap</i>. If this file is not located
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="org4f953d1"></a>The <code>offlineimap.py</code> content<br>
-<div class="outline-text-5" id="text-org4f953d1">
+<li><a id="org05d2acb"></a>The <code>offlineimap.py</code> content<br>
+<div class="outline-text-5" id="text-org05d2acb">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-doc">"""Offlineimap helper script."""</span>
 
@@ -1046,9 +1046,9 @@ This is an helper script used by <i>offlineimap</i>. If this file is not located
 </li>
 </ul>
 </div>
-<div id="outline-container-org54f6f23" class="outline-4">
-<h4 id="org54f6f23">Credentials for gmail account</h4>
-<div class="outline-text-4" id="text-org54f6f23">
+<div id="outline-container-org5d2243a" class="outline-4">
+<h4 id="org5d2243a">Credentials for gmail account</h4>
+<div class="outline-text-4" id="text-org5d2243a">
 <p>
 The configuration itself will vary depending to how you will use <i>offlineimap</i>, if you&rsquo;re using it as a <i>daemon</i> (continously running in the background) you should uncomment the <code>autorefresh</code> and <code>quick</code> option. I&rsquo;m not using it as a daemon since I want the <i>offlineimap</i> process only run when called by <i>notmuch</i> via hooks. Also check the full configuration directives at their <a href="https://github.com/OfflineIMAP/offlineimap3/blob/master/offlineimap.conf">github repo</a>.
 </p>
@@ -1093,9 +1093,9 @@ The configuration itself will vary depending to how you will use <i>offlineimap<
 </div>
 </div>
 </div>
-<div id="outline-container-org89202e3" class="outline-4">
-<h4 id="org89202e3">Yahoo</h4>
-<div class="outline-text-4" id="text-org89202e3">
+<div id="outline-container-org806de49" class="outline-4">
+<h4 id="org806de49">Yahoo</h4>
+<div class="outline-text-4" id="text-org806de49">
 <p>
 I have to use <code>maxconnections = 1</code> for <i>yahoo</i> and <i>ymail</i> since they bound to generate error regarding <i>UID</i> when using the default.
 </p>
@@ -1136,9 +1136,9 @@ I have to use <code>maxconnections = 1</code> for <i>yahoo</i> and <i>ymail</i> 
 </div>
 </div>
 </div>
-<div id="outline-container-org95500d4" class="outline-4">
-<h4 id="org95500d4">Hotmail</h4>
-<div class="outline-text-4" id="text-org95500d4">
+<div id="outline-container-org5126d7a" class="outline-4">
+<h4 id="org5126d7a">Hotmail</h4>
+<div class="outline-text-4" id="text-org5126d7a">
 <div class="org-src-container">
 <pre class="src src-python">[Account hotmail]
 <span class="org-variable-name">localrepository</span> = hotmail-local
@@ -1179,9 +1179,9 @@ I have to use <code>maxconnections = 1</code> for <i>yahoo</i> and <i>ymail</i> 
 </div>
 </div>
 </div>
-<div id="outline-container-orgb61928e" class="outline-4">
-<h4 id="orgb61928e">Ymail</h4>
-<div class="outline-text-4" id="text-orgb61928e">
+<div id="outline-container-org4d97326" class="outline-4">
+<h4 id="org4d97326">Ymail</h4>
+<div class="outline-text-4" id="text-org4d97326">
 <div class="org-src-container">
 <pre class="src src-python">[Account ymail]
 <span class="org-variable-name">localrepository</span> = ymail-local
