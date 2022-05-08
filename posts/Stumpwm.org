@@ -609,9 +609,33 @@
      #+end_src
 **** emacs
      #+begin_src lisp
+       (let ((chemacs-profile
+              (cond ((probe-file
+                      (merge-pathnames
+                       ".config/chemacs/profile"
+                       (user-homedir-pathname)))
+                     (merge-pathnames
+                      ".config/chemacs/profile"
+                      (user-homedir-pathname)))
+                    ((probe-file
+                      (merge-pathnames
+                       ".emacs-profile"
+                       (user-homedir-pathname)))
+                     (merge-pathnames
+                      ".emacs-profile"
+                      (user-homedir-pathname))))))
+         (when chemacs-profile
+           (defparameter *chemacs-profile*
+             (uiop:read-file-line chemacs-profile)
+             "The current Chemacs profile")))
+
        (defcommand emacs () ()
-         "Run or raise Firefox."
-         (run-shell-command "emacsclient -c -a ''"))
+                   "Run or raise Emacs."
+                   (let ((cmd
+                          (if *chemacs-profile*
+                              (format nil "emacsclient -s ~A -c -a ''" *chemacs-profile*)
+                              (format nil "emacsclient -c -a ''"))))
+                     (run-shell-command cmd)))
      #+end_src
 **** Browser
      Use the environment variable =${BROWSER}= if set.
