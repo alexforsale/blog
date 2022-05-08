@@ -60,6 +60,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-diminish)
      (require 'config-dashboard)
      (require 'config-alert)
+     (require 'config-smartparens)
   #+end_src
 ** Editing packages
    #+begin_src emacs-lisp
@@ -124,7 +125,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-magit)
      ;;(require 'config-slime)
      ;;(require 'config-sly) ; a better repl than slime
-     (require 'config-paredit)
+     ;;(require 'config-paredit)
      (require 'config-telega)
      (require 'config-emms)
      ;;(+config/emms-set-mpd) ; when using mpd
@@ -1152,6 +1153,39 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-alert)
         ;;; config-alert.el ends here
       #+end_src
+**** smartparens
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-smartparens.el" user-emacs-directory)
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-smartparens.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (unless +config/is-guix-system
+         (straight-use-package 'smartparens))
+       ;; disable `electric-pair-mode')
+       (electric-pair-mode nil)
+       (smartparens-global-mode 1)
+       (require 'smartparens-config)
+       (setq sp-highlight-pair-overlay nil
+             sp-highlight-wrap-overlay nil
+             sp-highlight-wrap-tag-overlay nil)
+       ;; Silence some harmless but annoying echo-area spam
+       (dolist (key '(:unmatched-expression :no-matching-tag))
+         (setf (alist-get key sp-message-alist) nil))
+       (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "'" nil :actions nil)
+       (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "`" nil :actions nil)
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-smartparens)
+        ;;; config-smartparens.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-ui)
@@ -1202,7 +1236,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 *** Enable =electric-pair-mode=
     #+begin_src emacs-lisp
-      (electric-pair-mode 1)
+      (unless (featurep 'smartparens)
+        (electric-pair-mode 1))
     #+end_src
 *** Use spaces instead of tabs
     #+begin_src emacs-lisp
