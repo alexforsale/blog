@@ -1087,7 +1087,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (diminish 'projectile-mode)
          (diminish 'paredit-mode)
          (diminish 'theme-magic-export-theme-mode)
-         (diminish 'git-gutter-mode))
+         (diminish 'git-gutter-mode)
+         (diminish 'smartparens-mode))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
