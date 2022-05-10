@@ -1,1 +1,2 @@
-#+include: posts/index.org :lines "-9"
+* Latests [[./posts/index.org][Posts]]
+#+include: posts/index.org :lines "3-9"
