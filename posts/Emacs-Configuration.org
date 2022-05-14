@@ -1900,9 +1900,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (setq org-catch-invisible-edits 'smart)
     #+end_src
-*** hide emphasis-marker
+*** don't hide emphasis-marker
+    It's kinda ugly but makes editing easy.
     #+begin_src emacs-lisp
-      (setq org-hide-emphasis-markers t)
+      (setq org-hide-emphasis-markers nil)
     #+end_src
 *** images
     #+begin_src emacs-lisp
