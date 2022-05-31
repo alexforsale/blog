@@ -333,7 +333,26 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
   This tangles into =~/.config/emacs/modules/config-defaults-variables.el=
 ** Determine running OS
    #+begin_src emacs-lisp
-     (shell-command ". ~/.bashrc" nil nil)
+     (cond ((string-match ".*/sh" (getenv "SHELL"))
+            (when (file-exists-p
+                   (expand-file-name ".shrc" (getenv "HOME")))
+              (shell-command "source ~/.shrc" nil nil)))
+           ((string-match ".*/csh" (getenv "SHELL"))
+            (when (file-exists-p
+                   (expand-file-name ".cshrc" (getenv "HOME")))
+              (shell-command "source ~/.cshrc")))
+           ((string-match ".*/tcsh" (getenv "SHELL"))
+            (when (file-exists-p
+                   (expand-file-name ".tcshrc" (getenv "HOME")))
+              (shell-command "source ~/.tcshrc")))
+           ((string-match ".*/bash" (getenv "SHELL"))
+            (when (file-exists-p
+                   (expand-file-name ".bashrc" (getenv "HOME")))
+              (shell-command "source ~/.bashrc")))
+           ((string-match ".*/zsh" (getenv "SHELL"))
+            (when (file-exists-p
+                   (expand-file-name ".zhrc" (getenv "HOME")))
+              (shell-command "source ~/.zshrc"))))
    #+end_src
    This is needed for /EXWM/ inside /guixSD/.
 *** guix
