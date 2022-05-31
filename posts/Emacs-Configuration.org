@@ -39,6 +39,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (customize-set-variable '+org-capture-projects-file (expand-file-name "projects.org" org-directory))
      (customize-set-variable 'org-agenda-files (list org-directory))
      (customize-set-variable '+emms-music-dir "~/Music")
+     (customize-set-variable '+config-doom-theme 'doom-solarized-dark)
+     (customize-set-variable '+config-standard-theme 'wombat)
    #+end_src
 ** UI Packages
    #+begin_src emacs-lisp
@@ -133,6 +135,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-pdf-tools)
      (require 'config-gist)
      (require 'config-ripgrep)
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (let ((+doom-theme +config-doom-theme)
+           (+standard-theme +config-standard-theme))
+       (cond ((and (featurep 'doom-themes)
+                   (featurep 'consult))
+              (consult-theme +doom-theme))
+             ((featurep 'doom-themes)
+              (load-theme +doom-theme t))
+             ((custom-theme-name-valid-p +standard-theme)
+              (load-theme +standard-theme t))))
    #+end_src
 ** Footer
    #+begin_src emacs-lisp
@@ -415,6 +429,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (setq shared-game-score-directory (expand-file-name "shared-game-score/" +emacs-data-dir))
      (setq timeclock-file (expand-file-name "timeclock" +emacs-data-dir))
      (setq type-break-file-name (expand-file-name "type-break.el" +emacs-data-dir))
+   #+end_src
+** theme
+   #+begin_src emacs-lisp
+     (defvar +config-doom-theme nil
+       "User doom theme")
+     (defvar +config-standard-theme nil
+       "User builtin theme")
    #+end_src
 ** footer
    #+begin_src emacs-lisp
