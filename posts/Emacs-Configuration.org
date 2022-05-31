@@ -350,7 +350,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (cond ((string-match ".*/sh" (getenv "SHELL"))
             (when (file-exists-p
                    (expand-file-name ".shrc" (getenv "HOME")))
-              (shell-command "source ~/.shrc" nil nil)))
+              (shell-command ". ~/.shrc" nil nil)))
            ((string-match ".*/csh" (getenv "SHELL"))
             (when (file-exists-p
                    (expand-file-name ".cshrc" (getenv "HOME")))
