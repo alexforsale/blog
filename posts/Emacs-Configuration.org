@@ -1851,6 +1851,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (setq org-clock-persist-file (expand-file-name "org/clock-persist.el" +emacs-data-dir))
         (setq org-id-locations-file (expand-file-name "org/id-locations.el" +emacs-data-dir))
         (setq org-persist-directory (expand-file-name "org/persist/" +emacs-data-dir))
+        (unless (file-directory-p org-persist-directory)
+          (make-directory org-persist-directory :parents))
         (setq org-publish-timestamp-directory  (expand-file-name "org/timestamps/" +emacs-data-dir))
         (setq org-generic-id-locations-file (expand-file-name ".org-generic-id-locations" +emacs-data-dir)))
     #+end_src
