@@ -14,8 +14,8 @@
   <link>https://alexforsale.github.io/blog</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Tue, 31 May 2022 17:40:42 +0000</pubDate>
-  <lastBuildDate>Tue, 31 May 2022 17:40:42 +0000</lastBuildDate>
+  <pubDate>Thu, 02 Jun 2022 14:24:22 +0000</pubDate>
+  <lastBuildDate>Thu, 02 Jun 2022 14:24:22 +0000</lastBuildDate>
   <generator>Emacs 26.3 Org-mode 9.5.3</generator>
   <webMaster>alexforsale@yahoo.com (Kristian Alexander P)</webMaster>
   <image>
@@ -26,11 +26,15 @@
 
   <ul class="org-ul">
     <li><p>
-      <b><a href="Decyphering-org-agenda.html">Decyphering org-agenda-view</a></b>
+      <b><a href="org-mode-conditional-header-arg.html">Conditional Code-block in Org-mode</a></b>
+    </p>
+    <p class='pubdate'>by Kristian Alexander P on Jun 02, 2022.</p></li>
+    <li><p>
+      <b><a href="prometheus-snmp-exporter.html">prometheus-snmp-exporter</a></b>
     </p>
     <p class='pubdate'>by Kristian Alexander P on Mar 25, 2022.</p></li>
     <li><p>
-      <b><a href="prometheus-snmp-exporter.html">prometheus-snmp-exporter</a></b>
+      <b><a href="Decyphering-org-agenda.html">Decyphering org-agenda-view</a></b>
     </p>
     <p class='pubdate'>by Kristian Alexander P on Mar 25, 2022.</p></li>
     <li><p>
