@@ -609,6 +609,9 @@
      #+end_src
 **** emacs
      #+begin_src lisp
+       (defparameter *chemacs-profile* nil
+         "The current Chemacs profile")
+
        (let ((chemacs-profile
               (cond ((probe-file
                       (merge-pathnames
@@ -625,9 +628,8 @@
                       ".emacs-profile"
                       (user-homedir-pathname))))))
          (when chemacs-profile
-           (defparameter *chemacs-profile*
-             (uiop:read-file-line chemacs-profile)
-             "The current Chemacs profile")))
+           (setf *chemacs-profile*
+                 (uiop:read-file-line chemacs-profile))))
 
        (defcommand emacs () ()
                    "Run or raise Emacs."
