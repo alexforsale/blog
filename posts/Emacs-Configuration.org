@@ -138,13 +138,19 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
+     (defun +config/load-theme (theme)
+       "Load THEME after new frame."
+       (add-hook 'after-make-frame-functions
+                 (lambda (frame)
+                   (select-frame frame)
+                   (when (display-graphic-p frame)
+                     (load-theme theme t)))))
+
      (cond ((and (featurep 'config-doom-themes)
                  (featurep 'consult))
-            (consult-theme +config-doom-theme))
-           ((featurep 'doom-themes)
-            (load-theme +config-doom-theme t))
+            (+config/load-theme +config-doom-theme))
            ((custom-theme-name-valid-p +config-standard-theme)
-            (load-theme +config-standard-theme t)))
+            (+config/load-theme +config-standard-theme t)))
    #+end_src
 ** Footer
    #+begin_src emacs-lisp
