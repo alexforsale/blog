@@ -138,7 +138,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (cond ((and (featurep 'doom-themes)
+     (cond ((and (featurep 'config-doom-themes)
                  (featurep 'consult))
             (consult-theme +config-doom-theme))
            ((featurep 'doom-themes)
