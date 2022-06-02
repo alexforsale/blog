@@ -435,6 +435,16 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (defvar +config-standard-theme nil
        "User builtin theme")
    #+end_src
+** =directory-empty-p=
+   This function only available for Emacs version 28+, make it available also for earlier version.
+   #+begin_src emacs-lisp
+     (when (version< emacs-version "28")
+       (defun directory-empty-p (file-name)
+         "Check if a directory contains any other files then dot-files"
+         (when (file-directory-p file-name)
+           (null (directory-files file-name nil
+                                  directory-files-no-dot-files-regexp t)))))
+   #+end_src
 ** footer
    #+begin_src emacs-lisp
      (provide 'config-defaults-variables)
