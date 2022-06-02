@@ -1,0 +1,22 @@
+#+title: Conditional Code-block in Org-mode
+#+date: <2022-06-02 Thu>
+#+author: Kristian Alexander P
+#+email: alexforsale@yahoo.com
+#+language: en
+* Literate Programming                                  :org:mode:codeblocks:
+  Two classical operations in literate programming[fn:1]:
+  - Tangle :: Extract the source code blocks and generate real working code files for further compilation or execution, eventually outside of Emacs.
+  - Weave :: Export the whole Org file as literate, human-readable documentation (generally in HTML or LaTeX).
+  Furthermore, we can conditionally instruct which code blocks to evaluate by using /emacs lisp/ in the code block /header arguments/.
+** Example
+   #+name: freebsd
+   #+begin_example
+   #+begin_src emacs-lisp :exports (if (string= "freebsd" (downcase (substring (shell-command-to-string "uname -s") 0 -1))) "both" "none") :results verbatim
+     (print "this will only evaluated on freebsd")
+   #+end_src
+   #+end_example
+* Footnotes
+
+[fn:1] https://org-babel.readthedocs.io/en/latest/
+
+#+include: ../utterances.inc
