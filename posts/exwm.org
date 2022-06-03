@@ -473,7 +473,7 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
     This defines a key binding in the =exwm-mode-map= major mode, in order to pass a key binding that already defined in the major mode, to the current window.
 *** minibuffer position
     #+begin_src emacs-lisp
-    (setq exwm-workspace-minibuffer-position 'bottom)
+    ;;(setq exwm-workspace-minibuffer-position 'bottom)
     #+end_src
     This hides the minibuffer and echo area.
 *** start perspective-exwm
@@ -503,6 +503,6 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
   #+caption: exwm with my emacs config
   #+attr_org: :width 300
   #+ATTR_HTML: :class center no-border :width 75% :height 75%
-  [[[[file:../blog/images/posts/exwm-with-emacs-config.png][../../images/posts/exwm-with-emacs-config.png]]]]
+  [[file:../blog/images/posts/exwm-with-emacs-config.png][../../images/posts/exwm-with-emacs-config.png]]
 
 #+include: ../utterances.inc
