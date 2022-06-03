@@ -63,6 +63,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-dashboard)
      (require 'config-alert)
      (require 'config-smartparens)
+     (require 'config-treemacs)
   #+end_src
 ** Editing packages
    #+begin_src emacs-lisp
@@ -1254,6 +1255,60 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+begin_src emacs-lisp
         (provide 'config-smartparens)
         ;;; config-smartparens.el ends here
+      #+end_src
+**** treemacs
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-treemacs.el" user-emacs-directory)
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-treemacs.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+     #+begin_src emacs-lisp
+       (straight-use-package 'treemacs)
+       (straight-use-package 'treemacs-projectile)
+       (straight-use-package 'treemacs-magit)
+       (straight-use-package 'treemacs-icons-dired)
+       (straight-use-package 'treemacs-perspective)
+       (straight-use-package 'treemacs-all-the-icons)
+     #+end_src
+     Variables
+     #+begin_src emacs-lisp
+       (customize-set-variable 'treemacs-persist-file (expand-file-name ".treemacs-persist" +emacs-data-dir))
+     #+end_src
+     Keybinding
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-x M-j") 'treemacs)
+     #+end_src
+     Misc
+     #+begin_src emacs-lisp
+       ;; projectile
+       (with-eval-after-load 'projectile
+         (require 'treemacs-projectile))
+       ;; dired
+       (add-hook 'dired-mode-hook #'treemacs-icons-dired-enable-once)
+       ;; magit
+       (with-eval-after-load 'magit
+         (require 'treemacs-magit))
+       ;; perspective
+       (with-eval-after-load 'perspective
+         (progn
+           (require 'treemacs-perspective)
+           (treemacs-set-scope-type 'Perspectives)))
+       ;; theme
+       (with-eval-after-load 'treemacs
+         (progn
+           (treemacs-load-theme 'doom-atom)
+           (treemacs-indent-guide-mode 1)))
+     #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-treemacs)
+        ;;; config-treemacs.el ends here
       #+end_src
 *** Footer
     #+begin_src emacs-lisp
