@@ -476,6 +476,33 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
     ;;(setq exwm-workspace-minibuffer-position 'bottom)
     #+end_src
     This hides the minibuffer and echo area.
+*** input-simulation key
+    #+begin_src emacs-lisp
+      (setq exwm-input-simulation-keys
+            '(
+              ;; movement
+              ([?\C-b] . [left])
+              ([?\M-b] . [C-left])
+              ([?\C-f] . [right])
+              ([?\M-f] . [C-right])
+              ([?\C-p] . [up])
+              ([?\C-n] . [down])
+              ([?\C-a] . [home])
+              ([?\C-e] . [end])
+              ([?\M-v] . [prior])
+              ([?\C-v] . [next])
+              ([?\C-d] . [delete])
+              ([?\C-k] . [S-end delete])
+              ;; cut/paste.
+              ([?\C-w] . [?\C-x])
+              ([?\M-w] . [?\C-c])
+              ([?\C-y] . [?\C-v])
+              ;; search
+              ([?\C-s] . [?\C-f])))
+    #+end_src
+    =exwm-input-simulation-keys= is an alist of the form (original-key . simulated-key), where both original-key and simulated-key are key sequences. Original-key is what you type to an X window in line-mode which then gets translated to simulated-key by EXWM and forwarded to the X window.
+
+    The codeblock above demonstrates how to use simulation keys to mimic the behavior of Emacs. The value of =exwm-input-simulation-keys= is a list of /cons/ cells =(SRC . DEST)=, where /SRC/ is the key sequence you press and /DEST/ is what /EXWM/ actually sends to application. Note that both /SRC/ and /DEST/ should be key sequences (vector or string).
 *** start perspective-exwm
     #+begin_src emacs-lisp
       (require 'perspective-exwm)
