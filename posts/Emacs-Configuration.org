@@ -4079,6 +4079,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (setq image-dired-gallery-dir (expand-file-name "image-dired/gallery/" +emacs-data-dir))
         (setq image-dired-temp-image-file (expand-file-name "image-dired/temp-image" +emacs-data-dir))
         (setq image-dired-temp-rotate-image-file (expand-file-name "image-dired/temp-rotate-image" +emacs-data-dir)))
+      (add-hook 'dired-load-hook
+                (function (lambda () (load "dired-x"))))
     #+end_src
 *** =newsticker=
     #+begin_src emacs-lisp
