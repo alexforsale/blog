@@ -2326,6 +2326,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               org-capture-default-templates "tt")
         (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
       #+end_src
+*** Inherit properties
+    Set org-properties to also apply to their sublevels.
+    #+begin_src emacs-lisp
+      (customize-set-variable 'org-use-property-inheritance t)
+    #+end_src
 *** Additional org packages
     This will be stored in each individual files.
 **** org-roam
