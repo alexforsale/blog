@@ -509,7 +509,7 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
       (perspective-exwm-mode)
     #+end_src
 *** system tray
-    #+begin_src emacs-lisp
+    #+begin_src emacs-lisp :tangle no
       (require 'exwm-systemtray)
       (exwm-systemtray-enable)
       (setq exwm-systemtray-height 25) ; default 16
