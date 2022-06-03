@@ -14,9 +14,9 @@
   <link>https://alexforsale.github.io/blog</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Thu, 02 Jun 2022 17:49:32 +0000</pubDate>
-  <lastBuildDate>Thu, 02 Jun 2022 17:49:32 +0000</lastBuildDate>
-  <generator>Emacs 26.3 Org-mode 9.5.3</generator>
+  <pubDate>Fri, 03 Jun 2022 10:28:36 +0000</pubDate>
+  <lastBuildDate>Fri, 03 Jun 2022 10:28:36 +0000</lastBuildDate>
+  <generator>Emacs 26.3 Org-mode 9.5.4</generator>
   <webMaster>alexforsale@yahoo.com (Kristian Alexander P)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
@@ -25,6 +25,10 @@
   </image>
 
   <ul class="org-ul">
+    <li><p>
+      <b><a href="exwm.html">EXWM</a></b>
+    </p>
+    <p class='pubdate'>by Kristian Alexander P on Jun 02, 2022.</p></li>
     <li><p>
       <b><a href="org-mode-conditional-header-arg.html">Conditional Code-block in Org-mode</a></b>
     </p>

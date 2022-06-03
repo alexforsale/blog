@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Jun 02, 2022 -->
+<!-- Jun 03, 2022 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Common Lisp</title>
@@ -58,9 +58,9 @@
 <header>
 <h1 class="title">Common Lisp</h1>
 <p class="subtitle" role="doc-subtitle">Published on Mar 20, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-org2fb0c36" class="outline-2">
-<h2 id="org2fb0c36"><span class="done DONE">DONE</span> Day One&#xa0;&#xa0;&#xa0;<span class="tag"><span class="clisp">clisp</span></span></h2>
-<div class="outline-text-2" id="text-org2fb0c36">
+</header><section id="outline-container-org4f4964c" class="outline-2">
+<h2 id="org4f4964c"><span class="done DONE">DONE</span> Day One&#xa0;&#xa0;&#xa0;<span class="tag"><span class="clisp">clisp</span></span></h2>
+<div class="outline-text-2" id="text-org4f4964c">
 <pre class="example">
 header-args: :results verbatim :exports both
 </pre>
@@ -68,9 +68,9 @@ header-args: :results verbatim :exports both
 <li>State &ldquo;DONE&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 00:40]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-orgbc5b682" class="outline-3">
-<h3 id="orgbc5b682">Getting Started&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sbcl">sbcl</span></span></h3>
-<div class="outline-text-3" id="text-orgbc5b682">
+<div id="outline-container-org38a7b36" class="outline-3">
+<h3 id="org38a7b36">Getting Started&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sbcl">sbcl</span></span></h3>
+<div class="outline-text-3" id="text-org38a7b36">
 <ul class="org-ul">
 <li>Done</li>
 </ul>
@@ -79,41 +79,41 @@ header-args: :results verbatim :exports both
 </p>
 </div>
 </div>
-<div id="outline-container-org9a99613" class="outline-3">
-<h3 id="org9a99613">SBCL REPL</h3>
-<div class="outline-text-3" id="text-org9a99613">
+<div id="outline-container-orge230852" class="outline-3">
+<h3 id="orge230852">SBCL REPL</h3>
+<div class="outline-text-3" id="text-orge230852">
 <p>
 Stands for <b>READ</b>, <b>EVAL</b>, <b>PRINT</b>, <b>LOOP</b>, the interactive interpreter for <i>SBCL</i>, out of the box doesn&rsquo;t support arrow keys, also it lacks history. One option is to use <code>rlwrap</code> package. Or simply just use <code>Emacs</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-org51bab64" class="outline-3">
-<h3 id="org51bab64">Libraries</h3>
-<div class="outline-text-3" id="text-org51bab64">
+<div id="outline-container-org2b15989" class="outline-3">
+<h3 id="org2b15989">Libraries</h3>
+<div class="outline-text-3" id="text-org2b15989">
 <p>
 Many of the libraries are documented here:
 </p>
 </div>
-<div id="outline-container-orgdc7b2d4" class="outline-4">
-<h4 id="orgdc7b2d4"><a href="https://quickdocs.org/">quickdocs</a></h4>
+<div id="outline-container-orgf3a0aab" class="outline-4">
+<h4 id="orgf3a0aab"><a href="https://quickdocs.org/">quickdocs</a></h4>
 </div>
-<div id="outline-container-org74dcbeb" class="outline-4">
-<h4 id="org74dcbeb"><a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a></h4>
+<div id="outline-container-orgc37b0b8" class="outline-4">
+<h4 id="orgc37b0b8"><a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a></h4>
 </div>
-<div id="outline-container-org4ce7f3d" class="outline-4">
-<h4 id="org4ce7f3d"><a href="https://www.cliki.net/">cliki</a></h4>
+<div id="outline-container-org85e797d" class="outline-4">
+<h4 id="org85e797d"><a href="https://www.cliki.net/">cliki</a></h4>
 </div>
 </div>
-<div id="outline-container-orgedfe949" class="outline-3">
-<h3 id="orgedfe949"><a href="https://www.quicklisp.org/beta/">Quicklisp</a></h3>
-<div class="outline-text-3" id="text-orgedfe949">
+<div id="outline-container-orgac865db" class="outline-3">
+<h3 id="orgac865db"><a href="https://www.quicklisp.org/beta/">Quicklisp</a></h3>
+<div class="outline-text-3" id="text-orgac865db">
 <p>
 The package manager, installation is straight-forward once you have <i>sbcl</i> installed.
 </p>
 </div>
-<div id="outline-container-org917d2e7" class="outline-4">
-<h4 id="org917d2e7">Installing packages via quicklisp</h4>
-<div class="outline-text-4" id="text-org917d2e7">
+<div id="outline-container-orgcf48e41" class="outline-4">
+<h4 id="orgcf48e41">Installing packages via quicklisp</h4>
+<div class="outline-text-4" id="text-orgcf48e41">
 <p>
 For example if we want to install <code>cl-ppcre</code> (regular expression package):
 </p>
@@ -141,9 +141,9 @@ T
 </pre>
 </div>
 </div>
-<div id="outline-container-org08bd8e4" class="outline-4">
-<h4 id="org08bd8e4">Configuration management</h4>
-<div class="outline-text-4" id="text-org08bd8e4">
+<div id="outline-container-org0f9b551" class="outline-4">
+<h4 id="org0f9b551">Configuration management</h4>
+<div class="outline-text-4" id="text-org0f9b551">
 <p>
 These are the locations which the interpreter will look for libraries:
 </p>
@@ -175,13 +175,13 @@ Also, libraries installed here will be available for every projects:
 </div>
 </div>
 </div>
-<div id="outline-container-orgeb8eb6b" class="outline-3">
-<h3 id="orgeb8eb6b">The basics</h3>
-<div class="outline-text-3" id="text-orgeb8eb6b">
+<div id="outline-container-org21c8b03" class="outline-3">
+<h3 id="org21c8b03">The basics</h3>
+<div class="outline-text-3" id="text-org21c8b03">
 </div>
-<div id="outline-container-org6c19938" class="outline-4">
-<h4 id="org6c19938">Expressions</h4>
-<div class="outline-text-4" id="text-org6c19938">
+<div id="outline-container-org0a0f7eb" class="outline-4">
+<h4 id="org0a0f7eb">Expressions</h4>
+<div class="outline-text-4" id="text-org0a0f7eb">
 <p>
 One of the simple <i>lisp</i> expression that can be read, evaluated, and printed is a number. In <i>lisp</i>, anything within a parentheses is a list, for example:
 </p>
@@ -201,9 +201,9 @@ is a list of three elements, the symbol <code>+</code>, and the number <code>2</
 </div>
 </div>
 </section>
-<section id="outline-container-org9935ea1" class="outline-2">
-<h2 id="org9935ea1"><span class="done DONE">DONE</span> Day Two</h2>
-<div class="outline-text-2" id="text-org9935ea1">
+<section id="outline-container-orge2d3a45" class="outline-2">
+<h2 id="orge2d3a45"><span class="done DONE">DONE</span> Day Two</h2>
+<div class="outline-text-2" id="text-orge2d3a45">
 <ul class="org-ul">
 <li>State &ldquo;DONE&rdquo;       from &ldquo;PROG&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 15:16]</span></span></li>
 </ul>
@@ -211,9 +211,9 @@ is a list of three elements, the symbol <code>+</code>, and the number <code>2</
 <li>State &ldquo;PROG&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-03-21 Mon 14:50]</span></span></li>
 </ul>
 </div>
-<div id="outline-container-org8083230" class="outline-3">
-<h3 id="org8083230">Data Types</h3>
-<div class="outline-text-3" id="text-org8083230">
+<div id="outline-container-org5c0f988" class="outline-3">
+<h3 id="org5c0f988">Data Types</h3>
+<div class="outline-text-3" id="text-org5c0f988">
 <p>
 In <i>lisp</i> it&rsquo;s data object that are typed, not variables. Any variable can have any Lisp object as its value.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
 Here are brief descriptions of various Common Lisp data types.
@@ -251,7 +251,7 @@ Here are brief descriptions of various Common Lisp data types.
 <div class='footer'>
   Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/blog'>Source</a> <br>
   GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
-  Last updated on Jun 02, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.3) <br>
+  Last updated on Jun 03, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.4) <br>
   <a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
 </div>
 </footer>
