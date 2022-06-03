@@ -46,7 +46,7 @@
    #+end_src
    The packages installed:
    - exwm :: the /EXWM/ package.
-   - pinentry :: ==GnuPG Pinentry= server implementation.
+   - pinentry :: =GnuPG Pinentry= server implementation.
    - desktop-environment :: The package desktop-environment provides commands and a global minor mode to control your GNU/Linux desktop from Emacs.
    - perspective :: The Perspective package provides multiple named workspaces (or "perspectives") in /Emacs/, similar to multiple desktops in window managers like /Awesome/ and /XMonad/, and /Spaces/ on the Mac.
    - perspective-exwm :: A couple of tricks and fixes to make using [[https://github.com/ch11ng/exwm][EXWM]] and [[https://github.com/nex3/perspective-el][perspective.el]] a better experience.
@@ -497,12 +497,12 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
   #+caption: firefox inside exwm
   #+attr_org: :width 300
   #+ATTR_HTML: :class center no-border :width 75% :height 75%
-  [[../../images/posts/vanilla-exwm-firefox.png]]
+  [[../images/posts/vanilla-exwm-firefox.png]]
   /EXWM/ with (almost) no /Emacs/ configurations (and yes, /Emacs/ can open images too).
 
   #+caption: exwm with my emacs config
   #+attr_org: :width 300
   #+ATTR_HTML: :class center no-border :width 75% :height 75%
-  [[file:../blog/images/posts/exwm-with-emacs-config.png][../../images/posts/exwm-with-emacs-config.png]]
+  [[../images/posts/exwm-with-emacs-config.png]]
 
 #+include: ../utterances.inc
