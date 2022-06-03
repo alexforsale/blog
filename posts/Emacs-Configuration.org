@@ -1275,6 +1275,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (straight-use-package 'treemacs-icons-dired)
        (straight-use-package 'treemacs-perspective)
        (straight-use-package 'treemacs-all-the-icons)
+       (straight-use-package 'project)
      #+end_src
      Variables
      #+begin_src emacs-lisp
