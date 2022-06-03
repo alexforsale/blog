@@ -181,7 +181,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     ;;; Code:
   #+end_src
   This file is loaded before the package system and GUI is initialized.
-** Set /+emacs-data-dir/ variables.
+** Set ==+emacs-data-dir= variables.
    #+begin_src emacs-lisp
      (defvar +emacs-data-dir
        (if (getenv "XDG_DATA_HOME")
