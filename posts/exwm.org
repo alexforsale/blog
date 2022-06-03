@@ -261,7 +261,7 @@
     - exwm-workspace-number :: Initial number of workspaces.
     - mouse-autoselect-window :: autoselect window with mouse pointer (/Emacs/ builtin).
     - persp-initial-frame-name :: Name used for the initial perspective when enabling =persp-mode=.
-    - persp-state-default-file :: The file location for =persp-state-save= and =persp-state-load=. The variable declaration is wrapped inside a function to guard in case =+emacs-data-dir= is unbound (this is a custom variable from my /Emacs/ [[file:../blog/posts/Emacs-Configuration.org::*Set /+emacs-data-dir/ variables.][configuration]]).
+    - persp-state-default-file :: The file location for =persp-state-save= and =persp-state-load=. The variable declaration is wrapped inside a function to guard in case =+emacs-data-dir= is unbound (this is a custom variable from my /Emacs/ [[file:../blog/posts/Emacs-Configuration.org][configuration]]).
     - persp-mode-prefix-key :: The prefix keybinding for activating =perspective-map=. Before /Emacs/ version 28 the value for this variable is automatically set to ~C-x x~. It's unset in /Emacs/ 28 since ~C-x x~ is used. I set this explicitly to ~C-c b~ (the /FreeBSD/ ports used /Emacs/ 27.2).
     There are many other /EXWM/-related variables that can be set, see their [[https://github.com/ch11ng/exwm/wiki][github wiki]] for a full listing. For other /Emacs/ non windows or frame specific variables, it's better to put them inside =user-init-file=.
     #+begin_src emacs-lisp
