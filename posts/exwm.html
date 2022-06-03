@@ -59,9 +59,9 @@
 <h1 class="title">EXWM</h1>
 <p class="subtitle" role="doc-subtitle">Published on Jun 02, 2022 by Kristian Alexander P.</p>
 </header>
-<section id="outline-container-orgfa57f7e" class="outline-2">
-<h2 id="orgfa57f7e">Configuration</h2>
-<div class="outline-text-2" id="text-orgfa57f7e">
+<section id="outline-container-org76c2661" class="outline-2">
+<h2 id="org76c2661">Configuration</h2>
+<div class="outline-text-2" id="text-org76c2661">
 <pre class="example">
 header-args: :tangle ~/.config/exwm/config :mkdirp t
 </pre>
@@ -76,9 +76,9 @@ header-args: :tangle ~/.config/exwm/config :mkdirp t
 </pre>
 </div>
 </div>
-<div id="outline-container-org6a7e64a" class="outline-3">
-<h3 id="org6a7e64a">package installation</h3>
-<div class="outline-text-3" id="text-org6a7e64a">
+<div id="outline-container-orgdca2c5e" class="outline-3">
+<h3 id="orgdca2c5e">package installation</h3>
+<div class="outline-text-3" id="text-orgdca2c5e">
 <p>
 As the commentary heading suggests, this <i>exwm</i> configuration should work even with no <i>Emacs</i> configuration file. But if you&rsquo;re using not using <i>Emacs</i> why using <i>exwm</i>?
 </p>
@@ -122,17 +122,17 @@ The packages installed:
 </p>
 </div>
 </div>
-<div id="outline-container-orgc6711ee" class="outline-3">
-<h3 id="orgc6711ee">Variables and custom functions</h3>
-<div class="outline-text-3" id="text-orgc6711ee">
+<div id="outline-container-org0291704" class="outline-3">
+<h3 id="org0291704">Variables and custom functions</h3>
+<div class="outline-text-3" id="text-org0291704">
 </div>
-<div id="outline-container-orgc925ece" class="outline-4">
-<h4 id="orgc925ece">Functions</h4>
-<div class="outline-text-4" id="text-orgc925ece">
+<div id="outline-container-org65b63c0" class="outline-4">
+<h4 id="org65b63c0">Functions</h4>
+<div class="outline-text-4" id="text-org65b63c0">
 </div>
 <ul class="org-ul">
-<li><a id="orgae37578"></a>Background command<br>
-<div class="outline-text-5" id="text-orgae37578">
+<li><a id="org2f98fc4"></a>Background command<br>
+<div class="outline-text-5" id="text-org2f98fc4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">exwm/run-in-background</span> (command)
   <span class="org-doc">"Run COMMAND in background if exists."</span>
@@ -146,8 +146,8 @@ This is a wrapper function mainly used for starting up <i>services</i> and <i>da
 </p>
 </div>
 </li>
-<li><a id="org618efe4"></a>fix exwm floating window<br>
-<div class="outline-text-5" id="text-org618efe4">
+<li><a id="orge01abf8"></a>fix exwm floating window<br>
+<div class="outline-text-5" id="text-orge01abf8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/fix-exwm-floating-windows</span> ()
   <span class="org-doc">"Fix behaviour when switching to floating."</span>
@@ -161,8 +161,8 @@ This function is for the <code>exwm-floating-setup-hook</code>. I think this was
 </p>
 </div>
 </li>
-<li><a id="org548e430"></a>exwm init hook wrapper<br>
-<div class="outline-text-5" id="text-org548e430">
+<li><a id="org8dc50fd"></a>exwm init hook wrapper<br>
+<div class="outline-text-5" id="text-org8dc50fd">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">things that should runs after initializing exwm</span>
 (<span class="org-keyword">defun</span> <span class="org-function-name">+config/exwm-init-hook</span> ()
@@ -194,8 +194,8 @@ The process that should be started after <i>EXWM</i> initialize.
 </dl>
 </div>
 </li>
-<li><a id="org12ef727"></a>setup window by class<br>
-<div class="outline-text-5" id="text-org12ef727">
+<li><a id="org0a65435"></a>setup window by class<br>
+<div class="outline-text-5" id="text-org0a65435">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/setup-window-by-class</span> ()
   <span class="org-doc">"Set rule based on window class name."</span>
@@ -304,8 +304,8 @@ This will configure window based on their <code>exwm-class-name</code>. To be ru
 </p>
 </div>
 </li>
-<li><a id="orgedb5f9e"></a>Switch to last workspace<br>
-<div class="outline-text-5" id="text-orgedb5f9e">
+<li><a id="org28f64c5"></a>Switch to last workspace<br>
+<div class="outline-text-5" id="text-org28f64c5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'exwm
   (<span class="org-keyword">defun</span> <span class="org-function-name">+config/exwm-workspace-switch-to-last</span> ()
@@ -320,8 +320,8 @@ A function to mimick the <code>workspace-back-and-forth</code> function in <i>i3
 </p>
 </div>
 </li>
-<li><a id="orgc103281"></a>logout<br>
-<div class="outline-text-5" id="text-orgc103281">
+<li><a id="orgfb1717c"></a>logout<br>
+<div class="outline-text-5" id="text-orgfb1717c">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/exwm-logout</span> ()
   <span class="org-doc">"Logout cleanly from EXWM."</span>
@@ -336,8 +336,8 @@ A wrapper function to safely exit <i>Emacs</i>.
 </p>
 </div>
 </li>
-<li><a id="orgbf7148f"></a>Terminal<br>
-<div class="outline-text-5" id="text-orgbf7148f">
+<li><a id="org3065f5f"></a>Terminal<br>
+<div class="outline-text-5" id="text-org3065f5f">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/exwm-terminal</span> ()
   <span class="org-doc">"Set the default terminal."</span>
@@ -357,8 +357,8 @@ Wrapper function for terminal emulators.
 </p>
 </div>
 </li>
-<li><a id="org21d702d"></a>rofi<br>
-<div class="outline-text-5" id="text-org21d702d">
+<li><a id="org578b230"></a>rofi<br>
+<div class="outline-text-5" id="text-org578b230">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/rofi-launcher</span> ()
   <span class="org-doc">"Run rofi."</span>
@@ -373,9 +373,9 @@ Wrapper function for <i>rofi</i>. Visually better than <code>async-shell-command
 </li>
 </ul>
 </div>
-<div id="outline-container-org615ab50" class="outline-4">
-<h4 id="org615ab50">Variables</h4>
-<div class="outline-text-4" id="text-org615ab50">
+<div id="outline-container-org3b0fd8c" class="outline-4">
+<h4 id="org3b0fd8c">Variables</h4>
+<div class="outline-text-4" id="text-org3b0fd8c">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(customize-set-variable 'exwm-workspace-warp-cursor t)
 (customize-set-variable 'mouse-autoselect-window t)
@@ -414,13 +414,13 @@ This variable is for <code>exwm-workspace-switch-hook</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf425f98" class="outline-3">
-<h3 id="orgf425f98">Global configuration</h3>
-<div class="outline-text-3" id="text-orgf425f98">
+<div id="outline-container-orgfe761ac" class="outline-3">
+<h3 id="orgfe761ac">Global configuration</h3>
+<div class="outline-text-3" id="text-orgfe761ac">
 </div>
-<div id="outline-container-org80539ec" class="outline-4">
-<h4 id="org80539ec">Cosmetic tweaks</h4>
-<div class="outline-text-4" id="text-org80539ec">
+<div id="outline-container-org4fde5a9" class="outline-4">
+<h4 id="org4fde5a9">Cosmetic tweaks</h4>
+<div class="outline-text-4" id="text-org4fde5a9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Disable menu-bar, tool-bar and scroll-bar to increase the usable space.</span>
 (menu-bar-mode -1)
@@ -435,9 +435,9 @@ I like to have my workspace (frame/buffer) free from distraction. Off course thi
 </p>
 </div>
 </div>
-<div id="outline-container-orgdf7de6e" class="outline-4">
-<h4 id="orgdf7de6e">Time</h4>
-<div class="outline-text-4" id="text-orgdf7de6e">
+<div id="outline-container-org05dac03" class="outline-4">
+<h4 id="org05dac03">Time</h4>
+<div class="outline-text-4" id="text-org05dac03">
 <p>
 I&rsquo;m not planning on using any panel, so I&rsquo;ll need a time indicator in the <i>Emacs</i> modeline.
 </p>
@@ -457,9 +457,9 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
 </p>
 </div>
 </div>
-<div id="outline-container-orgc93c0cc" class="outline-4">
-<h4 id="orgc93c0cc">start in server-mode</h4>
-<div class="outline-text-4" id="text-orgc93c0cc">
+<div id="outline-container-orga06df57" class="outline-4">
+<h4 id="orga06df57">start in server-mode</h4>
+<div class="outline-text-4" id="text-orga06df57">
 <p>
 Emacs server is not required to run EXWM but it has some interesting uses.
 </p>
@@ -471,9 +471,9 @@ Emacs server is not required to run EXWM but it has some interesting uses.
 </div>
 </div>
 </div>
-<div id="outline-container-orga410698" class="outline-4">
-<h4 id="orga410698">recentf</h4>
-<div class="outline-text-4" id="text-orga410698">
+<div id="outline-container-orgc379430" class="outline-4">
+<h4 id="orgc379430">recentf</h4>
+<div class="outline-text-4" id="text-orgc379430">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">recentf</span>)
 </pre>
@@ -484,9 +484,9 @@ In case <i>recentf</i> is not loaded.
 </div>
 </div>
 </div>
-<div id="outline-container-org0e8982a" class="outline-3">
-<h3 id="org0e8982a"><code>perspective</code> and <code>perspective-exwm</code></h3>
-<div class="outline-text-3" id="text-org0e8982a">
+<div id="outline-container-orgea86f58" class="outline-3">
+<h3 id="orgea86f58"><code>perspective</code> and <code>perspective-exwm</code></h3>
+<div class="outline-text-3" id="text-orgea86f58">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">perspective</span>)
 (<span class="org-keyword">require</span> '<span class="org-constant">perspective-exwm</span>)
@@ -516,9 +516,9 @@ As you can probably tell, workspaces in <i>EXWM</i> starts with <code>0</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf74f675" class="outline-3">
-<h3 id="orgf74f675">gpg</h3>
-<div class="outline-text-3" id="text-orgf74f675">
+<div id="outline-container-orgf3f8fe5" class="outline-3">
+<h3 id="orgf3f8fe5">gpg</h3>
+<div class="outline-text-3" id="text-orgf3f8fe5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(setenv <span class="org-string">"GPG_AGENT_INFO"</span> nil)  <span class="org-comment-delimiter">;; </span><span class="org-comment">use emacs pinentry</span>
 (<span class="org-keyword">setq</span> auth-source-debug t)
@@ -538,7 +538,7 @@ As you can probably tell, workspaces in <i>EXWM</i> starts with <code>0</code>.
 <p>
 This is for using <i>pinentry</i> inside <i>Emacs</i>. The <i>gpg-agent</i> configuration should also have this:
 </p>
-<pre class="example" id="org0d30435">
+<pre class="example" id="org8f93758">
 allow-emacs-pinentry
 allow-loopback-pinentry
 </pre>
@@ -547,9 +547,9 @@ The environment variable <code>${GPG_TTY}</code> should also be set (via <code>~
 </p>
 </div>
 </div>
-<div id="outline-container-org192799c" class="outline-3">
-<h3 id="org192799c">Desktop Environment</h3>
-<div class="outline-text-3" id="text-org192799c">
+<div id="outline-container-orgccf0807" class="outline-3">
+<h3 id="orgccf0807">Desktop Environment</h3>
+<div class="outline-text-3" id="text-orgccf0807">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(customize-set-variable 'desktop-environment-brightness-small-increment <span class="org-string">"1%+"</span>)
 (customize-set-variable 'desktop-environment-brightness-small-decrement <span class="org-string">"1%-"</span>)
@@ -581,9 +581,9 @@ Sets the keybinding for various <i>desktop-environment</i> functions.
 </p>
 </div>
 </div>
-<div id="outline-container-org3fc71fa" class="outline-3">
-<h3 id="org3fc71fa">Battery</h3>
-<div class="outline-text-3" id="text-org3fc71fa">
+<div id="outline-container-org2b40072" class="outline-3">
+<h3 id="org2b40072">Battery</h3>
+<div class="outline-text-3" id="text-org2b40072">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">battery</span>)
 (<span class="org-keyword">with-eval-after-load</span> 'battery
@@ -602,29 +602,29 @@ Sets the keybinding for various <i>desktop-environment</i> functions.
 </div>
 </div>
 </div>
-<div id="outline-container-org3dbc417" class="outline-3">
-<h3 id="org3dbc417">EXWM</h3>
-<div class="outline-text-3" id="text-org3dbc417">
+<div id="outline-container-org9eddbd6" class="outline-3">
+<h3 id="org9eddbd6">EXWM</h3>
+<div class="outline-text-3" id="text-org9eddbd6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">exwm</span>)
 </pre>
 </div>
 </div>
-<div id="outline-container-org8a3ab86" class="outline-4">
-<h4 id="org8a3ab86">hooks</h4>
-<div class="outline-text-4" id="text-org8a3ab86">
+<div id="outline-container-org96df6ae" class="outline-4">
+<h4 id="org96df6ae">hooks</h4>
+<div class="outline-text-4" id="text-org96df6ae">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-init-hook #'+config/exwm-init-hook)
 </pre>
 </div>
 <p>
-Calls the function <code>+config/exwm-init-hook</code> defined <a href="#org548e430">earlier</a>.
+Calls the function <code>+config/exwm-init-hook</code> defined <a href="#org8dc50fd">earlier</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-org6e4da81" class="outline-4">
-<h4 id="org6e4da81">hide the modeline on all floating windows</h4>
-<div class="outline-text-4" id="text-org6e4da81">
+<div id="outline-container-org8d429dd" class="outline-4">
+<h4 id="org8d429dd">hide the modeline on all floating windows</h4>
+<div class="outline-text-4" id="text-org8d429dd">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-floating-setup-hook
           (<span class="org-keyword">lambda</span> ()
@@ -633,9 +633,9 @@ Calls the function <code>+config/exwm-init-hook</code> defined <a href="#org548e
 </div>
 </div>
 </div>
-<div id="outline-container-org8753f7b" class="outline-4">
-<h4 id="org8753f7b">update title hook</h4>
-<div class="outline-text-4" id="text-org8753f7b">
+<div id="outline-container-org1a4cab0" class="outline-4">
+<h4 id="org1a4cab0">update title hook</h4>
+<div class="outline-text-4" id="text-org1a4cab0">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-update-title-hook
           (<span class="org-keyword">lambda</span> ()
@@ -653,21 +653,21 @@ Basically this hooks will rename the buffer name to the current window title, un
 </p>
 </div>
 </div>
-<div id="outline-container-orgf60b579" class="outline-4">
-<h4 id="orgf60b579">floating setup hook</h4>
-<div class="outline-text-4" id="text-orgf60b579">
+<div id="outline-container-org9fb9cad" class="outline-4">
+<h4 id="org9fb9cad">floating setup hook</h4>
+<div class="outline-text-4" id="text-org9fb9cad">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-floating-setup-hook #'+config/fix-exwm-floating-windows)
 </pre>
 </div>
 <p>
-Calls the <code>+config/fix-exwm-floating-windows</code> <a href="#org618efe4">function</a>. Will run when an X window has been made floating, in the context of the corresponding buffer.
+Calls the <code>+config/fix-exwm-floating-windows</code> <a href="#orge01abf8">function</a>. Will run when an X window has been made floating, in the context of the corresponding buffer.
 </p>
 </div>
 </div>
-<div id="outline-container-org5071c63" class="outline-4">
-<h4 id="org5071c63">exwm-manage-finish-hook</h4>
-<div class="outline-text-4" id="text-org5071c63">
+<div id="outline-container-org3d81abf" class="outline-4">
+<h4 id="org3d81abf">exwm-manage-finish-hook</h4>
+<div class="outline-text-4" id="text-org3d81abf">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-manage-finish-hook
           (<span class="org-keyword">lambda</span> ()
@@ -676,13 +676,13 @@ Calls the <code>+config/fix-exwm-floating-windows</code> <a href="#org618efe4">f
 </pre>
 </div>
 <p>
-This hook will call the <code>+config/setup-window-by-class</code> <a href="#org5071c63">function</a>, will run after a window is just managed, in the context of the corresponding buffer.
+This hook will call the <code>+config/setup-window-by-class</code> <a href="#org3d81abf">function</a>, will run after a window is just managed, in the context of the corresponding buffer.
 </p>
 </div>
 </div>
-<div id="outline-container-orgebe8838" class="outline-4">
-<h4 id="orgebe8838">exwm-workspace-switch-hook</h4>
-<div class="outline-text-4" id="text-orgebe8838">
+<div id="outline-container-org504bfd5" class="outline-4">
+<h4 id="org504bfd5">exwm-workspace-switch-hook</h4>
+<div class="outline-text-4" id="text-org504bfd5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'exwm-workspace-switch-hook
           (<span class="org-keyword">lambda</span> ()
@@ -696,9 +696,9 @@ The lambda function basically creates an alist containing the current workspace 
 </p>
 </div>
 </div>
-<div id="outline-container-orgaabba19" class="outline-4">
-<h4 id="orgaabba19">bind the logout function</h4>
-<div class="outline-text-4" id="text-orgaabba19">
+<div id="outline-container-org0748fdd" class="outline-4">
+<h4 id="org0748fdd">bind the logout function</h4>
+<div class="outline-text-4" id="text-org0748fdd">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(exwm-input-set-key (kbd <span class="org-string">"C-x C-c"</span>) '+config/exwm-logout)
 </pre>
@@ -708,9 +708,9 @@ The lambda function basically creates an alist containing the current workspace 
 </p>
 </div>
 </div>
-<div id="outline-container-org14b1efb" class="outline-4">
-<h4 id="org14b1efb">exwm-input-global-key</h4>
-<div class="outline-text-4" id="text-org14b1efb">
+<div id="outline-container-org2993f9c" class="outline-4">
+<h4 id="org2993f9c">exwm-input-global-key</h4>
+<div class="outline-text-4" id="text-org2993f9c">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> exwm-input-global-keys
       `(
@@ -746,9 +746,9 @@ This variables is an alist of the form <code>(key . command)</code>, meaning giv
 </p>
 </div>
 </div>
-<div id="outline-container-orgdcdbcd8" class="outline-4">
-<h4 id="orgdcdbcd8">Keybinding to pass the next key</h4>
-<div class="outline-text-4" id="text-orgdcdbcd8">
+<div id="outline-container-orgd405018" class="outline-4">
+<h4 id="orgd405018">Keybinding to pass the next key</h4>
+<div class="outline-text-4" id="text-orgd405018">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(define-key exwm-mode-map [?\C-q] #'exwm-input-send-next-key)
 </pre>
@@ -758,9 +758,9 @@ This defines a key binding in the <code>exwm-mode-map</code> major mode, in orde
 </p>
 </div>
 </div>
-<div id="outline-container-org79c9236" class="outline-4">
-<h4 id="org79c9236">minibuffer position</h4>
-<div class="outline-text-4" id="text-org79c9236">
+<div id="outline-container-orgefd34c8" class="outline-4">
+<h4 id="orgefd34c8">minibuffer position</h4>
+<div class="outline-text-4" id="text-orgefd34c8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;;</span><span class="org-comment">(setq exwm-workspace-minibuffer-position 'bottom)</span>
 </pre>
@@ -770,9 +770,9 @@ This hides the minibuffer and echo area.
 </p>
 </div>
 </div>
-<div id="outline-container-org36ee955" class="outline-4">
-<h4 id="org36ee955">input-simulation key</h4>
-<div class="outline-text-4" id="text-org36ee955">
+<div id="outline-container-orged67ef5" class="outline-4">
+<h4 id="orged67ef5">input-simulation key</h4>
+<div class="outline-text-4" id="text-orged67ef5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> exwm-input-simulation-keys
       '(
@@ -806,9 +806,9 @@ The codeblock above demonstrates how to use simulation keys to mimic the behavio
 </p>
 </div>
 </div>
-<div id="outline-container-orge76f3a4" class="outline-4">
-<h4 id="orge76f3a4">start perspective-exwm</h4>
-<div class="outline-text-4" id="text-orge76f3a4">
+<div id="outline-container-org8c42655" class="outline-4">
+<h4 id="org8c42655">start perspective-exwm</h4>
+<div class="outline-text-4" id="text-org8c42655">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">perspective-exwm</span>)
 (perspective-exwm-mode)
@@ -816,9 +816,9 @@ The codeblock above demonstrates how to use simulation keys to mimic the behavio
 </div>
 </div>
 </div>
-<div id="outline-container-org2003288" class="outline-4">
-<h4 id="org2003288">system tray</h4>
-<div class="outline-text-4" id="text-org2003288">
+<div id="outline-container-orgbc48214" class="outline-4">
+<h4 id="orgbc48214">system tray</h4>
+<div class="outline-text-4" id="text-orgbc48214">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">exwm-systemtray</span>)
 (exwm-systemtray-enable)
@@ -830,9 +830,9 @@ I don&rsquo;t use it, but keep it inside the configuration file for reference.
 </p>
 </div>
 </div>
-<div id="outline-container-org3837db7" class="outline-4">
-<h4 id="org3837db7">enable exwm</h4>
-<div class="outline-text-4" id="text-org3837db7">
+<div id="outline-container-orgf841bee" class="outline-4">
+<h4 id="orgf841bee">enable exwm</h4>
+<div class="outline-text-4" id="text-orgf841bee">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(exwm-enable)
 </pre>
@@ -844,23 +844,23 @@ This function can be placed anywhere.
 </div>
 </div>
 </section>
-<section id="outline-container-orge5e7f9b" class="outline-2">
-<h2 id="orge5e7f9b">Screenshots</h2>
-<div class="outline-text-2" id="text-orge5e7f9b">
+<section id="outline-container-org919e69e" class="outline-2">
+<h2 id="org919e69e">Screenshots</h2>
+<div class="outline-text-2" id="text-org919e69e">
 <p class="center no-border" width="75%" height="75%">
 <img src="../images/posts/vanilla-exwm-firefox.png" alt="vanilla-exwm-firefox.png" class="center no-border" width="75%" height="75%">
 <i>EXWM</i> with (almost) no <i>Emacs</i> configurations (and yes, <i>Emacs</i> can open images too).
 </p>
 
 
-<figure id="orgd823235">
+<figure id="orgbdd877b">
 <img src="../images/posts/exwm-with-emacs-config.png" alt="exwm-with-emacs-config.png" class="center no-border" width="75%" height="75%">
 
 <figcaption><span class="figure-number">Figure 1: </span>exwm with my emacs config</figcaption>
 </figure>
 
 
-<figure id="orgf5f2191">
+<figure id="org867d2e4">
 <img src="../images/posts/exwm-scratch.png" alt="exwm-scratch.png" class="center no-border" width="75%" height="75%">
 
 <figcaption><span class="figure-number">Figure 2: </span>exwm scratch</figcaption>
