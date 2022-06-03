@@ -341,7 +341,13 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
      (require 'org-crypt)
      (org-crypt-use-before-save-magic)
    #+end_src
-   This is for using /pinentry/ inside /Emacs/.
+   This is for using /pinentry/ inside /Emacs/. The /gpg-agent/ configuration should also have this:
+   #+name: ~/.gnupg/gpg-agent.conf
+   #+begin_example
+   allow-emacs-pinentry
+   allow-loopback-pinentry
+   #+end_example
+   The environment variable =${GPG_TTY}= should also be set (via =~/.xprofile= or =~/.profile=).
 ** Desktop Environment
    #+begin_src emacs-lisp
      (customize-set-variable 'desktop-environment-brightness-small-increment "1%+")
@@ -531,5 +537,10 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
   #+attr_org: :width 300
   #+ATTR_HTML: :class center no-border :width 75% :height 75%
   [[../images/posts/exwm-with-emacs-config.png]]
+
+  #+caption: exwm scratch
+  #+attr_org: :width 300
+  #+ATTR_HTML: :class center no-border :width 75% :height 75%
+  [[file:../images/posts/exwm-scratch.png]]
 
 #+include: ../utterances.inc
