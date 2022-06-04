@@ -3578,12 +3578,32 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
    :header-args: :tangle (expand-file-name "modules/config-defaults-tools.el" user-emacs-directory)
    :END:
    #+begin_src emacs-lisp
-     ;;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
-     ;;; Commentary:
+     ;; config-defaults-tools.el --- Summary -*- lexical-binding: t -*-
+     ;; Commentary:
      ;; This file is auto-generated from `config.org'
      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-     ;;; Code:
+     ;; Code:
      (require 'config-defaults-variables)
+
+     ;; run this after loading slime/sblc
+     (with-eval-after-load (or 'slime 'sbcl)
+       ;; quicklisp
+       (defvar +quicklisp-path "~/.local/share/quicklisp")
+
+       (cond ((and (executable-find "ros")
+                   (file-exists-p
+                    (expand-file-name
+                     ".roswell/helper.el"
+                     (getenv "HOME"))))
+              (progn
+                (load
+                 (expand-file-name
+                  ".roswell/helper.el"
+                  (getenv "HOME")))
+                (setq inferior-lisp-program "ros -Q run")))
+             ((executable-find "sbcl")
+              (setq inferior-lisp-program "sbcl")))
+       )
    #+end_src
 *** erc
 **** auto connect based on server
@@ -3709,30 +3729,26 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'slime))
-       (when (executable-find "sbcl")
-         (defvar +quicklisp-path "~/.local/share/quicklisp")
-         (setq inferior-lisp-program "sbcl")
-         (require 'slime)
-         (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path))
-           (load (expand-file-name "slime-helper.el" +quicklisp-path))
-           (slime-setup '(slime-fancy))))
-       (when (executable-find "sbcl")
-         (defun slime-description-fontify ()
-           "Fontify sections of SLIME Description."
-           (with-current-buffer "*SLIME Description*"
-             (highlight-regexp
-              (concat "^Function:\\|"
-                      "^Macro-function:\\|"
-                      "^Its associated name.+?) is\\|"
-                      "^The .+'s arguments are:\\|"
-                      "^Function documentation:$\\|"
-                      "^Its.+\\(is\\|are\\):\\|"
-                      "^On.+it was compiled from:$")
-              'hi-green-b)))
+       (require 'slime)
+       (when (file-exists-p (expand-file-name "slime-helper.el" +quicklisp-path))
+         (load (expand-file-name "slime-helper.el" +quicklisp-path))
+         (slime-setup '(slime-fancy)))
+       (defun slime-description-fontify ()
+         "Fontify sections of SLIME Description."
+         (with-current-buffer "*SLIME Description*"
+           (highlight-regexp
+            (concat "^Function:\\|"
+                    "^Macro-function:\\|"
+                    "^Its associated name.+?) is\\|"
+                    "^The .+'s arguments are:\\|"
+                    "^Function documentation:$\\|"
+                    "^Its.+\\(is\\|are\\):\\|"
+                    "^On.+it was compiled from:$")
+            'hi-green-b)))
 
-         (defadvice slime-show-description (after slime-description-fontify activate)
-           "Fontify sections of SLIME Description."
-           (slime-description-fontify)))
+       (defadvice slime-show-description (after slime-description-fontify activate)
+         "Fontify sections of SLIME Description."
+         (slime-description-fontify))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3754,8 +3770,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'sly))
-       (require 'sly-autoloads)
-       (setq inferior-lisp-program "sbcl")
+       ;;(require 'sly-autoloads)
        ;; (add-hook 'emacs-lisp-mode-hook #'sly-mode)
        ;; (add-hook 'eval-expression-minibuffer-setup-hook #'sly--mode)
        ;; (add-hook 'ielm-mode-hook #'sly-mode)
@@ -3764,6 +3779,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; (add-hook 'sly-mode #'sly-mode)
        ;; (add-hook 'lisp-interaction-mode-hook #'sly-mode)
        ;; (add-hook 'scheme-mode-hook #'sly-mode)
+       (add-hook 'sly-mode-hook
+                 (lambda ()
+                   (unless (sly-connected-p)
+                     (save-excursion (sly)))))
+       (setq sly-contribs 'sly-fancy)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
