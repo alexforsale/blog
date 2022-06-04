@@ -2954,6 +2954,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (when (featurep 'consult)
          (straight-use-package 'consult-notmuch)
          (require 'consult-notmuch))
+       (unless (featurep 'transient)
+         (straight-use-package 'transient))
+       (require 'transient)
      #+end_src
      This is the default saved-searches, for reference.
      #+begin_src emacs-lisp :tangle no
@@ -2992,6 +2995,52 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                (:name "ymail/archive" :query "tag:ymail/archive")
                (:name "ymail/spam" :query "tag:ymail/spam")))
      #+end_src
+     =+my/offlineimap-poll= function
+     #+begin_src emacs-lisp
+       (defun +my/offlineimap-poll (&optional args)
+         "Poll offlineimap with ARGS if provided."
+         (setq-local output-buffer "*offlineimap*"
+                     error-buffer "*offlineimap-error*"
+                     command "offlineimap")
+         (if args
+             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
+         (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
+     #+end_src
+     =+my/interactive-offlineimap-poll=
+     #+begin_src emacs-lisp
+       (defun +my/interactive-offlineimap-poll (&optional args)
+         "Runs offlineimap interactively.
+       Should be run with transient."
+         (interactive
+          (list (transient-args '+my/offlineimap-transient)))
+         (let ((command "offlineimap")
+               (output-buffer "*offlineimap*")
+               (error-buffer "*offlineimap-error*"))
+           (if args
+               (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
+             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))))
+     #+end_src
+     =+my/offlineimap-transient=
+     #+begin_src emacs-lisp
+       (transient-define-prefix +my/offlineimap-transient ()
+         "Offlineimap transient account chooser"
+         :man-page "offlineimap"
+         :incompatible '(("-a gmail" "-a yahoo" "-a ymail" "-a hotmail"))
+         ["Account"
+          ("g" "Gmail" "-a gmail")
+          ("y" "Yahoo" "-a yahoo")
+          ("Y" "Ymail" "-a ymail")
+          ("h" "Hotmail" "-a hotmail")]
+         ["Options"
+          ("-d" "dry-run" "--dry-run")
+          ("-i" "info" "--info")
+          ("-1" "single-thread" "-1")
+          ("-s" "syslog" "-s")
+          ("-q" "quick" "-q")]
+         ["Actions"
+          ("s" "Start" +my/interactive-offlineimap-poll)])
+       (define-key notmuch-common-keymap [remap notmuch-poll-and-refresh-this-buffer] #'+my/offlineimap-transient)
+     #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-notmuch)
@@ -3019,7 +3068,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                        (message-remove-header "Fcc")
                        (message-remove-header "Organization")
                        (gnus-alias-select-identity)
-                       (notmuch-fcc-header-setup)))))
+                       (when (featurep 'notmuch)
+                         (notmuch-fcc-header-setup))))))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
