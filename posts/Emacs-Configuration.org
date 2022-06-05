@@ -3616,6 +3616,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (setq inferior-lisp-program "ros -Q -l ~/.sbclrc run")))
            ((executable-find "sbcl")
             (setq inferior-lisp-program "sbcl")))
+     (setq max-lisp-eval-depth 32000
+           max-specpdl-size 32000)
    #+end_src
 *** erc
 **** auto connect based on server
