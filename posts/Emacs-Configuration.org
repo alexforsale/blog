@@ -1374,6 +1374,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (unless (featurep 'smartparens)
         (electric-pair-mode 1))
     #+end_src
+**** disable auto pairing for =<  >=
+     #+begin_src emacs-lisp
+       (add-function :before-until electric-pair-inhibit-predicate
+                     (lambda (c) (eq c ?<   ;; >
+                                     )))
+     #+end_src
 *** Use spaces instead of tabs
     #+begin_src emacs-lisp
       (setq-default indent-tabs-mode nil
