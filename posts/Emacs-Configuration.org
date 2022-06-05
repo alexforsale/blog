@@ -1194,6 +1194,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (setq dashboard-set-init-info t)
        (setq dashboard-week-agenda t)
        (setq dashboard-items-default-length 40)
+       (if (featurep 'projectile)
+           (setq dashboard-projects-backend 'projectile)
+         (setq dashboard-projects-backend 'project-el))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
