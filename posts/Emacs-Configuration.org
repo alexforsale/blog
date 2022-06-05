@@ -3931,6 +3931,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'emms)
+         (straight-use-package 'lyrics-fetcher)
          (straight-use-package 'org-emms))
        (customize-set-variable 'emms-directory (expand-file-name "emms" +emacs-data-dir))
        (customize-set-variable 'emms-player-mpv-update-metadata t)
@@ -3940,6 +3941,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'emms-source-file)
        (require 'emms-source-playlist)
        (require 'emms-librefm-scrobbler)
+       (require 'emms-lyrics')
        (require 'config-pass)
        (emms-all)
        (emms-default-players)
@@ -3947,7 +3949,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; history
        (emms-history-load)
        (setq emms-source-file-default-directory +emms-music-dir
-             emms-lyrics-dir (expand-file-name ".lyrics" +emms-music-dir)
+             emms-lyrics-dir (expand-file-name ".lyrics/" +emms-music-dir)
              emms-lyrics-display-buffer t
              emms-random-playlist t
              emms-repeat-playlist t
@@ -3967,6 +3969,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 
        (when (not (directory-name-p emms-lyrics-dir))
          (make-directory emms-lyrics-dir :parents))
+     #+end_src
+     Lyrics-fetcher
+     #+begin_src emacs-lisp
+       ;; lyrics-fetcher
+       (setq lyrics-fetcher-lyrics-folder emms-lyrics-dir)
+       (lyrics-fetcher-use-backend 'neteasecloud)
      #+end_src
 ***** emms-player-mpd
       #+begin_src emacs-lisp
