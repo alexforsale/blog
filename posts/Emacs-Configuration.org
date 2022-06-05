@@ -3915,6 +3915,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (straight-use-package 'org-emms))
        (customize-set-variable 'emms-directory (expand-file-name "emms" +emacs-data-dir))
        (customize-set-variable 'emms-player-mpv-update-metadata t)
+
+       (add-hook 'emms-player-started-hook 'emms-show)
        (require 'emms-setup)
        (require 'emms-source-file)
        (require 'emms-source-playlist)
@@ -3924,6 +3926,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; history
        (emms-history-load)
        (setq emms-source-file-default-directory +emms-music-dir
+             emms-lyrics-dir (expand-file-name ".lyrics" +emms-music-dir)
+             emms-lyrics-display-buffer t
+             emms-random-playlist t
+             emms-repeat-playlist t
              emms-source-playlist-default-format 'm3u
              emms-playlist-mode-center-when-go t
              emms-playlist-default-major-mode 'emms-playlist-mode
@@ -3931,6 +3937,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              emms-playlist-buffer-name "*Music*"
              emms-player-mpv-environment '("PULSnE_PROP_media.role=music")
              emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
+       (when (not (directory-name-p emms-lyrics-dir))
+         (make-directory emms-lyrics-dir :parents))
      #+end_src
 ***** emms-player-mpd
       #+begin_src emacs-lisp
