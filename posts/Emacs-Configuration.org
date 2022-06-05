@@ -3266,6 +3266,30 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; increase the number of candidates to show
        (setq vertico-count 15)
      #+end_src
+***** multiform extension
+      #+begin_src emacs-lisp
+        (require 'vertico-multiform)
+        (setq vertico-multiform-commands
+              '((consult-imenu buffer indexed)
+                (consult-imenu-multi buffer indexed)))
+
+        (setq vertico-multiform-categories
+              '((symbol (vertico-sort-function . vertico-sort-alpha))
+                (file (vertico-sort-function . sort-directories-first))))
+
+        (setq vertico-multiform-categories
+              '((buffer flat (vertico-cycle . t))))
+
+        (defun sort-directories-first (files)
+          (setq files (vertico-sort-history-length-alpha files))
+          (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
+                 (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
+      #+end_src
+***** vertico repeat
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "<C-S-iso-lefttab>") #'vertico-repeat)
+        (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-vertico)
