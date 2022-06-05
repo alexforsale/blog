@@ -3585,25 +3585,37 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; Code:
      (require 'config-defaults-variables)
 
-     ;; run this after loading slime/sblc
-     (with-eval-after-load (or 'slime 'sbcl)
-       ;; quicklisp
-       (defvar +quicklisp-path "~/.local/share/quicklisp")
+     ;; quicklisp
+     (if (file-directory-p
+          (expand-file-name
+           ".ros/lisp/quicklisp"
+           (getenv "HOME")))
+         (defvar +quicklisp-path
+           (expand-file-name
+            ".ros/lisp/quicklisp"
+            (getenv "HOME")))
+       (when (file-directory-p
+              (expand-file-name
+               ".local/share/quicklisp"
+               (getenv "HOME")))
+         (defvar +quicklisp-path
+           (expand-file-name
+            ".local/share/quicklisp"
+            (getenv "HOME")))))
 
-       (cond ((and (executable-find "ros")
-                   (file-exists-p
-                    (expand-file-name
-                     ".roswell/helper.el"
-                     (getenv "HOME"))))
-              (progn
-                (load
-                 (expand-file-name
-                  ".roswell/helper.el"
-                  (getenv "HOME")))
-                (setq inferior-lisp-program "ros -Q run")))
-             ((executable-find "sbcl")
-              (setq inferior-lisp-program "sbcl")))
-       )
+     (cond ((and (executable-find "ros")
+                 (file-exists-p
+                  (expand-file-name
+                   ".roswell/helper.el"
+                   (getenv "HOME"))))
+            (progn
+              (load
+               (expand-file-name
+                ".roswell/helper.el"
+                (getenv "HOME")))
+              (setq inferior-lisp-program "ros -Q -l ~/.sbclrc run")))
+           ((executable-find "sbcl")
+            (setq inferior-lisp-program "sbcl")))
    #+end_src
 *** erc
 **** auto connect based on server
@@ -3770,7 +3782,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'sly))
-       ;;(require 'sly-autoloads)
+       (require 'sly-autoloads)
        ;; (add-hook 'emacs-lisp-mode-hook #'sly-mode)
        ;; (add-hook 'eval-expression-minibuffer-setup-hook #'sly--mode)
        ;; (add-hook 'ielm-mode-hook #'sly-mode)
@@ -3779,11 +3791,16 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; (add-hook 'sly-mode #'sly-mode)
        ;; (add-hook 'lisp-interaction-mode-hook #'sly-mode)
        ;; (add-hook 'scheme-mode-hook #'sly-mode)
+       (add-hook 'comint-mode-hook #'sly-mode)
        (add-hook 'sly-mode-hook
                  (lambda ()
                    (unless (sly-connected-p)
                      (save-excursion (sly)))))
-       (setq sly-contribs 'sly-fancy)
+       (setq sly-contribs '(sly-fancy
+                            sly-fontifying-fu
+                            sly-profiler
+                            sly-retro
+                            sly-scratch))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
