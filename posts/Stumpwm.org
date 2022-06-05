@@ -128,6 +128,15 @@
           (setf *chemacs-profile*
                 (uiop:read-file-line chemacs-profile))))
     #+end_src
+*** Determine running OS
+    A simple method is by querying the output of ~uname -s~:
+    #+begin_src lisp
+      (defparameter *os*
+        (remove #\Newline
+                (string-downcase
+                 (run-shell-command "uname -s" t)))
+        "The currently running operating system in lowercase.")
+    #+end_src
 ** Load contrib modules
    Check several directories for modules, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
    #+begin_src lisp
@@ -327,23 +336,59 @@
    - show-battery-charge
      #+begin_src lisp
        (defun show-battery-charge ()
-         (let ((raw-battery (run-shell-command "acpi | cut -d, -f2" t)))
-           (substitute #\Space #\Newline raw-battery)))
+         (cond ((string= "freebsd" *os*)
+                (let ((raw-battery
+                        (remove
+                         #\Newline
+                         (run-shell-command "apm -l" t))))
+                  (format nil "~D%" raw-battery)))
+               ((string= "linux" *os*)
+                (let ((raw-battery
+                        (run-shell-command
+                         "acpi | cut -d, -f2" t)))
+                  (substitute #\Space #\Newline raw-battery)))))
      #+end_src
    - show-battery-state
      #+begin_src lisp
        (defun show-battery-state ()
-         (let ((raw-battery (run-shell-command "acpi | cut -d: -f2 | cut -d, -f1" t)))
-           (substitute #\Space #\Newline raw-battery)))
+         (cond ((string= "freebsd" *os*)
+                (let ((ac-status
+                        (remove
+                         #\Newline
+                         (run-shell-command
+                          "apm -a" t))))
+                  (cond ((equal "0" ac-status)
+                         (format nil "Discharging"))
+                        ((equal "1" ac-status)
+                         (format nil "Charging"))
+                        ((equal "2" ac-status)
+                         (format nil "Backup Power")))))
+               ((string= "linux" *os*)
+                (let ((raw-battery
+                        (run-shell-command
+                         "acpi | cut -d: -f2 | cut -d, -f1" t)))
+                  (substitute #\Space #\Newline raw-battery)))))
      #+end_src
    - show-brightness-value
      #+begin_src lisp
        (defun show-brightness-value ()
-         (let ((max-brightness
-                 (parse-integer (run-shell-command "brightnessctl max" t)))
-               (current-brightness
-                 (parse-integer (run-shell-command "brightnessctl get" t))))
-           (floor (* (/ current-brightness max-brightness) 100))))
+         (cond ((string= "freebsd" *os*)
+                (let ((current-brightness
+                        (remove
+                         #\Newline
+                         (run-shell-command
+                          "backlight |sed 's/.*: //'" t))))
+                  (format nil "~A%" current-brightness)))
+               ((string= "linux" *os*)
+                (let ((max-brightness
+                        (parse-integer
+                         (run-shell-command
+                          "brightnessctl max" t)))
+                      (current-brightness
+                        (parse-integer
+                         (run-shell-command
+                          "brightnessctl get" t))))
+                  (floor (* (/ current-brightness max-brightness) 100))))))
      #+end_src
    - show-current-volume
      #+begin_src lisp
