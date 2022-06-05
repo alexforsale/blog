@@ -103,6 +103,31 @@
        (and (null (directory (concatenate 'string path "/*")))
             (null (directory (concatenate 'string path "/*/")))))
    #+end_src
+** Global Variables
+*** chemacs
+    #+begin_src lisp
+      (defparameter *chemacs-profile* nil
+        "The current Chemacs profile")
+
+      (let ((chemacs-profile
+             (cond ((probe-file
+                     (merge-pathnames
+                      ".config/chemacs/profile"
+                      (user-homedir-pathname)))
+                    (merge-pathnames
+                     ".config/chemacs/profile"
+                     (user-homedir-pathname)))
+                   ((probe-file
+                     (merge-pathnames
+                      ".emacs-profile"
+                      (user-homedir-pathname)))
+                    (merge-pathnames
+                     ".emacs-profile"
+                     (user-homedir-pathname))))))
+        (when chemacs-profile
+          (setf *chemacs-profile*
+                (uiop:read-file-line chemacs-profile))))
+    #+end_src
 ** Load contrib modules
    Check several directories for modules, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
    #+begin_src lisp
@@ -128,6 +153,26 @@
      [ ! -L stumpish ] && ln -sv ../../.config/stumpwm/modules/util/stumpish/stumpish stumpish
      popd
    #+end_src
+*** swm-emacs contrib-package
+    This module interacts with emacs server with the name =*emacs-daemon-name*=.
+**** load the modules
+     #+begin_src lisp
+       (ql:quickload :cl-fad) ;dependency for `swm-emacs'
+       (load-module "swm-emacs")
+     #+end_src
+**** set the daemon name
+     If using /chemacs/ set this to the =*chemacs-profile*=.
+     #+begin_src lisp
+       (if *chemacs-profile*
+           (defvar swm-emacs:*emacs-daemon-name* *chemacs-profile*)
+         (defvar swm-emacs:*emacs-daemon-name* "default"))
+       (defvar *emacs-daemon-name* swm-emacs:*emacs-daemon-name*)
+     #+end_src
+**** +autostart the daemon+
+     +This is what the module all about anyway.+
+     #+begin_src lisp :tangle no
+       (swm-emacs::emacs-daemon-start)
+     #+end_src
 *** additional module directory
     This is for personal module
 **** Set the variable
@@ -323,7 +368,7 @@
     #+end_src
 *** MPD contrib package
     This package also provides mode-line format.
-    #+begin_src lisp
+    #+begin_src lisp :tangle no
       (load-module "mpd")
       (mpd:mpd-connect)
     #+end_src
@@ -337,7 +382,7 @@
     - =%t= :: Title
 **** Other variables
      - =*mpd-volume-step*= :: Default to 5
-       #+begin_src lisp
+       #+begin_src lisp :tangle no
          (setf mpd:*mpd-volume-step* 1)
        #+end_src
      - =*mpd-socket*= :: Default to =#(127 0 0 1)=
@@ -351,7 +396,7 @@
            (list
             "[^B^3%n^b] ^4%W"
             "^>"
-            "%m"
+            ;;"%m"
             '(:eval (format nil "^5|Volume: ~D" (show-current-volume)))
             '(:eval (unless (empty-directory-p "/sys/class/backlight") (format nil "^6|Backlight: ~D%" (show-brightness-value))))
             '(:eval (unless (empty-directory-p "/sys/class/power_supply") (format nil "^5|Battery:~D" (show-battery-charge))))
@@ -609,35 +654,12 @@
          (move-focus :down))
      #+end_src
 **** emacs
+     Will start /Emacs/ when there's no server with the name =*emacs-daemon-name*=, else will start daemonized /Emacs/.
      #+begin_src lisp
-       (defparameter *chemacs-profile* nil
-         "The current Chemacs profile")
-
-       (let ((chemacs-profile
-              (cond ((probe-file
-                      (merge-pathnames
-                       ".config/chemacs/profile"
-                       (user-homedir-pathname)))
-                     (merge-pathnames
-                      ".config/chemacs/profile"
-                      (user-homedir-pathname)))
-                    ((probe-file
-                      (merge-pathnames
-                       ".emacs-profile"
-                       (user-homedir-pathname)))
-                     (merge-pathnames
-                      ".emacs-profile"
-                      (user-homedir-pathname))))))
-         (when chemacs-profile
-           (setf *chemacs-profile*
-                 (uiop:read-file-line chemacs-profile))))
-
        (defcommand emacs () ()
                    "Run or raise Emacs."
                    (let ((cmd
-                          (if *chemacs-profile*
-                              (format nil "emacsclient -s ~A -c -a ''" *chemacs-profile*)
-                              (format nil "emacsclient -c -a ''"))))
+                          (format nil "emacsclient -s ~A -c -a ''" swm-emacs:*emacs-daemon-name*)))
                      (run-shell-command cmd)))
      #+end_src
 **** Browser
