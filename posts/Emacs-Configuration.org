@@ -119,6 +119,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (require 'config-consult)
      (require 'config-embark)
      (require 'config-corfu)
+     (require 'config-cape)
      (require 'config-dabbrev)
   #+end_src
 ** Tools packages
@@ -3576,6 +3577,62 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+begin_src emacs-lisp
         (provide 'config-corfu)
         ;;; config-corfu.el ends here
+      #+end_src
+**** cape
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-cape.el" user-emacs-directory)
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-cape.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+       (require 'config-defaults-variables)
+     #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'cape)
+      #+end_src
+***** init
+      #+begin_src emacs-lisp
+        (require 'cape)
+        (add-to-list 'completion-at-point-functions #'cape-file)
+        (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+        (add-to-list 'completion-at-point-functions #'cape-history)
+        (add-to-list 'completion-at-point-functions #'cape-keyword)
+        (add-to-list 'completion-at-point-functions #'cape-tex)
+        (add-to-list 'completion-at-point-functions #'cape-sgml)
+        (add-to-list 'completion-at-point-functions #'cape-rfc1345)
+        (add-to-list 'completion-at-point-functions #'cape-abbrev)
+        (add-to-list 'completion-at-point-functions #'cape-ispell)
+        (add-to-list 'completion-at-point-functions #'cape-dict)
+        (add-to-list 'completion-at-point-functions #'cape-symbol)
+        (add-to-list 'completion-at-point-functions #'cape-line)
+      #+end_src
+***** keybinding
+      #+begin_src emacs-lisp
+        (global-set-key (kbd "C-S-c p C-<return>") 'completion-at-point)
+        (global-set-key (kbd "C-S-c p t") 'complete-tag)
+        (global-set-key (kbd "C-S-c p d") 'cape-dabbrev)
+        (global-set-key (kbd "C-S-c p h") 'cape-history)
+        (global-set-key (kbd "C-S-c p f") 'cape-file)
+        (global-set-key (kbd "C-S-c p k") 'cape-keyword)
+        (global-set-key (kbd "C-S-c p s") 'cape-symbol)
+        (global-set-key (kbd "C-S-c p a") 'cape-abbrev)
+        (global-set-key (kbd "C-S-c p i") 'cape-ispell)
+        (global-set-key (kbd "C-S-c p l") 'cape-line)
+        (global-set-key (kbd "C-S-c p w") 'cape-dict)
+        (global-set-key (kbd "C-S-c p \\") 'cape-tex)
+        (global-set-key (kbd "C-S-c p _") 'cape-tex)
+        (global-set-key (kbd "C-S-c p ^") 'cape-tex)
+        (global-set-key (kbd "C-S-c p &") 'cape-sgml)
+        (global-set-key (kbd "C-S-c p r") 'cape-rfc1345)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-cape)
+        ;;; config-cape.el ends here
       #+end_src
 **** dabbrev
      :PROPERTIES:
