@@ -3240,7 +3240,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                         #'completion--in-region)
                       args)))
        (require 'vertico-directory)
-       (add-hook 'rfn-shadow-update-overlay-hook #'vertico-directory-tidy)
+       (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
        (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
        ;; tmm-menubar
