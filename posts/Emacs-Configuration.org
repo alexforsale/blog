@@ -3091,7 +3091,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           ("g" "Gmail" "gmail")
           ("y" "Yahoo" "yahoo")
           ("Y" "Ymail" "ymail")
-          ("h" "Hotmail" " hotmail")]
+          ("h" "Hotmail" "hotmail")]
          ["Options"
           ("-D" "debug all" "--debug")
           ("-l" "list" "--list")
