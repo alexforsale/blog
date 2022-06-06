@@ -2000,7 +2000,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (setq org-generic-id-locations-file (expand-file-name ".org-generic-id-locations" +emacs-data-dir)))
     #+end_src
 *** =org-structure-template-alist=
-    This is an /alist/ of keys and block types, with this, a block can be inserted by pressing ~TAB~ after the string =<KEY=.
+    This is an /alist/ of keys and block types.
     #+begin_src emacs-lisp
       (require 'org-tempo)
       (add-to-list 'org-modules 'org-tempo t)
@@ -2595,7 +2595,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 
         (defun +config/elfeed-update-counter-dec (&rest ignore)
           (cl-decf +config/elfeed-updates-in-progress)
-          (when (< +config/elfeed-updates-in-progress 0)
+          (when (< +config/elfeed-updates-in-progress 0) ; >
             ;; Just in case
             (setq +config/elfeed-updates-in-progress 0)))
 
@@ -5051,7 +5051,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+begin_src emacs-lisp
       (setq org-roam-graph-viewer "emacsclient")
       (add-hook 'org-roam-graph-generation-hook
-                (lambda (dot svg) (if (< (- (cadr (current-time)) +roam-publish-time) 5)
+                (lambda (dot svg) (if (< (- (cadr (current-time)) +roam-publish-time) 5) ;>
                                       (progn (copy-file svg (expand-file-name "roam/sitemap.svg" +blog-publish-directory) 't)
                                               ;(kill-buffer (file-name-nondirectory svg))
                                              (setq +roam-publish-time 0)))))
