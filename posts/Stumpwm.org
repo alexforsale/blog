@@ -98,12 +98,59 @@
      #+end_src
    - =*fload-window-modifier*= :: The keyboard modifier to use for resize and move floating windows without clicking on the top border. Valid values are =:META= =:ALT= =:HYPER= =:SUPER=, =:ALTGR= and =:NUMLOCK=.
 ** Functions
-   #+begin_src lisp
-     (defun empty-directory-p (path)
-       (and (null (directory (concatenate 'string path "/*")))
-            (null (directory (concatenate 'string path "/*/")))))
-   #+end_src
-** Global Variables and functions
+*** empty-directory-p
+    #+begin_src lisp
+      (defun empty-directory-p (path)
+        (and (null (directory (concatenate 'string path "/*")))
+             (null (directory (concatenate 'string path "/*/")))))
+    #+end_src
+*** check is process is active
+    #+begin_src lisp
+      (defun +config/is-active (process)
+        "Returns PROCESS pid if it's active."
+        (let ((+process
+                (parse-integer
+                 (run-shell-command
+                  (format nil "pgrep ~A" process) t) :junk-allowed t)))
+          (when +process)
+          (print +process)))
+    #+end_src
+*** Determine running OS
+    A simple method is by querying the output of ~uname -s~:
+    #+begin_src lisp
+      (defparameter *os*
+        (remove #\Newline
+                (string-downcase
+                 (run-shell-command "uname -s" t)))
+        "The currently running operating system in lowercase.")
+    #+end_src
+*** pass-to-emacsclient
+    #+begin_src lisp
+      (defun pass-to-emacsclient (arg)
+        (let ((emacs-cmd '("emacsclient")))
+          (when *chemacs-profile*
+            (push (format nil "-s ~A" *chemacs-profile*) (cdr (last emacs-cmd))))
+          (push (format nil "--eval ~A" arg) (cdr (last emacs-cmd)))
+          (run-shell-command (format nil "~A" emacs-cmd) t)))
+    #+end_src
+*** emacs-emms
+    #+begin_src lisp
+      (defun emacs-emms (cmd)
+        "Runs CMD for `Emacs's `EMMS'."
+        (let ((is-running
+                (pass-to-emacsclient "'emms-player-paused-p'")))
+          (when is-running
+            (cond ((string= (string-downcase cmd)
+                            (or "play" "pause"))
+                   (pass-to-emacsclient "'(emms-pause)'"))
+                  ((string= (string-downcase cmd)
+                            "next")
+                   (pass-to-emacsclient "'(emms-next)'"))
+                  ((string= (string-downcase cmd)
+                            (or "prev" "previous"))
+                   (pass-to-emacsclient "'(emms-previous)'"))))))
+    #+end_src
+** Global Variables
 *** chemacs
     #+begin_src lisp
       (defparameter *chemacs-profile* nil
@@ -133,26 +180,6 @@
       (if *chemacs-profile*
           (defvar *emacs-daemon-name* *chemacs-profile*)
         (defvar *emacs-daemon-name* "default"))
-    #+end_src
-*** check is process is active
-    #+begin_src lisp
-      (defun +config/is-active (process)
-        "Returns PROCESS pid if it's active."
-        (let ((+process
-                (split-string
-                 (run-shell-command
-                  (format nil "pgrep ~A" process) t))))
-          (when +process)
-          (print +process)))
-    #+end_src
-*** Determine running OS
-    A simple method is by querying the output of ~uname -s~:
-    #+begin_src lisp
-      (defparameter *os*
-        (remove #\Newline
-                (string-downcase
-                 (run-shell-command "uname -s" t)))
-        "The currently running operating system in lowercase.")
     #+end_src
 ** Load contrib modules
    Check several directories for modules, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
