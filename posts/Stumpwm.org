@@ -699,10 +699,12 @@
      Will start /Emacs/ when there's no server with the name =*emacs-daemon-name*=, else will start daemonized /Emacs/.
      #+begin_src lisp
        (defcommand emacs () ()
-                   "Run or raise Emacs."
-                   (let ((cmd
-                          (format nil "emacsclient -s ~A -c -a ''" swm-emacs:*emacs-daemon-name*)))
-                     (run-shell-command cmd)))
+         "Run or raise Emacs."
+         (let ((cmd
+                 (if *chemacs-profile*
+                     (format nil "emacsclient -s ~A -c -a emacs" *emacs-daemon-name*)
+                     (format nil "emacsclient -c -a emacs"))))
+           (run-shell-command cmd)))
      #+end_src
 **** Browser
      Use the environment variable =${BROWSER}= if set.
