@@ -3869,8 +3869,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      Add keybinding if missing
      #+begin_src emacs-lisp
-       (unless (key-binding (kbd "C-c g"))
-         (global-set-key (kbd "C-c g") 'magit-status))
+       (unless (key-binding (kbd "C-x g"))
+         (global-set-key (kbd "C-x g") 'magit-status))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
