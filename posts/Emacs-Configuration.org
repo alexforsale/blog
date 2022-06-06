@@ -4031,7 +4031,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'emms-source-file)
        (require 'emms-source-playlist)
        (require 'emms-librefm-scrobbler)
-       (require 'emms-lyrics')
+       (require 'emms-lyrics)
        (require 'config-pass)
        (emms-all)
        (emms-default-players)
