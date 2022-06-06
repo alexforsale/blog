@@ -103,7 +103,7 @@
        (and (null (directory (concatenate 'string path "/*")))
             (null (directory (concatenate 'string path "/*/")))))
    #+end_src
-** Global Variables
+** Global Variables and functions
 *** chemacs
     #+begin_src lisp
       (defparameter *chemacs-profile* nil
@@ -127,6 +127,23 @@
         (when chemacs-profile
           (setf *chemacs-profile*
                 (uiop:read-file-line chemacs-profile))))
+    #+end_src
+*** emacs daemon name
+    #+begin_src lisp
+      (if *chemacs-profile*
+          (defvar *emacs-daemon-name* *chemacs-profile*)
+        (defvar *emacs-daemon-name* "default"))
+    #+end_src
+*** check is process is active
+    #+begin_src lisp
+      (defun +config/is-active (process)
+        "Returns PROCESS pid if it's active."
+        (let ((+process
+                (split-string
+                 (run-shell-command
+                  (format nil "pgrep ~A" process) t))))
+          (when +process)
+          (print +process)))
     #+end_src
 *** Determine running OS
     A simple method is by querying the output of ~uname -s~:
