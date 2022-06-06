@@ -3868,7 +3868,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (add-hook 'magit-mode-hook #'hl-line-mode)
      #+end_src
      Add keybinding if missing
-     #+begin_src lisp
+     #+begin_src emacs-lisp
        (unless (key-binding (kbd "C-c g"))
          (global-set-key (kbd "C-c g") 'magit-status))
      #+end_src
