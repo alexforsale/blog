@@ -4036,6 +4036,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 
        (add-hook 'emms-player-started-hook 'emms-show)
        (require 'emms-setup)
+       (require 'emms-history)
        (require 'emms-source-file)
        (require 'emms-source-playlist)
        (require 'emms-librefm-scrobbler)
