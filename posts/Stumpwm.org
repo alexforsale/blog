@@ -179,26 +179,6 @@
      [ ! -L stumpish ] && ln -sv ../../.config/stumpwm/modules/util/stumpish/stumpish stumpish
      popd
    #+end_src
-*** swm-emacs contrib-package
-    This module interacts with emacs server with the name =*emacs-daemon-name*=.
-**** load the modules
-     #+begin_src lisp
-       (ql:quickload :cl-fad) ;dependency for `swm-emacs'
-       (load-module "swm-emacs")
-     #+end_src
-**** set the daemon name
-     If using /chemacs/ set this to the =*chemacs-profile*=.
-     #+begin_src lisp
-       (if *chemacs-profile*
-           (defvar swm-emacs:*emacs-daemon-name* *chemacs-profile*)
-         (defvar swm-emacs:*emacs-daemon-name* "default"))
-       (defvar *emacs-daemon-name* swm-emacs:*emacs-daemon-name*)
-     #+end_src
-**** +autostart the daemon+
-     +This is what the module all about anyway.+
-     #+begin_src lisp :tangle no
-       (swm-emacs::emacs-daemon-start)
-     #+end_src
 *** additional module directory
     This is for personal module
 **** Set the variable
