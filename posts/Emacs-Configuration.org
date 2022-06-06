@@ -3816,6 +3816,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
        (add-hook 'magit-mode-hook #'hl-line-mode)
      #+end_src
+     Add keybinding if missing
+     #+begin_src lisp
+       (unless (key-binding (kbd "C-x g"))
+         (global-set-key (kbd "C-x g") 'magit-status))
+     #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-magit)
