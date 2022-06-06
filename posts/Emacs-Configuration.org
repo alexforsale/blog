@@ -4130,9 +4130,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      Setup player based on executables.
      #+begin_src emacs-lisp
        (setq emms-player-list nil)
-       ;; (when (executable-find "vlc")
-       ;;   (add-to-list 'emms-player-list 'emms-player-vlc)
-       ;;   (add-to-list 'emms-player-list 'emms-player-vlc-playlist))
+       (when (executable-find "vlc")
+         (add-to-list 'emms-player-list 'emms-player-vlc)
+         (add-to-list 'emms-player-list 'emms-player-vlc-playlist))
        (when (executable-find "mpeg123")
          (add-to-list 'emms-player-list 'emms-player-mpg321))
        (when (executable-find "mplayer")
