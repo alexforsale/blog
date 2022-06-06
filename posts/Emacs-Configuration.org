@@ -1182,7 +1182,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (straight-use-package 'dashboard))
        (require 'dashboard)
        (dashboard-setup-startup-hook)
-       (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+       ;;(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
        (setq dashboard-center-content t)
        (setq dashboard-items '((recents  . 5)
                                (bookmarks . 5)
@@ -1488,7 +1488,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               comint-buffer-maximum-size 2048))
     #+end_src
 *** ediff
-    #+begin_src emacs-lisp
+    #+begin_src emacs-lisp :tangle no
       (eval-after-load 'ediff
         (setq ediff-diff-options "-w"
               ediff-split-window-function #'split-window-horizontally
