@@ -3,8 +3,7 @@
 #+author: Kristian Alexander P
 #+email: alexforsale@yahoo.com
 #+language: en
-#+startup: overview
-#+startup: hideblocks
+#+startup: content
 #+options: d:t toc:t
 
 This configuration was inspired by the [[https://github.com/SystemCrafters/rational-emacs][rational-emacs configuration]] from the [[https://www.youtube.com/c/SystemCrafters/videos][systemcrafters series]]. So instead of blindly copying every snippets of /Emacs/ configuration I've found on the internet, I'm taking the lighter approach and *try* to only use what is necessary.
@@ -1569,6 +1568,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (global-set-key (kbd "<menu>") 'nil)
       (global-set-key (kbd "<execute>") 'nil)
     #+end_src
+
 *** Additional Packages
 **** multiple-cursors
      :PROPERTIES:
