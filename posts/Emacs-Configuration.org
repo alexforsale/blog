@@ -1265,6 +1265,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (setf (alist-get key sp-message-alist) nil))
        (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "'" nil :actions nil)
        (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "`" nil :actions nil)
+       (sp-local-pair '(emacs-lisp-mode lisp-mode scheme-mode) "'" nil :actions nil)
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
