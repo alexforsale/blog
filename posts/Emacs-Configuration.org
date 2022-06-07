@@ -3034,8 +3034,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                      error-buffer "*mbsync-error*"
                      command "mbsync")
          (if args
-             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
-         (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
+             (progn
+               (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
+               (async-shell-command "notmuch new --verbose" output-buffer error-buffer))
+           (progn
+             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
+             (async-shell-command "notmuch new --verbose" output-buffer error-buffer))))
      #+end_src
      =+my/interactive-offlineimap-poll=
      #+begin_src emacs-lisp
@@ -3060,8 +3064,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                (output-buffer "*mbsync*")
                (error-buffer "*mbsync-error*"))
            (if args
+               (progn
+                 (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
+                 (async-shell-command "notmuch new --verbose" output-buffer error-buffer))
+             (progn
                (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
-             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))))
+               (async-shell-command "notmuch new --verbose" output-buffer error-buffer)))))
      #+end_src
      =+my/offlineimap-transient=
      #+begin_src emacs-lisp
