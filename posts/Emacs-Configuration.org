@@ -1253,8 +1253,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'smartparens))
-       ;; disable `electric-pair-mode')
-       (electric-pair-mode 0)
+       ;; disable `electric-pair-mode'
+       ;; (electric-pair-mode 0)
        (smartparens-global-mode 1)
        (require 'smartparens-config)
        (setq sp-highlight-pair-overlay nil
@@ -1266,7 +1266,15 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "'" nil :actions nil)
        (sp-local-pair '(minibuffer-mode minibuffer-inactive-mode) "`" nil :actions nil)
        (sp-local-pair '(emacs-lisp-mode lisp-mode scheme-mode) "'" nil :actions nil)
-     #+end_src
+       (add-hook 'minibuffer-setup-hook 'turn-on-smartparens-strict-mode)
+      #+end_src
+***** custom org-mode-hook
+      #+begin_src emacs-lisp
+        (defun +config/sp-mode-org-hook ()
+          (when (org-in-src-block-p)
+            (sp-local-pair 'org-mode "'" nil :actions nil)))
+        (add-hook 'org-mode-hook '+config/sp-mode-org-hook)
+      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-smartparens)
@@ -1387,8 +1395,17 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 *** Enable =electric-pair-mode=
     #+begin_src emacs-lisp
-      (unless (featurep 'smartparens)
-        (electric-pair-mode 1))
+      (electric-pair-mode 1)
+    #+end_src
+*** enable electric-indent-mode
+    #+begin_src emacs-lisp
+      (electric-indent-mode 1)
+    #+end_src
+*** custom hook for org-mode src-code-block
+    #+begin_src emacs-lisp
+      (defun +config/electric-indent-org-hook ()
+        (add-hook '(electic-indent-mode 0) 'org-in-src-block-p nil :local))
+      (add-hook 'org-mode-hook '+config/electric-indent-org-hook)
     #+end_src
 **** disable auto pairing for =<  >=
      #+begin_src emacs-lisp
