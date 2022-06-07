@@ -3012,7 +3012,27 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      Since I've used =afew= to modify /tags/ based on the accounts /maildir/ directories
      #+begin_src emacs-lisp
        (setq notmuch-saved-searches
-             '((:name "inbox" :query "tag:inbox" :key "i")
+             '((:name "Today"
+                      :query "date:today AND NOT tag:spam AND NOT tag:bulk"
+                      :key "T"
+                      :search-type 'tree
+                      :sort-order 'newest-first)
+               (:name "This Week"
+                      :query "date:weeks AND NOT tag:spam AND NOT tag:bulk"
+                      :key "W"
+                      :search-type 'tree
+                      :sort-order 'newest-first)
+               (:name "This Month"
+                      :query "date:months AND NOT tag:spam AND NOT tag:bulk"
+                      :key "M"
+                      :search-type 'tree
+                      :sort-order 'newest-first)
+               (:name "flagged"
+                      :query "tag:flagged AND NOT tag:spam AND NOT tag:bulk"
+                      :key "f"
+                      :search-type 'tree
+                      :sort-order 'newest-first)
+               (:name "inbox" :query "tag:inbox" :key "i")
                (:name "unread" :query "tag:unread" :key "u")
                (:name "spam" :query "tag:spam")
                (:name "gmail/inbox" :query "tag:gmail/inbox")
