@@ -1404,7 +1404,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 *** custom hook for org-mode src-code-block
     #+begin_src emacs-lisp
       (defun +config/electric-indent-org-hook ()
-        (add-hook '(electic-indent-mode 0) 'org-in-src-block-p nil :local))
+        (when (org-in-src-block-p) (electric-indent-mode 0)))
       (add-hook 'org-mode-hook '+config/electric-indent-org-hook)
     #+end_src
 **** disable auto pairing for =<  >=
@@ -3046,19 +3046,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (if args
              (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
          (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))
-
-       (defun +my/mbsync-poll (&optional args)
-         "Poll offlineimap with ARGS if provided."
-         (setq-local output-buffer "*mbsync*"
-                     error-buffer "*mbsync-error*"
-                     command "mbsync")
-         (if args
-             (progn
-               (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
-               (async-shell-command "notmuch new --verbose" output-buffer error-buffer))
-           (progn
-             (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
-             (async-shell-command "notmuch new --verbose" output-buffer error-buffer))))
      #+end_src
      =+my/interactive-offlineimap-poll=
      #+begin_src emacs-lisp
@@ -3073,22 +3060,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
            (if args
                (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
              (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer))))
-
-       (defun +my/interactive-mbsync-poll (&optional args)
-         "Runs mbsync interactively.
-       Should be run with transient."
-         (interactive
-          (list (transient-args '+my/mbsync-transient)))
-         (let ((command "mbsync")
-               (output-buffer "*mbsync*")
-               (error-buffer "*mbsync-error*"))
-           (if args
-               (progn
-                 (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
-                 (async-shell-command "notmuch new --verbose" output-buffer error-buffer))
-             (progn
-               (async-shell-command (mapconcat #'identity `(,command ,@args) " ") output-buffer error-buffer)
-               (async-shell-command "notmuch new --verbose" output-buffer error-buffer)))))
      #+end_src
      =+my/offlineimap-transient=
      #+begin_src emacs-lisp
@@ -3110,27 +3081,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          ["Actions"
           ("p" "poll offlineimap" +my/interactive-offlineimap-poll)])
 
-       (transient-define-prefix +my/mbsync-transient ()
-         "Mbsync transient account chooser"
-         :man-page "mbsync"
-         :incompatible '(("gmail" "yahoo" "ymail" "hotmail"))
-         ["Account"
-          ("g" "Gmail" "gmail")
-          ("y" "Yahoo" "yahoo")
-          ("Y" "Ymail" "ymail")
-          ("h" "Hotmail" "hotmail")]
-         ["Options"
-          ("-D" "debug all" "--debug")
-          ("-l" "list" "--list")
-          ("-V" "verbose" "--verbose")
-          ("-q" "quiet" "--quiet")]
-         ["Actions"
-          ("p" "Poll mbsync" +my/interactive-mbsync-poll)])
-
        (when (executable-find "offlineimap")
          (define-key notmuch-common-keymap [remap notmuch-poll-and-refresh-this-buffer] #'+my/offlineimap-transient))
-       (when (executable-find "mbsync")
-         (define-key notmuch-common-keymap [remap notmuch-poll-and-refresh-this-buffer] #'+my/mbsync-transient))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
