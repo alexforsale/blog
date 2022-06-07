@@ -830,12 +830,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; This file is auto-generated from `config.org'
        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
        ;;; Code:
-       (require 'config-defaults-variables)
+       (require 'config-defaults-variables nil t)
      #+end_src
      #+begin_src emacs-lisp
        (unless +config/is-guix-system
          (straight-use-package 'ace-window))
-       (require 'ace-window)
+       (require 'ace-window nil t)
 
        (set-face-attribute
         'aw-leading-char-face nil
