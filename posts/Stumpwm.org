@@ -181,6 +181,10 @@
           (defvar *emacs-daemon-name* *chemacs-profile*)
         (defvar *emacs-daemon-name* "default"))
     #+end_src
+*** set-transient-gravity
+    #+begin_src lisp
+      (setf set-transient-gravity :center)
+    #+end_src
 ** Load contrib modules
    Check several directories for modules, and add it to the /stumpwm/ module-dir using the function =set-module-dir=.
    #+begin_src lisp
