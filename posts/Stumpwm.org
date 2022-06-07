@@ -70,13 +70,11 @@
          (if server-running
              (progn
                (slynk:stop-server 4003)
-               (echo-string (current-screen)
-                            "Stopping slynk on port 4003.")
+               (echo "Stopping slynk on port 4003.")
                (setf server-running nil))
              (progn
                (slynk:create-server :port 4003 :dont-close t)
-               (echo-string (current-screen)
-                            "Starting slynk on port 4003.")
+               (echo "Starting slynk on port 4003.")
                (setf server-running t)))))
    #+end_src
 ** Stumpwm configuration
