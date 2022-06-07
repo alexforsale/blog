@@ -202,25 +202,25 @@ PROJECT: `posts in this case."
          :publishing-directory "./public/assets"
          :publishing-function org-publish-attachment
          :recursive t)
-        ("rss"
-         :base-directory "posts"
-         :base-extension "org"
-         :html-link-home ,(if (getenv "ROOT_URL")
-                             (concat (getenv "ROOT_URL")
-                                     +publish-root)
-                           (concat "https://java281.dynv6.net" +publish-root))
-         :rss-link-home ,(if (getenv "ROOT_URL")
-                             (concat (getenv "ROOT_URL")
-                                     +publish-root)
-                           (concat "https://java281.dynv6.net" +publish-root))
-         :html-link-use-abs-url t
-         :rss-extension "xml"
-         :publishing-directory "./public"
-         :publishing-function (org-rss-publish-to-rss)
-         :section-number nil
-         :exclude ".*"
-         :include ("index.org")
-         :table-of-contents nil)
+        ;; ("rss"
+        ;;  :base-directory "posts"
+        ;;  :base-extension "org"
+        ;;  :html-link-home ,(if (getenv "ROOT_URL")
+        ;;                      (concat (getenv "ROOT_URL")
+        ;;                              +publish-root)
+        ;;                    (concat "https://java281.dynv6.net" +publish-root))
+        ;;  :rss-link-home ,(if (getenv "ROOT_URL")
+        ;;                      (concat (getenv "ROOT_URL")
+        ;;                              +publish-root)
+        ;;                    (concat "https://java281.dynv6.net" +publish-root))
+        ;;  :html-link-use-abs-url t
+        ;;  :rss-extension "xml"
+        ;;  :publishing-directory "./public"
+        ;;  :publishing-function (org-rss-publish-to-rss)
+        ;;  :section-number nil
+        ;;  :exclude ".*"
+        ;;  :include ("index.org")
+        ;;  :table-of-contents nil)
         ("all" :components ("posts" "pages" "onehouraday" "css" "images" "assets"))))
 
 (provide ':publish)
