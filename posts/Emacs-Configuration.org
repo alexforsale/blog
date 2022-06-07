@@ -2928,6 +2928,28 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (when (featurep 'flycheck)
          (setq flycheck-indication-mode 'right-fringe))
      #+end_src
+***** keybinding
+      #+begin_src emacs-lisp
+       (defun +git-gutter:previous-hunk ()
+         "Wrapper for `git-gutter:previous-hunk'."
+         (interactive)
+         (git-gutter:previous-hunk args)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-p") '+git-gutter:previous-hunk)
+            map)))
+       (defun +git-gutter:next-hunk ()
+         "Wrapper for `git-gutter:next-hunk'."
+         (interactive)
+         (git-gutter:next-hunk 1)
+         (set-temporary-overlay-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-n") '+git-gutter:next-hunk)
+            map)))
+
+        (global-set-key (kbd "C-c g M-p") '+git-gutter:previous-hunk)
+        (global-set-key (kbd "C-c g M-n") '+git-gutter:next-hunk)
+      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-git-gutter)
