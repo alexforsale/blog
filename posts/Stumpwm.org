@@ -148,6 +148,18 @@
                             (or "prev" "previous"))
                    (pass-to-emacsclient "'(emms-previous)'"))))))
     #+end_src
+*** restart computer
+    #+begin_src lisp
+      (defun restart-computer ()
+        "Restart the computer."
+        (run-shell-command "sudo -A reboot"))
+    #+end_src
+*** shutdown computer
+    #+begin_src lisp
+      (defun shutdown-computer ()
+        "Restart the computer."
+        (run-shell-command "sudo -A poweroff"))
+    #+end_src
 ** Global Variables
 *** chemacs
     #+begin_src lisp
@@ -636,15 +648,15 @@
 **** End-session
      This uses the =end-session= /contrib/ module.
      #+begin_src lisp
-       (load-module "end-session")
+       ;;(load-module "end-session")
        (defvar *my-end-session-keymap*
          (let ((m (make-sparse-keymap)))
-           (define-key m (kbd "q") "end-session")
-           (define-key m (kbd "l") "logout")
-           (define-key m (kbd "s") "suspend-computer")
+           (define-key m (kbd "q") "quit")
+           ;;(define-key m (kbd "l") "logout")
+           ;;(define-key m (kbd "s") "suspend-computer")
            (define-key m (kbd "S") "shutdown-computer")
            (define-key m (kbd "r") "loadrc")
-           (define-key m (kbd "R") "restart-hard")
+           (define-key m (kbd "R") "reload")
            (define-key m (kbd "s-r") "restart-computer")
            m))
      #+end_src
@@ -775,8 +787,8 @@
          "Run or raise Emacs."
          (let ((cmd
                  (if *chemacs-profile*
-                     (format nil "emacsclient -s ~A -c -a emacs" *emacs-daemon-name*)
-                     (format nil "emacsclient -c -a emacs"))))
+                     (format nil "emacsclient -s ~A -c -a \"emacs --daemon\"" *emacs-daemon-name*)
+                     (format nil "emacsclient -c -a \"emacs --daemon\""))))
            (run-shell-command cmd)))
      #+end_src
 **** Browser
