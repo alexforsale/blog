@@ -848,10 +848,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         :inherit 'mode-line-buffer-id
         :foreground "lawn green")
 
-       (setq aw-scope 'frame)
-       (setq aw-dispatch-always nil)
-       (setq aw-minibuffer-flag t)
-       (setq aw-keys '(?q ?w ?e ?r ?t ?a ?s ?d ?f))
+       (customize-set-variable 'aw-scope 'frame)
+       (customize-set-variable 'aw-dispatch-always nil)
+       (customize-set-variable 'aw-minibuffer-flag t)
+       (customize-set-variable 'aw-keys '(?q ?w ?e ?r ?t ?a ?s ?d ?f))
        (defvar aw-dispatch-alist
          '((?x aw-delete-window "Delete Window")
            (?m aw-swap-window "Swap Windows")
