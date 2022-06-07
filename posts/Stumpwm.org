@@ -355,7 +355,8 @@
          (gnewbg "Dev")
          (gnewbg "Web")
          (gnewbg-float "Float") ; floating window
-         (which-key-mode)))
+         (which-key-mode)
+         (run-shell-command "emacs --daemon --debug-init")))
    #+end_src
    This also rename the /Default/ frame to /Term/. And create additional frame named /Dev/, and /Web/. Usually these are all I needed in a session and my muscle memory set them to /1/, /2/, and /3/ respectively.
 ** mode-line helper functions
