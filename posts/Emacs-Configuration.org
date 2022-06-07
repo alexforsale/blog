@@ -1867,45 +1867,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
      #+begin_src emacs-lisp
        (straight-use-package 'block-nav)
-       (defun +block-nav-previous-block ()
-         "Wrapper for `block-nav-previous-block'."
-         (interactive)
-         (block-nav-previous-block)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-p") '+block-nav-previous-block)
-            map)))
-       (defun +block-nav-next-block ()
-         "Wrapper for `block-nav-next-block'."
-         (interactive)
-         (block-nav-next-block)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-n") '+block-nav-next-block)
-            map)))
-       (defun +block-nav-previous-indentation-level ()
-         "Wrapper for `block-nav-previous-indentation-level'."
-         (interactive)
-         (block-nav-previous-indentation-level)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-P") '+block-nav-previous-indentation-level)
-            map)))
-       (defun +block-nav-next-indentation-level ()
-         "Wrapper for `block-nav-next-indentation-level'."
-         (interactive)
-         (block-nav-next-indentation-level)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-N") '+block-nav-next-indentation-level)
-            map)))
 
        (setf block-nav-move-skip-shallower t
              block-nav-center-after-scroll t)
-       (global-set-key (kbd "C-c M-p") '+block-nav-previous-block)
-       (global-set-key (kbd "C-c M-n") '+block-nav-next-block)
-       (global-set-key (kbd "C-c M-P") '+block-nav-previous-indentation-level)
-       (global-set-key (kbd "C-c M-N") '+block-nav-next-indentation-level)
+       (when (featurep 'hydra)
+         (defhydra hydra-block-nav (global-map "C-c b"
+                                    :pre (linum-mode 1)
+                                    :post (linum-mode -1))
+           "block-nav"
+           ("M-p" block-nav-previous-indentation-level "previous indent")
+           ("M-n" block-nav-next-indentation-level "next indent")
+           ("p" block-nav-previous-block "previous block")
+           ("n" block-nav-next-block "next block")))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -1987,7 +1960,79 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-jinja2-mode)
         ;;; config-jinja2-mode.el ends here
       #+end_src
-
+**** hydra
+     :header-args: :tangle (expand-file-name "modules/config-hydra.el" user-emacs-directory)
+     :END:
+     #+begin_src emacs-lisp
+       ;;; config-hydra.el --- Summary -*- lexical-binding: t -*-
+       ;;; Commentary:
+       ;; This file is auto-generated from `config.org'
+       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+       ;;; Code:
+     #+end_src
+***** package
+      #+begin_src emacs-lisp
+       (straight-use-package 'hydra)
+       (require 'hydra)
+      #+end_src
+***** hydra remapping
+****** yank
+       #+begin_src emacs-lisp
+         (cond ((featurep 'consult)
+                (defhydra hydra-yank-pop ()
+                  "yank"
+                  ("C-y" yank nil)
+                  ("M-y" yank-pop nil)
+                  ("y" (yank-pop 1) "next")
+                  ("Y" (yank-pop -1) "prev")
+                  ("l" consult-yank-from-kill-ring "list" :color blue)))
+               ((featurep 'helm)
+                (defhydra hydra-yank-pop ()
+                  "yank"
+                  ("C-y" yank nil)
+                  ("M-y" yank-pop nil)
+                  ("y" (yank-pop 1) "next")
+                  ("Y" (yank-pop -1) "prev")
+                  ("l" helm-show-kill-ring "list" :color blue)))
+               (t
+                (defhydra hydra-yank-pop ()
+                  "yank"
+                  ("C-y" yank nil)
+                  ("M-y" yank-pop nil)
+                  ("y" (yank-pop 1) "next")
+                  ("Y" (yank-pop -1) "prev"))))
+         (global-set-key [remap yank-pop] #'hydra-yank-pop/yank-pop)
+         (global-set-key [remap yank] #'hydra-yank-pop/yank)
+       #+end_src
+****** TODO movement
+       :LOGBOOK:
+       - Note taken on [2022-06-08 Wed 02:22] \\
+         Find a way to avoid conflict
+       - State "TODO"       from              [2022-06-08 Wed 02:22]
+       :END:
+       This conflict with minibuffer
+       #+begin_src emacs-lisp :tangle no
+         (global-set-key
+          (kbd "C-n")
+          (defhydra hydra-move
+            (:body-pre (next-line))
+            "move"
+            ("n" next-line)
+            ("p" previous-line)
+            ("f" forward-char)
+            ("b" backward-char)
+            ("a" beginning-of-line)
+            ("e" move-end-of-line)
+            ("v" scroll-up-command)
+            ;; Converting M-v to V here by analogy.
+            ("V" scroll-down-command)
+            ("l" recenter-top-bottom)))
+       #+end_src
+******* Footer
+        #+begin_src emacs-lisp
+          (provide 'config-hydra)
+          ;;; config-hydra.el ends here
+        #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-editings)
@@ -2938,25 +2983,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ***** keybinding
       #+begin_src emacs-lisp
-       (defun +git-gutter:previous-hunk ()
-         "Wrapper for `git-gutter:previous-hunk'."
-         (interactive)
-         (git-gutter:previous-hunk args)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-p") '+git-gutter:previous-hunk)
-            map)))
-       (defun +git-gutter:next-hunk ()
-         "Wrapper for `git-gutter:next-hunk'."
-         (interactive)
-         (git-gutter:next-hunk 1)
-         (set-temporary-overlay-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "M-n") '+git-gutter:next-hunk)
-            map)))
-
-        (global-set-key (kbd "C-c g M-p") '+git-gutter:previous-hunk)
-        (global-set-key (kbd "C-c g M-n") '+git-gutter:next-hunk)
+        (when (featurep 'hydra)
+          (defhydra hydra-git-gutter (global-map
+                                      "C-c g")
+            "
+        git-gutter^
+        "
+            ("p" git-gutter:previous-hunk "previous hunk")
+            ("n" git-gutter:next-hunk "next hunk")
+            ("P" git-gutter:popup-hunk "pop hunk")
+            ("s" git-gutter:stage-hunk "stage hunk")
+            ("r" git-gutter:revert-hunk "revert hunk")
+            ("u" git-gutter:update-all-windows "update all windows")))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
