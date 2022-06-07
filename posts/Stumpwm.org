@@ -426,14 +426,57 @@
     #+begin_src lisp
       (load-module "maildir")
       (setq maildir:*maildir-alist* nil)
-      (push (cons "gmail" (merge-pathnames ".mail/gmail/inbox/" (user-homedir-pathname)))
-            maildir:*maildir-alist*)
-      (push (cons "ymail" (merge-pathnames ".mail/ymail/inbox/" (user-homedir-pathname)))
-            maildir:*maildir-alist*)
-      (push (cons "hotmail" (merge-pathnames ".mail/hotmail/inbox/" (user-homedir-pathname)))
-            maildir:*maildir-alist*)
-      (push (cons "yahoo" (merge-pathnames ".mail/yahoo/inbox/" (user-homedir-pathname)))
-            maildir:*maildir-alist*)
+      ;; most of my linux devices
+      (when (not (empty-directory-p  "~/.mail/gmail/inbox/"))
+        (push (cons "gmail" (merge-pathnames ".mail/gmail/inbox/" (user-homedir-pathname)))
+              maildir:*maildir-alist*))
+      (when (not (empty-directory-p  "~/.mail/ymail/inbox/"))
+        (push (cons "ymail" (merge-pathnames ".mail/ymail/inbox/" (user-homedir-pathname)))
+              maildir:*maildir-alist*))
+      (when (not (empty-directory-p  "~/.mail/hotmail/inbox/"))
+        (push (cons "hotmail" (merge-pathnames ".mail/hotmail/inbox/" (user-homedir-pathname)))
+              maildir:*maildir-alist*))
+      (when (not (empty-directory-p  "~/.mail/yahoo/inbox/"))
+        (push (cons "yahoo" (merge-pathnames ".mail/yahoo/inbox/" (user-homedir-pathname)))
+              maildir:*maildir-alist*))
+
+      ;; freebsd
+      (let ((user-data-root (concat "/data/freebsd/"(getenv "USER"))))
+        (when (string= "freebsd" *os*)
+          (progn
+            (when
+                (not
+                 (empty-directory-p
+                  (concat
+                   user-data-root
+                   "/.mail/gmail/Inbox/")))
+              (push (cons "gmail" (concat user-data-root "/.mail/gmail/Inbox/"))
+                    maildir:*maildir-alist*))
+            (when
+                (not
+                 (empty-directory-p
+                  (concat
+                   user-data-root
+                   "/.mail/ymail/Inbox/")))
+              (push (cons "ymail" (concat user-data-root "/.mail/ymail/Inbox/"))
+                    maildir:*maildir-alist*))
+            (when
+                (not
+                 (empty-directory-p
+                  (concat
+                   user-data-root
+                   "/.mail/hotmail/Inbox/")))
+              (push (cons "hotmail" (concat user-data-root "/.mail/hotmail/Inbox/"))
+                    maildir:*maildir-alist*))
+            (when
+                (not
+                 (empty-directory-p
+                  (concat
+                   user-data-root
+                   "/.mail/yahoo/Inbox/")))
+              (push (cons "yahoo" (concat user-data-root "/.mail/yahoo/Inbox/"))
+                    maildir:*maildir-alist*)))))
+
     #+end_src
 *** MPD contrib package
     This package also provides mode-line format.
