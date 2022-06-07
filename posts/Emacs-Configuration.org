@@ -19,7 +19,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
   :END:
 ** Commented header
    #+begin_src emacs-lisp
-     ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t -*-
+     ;;; config-user.el --- Emacs configuration file -*- lexical-binding: t mode: emacs-lisp -*-
      ;;; Commentary:
      ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
      ;; for details.
