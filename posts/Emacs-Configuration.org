@@ -154,10 +154,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                        (load-theme theme t))))))
 
      (cond ((and (featurep 'config-doom-themes)
-                 (featurep 'consult))
-            (+config/load-theme +config-doom-theme))
-           ((custom-theme-name-valid-p +config-standard-theme)
-            (+config/load-theme +config-standard-theme t)))
+                 (featurep 'consult)
+                 (display-graphic-p))
+            (+config/load-theme +config-doom-theme)))
    #+end_src
 ** Footer
    #+begin_src emacs-lisp
