@@ -44,100 +44,100 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ** UI Packages
    #+begin_src emacs-lisp
      ;; UI Additional packages
-     (require 'config-all-the-icons)
-     (require 'config-doom-modelines)
-     (require 'config-doom-themes)
-     (unless (display-graphic-p)
-       (require 'config-theme-magic))
+     ;; (require 'config-all-the-icons)
+     ;; (require 'config-doom-modelines)
+     ;; (require 'config-doom-themes)
+     ;; (unless (display-graphic-p)
+     ;;   (require 'config-theme-magic))
      (require 'config-helpful)
      (require 'config-which-key)
-     (require 'config-ace-window)
-     (require 'config-perspective)
-     (unless (or (featurep 'exwm)
-                 (string= "exwm" (getenv "DESKTOP_SESSION")))
-       (require 'config-centaur-tabs)) ; doesn't look good in workspaces
-     (require 'config-rainbow-mode)
-     (require 'config-rainbow-delimiters)
-     (require 'config-hl-todo)
+     ;; (require 'config-ace-window)
+     ;; (require 'config-perspective)
+     ;; (unless (or (featurep 'exwm)
+     ;;             (string= "exwm" (getenv "DESKTOP_SESSION")))
+     ;;   (require 'config-centaur-tabs)) ; doesn't look good in workspaces
+     ;; (require 'config-rainbow-mode)
+     ;; (require 'config-rainbow-delimiters)
+     ;; (require 'config-hl-todo)
      (require 'config-diminish)
-     (require 'config-dashboard)
-     (require 'config-alert)
-     (require 'config-smartparens)
-     (require 'config-treemacs)
+     ;; (require 'config-dashboard)
+     ;; (require 'config-alert)
+     ;; (require 'config-smartparens)
+     ;; (require 'config-treemacs)
   #+end_src
 ** Editing packages
    #+begin_src emacs-lisp
      ;; Editing Additional packages
-     (require 'config-multiple-cursors)
-     (require 'config-yasnippet)
-     (require 'config-geiser)
-     (require 'config-yaml-mode)
-     (require 'config-toml-mode)
-     (require 'config-nix-mode)
-     (require 'config-markdown-mode)
-     (require 'config-rust-mode)
-     (require 'config-visual-regexp)
-     (require 'config-undo-fu)
-     (require 'config-block-nav)
-     (require 'config-ansible)
-     (require 'config-jinja2-mode)
+     ;; (require 'config-multiple-cursors)
+     ;; (require 'config-yasnippet)
+     ;; (require 'config-geiser)
+     ;; (require 'config-yaml-mode)
+     ;; (require 'config-toml-mode)
+     ;; (require 'config-nix-mode)
+     ;; (require 'config-markdown-mode)
+     ;; (require 'config-rust-mode)
+     ;; (require 'config-visual-regexp)
+     ;; (require 'config-undo-fu)
+     ;; (require 'config-block-nav)
+     ;; (require 'config-ansible)
+     ;; (require 'config-jinja2-mode)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
      ;; Org Additional packages
-     (require 'config-org-roam)
-     (require 'config-org-elfeed)
-     (require 'config-org-gcal)
+     ;; (require 'config-org-roam)
+     ;; (require 'config-org-elfeed)
+     ;; (require 'config-org-gcal)
      ;; (+config/org-gcal-setup-sync)
-     (require 'config-org-journal)
+     ;; (require 'config-org-journal)
    #+end_src
 ** IDE packages
    #+begin_src emacs-lisp
      ;; IDE Additional packages
-     (require 'config-flycheck)
-     (require 'config-projectile)
-     (require 'config-lsp-mode)
-     (require 'config-git-gutter)
+     ;; (require 'config-flycheck)
+     ;; (require 'config-projectile)
+     ;; (require 'config-lsp-mode)
+     ;; (require 'config-git-gutter)
    #+end_src
 ** Email packages
    #+begin_src emacs-lisp
      ;; Email Additional packages
-     (require 'config-notmuch)
-     (require 'config-gnus-alias)
-     (customize-set-variable '+config/mail-fetch-program "mbsync")
+     ;; (require 'config-notmuch)
+     ;; (require 'config-gnus-alias)
+     ;; (customize-set-variable '+config/mail-fetch-program "mbsync")
    #+end_src
 ** Various additional packages
    #+begin_src emacs-lisp
      ;; Shell Additional packages
-     (require 'config-vterm)
+     ;; (require 'config-vterm)
    #+end_src
 ** Completion packages
    #+begin_src emacs-lisp
      ;; Completion packages
-     (require 'config-vertico)
-     (require 'config-orderless)
-     (require 'config-marginalia)
-     (require 'config-consult)
-     (require 'config-embark)
-     (require 'config-corfu)
-     (require 'config-cape)
-     (require 'config-dabbrev)
+     ;; (require 'config-vertico)
+     ;; (require 'config-orderless)
+     ;; (require 'config-marginalia)
+     ;; (require 'config-consult)
+     ;; (require 'config-embark)
+     ;; (require 'config-corfu)
+     ;; (require 'config-cape)
+     ;; (require 'config-dabbrev)
   #+end_src
 ** Tools packages
    #+begin_src emacs-lisp
      ;; Misc tools packages
-     (require 'config-pass)
+     ;; (require 'config-pass)
      (require 'config-magit)
      ;;(require 'config-slime)
      ;;(require 'config-sly) ; a better repl than slime
      ;;(require 'config-paredit)
-     (require 'config-telega)
-     (require 'config-emms)
+     ;; (require 'config-telega)
+     ;; (require 'config-emms)
      ;;(+config/emms-set-mpd) ; when using mpd
-     (require 'config-w3m)
-     (require 'config-pdf-tools)
-     (require 'config-gist)
-     (require 'config-ripgrep)
+     ;; (require 'config-w3m)
+     ;; (require 'config-pdf-tools)
+     ;; (require 'config-gist)
+     ;; (require 'config-ripgrep)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
