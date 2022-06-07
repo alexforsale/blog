@@ -23,9 +23,9 @@
 
 (require 'org)
 (require 'ox-publish)
-;; (require 'htmlize) ;; required for ox-reveal to load Emacs theme
+(require 'htmlize) ;; required for ox-reveal to load Emacs theme
 ;; (require 'ox-html)
-(require 'ox-rss)
+;; (require 'ox-rss)
 (require 'ox-reveal)
 
 (setq org-export-with-section-numbers nil
@@ -221,7 +221,7 @@ PROJECT: `posts in this case."
          :exclude ".*"
          :include ("index.org")
          :table-of-contents nil)
-        ("all" :components ("posts" "pages" "onehouraday" "css" "images" "assets" "rss"))))
+        ("all" :components ("posts" "pages" "onehouraday" "css" "images" "assets"))))
 
 (provide ':publish)
 ;;; publish.el ends here
