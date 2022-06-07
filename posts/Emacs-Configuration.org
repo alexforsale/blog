@@ -2475,6 +2475,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                org-roam-ui-follow t
                org-roam-ui-update-on-save t
                org-roam-ui-open-on-start t))
+       (require 'server)
        (unless (server-running-p)
          (server-start))
        (require 'org-protocol)
