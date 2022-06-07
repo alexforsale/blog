@@ -339,6 +339,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (load (expand-file-name "config-user.el" user-emacs-directory)))
    #+end_src
    If there's any /modules/ or other files needed, this is where to place it.
+** start server
+   #+begin_src emacs-lisp
+     (require 'server)
+     (unless (server-running-p) (server-start))
+   #+end_src
 ** Adds footer since this is the end of the file [[file:init.el][init.el]]
    #+begin_src emacs-lisp
      (provide 'init)
