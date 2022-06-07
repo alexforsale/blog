@@ -233,8 +233,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      (push '(mouse-color . "white") default-frame-alist)
    #+end_src
    This also sets the initial /minimal theme/ to avoid having the vanilla theme.
-** Make the initial buffer load faster by setting its mode to fundamental-mode.
-   #+begin_src emacs-lisp
+** +Make the initial buffer load faster by setting its mode to fundamental-mode.+
+   #+begin_src emacs-lisp :tangle no
      (customize-set-variable 'initial-major-mode 'fundamental-mode)
    #+end_src
 ** Set location for /straight-base-dir/, must be set before straight.el initialized.
