@@ -1254,7 +1254,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (unless +config/is-guix-system
          (straight-use-package 'smartparens))
        ;; disable `electric-pair-mode')
-       (electric-pair-mode nil)
+       (electric-pair-mode 0)
        (smartparens-global-mode 1)
        (require 'smartparens-config)
        (setq sp-highlight-pair-overlay nil
