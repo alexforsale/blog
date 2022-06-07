@@ -3361,9 +3361,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                           #'consult-completion-in-region
                         #'completion--in-region)
                       args)))
-       (require 'vertico-directory)
-       (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
-       (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
        ;; tmm-menubar
        (global-set-key [f10] #'tmm-menubar)
@@ -3388,7 +3385,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; increase the number of candidates to show
        (setq vertico-count 15)
      #+end_src
-***** multiform extension
+***** vertico-multiform
       #+begin_src emacs-lisp
         (require 'vertico-multiform)
         (setq vertico-multiform-commands
@@ -3407,10 +3404,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
                  (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
       #+end_src
-***** vertico repeat
+***** vertico-repeat
       #+begin_src emacs-lisp
         (global-set-key (kbd "<C-S-iso-lefttab>") #'vertico-repeat)
         (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+      #+end_src
+***** vertico-directory
+      #+begin_src emacs-lisp
+        (require 'vertico-directory)
+        (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
+        (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+        (define-key vertico-map (kbd "DEL") 'vertico-directory-delete-char)
+        ;;(define-key vertico-map (kbd "M-DEL") 'vertico-directory-delete-char)
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
