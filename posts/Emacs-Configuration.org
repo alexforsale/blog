@@ -3168,11 +3168,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (defun +server-eshell ()
          "Command to be called by emacs-client to start a new shell.
 
-       A new eshell will be created. When the frame is closed, the buffer is deleted or the shell exits,
-       then hooks will take care that the other actions happen. For example, when the frame is closed,
-       then the buffer will be deleted and the client disconnected.
-
-       Also creates a local binding of 'C-x #' to kill the buffer."
+       A new eshell will be created.  When the frame is closed,
+       the buffer is deleted or the shell exits, then hooks will take
+       care that the other actions happen. For example, when the frame
+       is closed, then the buffer will be deleted and the client disconnected.
+       Also creates a local binding of `C-x #' to kill the buffer."
          (lexical-let ((buf (eshell t))
                        (client (first server-clients))
                        (frame (selected-frame)))
