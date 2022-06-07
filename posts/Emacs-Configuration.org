@@ -3058,7 +3058,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (straight-use-package 'ol-notmuch)
        (customize-set-variable 'notmuch-init-file (expand-file-name "notmuch-config" +emacs-data-dir))
        (customize-set-variable 'notmuch-search-oldest-first nil)
-       (global-set-key (kbd "C-c M") 'notmuch)
+       (global-set-key (kbd "C-c M") 'notmuch) ;; conflict with consult
        (when (featurep 'consult)
          (straight-use-package 'consult-notmuch)
          (require 'consult-notmuch))
