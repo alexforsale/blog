@@ -535,10 +535,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ((find-font (font-spec :name "Ubuntu Mono"))
         (set-frame-font "Ubuntu Mono-12")))
     #+end_src
-*** Load theme
-    #+begin_src emacs-lisp
-      ;;(unless custom-enabled-themes
-      ;;  (load-theme 'manoj-dark t))
+*** +Load theme+
+    #+begin_src emacs-lisp :tangle no
+      (unless custom-enabled-themes
+       (load-theme 'manoj-dark t))
     #+end_src
 *** Revert Dired and other buffers
     #+begin_src emacs-lisp
