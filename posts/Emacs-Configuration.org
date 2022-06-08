@@ -3239,20 +3239,21 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ***** custom functions
       #+begin_src emacs-lisp
-        (defun +git-gutter:next-hunk ()
-          (interactive)
-          (git-gutter:next-hunk 1)
-          (set-temporary-overlay-map
-           (let ((map (make-sparse-keymap)))
-             (define-key map (kbd "C-n") (git-gutter:next-hunk 1))
-             map)))
-        (defun +git-gutter:previous-hunk ()
-          (interactive)
-          (git-gutter:previous-hunk 1)
-          (set-temporary-overlay-map
-           (let ((map (make-sparse-keymap)))
-             (define-key map (kbd "C-p") (git-gutter:previous-hunk 1))
-             map)))
+        (unless (featurep 'evil)
+          (defun +git-gutter:next-hunk ()
+            (interactive)
+            (git-gutter:next-hunk 1)
+            (set-temporary-overlay-map
+             (let ((map (make-sparse-keymap)))
+               (define-key map (kbd "C-n") (git-gutter:next-hunk 1))
+               map)))
+          (defun +git-gutter:previous-hunk ()
+            (interactive)
+            (git-gutter:previous-hunk 1)
+            (set-temporary-overlay-map
+             (let ((map (make-sparse-keymap)))
+               (define-key map (kbd "C-p") (git-gutter:previous-hunk 1))
+               map))))
       #+end_src
 ***** keybinding
 ****** hydra
@@ -3273,21 +3274,19 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ****** general
        #+begin_src emacs-lisp
          (when (featurep 'general)
-           (general-define-key
-            :prefix "C-c SPC g"
-            "s" 'git-gutter:stage-hunk
-            "r" 'git-gutter:revert-hunk
-            "u" 'git-gutter:stage-hunk)
-           (if (featurep 'evil)
-               (general-define-key
-                :prefix "C-c SPC"
-                :repeat t
-                :jump t
-                "gk" '+git-gutter:previous-hunk
-                "gj" '+git-gutter:next-hunk)
-             (progn
-               (global-set-key (kbd "C-c SPC g C-p") '+git-gutter:previous-hunk)
-               (global-set-key (kbd "C-c SPC g C-n") '+git-gutter:next-hunk))))
+           (+config/leader-def
+             :states '(normal visual)
+             "s" 'git-gutter:stage-hunk
+             "r" 'git-gutter:revert-hunk
+             "u" 'git-gutter:stage-hunk)
+           (when (featurep 'evil)
+             (general-define-key
+               :keymaps '(normal visual)
+               :prefix +general-leader
+               :repeat t
+               :jump t
+               "gk" 'git-gutter:previous-hunk
+               "gj" 'git-gutter:next-hunk)))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -4243,7 +4242,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      Add keybinding if missing
      #+begin_src emacs-lisp
        (unless (key-binding (kbd "C-x g"))
-         (global-set-key (kbd "C-x g") 'magit-status))
+         (if (featurep 'evil)
+             (+config/leader-def
+               :states '(normal visual)
+               "gg" 'magit-status)
+           (global-set-key (kbd "C-x g") 'magit-status)))
      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
