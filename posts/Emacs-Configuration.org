@@ -3171,6 +3171,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (when (executable-find "offlineimap")
          (define-key notmuch-common-keymap [remap notmuch-poll-and-refresh-this-buffer] #'+my/offlineimap-transient))
      #+end_src
+***** mbsync
+      #+begin_src emacs-lisp
+        (defun +my/mbsync-poll ()
+          (interactive)
+          (async-shell-command "notmuch new" "*notmuch-poll*" "*notmuch-poll-error*"))
+        (when (executable-find "mbsync")
+          (define-key notmuch-common-keymap [remap notmuch-poll-and-refresh-this-buffer] #'+my/mbsync-poll))
+      #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-notmuch)
