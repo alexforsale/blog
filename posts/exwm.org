@@ -563,7 +563,7 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
   [[file:../images/posts/exwm-scratch.png]]
 
 # Local Variables:
-# eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
+# eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 # End:
 
 #+include: ../utterances.inc
