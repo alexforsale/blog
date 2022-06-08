@@ -81,6 +81,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-block-nav)
      ;; (require 'config-ansible)
      ;; (require 'config-jinja2-mode)
+     ;; (require 'config-hydra)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
@@ -1960,6 +1961,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         ;;; config-jinja2-mode.el ends here
       #+end_src
 **** hydra
+     :PROPERTIES:
      :header-args: :tangle (expand-file-name "modules/config-hydra.el" user-emacs-directory)
      :END:
      #+begin_src emacs-lisp
@@ -2027,11 +2029,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
             ("V" scroll-down-command)
             ("l" recenter-top-bottom)))
        #+end_src
-******* Footer
-        #+begin_src emacs-lisp
-          (provide 'config-hydra)
-          ;;; config-hydra.el ends here
-        #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-hydra)
+        ;;; config-hydra.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-editings)
