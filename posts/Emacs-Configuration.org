@@ -3,7 +3,7 @@
 #+author: Kristian Alexander P
 #+email: alexforsale@yahoo.com
 #+language: en
-#+startup: content
+#+startup: showall nohideblocks
 #+options: d:t toc:t
 
 This configuration was inspired by the [[https://github.com/SystemCrafters/rational-emacs][rational-emacs configuration]] from the [[https://www.youtube.com/c/SystemCrafters/videos][systemcrafters series]]. So instead of blindly copying every snippets of /Emacs/ configuration I've found on the internet, I'm taking the lighter approach and *try* to only use what is necessary.
@@ -82,6 +82,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-ansible)
      ;; (require 'config-jinja2-mode)
      ;; (require 'config-hydra)
+     ;; (require 'config-general)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
@@ -1865,21 +1866,32 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
        ;;; Code:
      #+end_src
-     #+begin_src emacs-lisp
-       (straight-use-package 'block-nav)
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'block-nav)
+      #+end_src
+***** variables
+      #+begin_src emacs-lisp
+        (setf block-nav-move-skip-shallower t
+              block-nav-center-after-scroll t)
+      #+end_src
+***** keybindings
+****** hydra
+       #+begin_src emacs-lisp
+         (when (featurep 'hydra)
+           (defhydra hydra-block-nav (global-map "C-c b"
+                                      :pre (linum-mode 1)
+                                      :post (linum-mode -1))
+             "block-nav"
+             ("M-p" block-nav-previous-indentation-level "previous indent")
+             ("M-n" block-nav-next-indentation-level "next indent")
+             ("p" block-nav-previous-block "previous block")
+             ("n" block-nav-next-block "next block")))
+       #+end_src
+****** general
+       #+begin_src emacs-lisp
 
-       (setf block-nav-move-skip-shallower t
-             block-nav-center-after-scroll t)
-       (when (featurep 'hydra)
-         (defhydra hydra-block-nav (global-map "C-c b"
-                                    :pre (linum-mode 1)
-                                    :post (linum-mode -1))
-           "block-nav"
-           ("M-p" block-nav-previous-indentation-level "previous indent")
-           ("M-n" block-nav-next-indentation-level "next indent")
-           ("p" block-nav-previous-block "previous block")
-           ("n" block-nav-next-block "next block")))
-     #+end_src
+       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-block-nav)
@@ -2033,6 +2045,58 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+begin_src emacs-lisp
         (provide 'config-hydra)
         ;;; config-hydra.el ends here
+      #+end_src
+**** general
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-general.el" user-emacs-directory)
+     :END:
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'general)
+      #+end_src
+***** variables
+      #+begin_src emacs-lisp
+        (defconst +general-leader "C-c SPC")
+      #+end_src
+      For frequently used prefix keys, the user can create a custom definer with a default =:prefix=, using a variable is not necessary, but it may be useful if you want to
+      experiment with different prefix keys and aren't using =general-create-definer=.
+      #+begin_example
+      #+begin_src emacs-lisp
+        (general-create-definer +config/leader-def
+          ;; :prefix my-leader
+          ;; or without a variable
+          :prefix "C-c")
+      #+end_src
+      #+end_example
+      Then we can use =+config/leader-def= in
+      - Global keybinding
+        #+begin_example
+        #+begin_src emacs-lisp
+          (+config/leader-def
+           "a" 'org-agenda
+           "b" 'counsel-bookmark
+           "c" 'org-capture)
+        #+end_src
+        #+end_example
+      - Local keybinding
+        #+begin_example
+        #+begin_src emacs-lisp
+          (+config/leader-def
+           :keymaps 'clojure-mode-map
+           ;; bind "C-c C-l"
+           "C-l" 'cider-load-file
+           "C-z" 'cider-switch-to-repl-buffer)
+          ;; `general-create-definer' creates wrappers around `general-def', so
+          ;; `define-key'-like syntax is also supported
+          (+config/leader-def clojure-mode-map
+                         "C-l" 'cider-load-file
+                         "C-z" 'cider-switch-to-repl-buffer)
+        #+end_src
+        #+end_example
+***** general definer
+      #+begin_src emacs-lisp
+        (general-create-definer +config/leader-def
+                                :prefix +general-leader)
       #+end_src
 *** Footer
     #+begin_src emacs-lisp
@@ -2937,66 +3001,81 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
        ;;; Code:
      #+end_src
-     #+begin_src emacs-lisp
-       ;; (straight-use-package 'git-gutter)
-       (straight-use-package 'git-gutter-fringe)
-       (require 'git-gutter-fringe)
-
-       ;; this is from doom
-       (defvar +vc-gutter-in-remote-files nil
-         "If non-nil, enable the vc gutter in remote files (e.g. open through TRAMP).")
-
-       (add-hook 'find-file-hook
-                 (defun +vc-gutter-init-maybe-h ()
-                   "Enable `git-gutter-mode' in the current buffer.
-            If the buffer doesn't represent an existing file, `git-gutter-mode's activation
-            is deferred until the file is saved. Respects `git-gutter:disabled-modes'."
-                   (let ((file-name (buffer-file-name (buffer-base-buffer))))
-                     (cond
-                      ((and (file-remote-p (or file-name default-directory))
-                            (not +vc-gutter-in-remote-files)))
-                      ;; If not a valid file, wait until it is written/saved to activate
-                      ;; git-gutter.
-                      ((not (and file-name (vc-backend file-name)))
-                       (add-hook 'after-save-hook #'+vc-gutter-init-maybe-h nil 'local))
-                      ;; Allow git-gutter or git-gutter-fringe to activate based on the type
-                      ;; of frame we're in. This allows git-gutter to work for silly geese
-                      ;; who open both tty and gui frames from the daemon.
-                      ((if (and (display-graphic-p)
-                                (require 'git-gutter-fringe nil t))
-                           (setq-local git-gutter:init-function      #'git-gutter-fr:init
-                                       git-gutter:view-diff-function #'git-gutter-fr:view-diff-infos
-                                       git-gutter:clear-function     #'git-gutter-fr:clear
-                                       git-gutter:window-width -1)
-                         (setq-local git-gutter:init-function      'nil
-                                     git-gutter:view-diff-function #'git-gutter:view-diff-infos
-                                     git-gutter:clear-function     #'git-gutter:clear-diff-infos
-                                     git-gutter:window-width 1))
-                       (unless (memq major-mode git-gutter:disabled-modes)
-                         (git-gutter-mode +1)
-                         (remove-hook 'after-save-hook #'+vc-gutter-init-maybe-h 'local)))))))
-       (setq git-gutter:disabled-modes '(fundamental-mode image-mode pdf-view-mode))
-       (add-hook 'focus-in-hook #'git-gutter:update-all-windows)
-
-       ;; avoid collision with flycheck
-       (when (featurep 'flycheck)
-         (setq flycheck-indication-mode 'right-fringe))
-     #+end_src
-***** keybinding
+***** package
       #+begin_src emacs-lisp
-        (when (featurep 'hydra)
-          (defhydra hydra-git-gutter (global-map
-                                      "C-c g")
-            "
-        git-gutter^
-        "
-            ("p" git-gutter:previous-hunk "previous hunk")
-            ("n" git-gutter:next-hunk "next hunk")
-            ("P" git-gutter:popup-hunk "pop hunk")
-            ("s" git-gutter:stage-hunk "stage hunk")
-            ("r" git-gutter:revert-hunk "revert hunk")
-            ("u" git-gutter:update-all-windows "update all windows")))
+        ;; (straight-use-package 'git-gutter)
+        (straight-use-package 'git-gutter-fringe)
       #+end_src
+***** variables
+      #+begin_src emacs-lisp
+        (require 'git-gutter-fringe)
+
+        ;; this is from doom
+        (defvar +vc-gutter-in-remote-files nil
+          "If non-nil, enable the vc gutter in remote files (e.g. open through TRAMP).")
+      #+end_src
+***** hooks
+      #+begin_src emacs-lisp
+        (add-hook 'find-file-hook
+                  (defun +vc-gutter-init-maybe-h ()
+                    "Enable `git-gutter-mode' in the current buffer.
+             If the buffer doesn't represent an existing file, `git-gutter-mode's activation
+             is deferred until the file is saved. Respects `git-gutter:disabled-modes'."
+                    (let ((file-name (buffer-file-name (buffer-base-buffer))))
+                      (cond
+                       ((and (file-remote-p (or file-name default-directory))
+                             (not +vc-gutter-in-remote-files)))
+                       ;; If not a valid file, wait until it is written/saved to activate
+                       ;; git-gutter.
+                       ((not (and file-name (vc-backend file-name)))
+                        (add-hook 'after-save-hook #'+vc-gutter-init-maybe-h nil 'local))
+                       ;; Allow git-gutter or git-gutter-fringe to activate based on the type
+                       ;; of frame we're in. This allows git-gutter to work for silly geese
+                       ;; who open both tty and gui frames from the daemon.
+                       ((if (and (display-graphic-p)
+                                 (require 'git-gutter-fringe nil t))
+                            (setq-local git-gutter:init-function      #'git-gutter-fr:init
+                                        git-gutter:view-diff-function #'git-gutter-fr:view-diff-infos
+                                        git-gutter:clear-function     #'git-gutter-fr:clear
+                                        git-gutter:window-width -1)
+                          (setq-local git-gutter:init-function      'nil
+                                      git-gutter:view-diff-function #'git-gutter:view-diff-infos
+                                      git-gutter:clear-function     #'git-gutter:clear-diff-infos
+                                      git-gutter:window-width 1))
+                        (unless (memq major-mode git-gutter:disabled-modes)
+                          (git-gutter-mode +1)
+                          (remove-hook 'after-save-hook #'+vc-gutter-init-maybe-h 'local)))))))
+        (setq git-gutter:disabled-modes '(fundamental-mode image-mode pdf-view-mode))
+        (add-hook 'focus-in-hook #'git-gutter:update-all-windows)
+      #+end_src
+***** avoid collision with flycheck
+      #+begin_src emacs-lisp
+        ;; avoid collision with flycheck
+        (when (featurep 'flycheck)
+          (setq flycheck-indication-mode 'right-fringe))
+      #+end_src
+***** keybinding
+****** hydra
+       #+begin_src emacs-lisp
+         (when (featurep 'hydra)
+           (defhydra hydra-git-gutter (global-map
+                                       "C-c g")
+             "
+         git-gutter^
+         "
+             ("p" git-gutter:previous-hunk "previous hunk")
+             ("n" git-gutter:next-hunk "next hunk")
+             ("P" git-gutter:popup-hunk "pop hunk")
+             ("s" git-gutter:stage-hunk "stage hunk")
+             ("r" git-gutter:revert-hunk "revert hunk")
+             ("u" git-gutter:update-all-windows "update all windows")))
+       #+end_src
+****** general
+       #+begin_src emacs-lisp
+         (when (featurep 'general)
+           (general)
+           )
+       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-git-gutter)
