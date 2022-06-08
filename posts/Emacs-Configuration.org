@@ -83,6 +83,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-jinja2-mode)
      ;; (require 'config-hydra)
      ;; (require 'config-general)
+     ;; (require 'config-evil)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
@@ -2098,19 +2099,176 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (require 'general)
         (general-create-definer +config/leader-def
                                 :prefix +general-leader)
+        (when (featurep 'evil)
+          (general-create-definer +config/local-leader-def
+                                  :prefix +general-local-leader))
       #+end_src
 ***** Set title for which-key
       #+begin_src emacs-lisp
-        (general-define-key
-         :prefix +general-leader
+        (+config/leader-def
+         :states '(normal visual)
          "" '(nil :which-key "+config/leader-def root")
-         "f" '(:ignore t :which-key "Files prefix")
-         "g" '(:ignore t :wk ("G-key" . "Git prefix")))
+         "f" '(:ignore t :which-key "Files Prefix")
+         "b" '(:ignore t :which-key "Buffers Prefix")
+         "w" '(:ignore t :which-key "Window Prefix")
+         "g" '(:ignore t :wk ("G-key" . "Git Prefix")))
       #+end_src
+***** Builtin function keybindings
+****** help
+       #+begin_src emacs-lisp
+         (general-define-key
+          :states '(normal visual)
+          :prefix +general-leader
+          "h" (general-simulate-key "C-h"
+                :name +general-simulates-C-h
+                :docstring "Simulate C-h in normal and visual state with SPC-h."
+                :which-key "Simulate C-h"))
+       #+end_src
+****** files
+       #+begin_src emacs-lisp
+         (+config/leader-def
+           :states '(normal visual)
+           "ff" 'find-file)
+         (when (featurep 'consult)
+           (+config/leader-def
+             :states '(normal visual)
+             "fF" 'consult-recent-file))
+       #+end_src
+****** buffers
+       #+begin_src emacs-lisp
+         (if (featurep 'consult)
+             (+config/leader-def
+               :states '(normal visual)
+               "bb" 'consult-buffer)
+           (+config/leader-def
+             :states '(normal visual)
+             "bb" 'switch-to-buffer))
+       #+end_src
+       builtins
+       #+begin_src emacs-lisp
+         (+config/leader-def
+           :states '(normal visual)
+           "bd" 'kill-current-buffer
+           "bi" 'ibuffer
+           "bk" 'kill-buffer
+           "bs" 'save-buffer
+           "bS" 'save-some-buffers
+           "b[" 'previous-buffer
+           "b]" 'next-buffer)
+       #+end_src
+****** window
+       builtin functions.
+       #+begin_src emacs-lisp
+         (+config/leader-def
+           :states '(normal visual)
+           "w=" 'balance-windows
+           "w+" 'maximize-window
+           "w-" 'minimize-window)
+
+         (general-define-key
+          :keymaps '(normal visual)
+          :prefix +general-leader
+          "w^" '(enlarge-window :properties (:repeat t))
+          "w{" '(shrink-window-horizontally :properties (:repeat t))
+          "w}" '(enlarge-window-horizontally :properties (:repeat t)))
+       #+end_src
+       #+begin_src emacs-lisp
+         (cond ((featurep 'ace-window)
+                (+config/leader-def
+                  :states '(normal visual)
+                  "wd" 'delete-window
+                  "wD" 'ace-delete-window
+                  "ww" 'ace-window))
+               ((featurep 'evil)
+                (+config/leader-def
+                  :states '(normal visual)
+                  "wd" 'evil-window-delete ; C-w C-c
+                  "ww" 'evil-window-next ; C-w C-w
+                  ))
+               (t
+                (+config/leader-def
+                  :states '(normal visual)
+                  "wd" 'delete-window
+                  "ww" 'other-window)))
+        #+end_src
+        Evil specifics
+        #+begin_src emacs-lisp
+          ;; evil-only
+          (when (featurep 'evil)
+            (+config/leader-def
+              :states '(normal visual)
+              "wW" 'evil-window-prev ; C-w W
+              "wh" 'evil-window-left ; C-w h
+              "wH" 'evil-window-top-left ; C-w C-t
+              "wl" 'evil-window-right ; C-w l
+              "wL" 'evil-window-bottom-right ; C-w C-b
+              "wj" 'evil-window-down ; C-w j
+              "wk" 'evil-window-up ; C-w k
+              "wR" 'evil-window-rotate-upwards ; C-w R
+              "wr" 'evil-window-rotate-downwards ; C-w r
+              ))
+        #+end_src
+
+        #+begin_src emacs-lisp
+          (cond ((featurep 'evil)
+                 (+config/leader-def
+                   :states '(normal visual)
+                   "ws" 'evil-window-split
+                   "wv" 'evil-window-vsplit))
+                (t (+config/leader-def
+                     :states '(normal visual)
+                     "ws" 'split-window-right
+                     "wv" 'split-window-below)))
+        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
         (provide 'config-general)
         ;;; config-general.el ends here
+      #+end_src
+**** evil
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-evil.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-evil.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'evil)
+        (straight-use-package 'evil-collection)
+      #+end_src
+***** variables
+****** move cursor beyond end of line
+       This is what I've grown accustomed in /Emacs/.
+       #+begin_src emacs-lisp
+         (customize-set-variable 'evil-move-beyond-eol t)
+         (customize-set-variable 'evil-split-window-below t)
+         (customize-set-variable 'evil-vsplit-window-right t)
+         (customize-set-variable 'evil-start-of-line t)
+         (customize-set-variable 'evil-want-keybinding nil)
+         (customize-set-variable 'evil-want-integration t)
+         (cond ((featurep 'undo-fu)
+                (customize-set-variable 'evil-undo-system 'undo-fu)
+                ((featurep 'undo-tree)
+                 (customize-set-variable 'evil-undo-system 'undo-tree))))
+       #+end_src
+***** dependencies
+      #+begin_src emacs-lisp
+        (require 'config-undo-fu)
+        (require 'evil)
+        (evil-mode 1)
+        (when (require 'evil-collection nil t)
+          (evil-collection-init))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-evil)
+        ;;; config-evil.el ends here
       #+end_src
 *** Footer
     #+begin_src emacs-lisp
