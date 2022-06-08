@@ -362,16 +362,32 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
      (customize-set-variable 'desktop-environment-screenshot-directory (expand-file-name "Screenshots/" (getenv "XDG_PICTURES_DIR")))
      (unless (file-directory-p desktop-environment-screenshot-directory)
        (make-directory desktop-environment-screenshot-directory :parents))
+     (when (featurep 'emms)
+       (with-eval-after-load 'desktop-environment
+         (customize-set-variable 'desktop-environment-music-next-command nil)
+         (customize-set-variable 'desktop-environment-music-previous-command nil)
+         (customize-set-variable 'desktop-environment-music-stop-command nil)
+         (customize-set-variable 'desktop-environment-music-toggle-command nil)
+         (define-key desktop-environment-mode-map (kbd "<XF86AudioNext>") #'emms-next)
+         (define-key desktop-environment-mode-map (kbd "<XF86AudioPrev>") #'emms-previous)
+         (define-key desktop-environment-mode-map (kbd "<XF86AudioPlay>") #'emms-pause)
+         (global-set-key (kbd "M-s-<f12>") #'emms-next)
+         (global-set-key (kbd "M-s-<f11>") #'emms-pause)
+         (global-set-key (kbd "M-s-<f10>") #'emms-previous)
+         (global-set-key (kbd "M-s-<f9>") 'desktop-environment-volume-increment)
+         (global-set-key (kbd "M-s-<f8>") 'desktop-environment-volume-decrement)
+         (global-set-key (kbd "M-s-<f7>") 'desktop-environment-toggle-mute)))
    #+end_src
    The variables for /Desktop Environment mode/. See their [[https://github.com/DamienCassou/desktop-environment][github repo]] for details.
    #+begin_src emacs-lisp
-     (with-eval-after-load 'desktop-environment
-       (global-set-key (kbd "M-s-<f12>") 'desktop-environment-music-next)
-       (global-set-key (kbd "M-s-<f11>") 'desktop-environment-toggle-music)
-       (global-set-key (kbd "M-s-<f10>") 'desktop-environment-music-previous)
-       (global-set-key (kbd "M-s-<f9>") 'desktop-environment-volume-increment)
-       (global-set-key (kbd "M-s-<f8>") 'desktop-environment-volume-decrement)
-       (global-set-key (kbd "M-s-<f7>") 'desktop-environment-toggle-mute))
+     (unless (featurep 'emms)
+       (with-eval-after-load 'desktop-environment
+         (global-set-key (kbd "M-s-<f12>") 'desktop-environment-music-next)
+         (global-set-key (kbd "M-s-<f11>") 'desktop-environment-toggle-music)
+         (global-set-key (kbd "M-s-<f10>") 'desktop-environment-music-previous)
+         (global-set-key (kbd "M-s-<f9>") 'desktop-environment-volume-increment)
+         (global-set-key (kbd "M-s-<f8>") 'desktop-environment-volume-decrement)
+         (global-set-key (kbd "M-s-<f7>") 'desktop-environment-toggle-mute)))
      (desktop-environment-mode)
    #+end_src
    Sets the keybinding for various /desktop-environment/ functions.
