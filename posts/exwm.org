@@ -307,6 +307,9 @@ past 5 or past 15 minutes. The default is to display 1-minute load average. The 
    #+begin_src emacs-lisp
      (require 'perspective)
      (require 'perspective-exwm)
+
+     (unless (equal persp-mode t)
+       (persp-mode))
    #+end_src
    I use these packages in order to have a 'traditional window manager' feel in regard to workspaces. In actuality, since this is basically /Emacs/ every window resides inside an /Emacs/ buffer. We can use the usual /Emacs/ buffer operations to manage windows, so it's fine just to have one workspace.
    I've used /perspective/ even before I started using /EXWM/, it's useful for managing set of files in their separate "views" (/perspectives/), so in example, I can have one perspective containing buffers related to my blog files (it can be any /Emacs/ buffers, like /dired/, /eshell/, etc.), and one buffer only related to my current /ssh/ connections.
