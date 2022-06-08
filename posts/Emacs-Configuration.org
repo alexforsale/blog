@@ -1978,13 +1978,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      :PROPERTIES:
      :header-args: :tangle (expand-file-name "modules/config-hydra.el" user-emacs-directory)
      :END:
-     #+begin_src emacs-lisp
-       ;;; config-hydra.el --- Summary -*- lexical-binding: t -*-
-       ;;; Commentary:
-       ;; This file is auto-generated from `config.org'
-       ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
-       ;;; Code:
-     #+end_src
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-hydra.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+      #+end_src
 ***** package
       #+begin_src emacs-lisp
        (straight-use-package 'hydra)
@@ -2052,13 +2053,22 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      :PROPERTIES:
      :header-args: :tangle (expand-file-name "modules/config-general.el" user-emacs-directory)
      :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-general.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+      #+end_src
 ***** package
       #+begin_src emacs-lisp
         (straight-use-package 'general)
       #+end_src
 ***** variables
       #+begin_src emacs-lisp
-        (defconst +general-leader "C-c SPC")
+        (defconst +general-leader "SPC")
+        (defconst +general-local-leader "C-c SPC")
       #+end_src
       For frequently used prefix keys, the user can create a custom definer with a default =:prefix=, using a variable is not necessary, but it may be useful if you want to
       experiment with different prefix keys and aren't using =general-create-definer=.
