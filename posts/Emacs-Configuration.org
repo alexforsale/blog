@@ -2108,11 +2108,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ***** general definer
       #+begin_src emacs-lisp
         (require 'general)
+        (when (featurep 'evil)
+          (general-evil-setup t))
         (general-create-definer +config/leader-def
-                                :prefix +general-leader)
+          :prefix +general-leader)
         (when (featurep 'evil)
           (general-create-definer +config/local-leader-def
-                                  :prefix +general-local-leader))
+            :prefix +general-local-leader))
       #+end_src
 ***** Set title for which-key
       #+begin_src emacs-lisp
@@ -2124,7 +2126,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          "w" '(:ignore t :which-key "Window Prefix")
          "g" '(:ignore t :wk ("G-key" . "Git Prefix")))
       #+end_src
-***** Builtin function keybindings
+***** keybindings
 ****** help
        #+begin_src emacs-lisp
          (general-define-key
@@ -2141,16 +2143,18 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
            :states '(normal visual)
            "ff" 'find-file)
          (when (featurep 'consult)
-           (+config/leader-def
-             :states '(normal visual)
-             "fF" 'consult-recent-file))
+           (with-eval-after-load 'consult
+             (+config/leader-def
+               :states '(normal visual)
+               "fF" 'consult-recent-file)))
        #+end_src
 ****** buffers
        #+begin_src emacs-lisp
          (if (featurep 'consult)
-             (+config/leader-def
-               :states '(normal visual)
-               "bb" 'consult-buffer)
+             (with-eval-after-load 'consult
+               (+config/leader-def
+                 :states '(normal visual)
+                 "bb" 'consult-buffer))
            (+config/leader-def
              :states '(normal visual)
              "bb" 'switch-to-buffer))
@@ -2185,17 +2189,19 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        #+end_src
        #+begin_src emacs-lisp
          (cond ((featurep 'ace-window)
-                (+config/leader-def
-                  :states '(normal visual)
-                  "wd" 'delete-window
-                  "wD" 'ace-delete-window
-                  "ww" 'ace-window))
+                (with-eval-after-load 'ace-window
+                  (+config/leader-def
+                    :states '(normal visual)
+                    "wd" 'delete-window
+                    "wD" 'ace-delete-window
+                    "ww" 'ace-window)))
                ((featurep 'evil)
-                (+config/leader-def
-                  :states '(normal visual)
-                  "wd" 'evil-window-delete ; C-w C-c
-                  "ww" 'evil-window-next ; C-w C-w
-                  ))
+                (with-eval-after-load 'evil
+                  (+config/leader-def
+                    :states '(normal visual)
+                    "wd" 'evil-window-delete ; C-w C-c
+                    "ww" 'evil-window-next ; C-w C-w
+                    )))
                (t
                 (+config/leader-def
                   :states '(normal visual)
@@ -2206,26 +2212,28 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         #+begin_src emacs-lisp
           ;; evil-only
           (when (featurep 'evil)
-            (+config/leader-def
-              :states '(normal visual)
-              "wW" 'evil-window-prev ; C-w W
-              "wh" 'evil-window-left ; C-w h
-              "wH" 'evil-window-top-left ; C-w C-t
-              "wl" 'evil-window-right ; C-w l
-              "wL" 'evil-window-bottom-right ; C-w C-b
-              "wj" 'evil-window-down ; C-w j
-              "wk" 'evil-window-up ; C-w k
-              "wR" 'evil-window-rotate-upwards ; C-w R
-              "wr" 'evil-window-rotate-downwards ; C-w r
-              ))
+            (with-eval-after-load 'evil
+              (+config/leader-def
+                :states '(normal visual)
+                "wW" 'evil-window-prev ; C-w W
+                "wh" 'evil-window-left ; C-w h
+                "wH" 'evil-window-top-left ; C-w C-t
+                "wl" 'evil-window-right ; C-w l
+                "wL" 'evil-window-bottom-right ; C-w C-b
+                "wj" 'evil-window-down ; C-w j
+                "wk" 'evil-window-up ; C-w k
+                "wR" 'evil-window-rotate-upwards ; C-w R
+                "wr" 'evil-window-rotate-downwards ; C-w r
+                )))
         #+end_src
 
         #+begin_src emacs-lisp
           (cond ((featurep 'evil)
-                 (+config/leader-def
-                   :states '(normal visual)
-                   "ws" 'evil-window-split
-                   "wv" 'evil-window-vsplit))
+                 (with-eval-after-load 'evil
+                   (+config/leader-def
+                     :states '(normal visual)
+                     "ws" 'evil-window-split
+                     "wv" 'evil-window-vsplit)))
                 (t (+config/leader-def
                      :states '(normal visual)
                      "ws" 'split-window-right
