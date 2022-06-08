@@ -3505,7 +3505,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'consult)
        (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
        (advice-add #'register-preview :override #'consult-register-window)
-       (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+       ;;(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
        (setq register-preview-delay 0.5
              register-preview-function #'consult-register-format)
        (setq xref-show-xrefs-function #'consult-xref
