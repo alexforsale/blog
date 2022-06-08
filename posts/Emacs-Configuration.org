@@ -141,6 +141,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-pdf-tools)
      ;; (require 'config-gist)
      ;; (require 'config-ripgrep)
+     ;; (require 'config-restart-emacs)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
@@ -4700,6 +4701,29 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-ripgrep)
         ;;; config-ripgrep.el ends here
       #+end_src
+**** restart-emacs
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-restart-emacs.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-restart-emacs.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+        (require 'config-defaults-variables)
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'restart-emacs)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-restart-emacs)
+        ;;; config-restart-emacs.el ends here
+      #+end_src
+
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-tools)
