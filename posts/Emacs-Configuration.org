@@ -4294,7 +4294,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'emms-history)
        (require 'emms-source-file)
        (require 'emms-source-playlist)
-       (require 'emms-librefm-scrobbler)
+       ;;(require 'emms-librefm-scrobbler)
        (require 'emms-lyrics)
        (require 'config-pass)
        (emms-all)
@@ -4316,11 +4316,11 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              emms-playlist-buffer-name "*Music*"
              emms-player-mpv-environment '("PULSnE_PROP_media.role=music")
              emms-player-mpv-parameters '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
-       (setq emms-librefm-scrobbler-username (user-login-name))
-       (setq emms-librefm-scrobbler-password (password-store-get (concat "libre.fm/" (user-login-name))))
+       ;;(setq emms-librefm-scrobbler-username (user-login-name))
+       ;;(setq emms-librefm-scrobbler-password (password-store-get (concat "libre.fm/" (user-login-name))))
 
-       (when emms-librefm-scrobbler-password
-         (emms-librefm-scrobbler-enable))
+       ;;(when emms-librefm-scrobbler-password
+       ;;  (emms-librefm-scrobbler-enable))
 
        (when (not (directory-name-p emms-lyrics-dir))
          (make-directory emms-lyrics-dir :parents))
