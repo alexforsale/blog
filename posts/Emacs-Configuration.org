@@ -998,6 +998,17 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (with-eval-after-load 'perspective
           (global-set-key [remap switch-to-buffer] #'persp-switch-to-buffer*))
       #+end_src
+****** general
+       #+begin_src emacs-lisp
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+               :states '(normal visual)
+               "Bb" (general-simulate-key "C-c b"
+                       :name +perspective-prefix
+                       :which-key "Perspective prefix"))))
+       #+end_src
 ***** hooks
       #+begin_src emacs-lisp
         (unless +config/exwm-enabled
@@ -2392,6 +2403,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (+config/leader-def
           :states '(normal visual)
           "" '(nil :which-key "+config/leader-def root")
+          "B" '(:ignore t :which-key "Perspective Prefix")
           "b" '(:ignore t :which-key "Buffers Prefix")
           "f" '(:ignore t :which-key "Files Prefix")
           "F" '(:ignore t :which-key "Frames Prefix")
