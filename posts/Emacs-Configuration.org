@@ -955,6 +955,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              (require 'general)
              (+config/leader-def
               :states '(normal visual)
+              "w0" 'ace-delete-window
               "wd" 'ace-delete-window
               "ww" 'ace-window)))
        #+end_src
@@ -2578,6 +2579,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           (unless (featurep 'ace-window)
             (+config/leader-def
               :states '(normal visual)
+              "w0" 'evil-window-delete ; C-w C-c
               "wd" 'evil-window-delete ; C-w C-c
               "ww" 'evil-window-next ; C-w C-w
               ))
