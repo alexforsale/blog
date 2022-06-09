@@ -3170,22 +3170,26 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ****** general
        #+begin_src emacs-lisp
-         (with-eval-after-load 'evil
-           (+config/leader-def
-             :states '(normal visual)
-             "or" '(:ignore t :which-key "Roam prefix")
-             "ori" 'org-roam-node-insert
-             "orf" 'org-roam-node-find
-             "orc" 'org-roam-capture
-             "orb" 'org-roam-buffer-toggle
-             "orB" 'org-roam-buffer-display-dedicated
-             "ors" 'org-roam-db-sync))
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+               :states '(normal visual)
+               "or" '(:ignore t :which-key "Roam prefix")
+               "ori" 'org-roam-node-insert
+               "orf" 'org-roam-node-find
+               "orc" 'org-roam-capture
+               "orb" 'org-roam-buffer-toggle
+               "orB" 'org-roam-buffer-display-dedicated
+               "ors" 'org-roam-db-sync)))
          (with-eval-after-load 'consult-org-roam
-           (+config/leader-def
-             :states '(normal visual)
-             "ore" 'consult-org-roam-file-find
-             "orx" 'consult-org-roam-backlinks
-             "orS" 'consult-org-roam-search))
+           (progn
+             (require 'general)
+             (+config/leader-def
+               :states '(normal visual)
+               "ore" 'consult-org-roam-file-find
+               "orx" 'consult-org-roam-backlinks
+               "orS" 'consult-org-roam-search)))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3284,13 +3288,15 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ****** general
        #+begin_src emacs-lisp
-         (with-eval-after-load 'evil
-           (+config/leader-def
-             :states '(normal visual)
-             "e" '(:ignore t :which-key "Elfeed prefix")
-             "ee" 'elfeed
-             "eu" 'elfeed-update
-             "eU" 'elfeed-update-feed))
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+               :states '(normal visual)
+               "e" '(:ignore t :which-key "Elfeed prefix")
+               "ee" 'elfeed
+               "eu" 'elfeed-update
+               "eU" 'elfeed-update-feed)))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3337,12 +3343,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ****** general
        #+begin_src emacs-lisp
-         (with-eval-after-load 'evil
-           (+config/leader-def
-             :states '(normal visual)
-             "og" '(:ignore t :which-key "Org-Gcal prefix")
-             "ogs" 'org-gcal-sync
-             "ogf" 'org-gcal-fetch))
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+               :states '(normal visual)
+               "og" '(:ignore t :which-key "Org-Gcal prefix")
+               "ogs" 'org-gcal-sync
+               "ogf" 'org-gcal-fetch)))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3451,10 +3459,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (global-flycheck-mode)
         (when (featurep 'consult)
           (require 'consult-flycheck)
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/ff" 'consult-flycheck)))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/ff" 'consult-flycheck))))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3488,12 +3498,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ****** general
        #+begin_src emacs-lisp
-           (with-eval-after-load 'evil
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
              (+config/leader-def
                :states '(normal visual)
                "pp" (general-simulate-key "C-c p"
                       :name +projectile-prefix
-                      :which-key "Projectile prefix")))
+                      :which-key "Projectile prefix"))))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -3781,10 +3793,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           (straight-use-package 'transient))
         (require 'transient)
         (require 'notmuch)
-        (with-eval-after-load 'evil
-          (+config/leader-def
-            :states '(normal visual)
-            "mm" 'notmuch))
+        (with-eval-after-load 'config-general
+          (progn
+            (require 'general)
+            (+config/leader-def
+              :states '(normal visual)
+              "mm" 'notmuch)))
       #+end_src
       This is the default saved-searches, for reference.
       #+begin_src emacs-lisp :tangle no
@@ -3997,10 +4011,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ***** general
       #+begin_src emacs-lisp
-        (with-eval-after-load 'evil
-          (+config/leader-def
-            :states '(normal visual)
-            "te" 'eshell))
+        (with-eval-after-load 'config-general
+          (progn
+            (require 'general)
+            (+config/leader-def
+              :states '(normal visual)
+              "te" 'eshell)))
       #+end_src
 *** Additional Packages
 **** vterm
@@ -4026,10 +4042,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      #+end_src
 ***** general
       #+begin_src emacs-lisp
-        (with-eval-after-load 'evil
-          (+config/leader-def
-            :states '(normal visual)
-            "tt" 'vterm))
+        (with-eval-after-load 'config-general
+          (progn
+            (require 'general)
+            (+config/leader-def
+              :states '(normal visual)
+              "tt" 'vterm)))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -4374,105 +4392,133 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ****** general
 ******* consult-register
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/ry" 'consult-register-store
-              "/rp" 'consult-register-load
-              "/rr" 'consult-register))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/ry" 'consult-register-store
+                "/rp" 'consult-register-load
+                "/rr" 'consult-register)))
         #+end_src
 ******* consult-bookmark
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/bl" 'consult-bookmark))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/bl" 'consult-bookmark)))
         #+end_src
 ******* consult-recent-file
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "fF" 'consult-recent-file))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "fF" 'consult-recent-file)))
         #+end_src
 ******* consult-buffer
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "bb" 'consult-buffer))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "bb" 'consult-buffer)))
         #+end_src
 ******* consult-imenu
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "si" 'consult-imenu
-              "sI" 'consult-imenu-multi))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "si" 'consult-imenu
+                "sI" 'consult-imenu-multi)))
         #+end_src
 ******* consult-line
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/l" 'consult-line
-              "/L" 'consult-line-multi))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/l" 'consult-line
+                "/L" 'consult-line-multi)))
         #+end_src
 ******* consult-outline
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/o" 'consult-outline))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/o" 'consult-outline)))
         #+end_src
 ******* consult-global-mark
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/bg" 'consult-global-mark))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/bg" 'consult-global-mark)))
         #+end_src
 ******* consult-find
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sf" 'consult-find))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sf" 'consult-find)))
         #+end_src
 ******* consult-locate
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sl" 'consult-locate))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sl" 'consult-locate)))
         #+end_src
 ******* consult-grep
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sg" 'consult-grep))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sg" 'consult-grep)))
         #+end_src
 ******* consult-git-grep
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sG" 'consult-git-grep))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sG" 'consult-git-grep)))
         #+end_src
 ******* consult-ripgrep
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sr" 'consult-ripgrep))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sr" 'consult-ripgrep)))
         #+end_src
 ******* consult-multi-occur
         #+begin_src emacs-lisp
-          (with-eval-after-load 'evil
-            (+config/leader-def
-              :states '(normal visual)
-              "/sm" 'consult-multi-occur))
+          (with-eval-after-load 'config-general
+            (progn
+              (require 'general)
+              (+config/leader-def
+                :states '(normal visual)
+                "/sm" 'consult-multi-occur)))
         #+end_src
 ***** Footer
       #+begin_src emacs-lisp
