@@ -809,6 +809,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (unless +config/is-guix-system
           (straight-use-package 'theme-magic))
         (when (executable-find "wal")
+          (require 'theme-magic)
           (theme-magic-export-theme-mode))
       #+end_src
 ***** Footer
