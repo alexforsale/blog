@@ -2524,6 +2524,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
          (customize-set-variable 'evil-want-keybinding nil)
          (customize-set-variable 'evil-want-integration t)
        #+end_src
+***** hooks
+      #+begin_src emacs-lisp
+        (add-hook 'with-editor-mode-hook 'evil-insert-state)
+      #+end_src
 ***** dependencies
       #+begin_src emacs-lisp
         (require 'config-undo-fu)
