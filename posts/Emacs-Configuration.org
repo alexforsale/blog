@@ -65,6 +65,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-alert)
      ;; (require 'config-smartparens)
      ;; (require 'config-treemacs)
+     ;; (require 'config-vertico-posframe)
   #+end_src
 ** Editing packages
    #+begin_src emacs-lisp
@@ -1501,6 +1502,35 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+begin_src emacs-lisp
         (provide 'config-treemacs)
         ;;; config-treemacs.el ends here
+      #+end_src
+**** vertico-posframe
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-vertico-posframe.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-vertico-posframe.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+        (require 'config-defaults-variables)
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (when (featurep 'vertico)
+          (straight-use-package 'vertico-posframe))
+      #+end_src
+***** config
+      #+begin_src emacs-lisp
+        (when (featurep 'vertico)
+          (require 'vertico-posframe)
+          (vertico-posframe-mode 1))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-vertico-posframe)
+        ;;; config-vertico-posframe.el ends here
       #+end_src
 *** Footer
     #+begin_src emacs-lisp
