@@ -950,11 +950,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ****** general
        Since the =+config/leader-def= is defined only when =evil= is loaded, evaluate this after =evil=.
        #+begin_src emacs-lisp
-         (with-eval-after-load 'evil
-           (+config/leader-def
-             :states '(normal visual)
-             "wD" 'ace-delete-window
-             "ww" 'ace-window))
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+              :states '(normal visual)
+              "wD" 'ace-delete-window
+              "ww" 'ace-window)))
        #+end_src
 ***** Footer
       #+begin_src emacs-lisp
@@ -1518,12 +1520,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ***** package
       #+begin_src emacs-lisp
-        (when (featurep 'vertico)
+        (with-eval-after-load 'vertico
           (straight-use-package 'vertico-posframe))
       #+end_src
 ***** config
       #+begin_src emacs-lisp
-        (when (featurep 'vertico)
+        (with-eval-after-load 'vertico
           (require 'vertico-posframe)
           (vertico-posframe-mode 1))
       #+end_src
