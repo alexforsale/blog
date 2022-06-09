@@ -2844,16 +2844,17 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
     #+end_src
 **** general
      #+begin_src emacs-lisp
-       (when (featurep 'general)
-         (with-eval-after-load 'evil
+       (with-eval-after-load 'config-general
+         (progn
+           (require 'general)
            (+config/leader-def
-            :states '(normal visual)
-            "ol" '(:ignore t :which-key "Links prefix")
-            "oa" '(:ignore t :which-key "Agenda prefix")
-            "oly" 'org-store-link
-            "olp" 'org-insert-link
-            "oaa" 'org-agenda
-            "X" 'org-capture)))
+             :states '(normal visual)
+             "ol" '(:ignore t :which-key "Links prefix")
+             "oa" '(:ignore t :which-key "Agenda prefix")
+             "oly" 'org-store-link
+             "olp" 'org-insert-link
+             "oaa" 'org-agenda
+             "x" 'org-capture)))
      #+end_src
 *** babel
     see [[https://www.gnu.org/software/emacs/manual/html_node/org/Languages.html][here]] for available languages.
