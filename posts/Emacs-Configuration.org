@@ -2456,6 +2456,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         #+begin_src emacs-lisp
           (+config/leader-def
             :states '(normal visual)
+            "w1" 'delete-other-windows
             "wo" 'delete-other-windows
             "w=" 'balance-windows
             "w+" 'maximize-window
