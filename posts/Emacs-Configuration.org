@@ -2393,6 +2393,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           "" '(nil :which-key "+config/leader-def root")
           "b" '(:ignore t :which-key "Buffers Prefix")
           "f" '(:ignore t :which-key "Files Prefix")
+          "F" '(:ignore t :which-key "Frames Prefix")
           "g" '(:ignore t :which-key ("G-key" . "Git Prefix"))
           "m" '(:ignore t :which-key "Mail Prefix")
           "o" '(:ignore t :which-key "Org-mode Prefix")
@@ -2468,6 +2469,14 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               "sg" 'grep-find
               "si" 'imenu)
          #+end_src
+******* frames
+        #+begin_src emacs-lisp
+          (+config/leader-def
+            :states '(normal visual)
+            "Fd" 'delete-frame
+            "Ff" 'make-frame
+            "fo" 'other-frame)
+        #+end_src
 ******* navigation
 ******** builtin
 ********* registers
