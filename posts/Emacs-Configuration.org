@@ -48,7 +48,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-all-the-icons)
      ;; (require 'config-doom-modelines)
      ;; (require 'config-doom-themes)
-     ;; (unless (display-graphic-p)
+     ;; (when (display-graphic-p)
      ;;   (require 'config-theme-magic))
      (require 'config-helpful)
      (require 'config-which-key)
