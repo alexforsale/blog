@@ -3978,20 +3978,20 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
        (require 'config-defaults-variables)
      #+end_src
      #+begin_src emacs-lisp
-              (unless +config/is-guix-system
-                (straight-use-package 'vterm))
-              (require 'vterm)
-              (global-set-key (kbd "C-c t t") 'vterm)
-              (setq vterm-max-scrollback 5000)
-              (add-hook 'vterm-mode-hook (lambda () (setq confirm-kill-processes nil
-                                                          hscroll-margin 0)))
+       (unless +config/is-guix-system
+         (straight-use-package 'vterm))
+       (require 'vterm)
+       (global-set-key (kbd "C-c t t") 'vterm)
+       (setq vterm-max-scrollback 5000)
+       (add-hook 'vterm-mode-hook (lambda () (setq confirm-kill-processes nil
+                                                   hscroll-margin 0)))
      #+end_src
 ***** general
       #+begin_src emacs-lisp
         (with-eval-after-load 'evil
           (+config/leader-def
             :states '(normal visual)
-            "te" 'vterm))
+            "tt" 'vterm))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
