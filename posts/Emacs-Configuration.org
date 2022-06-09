@@ -4482,7 +4482,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sf" 'consult-find)))
+                "sf" 'consult-find)))
         #+end_src
 ******* consult-locate
         #+begin_src emacs-lisp
@@ -4491,7 +4491,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sl" 'consult-locate)))
+                "sl" 'consult-locate)))
         #+end_src
 ******* consult-grep
         #+begin_src emacs-lisp
@@ -4500,7 +4500,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sg" 'consult-grep)))
+                "sg" 'consult-grep)))
         #+end_src
 ******* consult-git-grep
         #+begin_src emacs-lisp
@@ -4509,7 +4509,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sG" 'consult-git-grep)))
+                "sG" 'consult-git-grep)))
         #+end_src
 ******* consult-ripgrep
         #+begin_src emacs-lisp
@@ -4518,7 +4518,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sr" 'consult-ripgrep)))
+                "sr" 'consult-ripgrep)))
         #+end_src
 ******* consult-multi-occur
         #+begin_src emacs-lisp
@@ -4527,7 +4527,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               (require 'general)
               (+config/leader-def
                 :states '(normal visual)
-                "/sm" 'consult-multi-occur)))
+                "sm" 'consult-multi-occur)))
         #+end_src
 ***** Footer
       #+begin_src emacs-lisp
