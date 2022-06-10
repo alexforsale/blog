@@ -3474,7 +3474,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ***** package
       #+begin_src emacs-lisp
         (unless +config/is-guix-system
-          (straight-use-package 'flycheck)
+          (straight-use-package 'flycheck))
       #+end_src
 ***** consult integration
       #+begin_src emacs-lisp
