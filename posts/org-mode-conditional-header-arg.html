@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Jun 09, 2022 -->
+<!-- Jun 10, 2022 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Conditional Code-block in Org-mode</title>
@@ -58,9 +58,9 @@
 <header>
 <h1 class="title">Conditional Code-block in Org-mode</h1>
 <p class="subtitle" role="doc-subtitle">Published on Jun 02, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-org977b88a" class="outline-2">
-<h2 id="org977b88a">Literate Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="mode">mode</span>&#xa0;<span class="codeblocks">codeblocks</span></span></h2>
-<div class="outline-text-2" id="text-org977b88a">
+</header><section id="outline-container-orgfe777ae" class="outline-2">
+<h2 id="orgfe777ae">Literate Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="mode">mode</span>&#xa0;<span class="codeblocks">codeblocks</span></span></h2>
+<div class="outline-text-2" id="text-orgfe777ae">
 <p>
 Two classical operations in literate programming<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
 </p>
@@ -72,10 +72,10 @@ Two classical operations in literate programming<sup><a id="fnr.1" class="footre
 Furthermore, we can conditionally instruct which code blocks to evaluate by using <i>emacs lisp</i> in the code block <i>header arguments</i>.
 </p>
 </div>
-<div id="outline-container-org20f6534" class="outline-3">
-<h3 id="org20f6534">Example</h3>
-<div class="outline-text-3" id="text-org20f6534">
-<pre class="example" id="orgb997f22">
+<div id="outline-container-orgc14902b" class="outline-3">
+<h3 id="orgc14902b">Example</h3>
+<div class="outline-text-3" id="text-orgc14902b">
+<pre class="example" id="org662019a">
 #+begin_src emacs-lisp :exports (if (string= "freebsd" (downcase (substring (shell-command-to-string "uname -s") 0 -1))) "both" "none") :results verbatim
   (print "this will only evaluated on freebsd")
 #+end_src
@@ -100,7 +100,7 @@ Furthermore, we can conditionally instruct which code blocks to evaluate by usin
 <div class='footer'>
   Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/blog'>Source</a> <br>
   GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
-  Last updated on Jun 09, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.4) <br>
+  Last updated on Jun 10, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.4) <br>
   <a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
 </div>
 </footer>
