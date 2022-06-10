@@ -2877,7 +2877,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              "oa" '(:ignore t :which-key "Agenda prefix")
              "oly" 'org-store-link
              "olp" 'org-insert-link
-             "oaa" 'org-agenda
+             "oa" 'org-agenda
              "x" 'org-capture)))
      #+end_src
 *** babel
