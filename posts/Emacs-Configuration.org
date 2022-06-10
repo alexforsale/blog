@@ -1005,7 +1005,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              (require 'general)
              (+config/leader-def
                :states '(normal visual)
-               "Bb" (general-simulate-key "C-c b"
+               "B" (general-simulate-key "C-c b"
                        :name +perspective-prefix
                        :which-key "Perspective prefix"))))
        #+end_src
@@ -2405,14 +2405,12 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
           "" '(nil :which-key "+config/leader-def root")
           "SPC" 'execute-extended-command
           ":" 'eval-expression
-          "B" '(:ignore t :which-key "Perspective Prefix")
           "b" '(:ignore t :which-key "Buffers Prefix")
           "f" '(:ignore t :which-key "Files Prefix")
           "F" '(:ignore t :which-key "Frames Prefix")
           "g" '(:ignore t :which-key ("G-key" . "Git Prefix"))
           "m" '(:ignore t :which-key "Mail Prefix")
           "o" '(:ignore t :which-key "Org-mode Prefix")
-          "p" '(:ignore t :which-key "Project prefix")
           "s" '(:ignore t :which-key "Search prefix")
           "t" '(:ignore t :which-key "Terminal prefix")
           "w" '(:ignore t :which-key "Window Prefix")
@@ -3529,7 +3527,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              (require 'general)
              (+config/leader-def
                :states '(normal visual)
-               "pp" (general-simulate-key "C-c p"
+               "p" (general-simulate-key "C-c p"
                       :name +projectile-prefix
                       :which-key "Projectile prefix"))))
        #+end_src
