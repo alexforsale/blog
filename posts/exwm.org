@@ -247,7 +247,7 @@
     #+begin_src emacs-lisp
       (customize-set-variable 'exwm-workspace-warp-cursor t)
       (customize-set-variable 'mouse-autoselect-window t)
-      (customize-set-variable 'focus-follows-mouse t)
+      (customize-set-variable 'focus-follows-mouse nil)
       (customize-set-variable 'exwm-workspace-number 10)
       (customize-set-variable 'persp-initial-frame-name "Main")
       (if +emacs-data-dir

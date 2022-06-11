@@ -84,7 +84,7 @@
    #+end_src
    - =*mouse-focus-policy*= :: This variable decide how the mouse affects input focus. Possible values are ~:ignore~, ~:sloppy~ and ~:click~.
      #+begin_src lisp
-       (setf *mouse-focus-policy* :sloppy)
+       (setf *mouse-focus-policy* :click)
      #+end_src
    - =*run-or-raise-all-groups*= :: Defines how the =run-or-raise= function searches, in this case all groups.
      #+begin_src lisp

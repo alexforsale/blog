@@ -17,9 +17,9 @@
    - Navigation
      #+caption: Navigation Key
      #+attr_html: :frame border :border 2 :rules all
-     | Modifier Key     | Key |               Function |
-     |------------------+-----+------------------------|
-     | <l>              | <c> |                    <r> |
+     | Modifier Key       | Key |               Function |
+     |--------------------+-----+------------------------|
+     | <l>                | <c> |                    <r> |
      | *Mod4* (Super Key) |  h  |  Switch to left window |
      | *Mod4* (Super Key) |  j  | Switch to lower window |
      | *Mod4* (Super Key) |  k  | Switch to upper window |
@@ -27,10 +27,10 @@
    - Window Movement
      #+caption: Window Movement
      #+attr_html: :frame border :border 2 :rules all
-     | Modifier Key             | Key |                 Function |
-     |--------------------------+-----+--------------------------|
-     | <l>                      | <c> |                      <r> |
-     |--------------------------+-----+--------------------------|
+     | Modifier Key                 | Key |                 Function |
+     |------------------------------+-----+--------------------------|
+     | <l>                          | <c> |                      <r> |
+     |------------------------------+-----+--------------------------|
      | *Mod4* (Super Key) + *Shift* |  h  |  Move window to the left |
      | *Mod4* (Super Key) + *Shift* |  j  |    Move window to bottom |
      | *Mod4* (Super Key) + *Shift* |  k  |       Move window to top |
@@ -39,10 +39,10 @@
      Only works in /floating mode./
      #+caption: Window Resizing
      #+attr_html: :frame border :border 2 :rules all
-     | Modifier Key               | Key |                 Function |
-     |----------------------------+-----+--------------------------|
-     | <l>                        | <c> |                      <r> |
-     |----------------------------+-----+--------------------------|
+     | Modifier Key                   | Key |                 Function |
+     |--------------------------------+-----+--------------------------|
+     | <l>                            | <c> |                      <r> |
+     |--------------------------------+-----+--------------------------|
      | *Mod4* (Super Key) + *Control* |  h  |  grow window to the left |
      | *Mod4* (Super Key) + *Control* |  j  |    grow window to bottom |
      | *Mod4* (Super Key) + *Control* |  k  |       grow window to top |
@@ -50,14 +50,14 @@
    - Basic Commands
      #+caption: Basic Command
      #+attr_html: :frame border :border 2 :rules all
-     | Modifier Key                  |  Key  |                           Function |
-     |-------------------------------+-------+------------------------------------|
-     | <l>                           |  <c>  |                                <r> |
+     | Modifier Key                    |  Key  |                           Function |
+     |---------------------------------+-------+------------------------------------|
+     | <l>                             |  <c>  |                                <r> |
      | *Mod4* (Super Key)              |  TAB  |      Toggle between previous group |
      | *Mod4* (Super Key) + Mod1 (ALT) |  TAB  |             Toggle between layouts |
      | *Mod4* (Super Key)              |  F4   |                Kill focused window |
-     | *Mod4* (Super Key) + *Control*    |   r   | Reload Qtile configuration file(s) |
-     | *Mod4* (Super Key) + *Control*    |   q   |                             Logout |
+     | *Mod4* (Super Key) + *Control*  |   r   | Reload Qtile configuration file(s) |
+     | *Mod4* (Super Key) + *Control*  |   q   |                             Logout |
      | *Mod4* (Super Key)              |   d   |                      Spawn Command |
      | *Mod4* (Super Key)              | Space |              Switch to next window |
    - Other Commands
@@ -65,43 +65,43 @@
        These commands need /picom/ available and running.
        #+caption: Other Command
        #+attr_html: :frame border :border 2 :rules all
-       | Modifier Key     | Key |                                       Function |       |
-       |------------------+-----+------------------------------------------------+-------|
-       | <l>              | <c> |                                            <r> |       |
+       | Modifier Key       | Key |                                       Function |       |
+       |--------------------+-----+------------------------------------------------+-------|
+       | <l>                | <c> |                                            <r> |       |
        | *Mod4* (Super Key) | F2  | Decrease transparency value for current window | picom |
        | *Mod4* (Super Key) | F3  | Increase transparency value for current window | picom |
      - Hardware keys
        #+caption: Hardware Keys
        #+attr_html: :frame border :border 2 :rules all
-       | Modifier Key     |          Key          |                   Function |               |
-       |------------------+-----------------------+----------------------------+---------------|
-       | <l>              |          <c>          |                        <r> |               |
-       | -                |  XF86MonBrightnessUp  |        Increase brightness | brightnessctl |
-       | -                | XF86MonBrightnessDown |        Decrease brightness | brightnessctl |
-       | -                | XF86AudioLowerVolume  |            Decrease volume | pactl         |
-       | -                | XF86AudioRaiseVolume  |            Increase volume | pactl         |
-       | -                |     XF86AudioMute     |       Toggle volume muting | pactl         |
-       | -                |     XF86AudioPlay     |    Toggle media play/pause | playerctl     |
-       | -                |     XF86AudioNext     |     Toggle media play next | playerctl     |
-       | -                |     XF86AudioPrev     | Toggle media play previous | playerctl     |
-       | -                |       XF86Mail        |     Opens Notmuch in Emacs | emacs         |
-       | -                |    XF86MyComupter     |                Open Thunar | thunar        |
-       | -                |         Print         |      Fullscreen screenshot | maim          |
+       | Modifier Key       |          Key          |                   Function |               |
+       |--------------------+-----------------------+----------------------------+---------------|
+       | <l>                |          <c>          |                        <r> |               |
+       | -                  |  XF86MonBrightnessUp  |        Increase brightness | brightnessctl |
+       | -                  | XF86MonBrightnessDown |        Decrease brightness | brightnessctl |
+       | -                  | XF86AudioLowerVolume  |            Decrease volume | pactl         |
+       | -                  | XF86AudioRaiseVolume  |            Increase volume | pactl         |
+       | -                  |     XF86AudioMute     |       Toggle volume muting | pactl         |
+       | -                  |     XF86AudioPlay     |    Toggle media play/pause | playerctl     |
+       | -                  |     XF86AudioNext     |     Toggle media play next | playerctl     |
+       | -                  |     XF86AudioPrev     | Toggle media play previous | playerctl     |
+       | -                  |       XF86Mail        |     Opens Notmuch in Emacs | emacs         |
+       | -                  |    XF86MyComupter     |                Open Thunar | thunar        |
+       | -                  |         Print         |      Fullscreen screenshot | maim          |
        | *Mod4* (Super Key) |         Print         |       Selection screenshot | maim          |
      - Various apps
        #+caption: Various Apps
        #+attr_html: :frame border :border 2 :rules all
-       | Modifier Key             |        Key         |                 Function |                           |
-       |--------------------------+--------------------+--------------------------+---------------------------|
-       | <l>                      |        <c>         |                      <r> |                           |
-       | *Mod4* (Super Key)         | Return (Enter Key) |           Opens Terminal | Configurable via Variable |
+       | Modifier Key                 |        Key         |                 Function |                           |
+       |------------------------------+--------------------+--------------------------+---------------------------|
+       | <l>                          |        <c>         |                      <r> |                           |
+       | *Mod4* (Super Key)           | Return (Enter Key) |           Opens Terminal | Configurable via Variable |
        | *Mod4* (Super Key) + *Shift* | Return (Enter Key) |         Open Emacs vterm | Emacs                     |
-       | *Mod4* (Super Key)         |         b          |            Opens Firefox | firefox                   |
-       | *Mod4* (Super Key)         |         m          |   Opens Notmuch in Emacs | emacs                     |
-       | *Mod4* (Super Key)         |         n          | Opens emacsclient window | emacs                     |
+       | *Mod4* (Super Key)           |         b          |            Opens Firefox | firefox                   |
+       | *Mod4* (Super Key)           |         m          |   Opens Notmuch in Emacs | emacs                     |
+       | *Mod4* (Super Key)           |         n          | Opens emacsclient window | emacs                     |
        | *Mod4* (Super Key) + *Shift* |         m          |      Opens Emms in Emacs | emacs                     |
-       | *Mod4* (Super Key)         |         f          |    Opens Elfeed in Emacs | emacs                     |
-       | *Mod4* (Super Key)         |         t          |    Opens Telega in Emacs | emacs                     |
+       | *Mod4* (Super Key)           |         f          |    Opens Elfeed in Emacs | emacs                     |
+       | *Mod4* (Super Key)           |         t          |    Opens Telega in Emacs | emacs                     |
 * Main configuration
   :PROPERTIES:
   :header-args: :tangle ~/.config/qtile/config.py :mkdirp t
@@ -180,7 +180,7 @@
     groups = [Group(i) for i in "123456789"]
     dgroups_key_binder = None
     dgroups_app_rules = []  # type: List
-    follow_mouse_focus = True
+    follow_mouse_focus = False
     bring_front_click = True
     cursor_warp = True
     auto_fullscreen = True
