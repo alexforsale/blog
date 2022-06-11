@@ -678,7 +678,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       (customize-set-variable 'sh-indent-for-do 2)
       (customize-set-variable 'sh-indent-for-done 0)
       (customize-set-variable 'sh-indent-for-fi 0)
-      (customize-set-variable 'sh-indent-for-else 2)
+      (customize-set-variable 'sh-indent-for-else 0)
       (customize-set-variable 'sh-indent-for-then 2)
       (customize-set-variable 'sh-indent-after-do 2)
       (customize-set-variable 'sh-indent-after-done 2)
