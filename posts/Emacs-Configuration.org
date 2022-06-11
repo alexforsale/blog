@@ -996,7 +996,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ***** keybinding
       #+begin_src emacs-lisp
         (with-eval-after-load 'perspective
-          (global-set-key [remap switch-to-buffer] #'persp-switch-to-buffer*))
+          (global-set-key [remap switch-to-buffer] #'persp-switch-to-buffer*)
+          (define-key persp-mode-map (kbd "C-c b TAB") 'persp-switch-last))
       #+end_src
 ****** general
        #+begin_src emacs-lisp
@@ -1493,10 +1494,13 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
 ****** general
        #+begin_src emacs-lisp
-         (+config/leader-def
-           :states '(normal visual)
-           "t" '(:ignore t :which-key "Terminal/Treemacs prefix")
-           "t SPC" 'treemacs)
+         (with-eval-after-load 'config-general
+           (progn
+             (require 'general)
+             (+config/leader-def
+              :states '(normal visual)
+              "t" '(:ignore t :which-key "Terminal/Treemacs prefix")
+              "t SPC" 'treemacs)))
        #+end_src
 ***** Misc
       #+begin_src emacs-lisp
