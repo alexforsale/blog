@@ -86,6 +86,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-hydra)
      ;; (require 'config-general)
      ;; (require 'config-evil)
+     ;; (require 'config-aggressive-indent-mode)
    #+end_src
 ** Org packages
    #+begin_src emacs-lisp
@@ -2613,6 +2614,33 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-evil)
         ;;; config-evil.el ends here
       #+end_src
+**** aggressive-indent-mode
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-aggressive-indent-mode.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-aggressive-indent-mode.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'aggressive-indent)
+        (require 'aggressive-indent)
+        #+end_src
+***** config
+      #+begin_src emacs-lisp
+        (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+        (add-hook 'css-mode-hook #'aggressive-indent-mode)
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-aggressive-indent-mode)
+        ;;; config-aggressive-indent-mode.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-editings)
@@ -5051,7 +5079,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         ;; (add-hook 'sly-mode #'sly-mode)
         ;; (add-hook 'lisp-interaction-mode-hook #'sly-mode)
         ;; (add-hook 'scheme-mode-hook #'sly-mode)
-        (add-hook 'comint-mode-hook #'sly-mode)
+        ;; (add-hook 'comint-mode-hook #'sly-mode)
         (add-hook 'sly-mode-hook
                   (lambda ()
                     (unless (sly-connected-p)
