@@ -1005,7 +1005,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              (require 'general)
              (+config/leader-def
                :states '(normal visual)
-               "B" (general-simulate-key "C-c b"
+               "TAB" (general-simulate-key "C-c b"
                        :name +perspective-prefix
                        :which-key "Perspective prefix"))))
        #+end_src
