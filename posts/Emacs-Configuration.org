@@ -1190,6 +1190,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (add-hook 'css-mode-hook #'rainbow-mode)
       #+end_src
 ***** function
+      From [[https://emacs.stackexchange.com/questions/62336/do-not-colour-word-colours-in-rainbow-mode][emacs stackexchange]]:
       #+begin_src emacs-lisp
         ;; turn off word colors
         (defun +rainbow-turn-off-words ()
