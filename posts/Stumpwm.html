@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Jun 10, 2022 -->
+<!-- Jun 11, 2022 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Stumpwm</title>
@@ -58,16 +58,16 @@
 <header>
 <h1 class="title">Stumpwm</h1>
 <p class="subtitle" role="doc-subtitle">Published on Mar 19, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-org0e8ecb9" class="outline-2">
-<h2 id="org0e8ecb9">Configuration file</h2>
-<div class="outline-text-2" id="text-org0e8ecb9">
+</header><section id="outline-container-org7903b9f" class="outline-2">
+<h2 id="org7903b9f">Configuration file</h2>
+<div class="outline-text-2" id="text-org7903b9f">
 <pre class="example">
 header-args: :tangle ~/.config/stumpwm/config :mkdirp t
 </pre>
 </div>
-<div id="outline-container-orgab395be" class="outline-3">
-<h3 id="orgab395be">Header</h3>
-<div class="outline-text-3" id="text-orgab395be">
+<div id="outline-container-orgbde15d8" class="outline-3">
+<h3 id="orgbde15d8">Header</h3>
+<div class="outline-text-3" id="text-orgbde15d8">
 <p>
 Needed so <i>Emacs</i> will use <i>lisp major-mode</i> for this file since it&rsquo;s not using <i>.lisp</i> extension.
 </p>
@@ -80,9 +80,9 @@ Needed so <i>Emacs</i> will use <i>lisp major-mode</i> for this file since it&rs
 </div>
 </div>
 </div>
-<div id="outline-container-orgeeb879e" class="outline-3">
-<h3 id="orgeeb879e">Load <code>quicklisp</code></h3>
-<div class="outline-text-3" id="text-orgeeb879e">
+<div id="outline-container-orgef78260" class="outline-3">
+<h3 id="orgef78260">Load <code>quicklisp</code></h3>
+<div class="outline-text-3" id="text-orgef78260">
 <p>
 Load my installation of <i>quicklisp</i>. The special operator <code>let</code> creates new variable <code>quicklisp-init</code> and executes a series of <i>form</i> (here just runs the <i>macro</i> <code>when</code>) that uses these <i>bindings</i>.
 </p>
@@ -100,18 +100,18 @@ Load my installation of <i>quicklisp</i>. The special operator <code>let</code> 
 </ul>
 </div>
 </div>
-<div id="outline-container-org9ad82e3" class="outline-3">
-<h3 id="org9ad82e3">load stumpwm from quicklisp</h3>
-<div class="outline-text-3" id="text-org9ad82e3">
+<div id="outline-container-org0f404e9" class="outline-3">
+<h3 id="org0f404e9">load stumpwm from quicklisp</h3>
+<div class="outline-text-3" id="text-org0f404e9">
 <div class="org-src-container">
 <pre class="src src-lisp">(ql:quickload <span class="org-builtin">:stumpwm</span>)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc184c0b" class="outline-3">
-<h3 id="orgc184c0b">CANCELLED Swank</h3>
-<div class="outline-text-3" id="text-orgc184c0b">
+<div id="outline-container-orgff3bc4a" class="outline-3">
+<h3 id="orgff3bc4a">CANCELLED Swank</h3>
+<div class="outline-text-3" id="text-orgff3bc4a">
 <ul class="org-ul">
 <li>State &ldquo;CANCELLED&rdquo;  from              <span class="timestamp-wrapper"><span class="timestamp">[2022-04-10 Sun 02:01] </span></span> <br>
 use sly instead</li>
@@ -144,9 +144,9 @@ Requires <code>swank</code> (from the package <code>slime</code>) in order to ru
 </div>
 </div>
 </div>
-<div id="outline-container-orgbeee6af" class="outline-3">
-<h3 id="orgbeee6af">Sly</h3>
-<div class="outline-text-3" id="text-orgbeee6af">
+<div id="outline-container-org82e8453" class="outline-3">
+<h3 id="org82e8453">Sly</h3>
+<div class="outline-text-3" id="text-org82e8453">
 <p>
 It has more features enabled without too much customization.
 </p>
@@ -168,9 +168,9 @@ It has more features enabled without too much customization.
 </div>
 </div>
 </div>
-<div id="outline-container-org9101e6e" class="outline-3">
-<h3 id="org9101e6e">Stumpwm configuration</h3>
-<div class="outline-text-3" id="text-org9101e6e">
+<div id="outline-container-orgd3b1544" class="outline-3">
+<h3 id="orgd3b1544">Stumpwm configuration</h3>
+<div class="outline-text-3" id="text-orgd3b1544">
 <p>
 The macro <code>in-package</code> causes the package named to be the current packages; that is, the value of <code>*package*</code>. In short it&rsquo;ll let us to call <code>run-shell-command</code> instead of <code>stuwmpm:run-shell-command</code>, this also works for variables.
 </p>
@@ -183,7 +183,7 @@ The macro <code>in-package</code> causes the package named to be the current pac
 This variable decide how the mouse affects input focus. Possible values are <code>:ignore</code>, <code>:sloppy</code> and <code>:click</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-lisp">(setf *mouse-focus-policy* <span class="org-builtin">:sloppy</span>)
+<pre class="src src-lisp">(setf *mouse-focus-policy* <span class="org-builtin">:click</span>)
 </pre>
 </div></dd>
 <dt><code>*run-or-raise-all-groups*</code></dt><dd><p>
@@ -204,13 +204,13 @@ Same as above, but to <i>screens</i>.
 </dl>
 </div>
 </div>
-<div id="outline-container-orgec04406" class="outline-3">
-<h3 id="orgec04406">Functions</h3>
-<div class="outline-text-3" id="text-orgec04406">
+<div id="outline-container-org26b370e" class="outline-3">
+<h3 id="org26b370e">Functions</h3>
+<div class="outline-text-3" id="text-org26b370e">
 </div>
-<div id="outline-container-org6bed6a7" class="outline-4">
-<h4 id="org6bed6a7">empty-directory-p</h4>
-<div class="outline-text-4" id="text-org6bed6a7">
+<div id="outline-container-org7302de4" class="outline-4">
+<h4 id="org7302de4">empty-directory-p</h4>
+<div class="outline-text-4" id="text-org7302de4">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">empty-directory-p</span> (path)
   (and (null (directory (concatenate 'string path <span class="org-string">"/*"</span>)))
@@ -219,9 +219,9 @@ Same as above, but to <i>screens</i>.
 </div>
 </div>
 </div>
-<div id="outline-container-org04cdf85" class="outline-4">
-<h4 id="org04cdf85">check is process is active</h4>
-<div class="outline-text-4" id="text-org04cdf85">
+<div id="outline-container-org114d09d" class="outline-4">
+<h4 id="org114d09d">check is process is active</h4>
+<div class="outline-text-4" id="text-org114d09d">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+config/is-active</span> (process)
   <span class="org-doc">"Returns PROCESS pid if it's active."</span>
@@ -235,9 +235,9 @@ Same as above, but to <i>screens</i>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgebaf353" class="outline-4">
-<h4 id="orgebaf353">Determine running OS</h4>
-<div class="outline-text-4" id="text-orgebaf353">
+<div id="outline-container-org13f0124" class="outline-4">
+<h4 id="org13f0124">Determine running OS</h4>
+<div class="outline-text-4" id="text-org13f0124">
 <p>
 A simple method is by querying the output of <code>uname -s</code>:
 </p>
@@ -251,9 +251,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-org1e87188" class="outline-4">
-<h4 id="org1e87188">pass-to-emacsclient</h4>
-<div class="outline-text-4" id="text-org1e87188">
+<div id="outline-container-orgeb2801e" class="outline-4">
+<h4 id="orgeb2801e">pass-to-emacsclient</h4>
+<div class="outline-text-4" id="text-orgeb2801e">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">pass-to-emacsclient</span> (arg)
   (<span class="org-keyword">let</span> ((emacs-cmd '(<span class="org-string">"emacsclient"</span>)))
@@ -265,9 +265,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-orgbbbbbdf" class="outline-4">
-<h4 id="orgbbbbbdf">emacs-emms</h4>
-<div class="outline-text-4" id="text-orgbbbbbdf">
+<div id="outline-container-orgf7f43d7" class="outline-4">
+<h4 id="orgf7f43d7">emacs-emms</h4>
+<div class="outline-text-4" id="text-orgf7f43d7">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">emacs-emms</span> (cmd)
   <span class="org-doc">"Runs CMD for `</span><span class="org-doc"><span class="org-constant">Emacs</span></span><span class="org-doc">'s `</span><span class="org-doc"><span class="org-constant">EMMS</span></span><span class="org-doc">'."</span>
@@ -287,9 +287,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-orgc866ad1" class="outline-4">
-<h4 id="orgc866ad1">restart computer</h4>
-<div class="outline-text-4" id="text-orgc866ad1">
+<div id="outline-container-org4c7a59b" class="outline-4">
+<h4 id="org4c7a59b">restart computer</h4>
+<div class="outline-text-4" id="text-org4c7a59b">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">restart-computer</span> ()
   <span class="org-doc">"Restart the computer."</span>
@@ -298,9 +298,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-org511667d" class="outline-4">
-<h4 id="org511667d">shutdown computer</h4>
-<div class="outline-text-4" id="text-org511667d">
+<div id="outline-container-orgf5c43ed" class="outline-4">
+<h4 id="orgf5c43ed">shutdown computer</h4>
+<div class="outline-text-4" id="text-orgf5c43ed">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">shutdown-computer</span> ()
   <span class="org-doc">"Restart the computer."</span>
@@ -310,13 +310,13 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-org3f67e8a" class="outline-3">
-<h3 id="org3f67e8a">Global Variables</h3>
-<div class="outline-text-3" id="text-org3f67e8a">
+<div id="outline-container-orgf9c667d" class="outline-3">
+<h3 id="orgf9c667d">Global Variables</h3>
+<div class="outline-text-3" id="text-orgf9c667d">
 </div>
-<div id="outline-container-orge980c0b" class="outline-4">
-<h4 id="orge980c0b">chemacs</h4>
-<div class="outline-text-4" id="text-orge980c0b">
+<div id="outline-container-org545fc7a" class="outline-4">
+<h4 id="org545fc7a">chemacs</h4>
+<div class="outline-text-4" id="text-org545fc7a">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defparameter</span> <span class="org-variable-name">*chemacs-profile*</span> nil
   <span class="org-doc">"The current Chemacs profile"</span>)
@@ -343,9 +343,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-orgf759d45" class="outline-4">
-<h4 id="orgf759d45">emacs daemon name</h4>
-<div class="outline-text-4" id="text-orgf759d45">
+<div id="outline-container-orgdd9550f" class="outline-4">
+<h4 id="orgdd9550f">emacs daemon name</h4>
+<div class="outline-text-4" id="text-orgdd9550f">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">if</span> *chemacs-profile*
     (<span class="org-keyword">defvar</span> <span class="org-variable-name">*emacs-daemon-name*</span> *chemacs-profile*)
@@ -354,9 +354,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-org7d1ac38" class="outline-4">
-<h4 id="org7d1ac38">set-transient-gravity</h4>
-<div class="outline-text-4" id="text-org7d1ac38">
+<div id="outline-container-org6964067" class="outline-4">
+<h4 id="org6964067">set-transient-gravity</h4>
+<div class="outline-text-4" id="text-org6964067">
 <div class="org-src-container">
 <pre class="src src-lisp">(setf set-transient-gravity <span class="org-builtin">:center</span>)
 </pre>
@@ -364,9 +364,9 @@ A simple method is by querying the output of <code>uname -s</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-orgb14f300" class="outline-3">
-<h3 id="orgb14f300">Load contrib modules</h3>
-<div class="outline-text-3" id="text-orgb14f300">
+<div id="outline-container-orgff84f96" class="outline-3">
+<h3 id="orgff84f96">Load contrib modules</h3>
+<div class="outline-text-3" id="text-orgff84f96">
 <p>
 Check several directories for modules, and add it to the <i>stumpwm</i> module-dir using the function <code>set-module-dir</code>.
 </p>
@@ -401,16 +401,16 @@ popd
 </pre>
 </div>
 </div>
-<div id="outline-container-orgb3d090e" class="outline-4">
-<h4 id="orgb3d090e">additional module directory</h4>
-<div class="outline-text-4" id="text-orgb3d090e">
+<div id="outline-container-org5c80b66" class="outline-4">
+<h4 id="org5c80b66">additional module directory</h4>
+<div class="outline-text-4" id="text-org5c80b66">
 <p>
 This is for personal module
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgaeae106"></a>Set the variable<br>
-<div class="outline-text-5" id="text-orgaeae106">
+<li><a id="orgb226fa9"></a>Set the variable<br>
+<div class="outline-text-5" id="text-orgb226fa9">
 <p>
 Use this variable to set the directory, if there&rsquo;s more than one directory, consider keep them inside one single directory and add the parent directory instead, since the <code>set-module-dir</code> function is recursive.
 </p>
@@ -420,8 +420,8 @@ Use this variable to set the directory, if there&rsquo;s more than one directory
 </div>
 </div>
 </li>
-<li><a id="org8821c8c"></a>add when not empty<br>
-<div class="outline-text-5" id="text-org8821c8c">
+<li><a id="orgebc540b"></a>add when not empty<br>
+<div class="outline-text-5" id="text-orgebc540b">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">when</span> (not (empty-directory-p *additional-module-dir*))
   (set-module-dir *additional-module-dir*))
@@ -432,9 +432,9 @@ Use this variable to set the directory, if there&rsquo;s more than one directory
 </ul>
 </div>
 </div>
-<div id="outline-container-org67903c4" class="outline-3">
-<h3 id="org67903c4">Colors</h3>
-<div class="outline-text-3" id="text-org67903c4">
+<div id="outline-container-org7af0ad7" class="outline-3">
+<h3 id="org7af0ad7">Colors</h3>
+<div class="outline-text-3" id="text-org7af0ad7">
 <p>
 Set the default color to <code>base16-materia</code>, palette from <code>wal</code> as a fallback if there&rsquo;s no <code>wal</code> cache file yet.
 </p>
@@ -459,18 +459,18 @@ Set the default color to <code>base16-materia</code>, palette from <code>wal</co
 </pre>
 </div>
 </div>
-<div id="outline-container-orgf776338" class="outline-4">
-<h4 id="orgf776338">set the wal file</h4>
-<div class="outline-text-4" id="text-orgf776338">
+<div id="outline-container-orgaca7d94" class="outline-4">
+<h4 id="orgaca7d94">set the wal file</h4>
+<div class="outline-text-4" id="text-orgaca7d94">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">wal-colors-path</span> <span class="org-string">"~/.cache/wal/colors"</span>)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orge75abd9" class="outline-4">
-<h4 id="orge75abd9">Function to get the colors palette</h4>
-<div class="outline-text-4" id="text-orge75abd9">
+<div id="outline-container-orga588ebe" class="outline-4">
+<h4 id="orga588ebe">Function to get the colors palette</h4>
+<div class="outline-text-4" id="text-orga588ebe">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">get-color-palette</span> ()
   <span class="org-doc">"Read colors from wal cache file or from `</span><span class="org-doc"><span class="org-constant">default-colors</span></span><span class="org-doc">'."</span>
@@ -481,9 +481,9 @@ Set the default color to <code>base16-materia</code>, palette from <code>wal</co
 </div>
 </div>
 </div>
-<div id="outline-container-org7e8fe11" class="outline-4">
-<h4 id="org7e8fe11">Function to associate names into the colors palette</h4>
-<div class="outline-text-4" id="text-org7e8fe11">
+<div id="outline-container-orgc603a23" class="outline-4">
+<h4 id="orgc603a23">Function to associate names into the colors palette</h4>
+<div class="outline-text-4" id="text-orgc603a23">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">get-color</span> (name)
   <span class="org-doc">"Map the colors from `</span><span class="org-doc"><span class="org-constant">get-color-palette</span></span><span class="org-doc">'."</span>
@@ -510,9 +510,9 @@ Set the default color to <code>base16-materia</code>, palette from <code>wal</co
 </div>
 </div>
 </div>
-<div id="outline-container-org06a7016" class="outline-4">
-<h4 id="org06a7016">Color Variable</h4>
-<div class="outline-text-4" id="text-org06a7016">
+<div id="outline-container-org84625c5" class="outline-4">
+<h4 id="org84625c5">Color Variable</h4>
+<div class="outline-text-4" id="text-org84625c5">
 <div class="org-src-container">
 <pre class="src src-lisp">(setf *background* (get-color <span class="org-string">"color0"</span>))
 (setf *foreground* (get-color <span class="org-string">"color7"</span>))
@@ -536,9 +536,9 @@ Set the default color to <code>base16-materia</code>, palette from <code>wal</co
 </div>
 </div>
 </div>
-<div id="outline-container-org934e269" class="outline-4">
-<h4 id="org934e269">Map the colors into <code>*colors</code> variable</h4>
-<div class="outline-text-4" id="text-org934e269">
+<div id="outline-container-orgb1c4459" class="outline-4">
+<h4 id="orgb1c4459">Map the colors into <code>*colors</code> variable</h4>
+<div class="outline-text-4" id="text-orgb1c4459">
 <div class="org-src-container">
 <pre class="src src-lisp">(setq *colors*
       `(,*color0* ,*color1* ,*color2* ,*color3* ,*color4* ,*color5* ,*color6* ,*color7* ,*color8* ,*color9*))
@@ -546,45 +546,45 @@ Set the default color to <code>base16-materia</code>, palette from <code>wal</co
 </div>
 </div>
 </div>
-<div id="outline-container-orgd67d44c" class="outline-4">
-<h4 id="orgd67d44c">Update the Color Map</h4>
-<div class="outline-text-4" id="text-orgd67d44c">
+<div id="outline-container-orgf4472b7" class="outline-4">
+<h4 id="orgf4472b7">Update the Color Map</h4>
+<div class="outline-text-4" id="text-orgf4472b7">
 <div class="org-src-container">
 <pre class="src src-lisp">(update-color-map (current-screen))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgccb1d64" class="outline-4">
-<h4 id="orgccb1d64">Set the foreground color for the message bar and input</h4>
-<div class="outline-text-4" id="text-orgccb1d64">
+<div id="outline-container-org41b6097" class="outline-4">
+<h4 id="org41b6097">Set the foreground color for the message bar and input</h4>
+<div class="outline-text-4" id="text-org41b6097">
 <div class="org-src-container">
 <pre class="src src-lisp">(set-fg-color *color7*)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org5355ede" class="outline-4">
-<h4 id="org5355ede">Set the background color for the message bar and input</h4>
-<div class="outline-text-4" id="text-org5355ede">
+<div id="outline-container-orgd37faa6" class="outline-4">
+<h4 id="orgd37faa6">Set the background color for the message bar and input</h4>
+<div class="outline-text-4" id="text-orgd37faa6">
 <div class="org-src-container">
 <pre class="src src-lisp">(set-bg-color *color0*)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org51c47e5" class="outline-4">
-<h4 id="org51c47e5">Set the border color for the message bar and input</h4>
-<div class="outline-text-4" id="text-org51c47e5">
+<div id="outline-container-orgdad6f75" class="outline-4">
+<h4 id="orgdad6f75">Set the border color for the message bar and input</h4>
+<div class="outline-text-4" id="text-orgdad6f75">
 <div class="org-src-container">
 <pre class="src src-lisp">(set-border-color *color2*)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcc5cec7" class="outline-4">
-<h4 id="orgcc5cec7">Set the border color for focused windows.</h4>
-<div class="outline-text-4" id="text-orgcc5cec7">
+<div id="outline-container-orgead8727" class="outline-4">
+<h4 id="orgead8727">Set the border color for focused windows.</h4>
+<div class="outline-text-4" id="text-orgead8727">
 <p>
 This is only used when there is more than one frame.
 </p>
@@ -594,9 +594,9 @@ This is only used when there is more than one frame.
 </div>
 </div>
 </div>
-<div id="outline-container-org8a37cbc" class="outline-4">
-<h4 id="org8a37cbc">Set the border color for windows without focus.</h4>
-<div class="outline-text-4" id="text-org8a37cbc">
+<div id="outline-container-org1ea7e58" class="outline-4">
+<h4 id="org1ea7e58">Set the border color for windows without focus.</h4>
+<div class="outline-text-4" id="text-org1ea7e58">
 <p>
 This is only used when there is more than one frame.
 </p>
@@ -606,18 +606,18 @@ This is only used when there is more than one frame.
 </div>
 </div>
 </div>
-<div id="outline-container-org249b172" class="outline-4">
-<h4 id="org249b172">Set the border color for focused windows in a float group</h4>
-<div class="outline-text-4" id="text-org249b172">
+<div id="outline-container-org2001ad0" class="outline-4">
+<h4 id="org2001ad0">Set the border color for focused windows in a float group</h4>
+<div class="outline-text-4" id="text-org2001ad0">
 <div class="org-src-container">
 <pre class="src src-lisp">(set-float-focus-color *color3*)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org40502b8" class="outline-4">
-<h4 id="org40502b8">Set the border color for windows without focus in a float group.</h4>
-<div class="outline-text-4" id="text-org40502b8">
+<div id="outline-container-org1708230" class="outline-4">
+<h4 id="org1708230">Set the border color for windows without focus in a float group.</h4>
+<div class="outline-text-4" id="text-org1708230">
 <div class="org-src-container">
 <pre class="src src-lisp">(set-float-unfocus-color *color3*)
 </pre>
@@ -625,9 +625,9 @@ This is only used when there is more than one frame.
 </div>
 </div>
 </div>
-<div id="outline-container-org919202a" class="outline-3">
-<h3 id="org919202a">Autostarts</h3>
-<div class="outline-text-3" id="text-org919202a">
+<div id="outline-container-orgf1551d1" class="outline-3">
+<h3 id="orgf1551d1">Autostarts</h3>
+<div class="outline-text-3" id="text-orgf1551d1">
 <p>
 The variable <code>*initializing*</code> is only set to <code>T</code> when <i>stumpwm</i> is starting up. Which means once per session. Useful for starting up applications that only needed at startup.
 </p>
@@ -656,9 +656,9 @@ This also rename the <i>Default</i> frame to <i>Term</i>. And create additional 
 </p>
 </div>
 </div>
-<div id="outline-container-org8dc8de8" class="outline-3">
-<h3 id="org8dc8de8">mode-line helper functions</h3>
-<div class="outline-text-3" id="text-org8dc8de8">
+<div id="outline-container-org9156327" class="outline-3">
+<h3 id="org9156327">mode-line helper functions</h3>
+<div class="outline-text-3" id="text-org9156327">
 <ul class="org-ul">
 <li><p>
 show-battery-charge
@@ -738,9 +738,9 @@ show-current-volume
 </div></li>
 </ul>
 </div>
-<div id="outline-container-orgffb8445" class="outline-4">
-<h4 id="orgffb8445">maildir contrib package</h4>
-<div class="outline-text-4" id="text-orgffb8445">
+<div id="outline-container-orgd4cabe0" class="outline-4">
+<h4 id="orgd4cabe0">maildir contrib package</h4>
+<div class="outline-text-4" id="text-orgd4cabe0">
 <p>
 The <code>maildir:*maildir-alist*</code> already set <i>&ldquo;Mail&rdquo;</i> to <i>&ldquo;~/Mail</i>&ldquo;, which I don&rsquo;t use, so I clear it first before adding my mail directories. Also the path listed must contains the mail directory <code>cur</code>, <code>new</code>, and <code>tmp</code>.
 </p>
@@ -802,9 +802,9 @@ The <code>maildir:*maildir-alist*</code> already set <i>&ldquo;Mail&rdquo;</i> t
 </div>
 </div>
 </div>
-<div id="outline-container-org75dc944" class="outline-4">
-<h4 id="org75dc944">MPD contrib package</h4>
-<div class="outline-text-4" id="text-org75dc944">
+<div id="outline-container-org17825f1" class="outline-4">
+<h4 id="org17825f1">MPD contrib package</h4>
+<div class="outline-text-4" id="text-org17825f1">
 <p>
 This package also provides mode-line format.
 </p>
@@ -827,8 +827,8 @@ The mode-line format is by default <code>%S [%s;%r;%F]: %a - %A - %t (%n/%p)</co
 </dl>
 </div>
 <ul class="org-ul">
-<li><a id="org793ba41"></a>Other variables<br>
-<div class="outline-text-5" id="text-org793ba41">
+<li><a id="org4171a32"></a>Other variables<br>
+<div class="outline-text-5" id="text-org4171a32">
 <dl class="org-dl">
 <dt><code>*mpd-volume-step*</code></dt><dd><p>
 Default to 5
@@ -846,9 +846,9 @@ Default to 5
 </ul>
 </div>
 </div>
-<div id="outline-container-org80d073a" class="outline-3">
-<h3 id="org80d073a">The mode-line variable</h3>
-<div class="outline-text-3" id="text-org80d073a">
+<div id="outline-container-org7c7dd16" class="outline-3">
+<h3 id="org7c7dd16">The mode-line variable</h3>
+<div class="outline-text-3" id="text-org7c7dd16">
 <p>
 The mode line is a bar that runs across either the top or bottom of a head and is used to display information.  By default the mode line displays the list of windows, similar to the output <code>C-t w</code> produces.
 </p>
@@ -915,9 +915,9 @@ The last line <code>(enable-mode-line (current-screen) (current-head) t)</code> 
 </p>
 </div>
 </div>
-<div id="outline-container-org6e59252" class="outline-3">
-<h3 id="org6e59252">Input and message.</h3>
-<div class="outline-text-3" id="text-org6e59252">
+<div id="outline-container-orged57260" class="outline-3">
+<h3 id="orged57260">Input and message.</h3>
+<div class="outline-text-3" id="text-orged57260">
 <dl class="org-dl">
 <dt><code>*input-window-gravity*</code></dt><dd><p>
 This variable controls where the input window appears. Valid values are: <code>:top-left</code>, <code>:top-right</code>, <code>:bottom-left</code>, <code>:bottom-right</code>, <code>:center</code>, <code>:top</code>, <code>:left</code>, <code>:right</code>, and <code>:bottom</code>.
@@ -965,9 +965,9 @@ Set the border width for the message bar, input bar and frame indicator.
 </div>
 </div>
 
-<div id="outline-container-org1fa0d66" class="outline-3">
-<h3 id="org1fa0d66">Window Appearance</h3>
-<div class="outline-text-3" id="text-org1fa0d66">
+<div id="outline-container-org7fb1e21" class="outline-3">
+<h3 id="org7fb1e21">Window Appearance</h3>
+<div class="outline-text-3" id="text-org7fb1e21">
 <dl class="org-dl">
 <dt><code>*maxsize-border-width*</code></dt><dd><p>
 The width in pixels given to the borders of windows with maxsize or ratio hints.
@@ -993,9 +993,9 @@ This controls the appearance of the border around windows. Valid values are: <co
 </dl>
 </div>
 </div>
-<div id="outline-container-orgf1e9cec" class="outline-3">
-<h3 id="orgf1e9cec">Font</h3>
-<div class="outline-text-3" id="text-orgf1e9cec">
+<div id="outline-container-orgd9e62a1" class="outline-3">
+<h3 id="orgd9e62a1">Font</h3>
+<div class="outline-text-3" id="text-orgd9e62a1">
 <p>
 In order to use <i>TTF</i> fonts, we need an additional package <code>ttf-fonts</code>, which is available in the <code>contrib</code> repository, or from <i>quicklisp</i>.
 </p>
@@ -1007,9 +1007,9 @@ In order to use <i>TTF</i> fonts, we need an additional package <code>ttf-fonts<
 This package also depends on <a href="https://www.google.com.hk/search?client=firefox-b-d&amp;q=github+clx-truetype&amp;pli=1">clx-truetype</a> which sadly is not in <i>quicklisp</i> repository, add it manually to the <code>local-projects</code> directory inside your <i>quicklisp</i> installation directory (when not set usually in <code>~/quicklisp</code>)
 </p>
 </div>
-<div id="outline-container-orgf1c1da6" class="outline-4">
-<h4 id="orgf1c1da6"><code>*font-dir*</code></h4>
-<div class="outline-text-4" id="text-orgf1c1da6">
+<div id="outline-container-org00583b5" class="outline-4">
+<h4 id="org00583b5"><code>*font-dir*</code></h4>
+<div class="outline-text-4" id="text-org00583b5">
 <p>
 This is empty by default, so populate it first
 </p>
@@ -1023,9 +1023,9 @@ This is empty by default, so populate it first
 </div>
 </div>
 </div>
-<div id="outline-container-org27345d0" class="outline-3">
-<h3 id="org27345d0">The Keybindings</h3>
-<div class="outline-text-3" id="text-org27345d0">
+<div id="outline-container-org9a28a55" class="outline-3">
+<h3 id="org9a28a55">The Keybindings</h3>
+<div class="outline-text-3" id="text-org9a28a55">
 <p>
 There are several variables that defines when a <i>keybinding</i> is used:
 </p>
@@ -1037,9 +1037,9 @@ There are several variables that defines when a <i>keybinding</i> is used:
 <dt><code>*exchange-window-map*</code></dt><dd>The keymap that <code>exchange-window</code> key bindings sit on.</dd>
 </dl>
 </div>
-<div id="outline-container-orgcaf9368" class="outline-4">
-<h4 id="orgcaf9368">Sets the prefix</h4>
-<div class="outline-text-4" id="text-orgcaf9368">
+<div id="outline-container-orgf611670" class="outline-4">
+<h4 id="orgf611670">Sets the prefix</h4>
+<div class="outline-text-4" id="text-orgf611670">
 <p>
 Here I&rsquo;m using <code>s-SPC</code> (<i>Super Key</i> and the spacebar).
 </p>
@@ -1053,16 +1053,16 @@ The <code>kbd</code> itself is a function specific to <i>stumpwm</i>.
 </p>
 </div>
 </div>
-<div id="outline-container-orgfd24ce4" class="outline-4">
-<h4 id="orgfd24ce4">Sparse Keymaps</h4>
-<div class="outline-text-4" id="text-orgfd24ce4">
+<div id="outline-container-orgdd0f19c" class="outline-4">
+<h4 id="orgdd0f19c">Sparse Keymaps</h4>
+<div class="outline-text-4" id="text-orgdd0f19c">
 <p>
 The function <code>make-sparse-keymap</code> used to create a new list of bindings in the key binding tree.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org5ec7bea"></a><span class="todo TODO">TODO</span> screenshot<br>
-<div class="outline-text-5" id="text-org5ec7bea">
+<li><a id="org0f2d5ba"></a><span class="todo TODO">TODO</span> screenshot<br>
+<div class="outline-text-5" id="text-org0f2d5ba">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-04-10 Sun 03:26]</span></span></li>
 </ul>
@@ -1080,8 +1080,8 @@ For now I&rsquo;ll use <i>flameshot</i>. But eventually I&rsquo;ll use either th
 </div>
 </div>
 </li>
-<li><a id="org9546346"></a>End-session<br>
-<div class="outline-text-5" id="text-org9546346">
+<li><a id="org28ccb2b"></a>End-session<br>
+<div class="outline-text-5" id="text-org28ccb2b">
 <p>
 This uses the <code>end-session</code> <i>contrib</i> module.
 </p>
@@ -1108,8 +1108,8 @@ And bind it to <code>C-s-q</code> (that <code>Control</code>, <code>Shift</code>
 </div>
 </div>
 </li>
-<li><a id="orgd0b94fe"></a>Describe function<br>
-<div class="outline-text-5" id="text-orgd0b94fe">
+<li><a id="org557dcd5"></a>Describe function<br>
+<div class="outline-text-5" id="text-org557dcd5">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">*my-describe-bindings*</span>
   (<span class="org-keyword">let</span> ((m (make-sparse-keymap)))
@@ -1122,8 +1122,8 @@ And bind it to <code>C-s-q</code> (that <code>Control</code>, <code>Shift</code>
 </div>
 </div>
 </li>
-<li><a id="org52001cf"></a>float keymap<br>
-<div class="outline-text-5" id="text-org52001cf">
+<li><a id="orgf179c30"></a>float keymap<br>
+<div class="outline-text-5" id="text-orgf179c30">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">*my-frames-float-keymap*</span>
   (<span class="org-keyword">let</span> ((m (make-sparse-keymap)))
@@ -1136,8 +1136,8 @@ And bind it to <code>C-s-q</code> (that <code>Control</code>, <code>Shift</code>
 </div>
 </div>
 </li>
-<li><a id="orgbe92d35"></a>frame management<br>
-<div class="outline-text-5" id="text-orgbe92d35">
+<li><a id="orga096507"></a>frame management<br>
+<div class="outline-text-5" id="text-orga096507">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">*my-frames-management-keymap*</span>
   (<span class="org-keyword">let</span> ((m (make-sparse-keymap)))
@@ -1181,8 +1181,8 @@ And bind it to <code>C-s-q</code> (that <code>Control</code>, <code>Shift</code>
 </div>
 </div>
 </li>
-<li><a id="org7f2d69a"></a>apps<br>
-<div class="outline-text-5" id="text-org7f2d69a">
+<li><a id="orgc32a58e"></a>apps<br>
+<div class="outline-text-5" id="text-orgc32a58e">
 <div class="org-src-container">
 <pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">*my-app-bindings*</span>
   (<span class="org-keyword">let</span> ((m (make-sparse-keymap)))
@@ -1205,21 +1205,21 @@ And bind it to <code>C-s-q</code> (that <code>Control</code>, <code>Shift</code>
 </li>
 </ul>
 </div>
-<div id="outline-container-org0a2b11a" class="outline-4">
-<h4 id="org0a2b11a"><span class="todo TODO">TODO</span> Undefine default keybindings</h4>
-<div class="outline-text-4" id="text-org0a2b11a">
+<div id="outline-container-org94352f4" class="outline-4">
+<h4 id="org94352f4"><span class="todo TODO">TODO</span> Undefine default keybindings</h4>
+<div class="outline-text-4" id="text-org94352f4">
 <ul class="org-ul">
 <li>State &ldquo;TODO&rdquo;       from              <span class="timestamp-wrapper"><span class="timestamp">[2022-04-10 Sun 03:22]</span></span></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdf11240" class="outline-4">
-<h4 id="orgdf11240">Custom functions, commands and macros</h4>
-<div class="outline-text-4" id="text-orgdf11240">
+<div id="outline-container-org5c8c37a" class="outline-4">
+<h4 id="org5c8c37a">Custom functions, commands and macros</h4>
+<div class="outline-text-4" id="text-org5c8c37a">
 </div>
 <ul class="org-ul">
-<li><a id="org0eb35cc"></a>colon1<br>
-<div class="outline-text-5" id="text-org0eb35cc">
+<li><a id="org08be1cf"></a>colon1<br>
+<div class="outline-text-5" id="text-org08be1cf">
 <p>
 This is a custom command from the default configuration that prompt the user for an interactive command. The first arg is an optional initial contents.
 </p>
@@ -1235,8 +1235,8 @@ Note that in <i>stumpwm</i> there&rsquo;s also the <i>command</i> <code>colon</c
 </p>
 </div>
 </li>
-<li><a id="orgd5ef176"></a>make-web-jump<br>
-<div class="outline-text-5" id="text-orgd5ef176">
+<li><a id="org40aaa2d"></a>make-web-jump<br>
+<div class="outline-text-5" id="text-org40aaa2d">
 <p>
 Also from the default configuration, currently sets for <i>DuckDuckGo</i> and <i>IMDB</i>.
 </p>
@@ -1252,8 +1252,8 @@ Also from the default configuration, currently sets for <i>DuckDuckGo</i> and <i
 </div>
 </div>
 </li>
-<li><a id="org88f8bb0"></a>Split window<br>
-<div class="outline-text-5" id="text-org88f8bb0">
+<li><a id="orgea4846e"></a>Split window<br>
+<div class="outline-text-5" id="text-orgea4846e">
 <div class="org-src-container">
 <pre class="src src-lisp">(defcommand hsplit-and-focus () ()
   <span class="org-string">"Create a new frame on the right and focus it."</span>
@@ -1268,8 +1268,8 @@ Also from the default configuration, currently sets for <i>DuckDuckGo</i> and <i
 </div>
 </div>
 </li>
-<li><a id="org14f47a5"></a>emacs<br>
-<div class="outline-text-5" id="text-org14f47a5">
+<li><a id="org2d19097"></a>emacs<br>
+<div class="outline-text-5" id="text-org2d19097">
 <p>
 Will start <i>Emacs</i> when there&rsquo;s no server with the name <code>*emacs-daemon-name*</code>, else will start daemonized <i>Emacs</i>.
 </p>
@@ -1285,8 +1285,8 @@ Will start <i>Emacs</i> when there&rsquo;s no server with the name <code>*emacs-
 </div>
 </div>
 </li>
-<li><a id="org761950d"></a>Browser<br>
-<div class="outline-text-5" id="text-org761950d">
+<li><a id="orgad2a77a"></a>Browser<br>
+<div class="outline-text-5" id="text-orgad2a77a">
 <p>
 Use the environment variable <code>${BROWSER}</code> if set.
 </p>
@@ -1302,8 +1302,8 @@ Use the environment variable <code>${BROWSER}</code> if set.
 </div>
 </div>
 </li>
-<li><a id="orgf9c4cce"></a>Terminal Emulator<br>
-<div class="outline-text-5" id="text-orgf9c4cce">
+<li><a id="org6b1da04"></a>Terminal Emulator<br>
+<div class="outline-text-5" id="text-org6b1da04">
 <p>
 Although <i>XTerm</i> is my default terminal-emulator, I sometimes try tinkering with other programs, so I set the <code>$TERMINAL</code> environment variable to set my current terminal-emulator.
 </p>
@@ -1327,33 +1327,33 @@ And my default keybinding is <code>s-RET</code>.
 </li>
 </ul>
 </div>
-<div id="outline-container-org25f3763" class="outline-4">
-<h4 id="org25f3763">Keybinding Tree</h4>
-<div class="outline-text-4" id="text-org25f3763">
+<div id="outline-container-org89c1007" class="outline-4">
+<h4 id="org89c1007">Keybinding Tree</h4>
+<div class="outline-text-4" id="text-org89c1007">
 <p>
 This is what in <i>Emacs</i> called &ldquo;keychord&rdquo; (I think). So, <code>s-h v</code> is for the function <code>describe-variable</code> and so on. Also note that since I&rsquo;m already use <code>s-d h</code> this means I&rsquo;m not using the usual <i>window-manager</i> <i>vim</i> keybindings (<code>h</code>, <code>j</code>, <code>k</code>, <code>l</code>). Also since &ldquo;<code>h</code>&rdquo; is actually already bound in <code>*top-map*</code> I need to unbind it in order to set it for <code>*my-describe-bindings*</code>.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org936dce6"></a>Top Map<br>
-<div class="outline-text-5" id="text-org936dce6">
+<li><a id="org03b8c14"></a>Top Map<br>
+<div class="outline-text-5" id="text-org03b8c14">
 <p>
 This is the keybinding that resides on the <code>*top-map*</code>
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org0177fca"></a><code>*my-describe-bindings*</code><br>
-<div class="outline-text-6" id="text-org0177fca">
+<li><a id="org7e899e2"></a><code>*my-describe-bindings*</code><br>
+<div class="outline-text-6" id="text-org7e899e2">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-h"</span>) '*my-describe-bindings*)
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgf828a26"></a>Media Keys<br>
+<li><a id="org1f1b3ed"></a>Media Keys<br>
 <ul class="org-ul">
-<li><a id="org53c025d"></a>Volume<br>
-<div class="outline-text-7" id="text-org53c025d">
+<li><a id="org8c8177e"></a>Volume<br>
+<div class="outline-text-7" id="text-org8c8177e">
 <p>
 Using <i>PulseAudio</i>.
 </p>
@@ -1365,8 +1365,8 @@ Using <i>PulseAudio</i>.
 </div>
 </div>
 </li>
-<li><a id="org180da18"></a>Audio Player<br>
-<div class="outline-text-7" id="text-org180da18">
+<li><a id="orgafe7dbf"></a>Audio Player<br>
+<div class="outline-text-7" id="text-orgafe7dbf">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"XF86AudioPlay"</span>) <span class="org-string">"exec playerctl play-pause"</span>)
 (define-key *top-map* (kbd <span class="org-string">"XF86AudioNext"</span>) <span class="org-string">"exec playerctl next"</span>)
@@ -1375,8 +1375,8 @@ Using <i>PulseAudio</i>.
 </div>
 </div>
 </li>
-<li><a id="org2dc7bdf"></a>Backlight<br>
-<div class="outline-text-7" id="text-org2dc7bdf">
+<li><a id="org3d30360"></a>Backlight<br>
+<div class="outline-text-7" id="text-org3d30360">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"XF86MonBrightnessDown"</span>) <span class="org-string">"exec brightnessctl set 1%-"</span>)
 (define-key *top-map* (kbd <span class="org-string">"XF86MonBrightnessUp"</span>) <span class="org-string">"exec brightnessctl set +1%"</span>)
@@ -1386,8 +1386,8 @@ Using <i>PulseAudio</i>.
 </li>
 </ul>
 </li>
-<li><a id="org202ed2e"></a>Picom transparency<br>
-<div class="outline-text-6" id="text-org202ed2e">
+<li><a id="org28c7dd5"></a>Picom transparency<br>
+<div class="outline-text-6" id="text-org28c7dd5">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-F2"</span>) <span class="org-string">"exec picom-trans -c -5"</span>)
 (define-key *top-map* (kbd <span class="org-string">"s-F3"</span>) <span class="org-string">"exec picom-trans -c +5"</span>)
@@ -1395,16 +1395,16 @@ Using <i>PulseAudio</i>.
 </div>
 </div>
 </li>
-<li><a id="orgab4fa67"></a>rofi<br>
-<div class="outline-text-6" id="text-orgab4fa67">
+<li><a id="org9d9701e"></a>rofi<br>
+<div class="outline-text-6" id="text-org9d9701e">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-d"</span>) <span class="org-string">"exec rofi -show drun"</span>)
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org24560d3"></a><code>colon</code><br>
-<div class="outline-text-6" id="text-org24560d3">
+<li><a id="org0dcd046"></a><code>colon</code><br>
+<div class="outline-text-6" id="text-org0dcd046">
 <p>
 I use this often enough it deserve it&rsquo;s own key.
 </p>
@@ -1414,8 +1414,8 @@ I use this often enough it deserve it&rsquo;s own key.
 </div>
 </div>
 </li>
-<li><a id="org91efbf1"></a>Mail<br>
-<div class="outline-text-6" id="text-org91efbf1">
+<li><a id="org5562493"></a>Mail<br>
+<div class="outline-text-6" id="text-org5562493">
 <p>
 Bind it to <code>XF86Mail</code>
 </p>
@@ -1425,8 +1425,8 @@ Bind it to <code>XF86Mail</code>
 </div>
 </div>
 </li>
-<li><a id="org36dd4bb"></a>Web<br>
-<div class="outline-text-6" id="text-org36dd4bb">
+<li><a id="org4b1f607"></a>Web<br>
+<div class="outline-text-6" id="text-org4b1f607">
 <p>
 Bound to <code>XF86MyComputer</code>
 </p>
@@ -1436,8 +1436,8 @@ Bound to <code>XF86MyComputer</code>
 </div>
 </div>
 </li>
-<li><a id="orgeba19d3"></a>Group selections<br>
-<div class="outline-text-6" id="text-orgeba19d3">
+<li><a id="org2e11a13"></a>Group selections<br>
+<div class="outline-text-6" id="text-org2e11a13">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-1"</span>) <span class="org-string">"gselect 1"</span>)
 (define-key *top-map* (kbd <span class="org-string">"s-2"</span>) <span class="org-string">"gselect 2"</span>)
@@ -1455,8 +1455,8 @@ Bound to <code>XF86MyComputer</code>
 </div>
 </div>
 </li>
-<li><a id="org2dce633"></a>Group move<br>
-<div class="outline-text-6" id="text-org2dce633">
+<li><a id="org99ac928"></a>Group move<br>
+<div class="outline-text-6" id="text-org99ac928">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-!"</span>) <span class="org-string">"gmove-and-follow 1"</span>)
 (define-key *top-map* (kbd <span class="org-string">"s-@"</span>) <span class="org-string">"gmove-and-follow 2"</span>)
@@ -1472,32 +1472,32 @@ Bound to <code>XF86MyComputer</code>
 </div>
 </div>
 </li>
-<li><a id="orge3c59f7"></a>Binding for <code>*my-frame-management-keymap*</code><br>
-<div class="outline-text-6" id="text-orge3c59f7">
+<li><a id="org0b6eaa7"></a>Binding for <code>*my-frame-management-keymap*</code><br>
+<div class="outline-text-6" id="text-org0b6eaa7">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-w"</span>) '*my-frames-management-keymap*)
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgdc92f8a"></a>Binding for <code>*my-app-bindings</code><br>
-<div class="outline-text-6" id="text-orgdc92f8a">
+<li><a id="orgfe3bc1b"></a>Binding for <code>*my-app-bindings</code><br>
+<div class="outline-text-6" id="text-orgfe3bc1b">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-x"</span>) '*my-app-bindings*)
 </pre>
 </div>
 </div>
 </li>
-<li><a id="org4cc8e31"></a>escape-key<br>
-<div class="outline-text-6" id="text-org4cc8e31">
+<li><a id="org75b94c3"></a>escape-key<br>
+<div class="outline-text-6" id="text-org75b94c3">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-quoteleft"</span>) <span class="org-string">"send-raw-key"</span>)
 </pre>
 </div>
 </div>
 </li>
-<li><a id="orgf6a76fa"></a>Screenshot<br>
-<div class="outline-text-6" id="text-orgf6a76fa">
+<li><a id="org1ec0a39"></a>Screenshot<br>
+<div class="outline-text-6" id="text-org1ec0a39">
 <p>
 Most keyboard have the <code>Print</code> key, so I&rsquo;ll bind it there
 </p>
@@ -1507,8 +1507,8 @@ Most keyboard have the <code>Print</code> key, so I&rsquo;ll bind it there
 </div>
 </div>
 </li>
-<li><a id="org3e3109b"></a>Frame movement<br>
-<div class="outline-text-6" id="text-org3e3109b">
+<li><a id="orgc850f2c"></a>Frame movement<br>
+<div class="outline-text-6" id="text-orgc850f2c">
 <p>
 Using <i>Emacs</i> keys
 </p>
@@ -1539,10 +1539,10 @@ Using numbers
 </li>
 </ul>
 </li>
-<li><a id="orgea637fb"></a>Group Map<br>
+<li><a id="orgc6ea06e"></a>Group Map<br>
 <ul class="org-ul">
-<li><a id="org3d579b1"></a>vgroups<br>
-<div class="outline-text-6" id="text-org3d579b1">
+<li><a id="orgb15f057"></a>vgroups<br>
+<div class="outline-text-6" id="text-orgb15f057">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *groups-map* (kbd <span class="org-string">"G"</span>) <span class="org-string">"vgroups"</span>)
 </pre>
@@ -1551,10 +1551,10 @@ Using numbers
 </li>
 </ul>
 </li>
-<li><a id="org9039ad4"></a>Root Map<br>
+<li><a id="org594ee07"></a>Root Map<br>
 <ul class="org-ul">
-<li><a id="org2fd7866"></a>Binding for <code>*group-map*</code><br>
-<div class="outline-text-6" id="text-org2fd7866">
+<li><a id="org62ecf00"></a>Binding for <code>*group-map*</code><br>
+<div class="outline-text-6" id="text-org62ecf00">
 <p>
 This is already set by default.
 </p>
@@ -1564,8 +1564,8 @@ This is already set by default.
 </div>
 </div>
 </li>
-<li><a id="org64c9a6e"></a>Slynk<br>
-<div class="outline-text-6" id="text-org64c9a6e">
+<li><a id="orgccfecf9"></a>Slynk<br>
+<div class="outline-text-6" id="text-orgccfecf9">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *root-map* (kbd <span class="org-string">"s-s"</span>) <span class="org-string">"slynk"</span>)
 </pre>
@@ -1576,9 +1576,9 @@ This is already set by default.
 </li>
 </ul>
 </div>
-<div id="outline-container-orgbe38cf6" class="outline-4">
-<h4 id="orgbe38cf6">Function key</h4>
-<div class="outline-text-4" id="text-orgbe38cf6">
+<div id="outline-container-org78b8def" class="outline-4">
+<h4 id="org78b8def">Function key</h4>
+<div class="outline-text-4" id="text-org78b8def">
 <p>
 This keymap is for keyboard with no media keys. On my laptop the media key is mapped to the Function keys:
 </p>
@@ -1674,8 +1674,8 @@ This keymap is for keyboard with no media keys. On my laptop the media key is ma
 </table>
 </div>
 <ul class="org-ul">
-<li><a id="orgb983845"></a>Media<br>
-<div class="outline-text-5" id="text-orgb983845">
+<li><a id="orgb5d3291"></a>Media<br>
+<div class="outline-text-5" id="text-orgb5d3291">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"s-F7"</span>) <span class="org-string">"exec pactl -- set-sink-mute @DEFAULT_SINK@ toggle"</span>)
 (define-key *top-map* (kbd <span class="org-string">"s-F8"</span>) <span class="org-string">"exec pactl -- set-sink-volume @DEFAULT_SINK@ -1%"</span>)
@@ -1687,8 +1687,8 @@ This keymap is for keyboard with no media keys. On my laptop the media key is ma
 </div>
 </div>
 </li>
-<li><a id="org70ed0bd"></a>Brightneess<br>
-<div class="outline-text-5" id="text-org70ed0bd">
+<li><a id="org4904a58"></a>Brightneess<br>
+<div class="outline-text-5" id="text-org4904a58">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-key *top-map* (kbd <span class="org-string">"C-s-F2"</span>) <span class="org-string">"exec brightnessctl set 1%-"</span>)
 (define-key *top-map* (kbd <span class="org-string">"C-s-F3"</span>) <span class="org-string">"exec brightnessctl set +1%"</span>)
@@ -1698,9 +1698,9 @@ This keymap is for keyboard with no media keys. On my laptop the media key is ma
 </li>
 </ul>
 </div>
-<div id="outline-container-orgf3882ac" class="outline-4">
-<h4 id="orgf3882ac">Remapped Keys</h4>
-<div class="outline-text-4" id="text-orgf3882ac">
+<div id="outline-container-org9a5bc7f" class="outline-4">
+<h4 id="org9a5bc7f">Remapped Keys</h4>
+<div class="outline-text-4" id="text-org9a5bc7f">
 <p>
 The <code>define-remapped-keys</code> function can be configured to translate certain familiar top level keybindings to alternative key sequences that are understood by specific applications. One example is to force the <i>Emacs</i> keybinding <code>C-n</code> and <code>C-p</code> to move up and down for any specified application. To use the original application we can use <code>send-raw-key</code>. And for temporarily disable all remapped keys, set the <code>*remapped-keys-enabled-p*</code> to nil.
 </p>
@@ -1728,9 +1728,9 @@ The <code>define-remapped-keys</code> function can be configured to translate ce
 </div>
 </div>
 </div>
-<div id="outline-container-org44702ec" class="outline-4">
-<h4 id="org44702ec">CANCELLED imdb and duckduckgo</h4>
-<div class="outline-text-4" id="text-org44702ec">
+<div id="outline-container-orga3eff5d" class="outline-4">
+<h4 id="orga3eff5d">CANCELLED imdb and duckduckgo</h4>
+<div class="outline-text-4" id="text-orga3eff5d">
 <ul class="org-ul">
 <li>State &ldquo;CANCELLED&rdquo;  from              <span class="timestamp-wrapper"><span class="timestamp">[2022-04-10 Sun 13:28] </span></span> <br>
 not used</li>
@@ -1746,9 +1746,9 @@ This is from the default configuration, I don&rsquo;t use this often.
 </div>
 </div>
 </div>
-<div id="outline-container-org0e74a03" class="outline-3">
-<h3 id="org0e74a03">Window rules</h3>
-<div class="outline-text-3" id="text-org0e74a03">
+<div id="outline-container-orgc43f012" class="outline-3">
+<h3 id="orgc43f012">Window rules</h3>
+<div class="outline-text-3" id="text-orgc43f012">
 <p>
 First we need to clear the previous rules in order to create a new one.
 </p>
@@ -1758,9 +1758,9 @@ First we need to clear the previous rules in order to create a new one.
 </div>
 </div>
 </div>
-<div id="outline-container-org7f0e852" class="outline-3">
-<h3 id="org7f0e852">Frame preferences</h3>
-<div class="outline-text-3" id="text-org7f0e852">
+<div id="outline-container-org02f389d" class="outline-3">
+<h3 id="org02f389d">Frame preferences</h3>
+<div class="outline-text-3" id="text-org02f389d">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-frame-preference <span class="org-string">"Term"</span>
   (1 t t <span class="org-builtin">:class</span> <span class="org-string">"XTerm"</span>)
@@ -1807,9 +1807,9 @@ First we need to clear the previous rules in order to create a new one.
 </div>
 </div>
 </section>
-<section id="outline-container-orge72e66f" class="outline-2">
-<h2 id="orge72e66f">Running Stumpwm</h2>
-<div class="outline-text-2" id="text-orge72e66f">
+<section id="outline-container-org3cecc96" class="outline-2">
+<h2 id="org3cecc96">Running Stumpwm</h2>
+<div class="outline-text-2" id="text-org3cecc96">
 <p>
 There are various methods of starting a <i>stumpwm</i> X session. The easiest way is to install the <i>stumpwm</i> package using your <i>distro</i> package manager, then you can run the executable <code>stumpwm</code> using <i>xinit</i>, <i>startx</i>, or via <i>display managers</i>, since the package will likely to also provide a <code>.desktop</code> file.
 The other (recommended) way is to clone the official repository<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>, install the required dependencies, build and install <i>stumpwm</i> (usually into <code>/usr/local/</code> so other user can also use it). Then start it by either <i>startx</i> or <i>xinit</i>, or create additional <code>.desktop</code> file so the <i>display manager</i> can also use it.
@@ -1881,7 +1881,7 @@ This method, and the method using <i>git</i> repository, has the benefit of havi
 <div class='footer'>
   Copyright © 2012-2022 <a href='mailto:alexforsale@yahoo.com'>alexforsale</a> | <a href='https://github.com/alexforsale/blog'>Source</a> <br>
   GnuPG fingerprint: <a href='https://keys.openpgp.org/search?q=27517709E592F14C5A51D90B972B3C2D613E4AE9'>2751 7709 E592 F14C 5A51 D90B 972B 3C2D 613E 4AE9</a> <br>
-  Last updated on Jun 10, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.4) <br>
+  Last updated on Jun 11, 2022. Generated using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.3 (<a href="https://orgmode.org">Org</a> mode 9.5.4) <br>
   <a href="https://info.flagcounter.com/yNMj"><img src="https://s05.flagcounter.com/mini/yNMj/bg_FFFFFF/txt_000000/border_CCCCCC/flags_0/" alt="Flag Counter" border="0"></a>
 </div>
 </footer>
