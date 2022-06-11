@@ -1553,6 +1553,9 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (with-eval-after-load 'vertico
           (require 'vertico-posframe)
           (vertico-posframe-mode 1))
+        (when (featurep 'corfu)
+          (setq corfu-preview-current nil
+                corfu-echo-documentation nil))
       #+end_src
 ***** Footer
       #+begin_src emacs-lisp
