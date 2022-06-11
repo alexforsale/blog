@@ -1487,9 +1487,17 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
             (treemacs-select-window)))
       #+end_src
 ***** Keybinding
+      To switch from a normal window to a /treemacs/ window add ~C-u~ before the keybinding (~C-u C-x o~).
       #+begin_src emacs-lisp
-        (global-set-key (kbd "C-x M-j") 'treemacs)
+        (global-set-key (kbd "C-x M-SPC") 'treemacs)
       #+end_src
+****** general
+       #+begin_src emacs-lisp
+         (+config/leader-def
+           :states '(normal visual)
+           "t" '(:ignore t :which-key "Terminal/Treemacs prefix")
+           "t SPC" 'treemacs)
+       #+end_src
 ***** Misc
       #+begin_src emacs-lisp
         ;; projectile
