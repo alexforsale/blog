@@ -58,9 +58,9 @@
 <header>
 <h1 class="title">Conditional Code-block in Org-mode</h1>
 <p class="subtitle" role="doc-subtitle">Published on Jun 02, 2022 by Kristian Alexander P.</p>
-</header><section id="outline-container-orga28449b" class="outline-2">
-<h2 id="orga28449b">Literate Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="mode">mode</span>&#xa0;<span class="codeblocks">codeblocks</span></span></h2>
-<div class="outline-text-2" id="text-orga28449b">
+</header><section id="outline-container-orgbd34a1e" class="outline-2">
+<h2 id="orgbd34a1e">Literate Programming&#xa0;&#xa0;&#xa0;<span class="tag"><span class="org">org</span>&#xa0;<span class="mode">mode</span>&#xa0;<span class="codeblocks">codeblocks</span></span></h2>
+<div class="outline-text-2" id="text-orgbd34a1e">
 <p>
 Two classical operations in literate programming<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
 </p>
@@ -72,10 +72,10 @@ Two classical operations in literate programming<sup><a id="fnr.1" class="footre
 Furthermore, we can conditionally instruct which code blocks to evaluate by using <i>emacs lisp</i> in the code block <i>header arguments</i>.
 </p>
 </div>
-<div id="outline-container-orgcdc8775" class="outline-3">
-<h3 id="orgcdc8775">Example</h3>
-<div class="outline-text-3" id="text-orgcdc8775">
-<pre class="example" id="orgcdce8a5">
+<div id="outline-container-org06d75bd" class="outline-3">
+<h3 id="org06d75bd">Example</h3>
+<div class="outline-text-3" id="text-org06d75bd">
+<pre class="example" id="org526e006">
 #+begin_src emacs-lisp :exports (if (string= "freebsd" (downcase (substring (shell-command-to-string "uname -s") 0 -1))) "both" "none") :results verbatim
   (print "this will only evaluated on freebsd")
 #+end_src
