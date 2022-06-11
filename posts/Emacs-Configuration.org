@@ -1478,7 +1478,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (customize-set-variable 'treemacs-persist-file (expand-file-name ".treemacs-persist" +emacs-data-dir))
       #+end_src
 ***** Functions
-      #+begin_src emacs-lisp
+      #+begin_src emacs-lisp :tangle no
         (require 'ace-window)
         (defun +config/treemacs-back-and-forth ()
           (interactive)
@@ -1489,7 +1489,6 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
 ***** Keybinding
       #+begin_src emacs-lisp
         (global-set-key (kbd "C-x M-j") 'treemacs)
-        (global-set-key (kbd "C-x M-SPC") '+config/treemacs-back-and-forth)
       #+end_src
 ***** Misc
       #+begin_src emacs-lisp
