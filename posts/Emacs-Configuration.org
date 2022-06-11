@@ -956,7 +956,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
              (+config/leader-def
               :states '(normal visual)
               "w0" 'ace-delete-window
-              "wd" 'ace-delete-window
+              "wd" 'delete-window
               "ww" 'ace-window)))
        #+end_src
 ***** Footer
