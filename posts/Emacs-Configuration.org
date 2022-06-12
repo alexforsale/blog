@@ -146,6 +146,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; (require 'config-gist)
      ;; (require 'config-ripgrep)
      ;; (require 'config-restart-emacs)
+     ;; (require 'config-hugo)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
@@ -3952,6 +3953,8 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+end_src
       =+my/offlineimap-transient=
       #+begin_src emacs-lisp
+        (require 'transient)
+
         (transient-define-prefix +my/offlineimap-transient ()
           "Offlineimap transient account chooser"
           :man-page "offlineimap"
@@ -5558,7 +5561,128 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (provide 'config-restart-emacs)
         ;;; config-restart-emacs.el ends here
       #+end_src
+**** hugo
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-hugo.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-hugo.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+        (require 'config-defaults-variables)
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'ox-hugo)
+      #+end_src
+***** variables
+      #+begin_src emacs-lisp
+        (defvar +config/blog-dir (expand-file-name "blog" org-directory)
+          "Blog directory, relative to `org-directory'.")
+        (defvar +config/ox-hugo-en-file (expand-file-name "content-org/posts.en.org" +config/blog-dir)
+          "Blog file for `hugo'.")
+        (defvar +config/ox-hugo-id-file (expand-file-name "content-org/posts.id.org" +config/blog-dir)
+          "Blog file for `hugo'.")
+        (defvar +config/ox-hugo-heading "Blog Ideas"
+          "Heading for org-capture inside `+config/ox-hugo-file'.")
+      #+end_src
+***** config
+      #+begin_src emacs-lisp
+        (require 'ox)
+        (require 'ox-hugo)
+      #+end_src
+***** capture template
+      #+begin_src emacs-lisp
+        ;; Populates only the EXPORT_FILE_NAME property in the inserted heading.
+        (with-eval-after-load 'org-capture
+          (defun org-hugo-new-subtree-post-capture-template ()
+            "Returns `org-capture' template string for new Hugo post.
+                                                                        See `org-capture-templates' for more information."
+            (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+                   (fname (org-hugo-slug title)))
+              (mapconcat #'identity
+                         `(
+                           ,(concat "* TODO " title)
+                           ":PROPERTIES:"
+                           ,(concat ":EXPORT_FILE_NAME: " fname)
+                           ":END:"
+                           "%?\n")          ;Place the cursor here finally
+                         "\n")))
 
+          (setq org-capture-templates
+                (append org-capture-templates
+                        `(("h" "(h)ugo")
+                          ("he"  "Hugo (e)nglish post"               ;`org-capture' binding + h
+                           entry
+                           ;; It is assumed that below file is present in `org-directory'
+                           ;; and that it has a "Blog Ideas" heading. It can even be a
+                           ;; symlink pointing to the actual location of all-posts.org!
+                           (file+olp ,+config/ox-hugo-en-file ,+config/ox-hugo-heading)
+                           (function org-hugo-new-subtree-post-capture-template))
+                          ("hi"  "Hugo (i)ndonesian post"               ;`org-capture' binding + h
+                           entry
+                           ;; It is assumed that below file is present in `org-directory'
+                           ;; and that it has a "Blog Ideas" heading. It can even be a
+                           ;; symlink pointing to the actual location of all-posts.org!
+                           (file+olp ,+config/ox-hugo-id-file ,+config/ox-hugo-heading)
+                           (function org-hugo-new-subtree-post-capture-template))))))
+      #+end_src
+***** start hugo server function
+      #+begin_src emacs-lisp
+        (defun +config/start-hugo-server (args)
+          "Start hugo server in `+config/blog-dir'."
+          (interactive (list (transient-args '+config/transient-hugo-server)))
+          (if (not (executable-find "hugo"))
+              (message "hugo executable not found")
+            (let ((default-directory +config/blog-dir)
+                  (command "hugo server"))
+              (async-shell-command (mapconcat #'identity `(,command ,@args) " ") "*hugo*" "*hugo-error*"))))
+      #+end_src
+***** transient define
+      #+begin_src emacs-lisp
+        (require 'transient)
+        (transient-define-prefix +config/transient-hugo-server ()
+          "Run hugo server with `transient'."
+          :man-page "hugo-server"
+          ["Options"
+           ("-D" "Build drafts" "--buildDrafts")
+           ("-E" "Build expired" "--buildExpired")
+           ("-F" "Build future" "--buildFuture")
+           ("d" "Debug" "--debug")
+           ("B" "Disable build errors on browser" "--disableBrowserError")
+           ("c" "Clean destination dir" "--cleanDestinationDir")
+           ("e" "Enable Git info" "--enableGitInfo")
+           ("F" "enable full re-renders on changes" "--disableFastRender")
+           ("f" "Force sync static files" "--forceSyncStatic")
+           ("g" "enable to run some cleanup tasks" "--gc")
+           ("m" "Minify any supported output format" "--minify")
+           ("C" "No chmod" "--noChmod")
+           ("T" "Don't sync modification time of files" "--noTimes")
+           ("I" "Print missing translation" "--printI18nWarnings")
+           ("M" "Print memory usage" "--printMemoryUsage")
+           ("P" "Print warning on duplicate target path" "--printPathWarnings")
+           ("q" "Quiet" "--quiet")
+           ("v" "Verbose" "--verbose")
+           ("w" "Watch filesystem for changes" "--watch")]
+          ["Action"
+           ("s" "hugo server" +config/start-hugo-server)])
+      #+end_src
+***** general keybinding
+      #+begin_src emacs-lisp
+        (with-eval-after-load 'general
+          (+config/leader-def
+            :states '(normal visual)
+            "H" '(:ignore t :whick-key "Hugo prefix")
+            "Hs" '+config/transient-hugo-server))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-hugo)
+        ;;; config-hugo.el ends here
+      #+end_src
 *** Footer
     #+begin_src emacs-lisp
       (provide 'config-defaults-tools)
