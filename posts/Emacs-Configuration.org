@@ -134,6 +134,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
      ;; Misc tools packages
      ;; (require 'config-pass)
      (require 'config-magit)
+     (require 'config-git-modes)
      ;;(require 'config-slime)
      ;;(require 'config-sly) ; a better repl than slime
      ;;(require 'config-paredit)
@@ -5007,6 +5008,34 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
       #+begin_src emacs-lisp
         (provide 'config-magit)
         ;;; config-magit.el ends here
+      #+end_src
+**** git-modes
+     :PROPERTIES:
+     :header-args: :tangle (expand-file-name "modules/config-git-modes.el" user-emacs-directory)
+     :END:
+***** header
+      #+begin_src emacs-lisp
+        ;;; config-git-modes.el --- Summary -*- lexical-binding: t -*-
+        ;;; Commentary:
+        ;; This file is auto-generated from `config.org'
+        ;; See `https://java281.dynv6.net/~alexforsale/posts/Emacs-Configuration.html'
+        ;;; Code:
+        (require 'config-defaults-variables)
+      #+end_src
+***** package
+      #+begin_src emacs-lisp
+        (straight-use-package 'git-modes)
+      #+end_src
+***** config
+      #+begin_src emacs-lisp
+        (add-to-list 'auto-mode-alist
+                     (cons "/.dockerignore\\'" 'gitignore-mode)
+                     (cons "/.griveignore\\'" 'gitignore-mode))
+      #+end_src
+***** Footer
+      #+begin_src emacs-lisp
+        (provide 'config-git-modes)
+        ;;; config-git-modes.el ends here
       #+end_src
 **** slime
      :PROPERTIES:
