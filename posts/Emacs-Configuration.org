@@ -3233,13 +3233,7 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
         (require 'org-protocol)
         (require 'org-roam-protocol)
         (setq org-roam-capture-templates
-              (quote (("m" "main" plain
-                       "%?"
-                       :if-new (file-head "main/${slug}.org"
-                                          "#+title: ${title}\n")
-                       :immediate-finish t
-                       :unnarrowed t)
-                      ("r" "reference" plain "%?"
+              (quote (("r" "reference" plain "%?"
                        :if-new (file+head "reference/${title}.org" "#+title: ${title}\n")
                        :immediate-finish t
                        :unnarrowed t)
