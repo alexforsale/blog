@@ -2732,6 +2732,10 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                                  (?B . (:foreground "#fdf6e3"))
                                  (?C . (:foreground "#859900"))))
     #+end_src
+*** org-protocol
+    #+begin_src emacs-lisp
+      (require 'org-protocol)
+    #+end_src
 *** fontify
     #+begin_src emacs-lisp
       (setq org-fontify-quote-and-verse-blocks t
@@ -3115,6 +3119,22 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
               org-capture-default-templates "tt")
         (add-hook 'org-capture-prepare-finalize-hook 'org-id-store-link)
       #+end_src
+*** Settings up org-protocol
+**** create a desktop application
+     On /linux/ and some other /unix/ OS this is achieved by creating a =.desktop= file in =~/.local/share/applications/= folder. Here it's =~/.local/share/applications/org-protocol.desktop=.
+     #+begin_src conf :tangle ~/.local/share/applications/org-protocol.desktop :mkdirp t
+       [Desktop Entry]
+       Name=Org-Protocol
+       Exec=emacsclient %u
+       Icon=emacs-icon
+       Type=Application
+       Terminal=false
+       MimeType=x-scheme-handler/org-protocol
+     #+end_src
+     Then associate it with the =org-protocol://= link
+     #+begin_src sh
+       [ $(command -v xdg-mime) ] && xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+     #+end_src
 *** Inherit properties
     Set org-properties to also apply to their sublevels.
     #+begin_src emacs-lisp
