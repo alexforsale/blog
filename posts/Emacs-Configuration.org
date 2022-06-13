@@ -3164,6 +3164,22 @@ To easily toggle the additional packages, create a =config-user.el= file inside 
                                                      :host github
                                                      :repo "jgru/consult-org-roam"))))
       #+end_src
+***** for freebsd
+      Need to install =emacsql= package from =pkg=.
+      #+begin_src emacs-lisp
+        (when (and (string= "berkeley-unix" system-type)
+                   (executable-find "emacsql-sqlite"))
+          (straight-use-package '(emacsql :type built-in))
+          (straight-use-package '(emacsql-sqlite :type built-in))
+          (require 'emacsql)
+          (require 'emacsql-sqlite)
+          (setq emacsql-data-root
+                (concat "/usr/local/share/emacs/"
+                        emacs-version
+                        "/site-lisp/emacsql/"))
+          (setq emacsql-sqlite-data-root emacsql-data-root)
+          (setq emacsql-sqlite-executable "/usr/local/bin/emacsql-sqlite"))
+      #+end_src
 ***** config
       #+begin_src emacs-lisp
         (customize-set-variable 'org-roam-db-location (expand-file-name "org-roam.db" +emacs-data-dir))
